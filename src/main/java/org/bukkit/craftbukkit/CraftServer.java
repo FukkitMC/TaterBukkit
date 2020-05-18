@@ -295,7 +295,6 @@ public final class CraftServer implements Server {
         ambientSpawn = configuration.getInt("spawn-limits.ambient");
         console.autosavePeriod = configuration.getInt("ticks-per.autosave");
         warningState = WarningState.value(configuration.getString("settings.deprecated-verbose"));
-        System.out.println(MinecraftServer.class.getProtectionDomain().getCodeSource().getLocation());
         ChunkTicketType.PLUGIN.expiryTicks = configuration.getInt("chunk-gc.period-in-ticks");
         minimumAPI = configuration.getString("settings.minimum-api");
         loadIcon();
