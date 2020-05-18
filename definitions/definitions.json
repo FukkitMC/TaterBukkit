@@ -1,0 +1,2600 @@
+[
+  {
+    "name": "net/minecraft/server/dedicated/gui/DedicatedServerGui",
+    "injectInterfaces": [],
+    "syntheticFields": [
+      {
+        "access": 9,
+        "name": "ANSI",
+        "type": "Ljava/util/regex/Pattern;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/server/world/ChunkTicketType",
+    "injectInterfaces": [],
+    "syntheticFields": [
+      {
+        "access": 9,
+        "name": "PLUGIN_TICKET",
+        "type": "Lnet/minecraft/server/world/ChunkTicketType;",
+        "signature": "Lnet/minecraft/server/world/ChunkTicketType<Lorg/bukkit/plugin/Plugin;>;"
+      },
+      {
+        "access": 9,
+        "name": "PLUGIN",
+        "type": "Lnet/minecraft/server/world/ChunkTicketType;",
+        "signature": "Lnet/minecraft/server/world/ChunkTicketType<Lnet/minecraft/util/Unit;>;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/world/ModifiableWorld",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/ModifiableWorldExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/world/border/WorldBorder",
+    "injectInterfaces": [],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "world",
+        "type": "Lnet/minecraft/server/WorldServer;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/entity/projectile/ExplosiveProjectileEntity",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/ExplosiveProjectileEntityExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "isIncendiary",
+        "type": "Z"
+      },
+      {
+        "access": 1,
+        "name": "bukkitYield",
+        "type": "F"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/server/dedicated/ServerCommandOutput",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/ServerCommandOutputExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/recipe/ShapedRecipe",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/ShapedRecipeExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/container/BlockContext",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/BlockContextExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/container/AbstractFurnaceContainer",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/AbstractFurnaceContainerExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "player",
+        "type": "Lnet/minecraft/entity/player/PlayerInventory;"
+      },
+      {
+        "access": 1,
+        "name": "bukkitEntity",
+        "type": "Lorg/bukkit/craftbukkit/inventory/CraftInventoryView;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/server/command/CommandManager",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/CommandManagerExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/entity/Entity",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/EntityExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "persist",
+        "type": "Z"
+      },
+      {
+        "access": 1,
+        "name": "valid",
+        "type": "Z"
+      },
+      {
+        "access": 1,
+        "name": "projectileSource",
+        "type": "Lorg/bukkit/projectiles/ProjectileSource;"
+      },
+      {
+        "access": 1,
+        "name": "forceExplosionKnockback",
+        "type": "Z"
+      },
+      {
+        "access": 9,
+        "name": "CURRENT_LEVEL",
+        "type": "I"
+      },
+      {
+        "access": 1,
+        "name": "bukkitEntity",
+        "type": "Lorg/bukkit/craftbukkit/entity/CraftEntity;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/command/arguments/EntityArgumentType",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/EntityArgumentTypeExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/recipe/SpecialCraftingRecipe",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/SpecialCraftingRecipeExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/recipe/CampfireCookingRecipe",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/CampfireCookingRecipeExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/entity/boss/CommandBossBar",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/CommandBossBarExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "bossBar",
+        "type": "Lorg/bukkit/boss/KeyedBossBar;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/entity/passive/AnimalEntity",
+    "injectInterfaces": [],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "breedItem",
+        "type": "Lnet/minecraft/item/ItemStack;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/server/dedicated/AbstractPropertiesHandler",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/AbstractPropertiesHandlerExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "options",
+        "type": "Ljoptsimple/OptionSet;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/server/network/ServerHandshakeNetworkHandler",
+    "injectInterfaces": [],
+    "syntheticFields": [
+      {
+        "access": 9,
+        "name": "throttleTracker",
+        "type": "Ljava/util/HashMap;"
+      },
+      {
+        "access": 9,
+        "name": "throttleCounter",
+        "type": "I"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/block/CauldronBlock",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/CauldronBlockExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/block/entity/ShulkerBoxBlockEntity",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/ShulkerBoxBlockEntityExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "maxStack",
+        "type": "I"
+      },
+      {
+        "access": 1,
+        "name": "transaction",
+        "type": "Ljava/util/List;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/village/TradeOffer",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/TradeOfferExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "bukkitHandle",
+        "type": "Lorg/bukkit/craftbukkit/inventory/CraftMerchantRecipe;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/block/entity/ChestBlockEntity",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/ChestBlockEntityExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "maxStack",
+        "type": "I"
+      },
+      {
+        "access": 1,
+        "name": "transaction",
+        "type": "Ljava/util/List;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/container/BeaconContainer",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/BeaconContainerExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "player",
+        "type": "Lnet/minecraft/entity/player/PlayerInventory;"
+      },
+      {
+        "access": 1,
+        "name": "bukkitEntity",
+        "type": "Lorg/bukkit/craftbukkit/inventory/CraftInventoryView;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/world/biome/source/BiomeArray",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/BiomeArrayExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/village/Trader",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/TraderExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/entity/decoration/ArmorStandEntity",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/ArmorStandEntityExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/server/ServerNetworkIo",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/ServerNetworkIoExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/entity/vehicle/AbstractMinecartEntity",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/AbstractMinecartEntityExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "flyingX",
+        "type": "D"
+      },
+      {
+        "access": 1,
+        "name": "slowWhenEmpty",
+        "type": "Z"
+      },
+      {
+        "access": 1,
+        "name": "derailedX",
+        "type": "D"
+      },
+      {
+        "access": 1,
+        "name": "derailedY",
+        "type": "D"
+      },
+      {
+        "access": 1,
+        "name": "derailedZ",
+        "type": "D"
+      },
+      {
+        "access": 1,
+        "name": "flyingY",
+        "type": "D"
+      },
+      {
+        "access": 1,
+        "name": "flyingZ",
+        "type": "D"
+      },
+      {
+        "access": 1,
+        "name": "maxSpeed",
+        "type": "D"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/world/dimension/DimensionType",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/DimensionTypeExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "type",
+        "type": "Lnet/minecraft/world/dimension/DimensionType;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/block/entity/DispenserBlockEntity",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/DispenserBlockEntityExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "maxStack",
+        "type": "I"
+      },
+      {
+        "access": 1,
+        "name": "transaction",
+        "type": "Ljava/util/List;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/server/world/ServerWorld",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/ServerWorldExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "tickPosition",
+        "type": "I"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/world/BlockView",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/BlockViewExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/block/entity/BrewingStandBlockEntity",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/BrewingStandBlockEntityExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "lastTick",
+        "type": "I"
+      },
+      {
+        "access": 1,
+        "name": "maxStack",
+        "type": "I"
+      },
+      {
+        "access": 1,
+        "name": "transaction",
+        "type": "Ljava/util/List;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/entity/mob/ZombieEntity",
+    "injectInterfaces": [],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "lastTick",
+        "type": "I"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/server/world/ChunkTicketManager",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/ChunkTicketManagerExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/server/network/ServerPlayerEntity",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/ServerPlayerEntityExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "joining",
+        "type": "Z"
+      },
+      {
+        "access": 1,
+        "name": "sentListPacket",
+        "type": "Z"
+      },
+      {
+        "access": 1,
+        "name": "pluginRainPosition",
+        "type": "F"
+      },
+      {
+        "access": 1,
+        "name": "timeOffset",
+        "type": "J"
+      },
+      {
+        "access": 1,
+        "name": "newExp",
+        "type": "I"
+      },
+      {
+        "access": 1,
+        "name": "displayName",
+        "type": "Ljava/lang/String;"
+      },
+      {
+        "access": 1,
+        "name": "compassTarget",
+        "type": "Lorg/bukkit/Location;"
+      },
+      {
+        "access": 1,
+        "name": "maxHealthCache",
+        "type": "D"
+      },
+      {
+        "access": 1,
+        "name": "weather",
+        "type": "Lorg/bukkit/WeatherType;"
+      },
+      {
+        "access": 1,
+        "name": "relativeTime",
+        "type": "Z"
+      },
+      {
+        "access": 1,
+        "name": "listName",
+        "type": "Lnet/minecraft/text/Text;"
+      },
+      {
+        "access": 1,
+        "name": "newTotalExp",
+        "type": "I"
+      },
+      {
+        "access": 1,
+        "name": "clientViewDistance",
+        "type": "Ljava/lang/Integer;"
+      },
+      {
+        "access": 1,
+        "name": "keepLevel",
+        "type": "Z"
+      },
+      {
+        "access": 1,
+        "name": "newLevel",
+        "type": "I"
+      },
+      {
+        "access": 1,
+        "name": "pluginRainPositionPrevious",
+        "type": "F"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/server/BlockChest/DoubleInventory",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/DoubleInventoryExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "inventorylargechest",
+        "type": "Lnet/minecraft/server/InventoryLargeChest;"
+      },
+      {
+        "access": 1,
+        "name": "tileentitychest",
+        "type": "Lnet/minecraft/server/TileEntityChest;"
+      },
+      {
+        "access": 1,
+        "name": "tileentitychest1",
+        "type": "Lnet/minecraft/server/TileEntityChest;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/block/entity/BlockEntity",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/BlockEntityExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "persistentDataContainer",
+        "type": "Lorg/bukkit/craftbukkit/persistence/CraftPersistentDataContainer;"
+      },
+      {
+        "access": 9,
+        "name": "DATA_TYPE_REGISTRY",
+        "type": "Lorg/bukkit/craftbukkit/persistence/CraftPersistentDataTypeRegistry;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/block/NoteBlock",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/NoteBlockExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/entity/vehicle/StorageMinecartEntity",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/StorageMinecartEntityExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "maxStack",
+        "type": "I"
+      },
+      {
+        "access": 1,
+        "name": "transaction",
+        "type": "Ljava/util/List;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/entity/projectile/LlamaSpitEntity",
+    "injectInterfaces": [],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "shooter",
+        "type": "Lnet/minecraft/entity/LivingEntity;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/entity/passive/WolfEntity",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/WolfEntityExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/village/TraderInventory",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/TraderInventoryExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "maxStack",
+        "type": "I"
+      },
+      {
+        "access": 1,
+        "name": "transaction",
+        "type": "Ljava/util/List;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/entity/ai/goal/TemptGoal",
+    "injectInterfaces": [],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "target",
+        "type": "Lnet/minecraft/entity/LivingEntity;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/server/TileEntityLectern/LecternInventory",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/LecternInventoryExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "maxStack",
+        "type": "I"
+      },
+      {
+        "access": 1,
+        "name": "transaction",
+        "type": "Ljava/util/List;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/entity/mob/ZombieVillagerEntity",
+    "injectInterfaces": [],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "lastTick",
+        "type": "I"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/server/command/CommandOutput",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/CommandOutputExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/container/EnchantingTableContainer",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/EnchantingTableContainerExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "bukkitEntity",
+        "type": "Lorg/bukkit/craftbukkit/inventory/CraftInventoryView;"
+      },
+      {
+        "access": 1,
+        "name": "player",
+        "type": "Lorg/bukkit/entity/Player;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/inventory/BasicInventory",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/BasicInventoryExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "maxStack",
+        "type": "I"
+      },
+      {
+        "access": 1,
+        "name": "transaction",
+        "type": "Ljava/util/List;"
+      },
+      {
+        "access": 1,
+        "name": "bukkitOwner",
+        "type": "Lorg/bukkit/inventory/InventoryHolder;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/entity/passive/RabbitEntity",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/RabbitEntityExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/world/storage/RegionBasedStorage",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/RegionBasedStorageExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/container/Container",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/ContainerExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "title",
+        "type": "Lnet/minecraft/text/Text;"
+      },
+      {
+        "access": 1,
+        "name": "checkReachable",
+        "type": "Z"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/entity/data/DataTracker",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/DataTrackerExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/server/world/ServerChunkManager",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/ServerChunkManagerExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/block/Block",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/BlockExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/server/world/ChunkHolder",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/ChunkHolderExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/entity/raid/Raid",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/RaidExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/recipe/BlastingRecipe",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/BlastingRecipeExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/recipe/SmeltingRecipe",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/SmeltingRecipeExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/block/dispenser/ItemDispenserBehavior",
+    "injectInterfaces": [],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/server/network/ServerLoginNetworkHandler",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/ServerLoginNetworkHandlerExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "hostname",
+        "type": "Ljava/lang/String;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/command/EntitySelectorReader",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/EntitySelectorReaderExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/block/entity/SignBlockEntity",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/SignBlockEntityExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/block/SaplingBlock",
+    "injectInterfaces": [],
+    "syntheticFields": [
+      {
+        "access": 9,
+        "name": "treeType",
+        "type": "Lorg/bukkit/TreeType;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/server/EntityMinecartCommandBlock/a",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/aExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/loot/context/LootContextParameters",
+    "injectInterfaces": [],
+    "syntheticFields": [
+      {
+        "access": 9,
+        "name": "LOOTING_MOD",
+        "type": "Lnet/minecraft/loot/context/LootContextParameter;",
+        "signature": "Lnet/minecraft/loot/context/LootContextParameter<Ljava/lang/Integer;>;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/container/LoomContainer",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/LoomContainerExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "bukkitEntity",
+        "type": "Lorg/bukkit/craftbukkit/inventory/CraftInventoryView;"
+      },
+      {
+        "access": 1,
+        "name": "player",
+        "type": "Lorg/bukkit/entity/Player;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/block/entity/BeehiveBlockEntity",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/BeehiveBlockEntityExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "maxBees",
+        "type": "I"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/container/AnvilContainer",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/AnvilContainerExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "lastLevelCost",
+        "type": "I"
+      },
+      {
+        "access": 1,
+        "name": "maximumRepairCost",
+        "type": "I"
+      },
+      {
+        "access": 1,
+        "name": "bukkitEntity",
+        "type": "Lorg/bukkit/craftbukkit/inventory/CraftInventoryView;"
+      },
+      {
+        "access": 1,
+        "name": "playerInventory",
+        "type": "Lnet/minecraft/server/PlayerInventory;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/container/Generic3x3Container",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/Generic3x3ContainerExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "player",
+        "type": "Lnet/minecraft/server/PlayerInventory;"
+      },
+      {
+        "access": 1,
+        "name": "bukkitEntity",
+        "type": "Lorg/bukkit/craftbukkit/inventory/CraftInventoryView;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/entity/passive/PassiveEntity",
+    "injectInterfaces": [],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "ageLocked",
+        "type": "Z"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/entity/ItemEntity",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/ItemEntityExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "lastTick",
+        "type": "I"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/block/entity/LecternBlockEntity",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/LecternBlockEntityExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/recipe/Ingredient",
+    "injectInterfaces": [],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "exact",
+        "type": "Z"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/container/GrindstoneContainer",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/GrindstoneContainerExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "bukkitEntity",
+        "type": "Lorg/bukkit/craftbukkit/inventory/CraftInventoryView;"
+      },
+      {
+        "access": 1,
+        "name": "player",
+        "type": "Lorg/bukkit/entity/Player;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/entity/thrown/ThrownItemEntity",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/ThrownItemEntityExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/container/BrewingStandContainer",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/BrewingStandContainerExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "player",
+        "type": "Lnet/minecraft/server/PlayerInventory;"
+      },
+      {
+        "access": 1,
+        "name": "bukkitEntity",
+        "type": "Lorg/bukkit/craftbukkit/inventory/CraftInventoryView;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/container/CraftingTableContainer",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/CraftingTableContainerExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "bukkitEntity",
+        "type": "Lorg/bukkit/craftbukkit/inventory/CraftInventoryView;"
+      },
+      {
+        "access": 1,
+        "name": "playerInventory",
+        "type": "Lnet/minecraft/server/PlayerInventory;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/server/ServerConfigList",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/ServerConfigListExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/entity/decoration/ItemFrameEntity",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/ItemFrameEntityExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/block/RedstoneOreBlock",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/RedstoneOreBlockExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/block/entity/BeaconBlockEntity",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/BeaconBlockEntityExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/entity/boss/dragon/EnderDragonEntity",
+    "injectInterfaces": [],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "explosionSource",
+        "type": "Lnet/minecraft/server/Explosion;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/recipe/Recipe",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/RecipeExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/world/ChunkRegion",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/ChunkRegionExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/block/entity/HopperBlockEntity",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/HopperBlockEntityExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "maxStack",
+        "type": "I"
+      },
+      {
+        "access": 1,
+        "name": "transaction",
+        "type": "Ljava/util/List;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/block/entity/BarrelBlockEntity",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/BarrelBlockEntityExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "maxStack",
+        "type": "I"
+      },
+      {
+        "access": 1,
+        "name": "transaction",
+        "type": "Ljava/util/List;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/server/dedicated/MinecraftDedicatedServer",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/MinecraftDedicatedServerExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/entity/EntityType",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/EntityTypeExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/block/SpawnerBlock",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/SpawnerBlockExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/world/WorldSaveHandler",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/WorldSaveHandlerExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "uuid",
+        "type": "Ljava/util/UUID;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/block/entity/LockableContainerBlockEntity",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/LockableContainerBlockEntityExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/server/network/ServerPlayNetworkHandler",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/ServerPlayNetworkHandlerExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 9,
+        "name": "SURVIVAL_PLACE_DISTANCE_SQUARED",
+        "type": "I"
+      },
+      {
+        "access": 1,
+        "name": "lastTick",
+        "type": "I"
+      },
+      {
+        "access": 1,
+        "name": "lastBookTick",
+        "type": "I"
+      },
+      {
+        "access": 1,
+        "name": "lastPosY",
+        "type": "D"
+      },
+      {
+        "access": 1,
+        "name": "justTeleported",
+        "type": "Z"
+      },
+      {
+        "access": 9,
+        "name": "chatSpamField",
+        "type": "Ljava/util/concurrent/atomic/AtomicIntegerFieldUpdater;"
+      },
+      {
+        "access": 1,
+        "name": "lastPitch",
+        "type": "F"
+      },
+      {
+        "access": 9,
+        "name": "CUSTOM_UNREGISTER",
+        "type": "Lnet/minecraft/util/Identifier;"
+      },
+      {
+        "access": 1,
+        "name": "craftServer",
+        "type": "Lorg/bukkit/craftbukkit/CraftServer;"
+      },
+      {
+        "access": 9,
+        "name": "CUSTOM_REGISTER",
+        "type": "Lnet/minecraft/util/Identifier;"
+      },
+      {
+        "access": 1,
+        "name": "lastPosZ",
+        "type": "D"
+      },
+      {
+        "access": 1,
+        "name": "processedDisconnect",
+        "type": "Z"
+      },
+      {
+        "access": 1,
+        "name": "dropCount",
+        "type": "I"
+      },
+      {
+        "access": 9,
+        "name": "CREATIVE_PLACE_DISTANCE_SQUARED",
+        "type": "I"
+      },
+      {
+        "access": 1,
+        "name": "lastPosX",
+        "type": "D"
+      },
+      {
+        "access": 1,
+        "name": "lastYaw",
+        "type": "F"
+      },
+      {
+        "access": 1,
+        "name": "lastDropTick",
+        "type": "I"
+      },
+      {
+        "access": 1,
+        "name": "allowedPlayerTicks",
+        "type": "I"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/item/BlockItem",
+    "injectInterfaces": [],
+    "syntheticFields": [],
+    "syntheticMethods": [
+      {
+        "opcode": 184,
+        "access": 9,
+        "name": "getBlockState",
+        "descriptor": "(Lnet/minecraft/block/BlockState;Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/block/BlockState;",
+        "redirect": {
+          "owner": "io/github/fukkitmc/fukkit/redirects/ItemBlockRedirects",
+          "name": "getBlockState",
+          "descriptor": "(Lnet/minecraft/block/BlockState;Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/block/BlockState;",
+          "isInterface": true
+        }
+      }
+    ]
+  },
+  {
+    "name": "net/minecraft/container/HorseContainer",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/HorseContainerExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "player",
+        "type": "Lnet/minecraft/server/PlayerInventory;"
+      },
+      {
+        "access": 1,
+        "name": "bukkitEntity",
+        "type": "Lorg/bukkit/craftbukkit/inventory/CraftInventoryView;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/entity/LightningEntity",
+    "injectInterfaces": [],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "isEffect",
+        "type": "Z"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/recipe/SmokingRecipe",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/SmokingRecipeExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/world/gen/feature/JungleGroundBushFeature",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/JungleGroundBushFeatureExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/entity/LivingEntity/ProcessableEffect",
+    "injectInterfaces": [],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "type",
+        "type": "Lnet/minecraft/server/MobEffectList;"
+      },
+      {
+        "access": 1,
+        "name": "effect",
+        "type": "Lnet/minecraft/server/MobEffect;"
+      },
+      {
+        "access": 1,
+        "name": "cause",
+        "type": "Lorg/bukkit/event/entity/EntityPotionEffectEvent/Cause;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/container/ShulkerBoxContainer",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/ShulkerBoxContainerExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "player",
+        "type": "Lnet/minecraft/server/PlayerInventory;"
+      },
+      {
+        "access": 1,
+        "name": "bukkitEntity",
+        "type": "Lorg/bukkit/craftbukkit/inventory/CraftInventoryView;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/entity/player/PlayerInventory",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/PlayerInventoryExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "maxStack",
+        "type": "I"
+      },
+      {
+        "access": 1,
+        "name": "transaction",
+        "type": "Ljava/util/List;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/entity/passive/HorseBaseEntity",
+    "injectInterfaces": [],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "maxDomestication",
+        "type": "I"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/server/MinecraftServer",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/MinecraftServerExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "bukkitDataPackFolder",
+        "type": "Ljava/io/File;"
+      },
+      {
+        "access": 1,
+        "name": "console",
+        "type": "Lorg/bukkit/command/ConsoleCommandSender;"
+      },
+      {
+        "access": 1,
+        "name": "forceTicks",
+        "type": "Z"
+      },
+      {
+        "access": 1,
+        "name": "server",
+        "type": "Lorg/bukkit/craftbukkit/CraftServer;"
+      },
+      {
+        "access": 1,
+        "name": "processQueue",
+        "type": "Ljava/util/Queue;"
+      },
+      {
+        "access": 1,
+        "name": "stopLock",
+        "type": "Ljava/lang/Object;"
+      },
+      {
+        "access": 9,
+        "name": "currentTick",
+        "type": "I"
+      },
+      {
+        "access": 1,
+        "name": "vanillaCommandDispatcher",
+        "type": "Lnet/minecraft/server/command/CommandManager;"
+      },
+      {
+        "access": 1,
+        "name": "hasStopped",
+        "type": "Z"
+      },
+      {
+        "access": 1,
+        "name": "remoteConsole",
+        "type": "Lorg/bukkit/command/RemoteConsoleCommandSender;"
+      },
+      {
+        "access": 1,
+        "name": "options",
+        "type": "Ljoptsimple/OptionSet;"
+      },
+      {
+        "access": 1,
+        "name": "reader",
+        "type": "Ljline/console/ConsoleReader;"
+      },
+      {
+        "access": 1,
+        "name": "autosavePeriod",
+        "type": "I"
+      }
+    ],
+    "syntheticMethods": [
+      {
+        "opcode": 184,
+        "access": 9,
+        "name": "getServer",
+        "descriptor": "()Lnet/minecraft/server/MinecraftServer;",
+        "redirect": {
+          "owner": "io/github/fukkitmc/fukkit/redirects/MinecraftServerRedirects",
+          "name": "getServer",
+          "descriptor": "()Lnet/minecraft/server/MinecraftServer;",
+          "isInterface": true
+        }
+      }
+    ]
+  },
+  {
+    "name": "net/minecraft/world/PortalForcer",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/PortalForcerExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/inventory/Inventory",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/InventoryExtra"
+    ],
+    "syntheticFields": [
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/server/BanEntry",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/BanEntryExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/inventory/CraftingResultInventory",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/CraftingResultInventoryExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "maxStack",
+        "type": "I"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/entity/mob/CreeperEntity",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/CreeperEntityExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/entity/projectile/ArrowEntity",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/ArrowEntityExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/server/Shape",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/ShapeExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "blocks",
+        "type": "Ljava/util/List;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/container/PlayerContainer",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/PlayerContainerExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "player",
+        "type": "Lnet/minecraft/server/PlayerInventory;"
+      },
+      {
+        "access": 1,
+        "name": "bukkitEntity",
+        "type": "Lorg/bukkit/craftbukkit/inventory/CraftInventoryView;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/item/map/MapState",
+    "injectInterfaces": [],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "server",
+        "type": "Lorg/bukkit/craftbukkit/CraftServer;"
+      },
+      {
+        "access": 1,
+        "name": "uniqueId",
+        "type": "Ljava/util/UUID;"
+      },
+      {
+        "access": 1,
+        "name": "mapView",
+        "type": "Lorg/bukkit/craftbukkit/map/CraftMapView;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/entity/mob/MobEntity",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/MobEntityExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "aware",
+        "type": "Z"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/entity/vehicle/BoatEntity",
+    "injectInterfaces": [],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "craftLastLocation",
+        "type": "Lorg/bukkit/Location;"
+      },
+      {
+        "access": 1,
+        "name": "occupiedDeceleration",
+        "type": "D"
+      },
+      {
+        "access": 1,
+        "name": "unoccupiedDeceleration",
+        "type": "D"
+      },
+      {
+        "access": 1,
+        "name": "maxSpeed",
+        "type": "D"
+      },
+      {
+        "access": 1,
+        "name": "landBoats",
+        "type": "Z"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/container/LecternContainer",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/LecternContainerExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "bukkitEntity",
+        "type": "Lorg/bukkit/craftbukkit/inventory/CraftInventoryView;"
+      },
+      {
+        "access": 1,
+        "name": "player",
+        "type": "Lorg/bukkit/entity/Player;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/server/Containers/Supplier",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/SupplierExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/entity/TntEntity",
+    "injectInterfaces": [],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "isIncendiary",
+        "type": "Z"
+      },
+      {
+        "access": 1,
+        "name": "yield",
+        "type": "F"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/inventory/CraftingInventory",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/CraftingInventoryExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "currentRecipe",
+        "type": "Lnet/minecraft/server/IRecipe;"
+      },
+      {
+        "access": 1,
+        "name": "resultInventory",
+        "type": "Lnet/minecraft/server/IInventory;"
+      },
+      {
+        "access": 1,
+        "name": "maxStack",
+        "type": "I"
+      },
+      {
+        "access": 1,
+        "name": "transaction",
+        "type": "Ljava/util/List;"
+      },
+      {
+        "access": 1,
+        "name": "owner",
+        "type": "Lnet/minecraft/server/EntityHuman;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/recipe/StonecuttingRecipe",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/StonecuttingRecipeExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/advancement/Advancement",
+    "injectInterfaces": [],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "bukkit",
+        "type": "Lorg/bukkit/advancement/Advancement;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/state/property/IntProperty",
+    "injectInterfaces": [],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "max",
+        "type": "I"
+      },
+      {
+        "access": 1,
+        "name": "min",
+        "type": "I"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/server/PlayerChunkMap/CallbackExecutor",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/CallbackExecutorExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "queued",
+        "type": "Ljava/lang/Runnable;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/scoreboard/ServerScoreboard",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/ServerScoreboardExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/server/CommandSpreadPlayers/a",
+    "injectInterfaces": [],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/server/network/ServerPlayerInteractionManager",
+    "injectInterfaces": [],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "firedInteract",
+        "type": "Z"
+      },
+      {
+        "access": 1,
+        "name": "interactResult",
+        "type": "Z"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/server/network/EntityTrackerEntry",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/EntityTrackerEntryExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "trackedPlayers",
+        "type": "Ljava/util/Set;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/world/storage/VersionedChunkStorage",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/VersionedChunkStorageExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/block/DispenserBlock",
+    "injectInterfaces": [],
+    "syntheticFields": [
+      {
+        "access": 9,
+        "name": "eventFired",
+        "type": "Z"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/world/CommandBlockExecutor",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/CommandBlockExecutorExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/container/HopperContainer",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/HopperContainerExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "player",
+        "type": "Lnet/minecraft/server/PlayerInventory;"
+      },
+      {
+        "access": 1,
+        "name": "bukkitEntity",
+        "type": "Lorg/bukkit/craftbukkit/inventory/CraftInventoryView;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/entity/decoration/AbstractDecorationEntity",
+    "injectInterfaces": [],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/entity/passive/AbstractTraderEntity",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/AbstractTraderEntityExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "craftMerchant",
+        "type": "Lorg/bukkit/craftbukkit/inventory/CraftMerchant;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/block/BedBlock",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/BedBlockExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/block/FireBlock",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/FireBlockExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/entity/player/HungerManager",
+    "injectInterfaces": [],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "entityhuman",
+        "type": "Lnet/minecraft/server/EntityHuman;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/container/CartographyTableContainer",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/CartographyTableContainerExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "bukkitEntity",
+        "type": "Lorg/bukkit/craftbukkit/inventory/CraftInventoryView;"
+      },
+      {
+        "access": 1,
+        "name": "player",
+        "type": "Lorg/bukkit/entity/Player;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/inventory/DoubleInventory",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/DoubleInventoryExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "transaction",
+        "type": "Ljava/util/List;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/entity/damage/DamageSource",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/DamageSourceExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "sweep",
+        "type": "Z"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/container/MerchantContainer",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/MerchantContainerExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "player",
+        "type": "Lnet/minecraft/server/PlayerInventory;"
+      },
+      {
+        "access": 1,
+        "name": "bukkitEntity",
+        "type": "Lorg/bukkit/craftbukkit/inventory/CraftInventoryView;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/item/SignItem",
+    "injectInterfaces": [],
+    "syntheticFields": [
+      {
+        "access": 9,
+        "name": "openSign",
+        "type": "Lnet/minecraft/server/BlockPosition;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/loot/LootManager",
+    "injectInterfaces": [],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "lootTableToKey",
+        "type": "Ljava/util/Map;",
+        "signature": "Ljava/util/Map<Lnet/minecraft/loot/LootTable;Lnet/minecraft/util/Identifier;>;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/server/PlayerManager",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/PlayerManagerExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "cserver",
+        "type": "Lorg/bukkit/craftbukkit/CraftServer;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/server/dedicated/ServerPropertiesHandler",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/ServerPropertiesHandlerExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "debug",
+        "type": "Z"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/container/GenericContainer",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/GenericContainerExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "player",
+        "type": "Lnet/minecraft/server/PlayerInventory;"
+      },
+      {
+        "access": 1,
+        "name": "bukkitEntity",
+        "type": "Lorg/bukkit/craftbukkit/inventory/CraftInventoryView;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/recipe/ShapelessRecipe",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/ShapelessRecipeExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/world/explosion/Explosion",
+    "injectInterfaces": [],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "wasCanceled",
+        "type": "Z"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/entity/AreaEffectCloudEntity",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/AreaEffectCloudEntityExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/loot/LootTable",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/LootTableExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/recipe/RecipeManager",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/RecipeManagerExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/entity/ExperienceOrbEntity",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/ExperienceOrbEntityExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/block/OreBlock",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/OreBlockExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/container/StonecutterContainer",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/StonecutterContainerExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "bukkitEntity",
+        "type": "Lorg/bukkit/craftbukkit/inventory/CraftInventoryView;"
+      },
+      {
+        "access": 1,
+        "name": "player",
+        "type": "Lorg/bukkit/entity/Player;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/item/ItemStack",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/ItemStackExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/entity/mob/EndermanEntity",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/EndermanEntityExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/entity/player/PlayerEntity",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/PlayerEntityExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "oldLevel",
+        "type": "I"
+      },
+      {
+        "access": 1,
+        "name": "fauxSleeping",
+        "type": "Z"
+      },
+      {
+        "access": 1,
+        "name": "spawnWorld",
+        "type": "Ljava/lang/String;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/entity/damage/ProjectileDamageSource",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/ProjectileDamageSourceExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/block/sapling/SaplingGenerator",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/SaplingGeneratorExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/entity/projectile/ShulkerBulletEntity",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/ShulkerBulletEntityExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/server/command/ServerCommandSource",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/ServerCommandSourceExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "currentCommand",
+        "type": "Lcom/mojang/brigadier/tree/CommandNode;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/world/World",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/WorldExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "populating",
+        "type": "Z"
+      },
+      {
+        "access": 1,
+        "name": "keepSpawnInMemory",
+        "type": "Z"
+      },
+      {
+        "access": 1,
+        "name": "ticksPerWaterSpawns",
+        "type": "J"
+      },
+      {
+        "access": 1,
+        "name": "generator",
+        "type": "Lorg/bukkit/generator/ChunkGenerator;"
+      },
+      {
+        "access": 1,
+        "name": "captureBlockStates",
+        "type": "Z"
+      },
+      {
+        "access": 1,
+        "name": "craftWorld",
+        "type": "Lorg/bukkit/craftbukkit/CraftWorld;"
+      },
+      {
+        "access": 1,
+        "name": "ticksPerMonsterSpawns",
+        "type": "J"
+      },
+      {
+        "access": 1,
+        "name": "captureTreeGeneration",
+        "type": "Z"
+      },
+      {
+        "access": 1,
+        "name": "capturedBlockStates",
+        "type": "Ljava/util/Map;",
+        "signature": "Ljava/util/Map<Lnet/minecraft/util/math/BlockPos;Lorg/bukkit/craftbukkit/block/CapturedBlockState;>;"
+      },
+      {
+        "access": 1,
+        "name": "ticksPerAnimalSpawns",
+        "type": "J"
+      },
+      {
+        "access": 1,
+        "name": "pvpMode",
+        "type": "Z"
+      },
+      {
+        "access": 1,
+        "name": "captureDrops",
+        "type": "Ljava/util/List;"
+      },
+      {
+        "access": 1,
+        "name": "capturedTileEntities",
+        "type": "Ljava/util/Map;"
+      },
+      {
+        "access": 1,
+        "name": "ticksPerAmbientSpawns",
+        "type": "J"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/entity/LivingEntity",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/LivingEntityExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "maxAirTicks",
+        "type": "I"
+      },
+      {
+        "access": 1,
+        "name": "canPickUpLoot",
+        "type": "Z"
+      },
+      {
+        "access": 1,
+        "name": "collides",
+        "type": "Z"
+      },
+      {
+        "access": 1,
+        "name": "expToDrop",
+        "type": "I"
+      },
+      {
+        "access": 1,
+        "name": "forceDrops",
+        "type": "Z"
+      },
+      {
+        "access": 1,
+        "name": "drops",
+        "type": "Ljava/util/ArrayList;"
+      },
+      {
+        "access": 1,
+        "name": "effectsToProcess",
+        "type": "Ljava/util/List;"
+      },
+      {
+        "access": 1,
+        "name": "craftAttributes",
+        "type": "Lorg/bukkit/craftbukkit/attribute/CraftAttributeMap;"
+      },
+      {
+        "access": 1,
+        "name": "isTickingEffects",
+        "type": "Z"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/block/entity/AbstractFurnaceBlockEntity",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/AbstractFurnaceBlockEntityExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "maxStack",
+        "type": "I"
+      },
+      {
+        "access": 1,
+        "name": "transaction",
+        "type": "Ljava/util/List;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/world/chunk/WorldChunk",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/WorldChunkExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "mustNotSave",
+        "type": "Z"
+      },
+      {
+        "access": 1,
+        "name": "needsDecoration",
+        "type": "Z"
+      },
+      {
+        "access": 1,
+        "name": "bukkitChunk",
+        "type": "Lorg/bukkit/Chunk;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/world/level/LevelProperties",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/LevelPropertiesExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "world",
+        "type": "Lnet/minecraft/server/WorldServer;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/inventory/EnderChestInventory",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/EnderChestInventoryExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "owner",
+        "type": "Lnet/minecraft/server/EntityHuman;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/item/BucketItem",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/BucketItemExtra"
+    ],
+    "syntheticFields": [],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/tag/RegistryTagContainer",
+    "injectInterfaces": [],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "version",
+        "type": "I"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/server/world/ThreadedAnvilChunkStorage",
+    "injectInterfaces": [],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "callbackExecutor",
+        "type": "Lnet/minecraft/server/PlayerChunkMap/CallbackExecutor;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/server/PacketStatusListener/ServerListPingEvent",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/ServerListPingEventExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "i",
+        "type": "I"
+      },
+      {
+        "access": 1,
+        "name": "ret",
+        "type": "I"
+      },
+      {
+        "access": 1,
+        "name": "player",
+        "type": "Lnet/minecraft/server/EntityPlayer;"
+      },
+      {
+        "access": 1,
+        "name": "icon",
+        "type": "Lorg/bukkit/craftbukkit/util/CraftIconCache;"
+      }
+    ],
+    "syntheticMethods": []
+  }
+]
