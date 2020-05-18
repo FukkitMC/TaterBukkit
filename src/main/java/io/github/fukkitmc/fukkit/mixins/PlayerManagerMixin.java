@@ -25,6 +25,7 @@ public class PlayerManagerMixin {
         }else{
             ((PlayerManager)(Object)this).cserver = new CraftServer((MinecraftDedicatedServer)server, ((PlayerManager)(Object)this));
         }
+        server.server = ((PlayerManager)(Object)this).cserver;
         server.console = org.bukkit.craftbukkit.command.ColouredConsoleSender.getInstance();
         server.reader.addCompleter(new org.bukkit.craftbukkit.command.ConsoleCommandCompleter(server.server));
     }

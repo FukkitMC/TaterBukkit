@@ -11,6 +11,8 @@ public interface EntityExtra {
 
     org.bukkit.craftbukkit.entity.CraftEntity getBukkitEntity();
 
+    org.bukkit.craftbukkit.entity.CraftEntity getRawBukkitEntity();
+
     float getBukkitYaw();
 
     void burn(float var0);

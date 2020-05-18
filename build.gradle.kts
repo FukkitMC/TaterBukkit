@@ -1,5 +1,5 @@
 plugins {
-    id("fabric-loom") version "g0.4.0-20200517.221454-2"
+    id("fabric-loom") version "g0.4.0-SNAPSHOT"
 }
 
 group = "io.github.fukkitmc"

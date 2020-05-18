@@ -237,7 +237,7 @@ public final class CraftServer implements Server {
         this.console = console;
         this.playerList = (DedicatedPlayerManager) playerList;
         this.playerView = Collections.unmodifiableList(Lists.transform(playerList.players, (Function<ServerPlayerEntity, CraftPlayer>) player -> player.getBukkitEntity()));
-        this.serverVersion = CraftServer.class.getPackage().getImplementationVersion();
+        this.serverVersion = "TaterBukkit";
 
         Bukkit.setServer(this);
 

@@ -9,8 +9,6 @@ public interface ServerPlayerEntityExtra {
 
     org.bukkit.craftbukkit.entity.CraftPlayer getBukkitEntity();
 
-    net.minecraft.scoreboard.Scoreboard getScoreboard();
-
     void tickWeather();
 
     void spawnIn(net.minecraft.world.World var0);
