@@ -3,17 +3,17 @@
   "id": "fukkit",
   "version": "${version}",
 
-  "name": "Example Mod",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "name": "Tater Bukkit",
+  "description": "good implementation of CraftBukkit on fabric",
   "authors": [
-    "Me!"
+    "ramidzkh",
+    "hydos",
+    "half"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
   },
 
-  "license": "CC0-1.0",
+  "license": "LGPL-3.0",
   "icon": "assets/fukkit/icon.png",
 
   "environment": "*",
