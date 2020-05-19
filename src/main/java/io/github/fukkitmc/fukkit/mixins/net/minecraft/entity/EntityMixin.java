@@ -2,6 +2,7 @@ package io.github.fukkitmc.fukkit.mixins.net.minecraft.entity;
 
 import io.github.fukkitmc.fukkit.extras.EntityExtra;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -10,6 +11,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.craftbukkit.entity.CraftEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Entity.class)
 public class EntityMixin implements EntityExtra {
@@ -73,4 +77,5 @@ public class EntityMixin implements EntityExtra {
     public Entity teleportTo(DimensionType var0, BlockPos var1) {
         return null;
     }
+
 }

@@ -27,6 +27,8 @@ public class MinecraftServerMixin {
     public void init(File gameDir, Proxy proxy, DataFixer dataFixer, CommandManager commandManager, YggdrasilAuthenticationService authService, MinecraftSessionService sessionService, GameProfileRepository gameProfileRepository, UserCache userCache, WorldGenerationProgressListenerFactory worldGenerationProgressListenerFactory, String levelName, CallbackInfo ci) throws IOException {
         ((MinecraftServer)(Object)this).options = Main.serverOptions;
         ((MinecraftServer)(Object)this).reader = new ConsoleReader(System.in, System.out);
+        ((MinecraftServer)(Object)this).commandManager = ((MinecraftServer)(Object)this).vanillaCommandDispatcher = commandManager; // CraftBukkit
+
     }
 
     @Inject(method = "main", at = @At("HEAD"))
