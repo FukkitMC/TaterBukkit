@@ -1,4 +1,4 @@
-package io.github.fukkitmc.fukkit.mixins;
+package io.github.fukkitmc.fukkit.mixins.net.minecraft.server;
 
 import com.mojang.authlib.GameProfileRepository;
 import com.mojang.authlib.minecraft.MinecraftSessionService;
