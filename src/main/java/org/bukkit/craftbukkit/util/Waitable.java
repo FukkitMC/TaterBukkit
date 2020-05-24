@@ -16,51 +16,6 @@ public abstract class Waitable<T> implements Runnable {
     T value = null;
     Status status = Status.WAITING;
 
-    public static Waitable createChatWaitable(PlayerChatEvent queueEvent, MinecraftServer server) {
-        return new Waitable() {
-            @Override
-            protected Object evaluate() {
-                org.bukkit.Bukkit.getPluginManager().callEvent(queueEvent);
-
-                if (queueEvent.isCancelled()) {
-                    return null;
-                }
-
-                String message = String.format(queueEvent.getFormat(), queueEvent.getPlayer().getDisplayName(), queueEvent.getMessage());
-                server.console.sendMessage(message);
-                if (((LazyPlayerSet) queueEvent.getRecipients()).isLazy()) {
-                    for (Object player : server.getPlayerManager().players) {
-                        ((ServerPlayerEntity) player).sendMessage(CraftChatMessage.fromString(message));
-                    }
-                } else {
-                    for (Player player : queueEvent.getRecipients()) {
-                        player.sendMessage(message);
-                    }
-                }
-                return null;
-            }
-        };
-    }
-
-    public static Waitable createDisconnectIllegalChars(ServerPlayNetworkHandler thus) {
-        return new Waitable() {
-            @Override
-            protected Object evaluate() {
-                thus.disconnect(new TranslatableText("multiplayer.disconnect.illegal_characters", new Object[0]));
-                return null;
-            }
-        };
-    }
-
-    public static Waitable createDisconnectSpamWaitable(ServerPlayNetworkHandler thus) {
-        return new Waitable() {
-            @Override
-            protected Object evaluate() {
-                thus.disconnect(new TranslatableText("disconnect.spam", new Object[0]).getString());
-                return null;
-            }
-        };
-    }
 
     @Override
     public final void run() {
@@ -98,5 +53,20 @@ public abstract class Waitable<T> implements Runnable {
         WAITING,
         RUNNING,
         FINISHED,
+    }
+
+    public static class Wrapper extends Waitable<Object> {
+
+        private final Runnable yes;
+
+        public Wrapper(Runnable yes) {
+            this.yes = yes;
+        }
+
+        @Override
+        protected Object evaluate() {
+            yes.run();
+            return null;
+        }
     }
 }

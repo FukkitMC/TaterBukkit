@@ -49,6 +49,6 @@ tasks.withType<JavaCompile> {
     options.isFork = true
     options.forkOptions.apply {
         executable = "java"
-        jvmArgs = listOf("-classpath", project.configurations["ecj"].asPath, "org.eclipse.jdt.internal.compiler.batch.Main", "-nowarn")
+        jvmArgs = listOf("-classpath", project.configurations["ecj"].asPath, "org.eclipse.jdt.internal.compiler.batch.Main", "-nowarn", "-g", "-verbose", "-referenceInfo")
     }
 }

@@ -45,17 +45,14 @@ public abstract class ServerPlayNetworkHandlerMixin implements ServerPlayNetwork
     @Shadow public static Logger LOGGER;
 
 
-    @Shadow public abstract void sendPacket(Packet<?> packet);
-
     @Inject(method = "<init>",at =  @At("TAIL"))
     public void constructor(MinecraftServer minecraftServer, ClientConnection clientConnection, ServerPlayerEntity serverPlayerEntity, CallbackInfo ci){
         ((ServerPlayNetworkHandler) (Object) this).craftServer = minecraftServer.server;
     }
 
-
     /**
-     * @author fukkit
-     * @reason craftbukkit did some weird stuff here
+     * @author Fukkit
+     * @reason Craftbukkit
      */
     @Overwrite
     public void executeCommand(String string) {
@@ -89,6 +86,77 @@ public abstract class ServerPlayNetworkHandlerMixin implements ServerPlayNetwork
     public boolean isDisconnected() {
         return false;
     }
+
+    @Override
+    public void chat(String s, boolean async) {
+        if (s.isEmpty() || this.player.getClientChatVisibility() == ChatVisibility.HIDDEN) {
+            return;
+        }
+
+        if (!async && s.startsWith("/")) {
+            this.executeCommand(s);
+        } else if (this.player.getClientChatVisibility() == ChatVisibility.SYSTEM) {
+            // Do nothing, this is coming from a plugin
+        } else {
+            Player player = this.getPlayer();
+            AsyncPlayerChatEvent event = new AsyncPlayerChatEvent(async, player, s, new LazyPlayerSet(server));
+            ((ServerPlayNetworkHandler)(Object)this).craftServer.getPluginManager().callEvent(event);
+
+            if (PlayerChatEvent.getHandlerList().getRegisteredListeners().length != 0) {
+                // Evil plugins still listening to deprecated event
+                final PlayerChatEvent queueEvent = new PlayerChatEvent(player, event.getMessage(), event.getFormat(), event.getRecipients());
+                queueEvent.setCancelled(event.isCancelled());
+                Waitable waitable = new Waitable.Wrapper(()-> {
+                    org.bukkit.Bukkit.getPluginManager().callEvent(queueEvent);
+
+                    if (queueEvent.isCancelled()) {
+                        return;
+                    }
+
+                    String message = String.format(queueEvent.getFormat(), queueEvent.getPlayer().getDisplayName(), queueEvent.getMessage());
+                    server.console.sendMessage(message);
+                    if (((LazyPlayerSet) queueEvent.getRecipients()).isLazy()) {
+                        for (Object plr : server.getPlayerManager().players) {
+                            ((ServerPlayerEntity) plr).sendMessage(CraftChatMessage.fromString(message));
+                        }
+                    } else {
+                        for (Player plr : queueEvent.getRecipients()) {
+                            plr.sendMessage(message);
+                        }
+                    }
+                });
+                if (async) {
+                    server.processQueue.add(waitable);
+                } else {
+                    waitable.run();
+                }
+                try {
+                    waitable.get();
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt(); // This is proper habit for java. If we aren't handling it, pass it on!
+                } catch (ExecutionException e) {
+                    throw new RuntimeException("Exception processing chat event", e.getCause());
+                }
+            } else {
+                if (event.isCancelled()) {
+                    return;
+                }
+
+                s = String.format(event.getFormat(), event.getPlayer().getDisplayName(), event.getMessage());
+                server.console.sendMessage(s);
+                if (((LazyPlayerSet) event.getRecipients()).isLazy()) {
+                    for (Object recipient : server.getPlayerManager().players) {
+                        ((ServerPlayerEntity) recipient).sendMessage(CraftChatMessage.fromString(s));
+                    }
+                } else {
+                    for (Player recipient : event.getRecipients()) {
+                        recipient.sendMessage(s);
+                    }
+                }
+            }
+        }
+    }
+
     @Override
     public void teleport(Location var0) {
 

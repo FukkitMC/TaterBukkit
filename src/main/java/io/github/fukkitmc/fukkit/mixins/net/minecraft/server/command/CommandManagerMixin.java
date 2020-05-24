@@ -155,6 +155,7 @@ public abstract class CommandManagerMixin implements CommandManagerExtra {
 
     /**
      * @author Fukkit
+     * @reason Craftbukkit
      */
     @Overwrite
     public void sendCommandTree(ServerPlayerEntity entityplayer) {
