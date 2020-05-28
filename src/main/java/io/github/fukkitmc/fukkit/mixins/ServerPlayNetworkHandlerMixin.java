@@ -56,6 +56,7 @@ public abstract class ServerPlayNetworkHandlerMixin implements ServerPlayNetwork
     @Inject(method = "<init>",at =  @At("TAIL"))
     public void constructor(MinecraftServer minecraftServer, ClientConnection clientConnection, ServerPlayerEntity serverPlayerEntity, CallbackInfo ci){
         ((ServerPlayNetworkHandler) (Object) this).craftServer = minecraftServer.server;
+        chatSpamField = AtomicIntegerFieldUpdater.newUpdater(ServerPlayNetworkHandler.class, "bukkitChatThrottle");
     }
 
     /**
@@ -190,8 +191,6 @@ public abstract class ServerPlayNetworkHandlerMixin implements ServerPlayNetwork
      */
     @Overwrite
     public void onChatMessage(ChatMessageC2SPacket packetplayinchat) {
-        // CraftBukkit start - async chat
-        // SPIGOT-3638
         if (this.server.isStopped()) {
             return;
         }
@@ -200,9 +199,10 @@ public abstract class ServerPlayNetworkHandlerMixin implements ServerPlayNetwork
         if (packetplayinchat.getChatMessage().startsWith("/")) {
             NetworkThreadUtils.forceMainThread(packetplayinchat, ((ServerPlayNetworkHandler)(Object)this), this.player.getServerWorld());
         }
+
         // CraftBukkit end
         if (this.player.removed || this.player.getClientChatVisibility() == ChatVisibility.HIDDEN) { // CraftBukkit - dead men tell no tales
-            this.sendPacket(new ChatMessageS2CPacket((new TranslatableText("chat.cannotSend", new Object[0])).formatted(Formatting.RED)));
+            this.sendPacket(new ChatMessageS2CPacket((new TranslatableText("chat.cannotSend")).formatted(Formatting.RED)));
         } else {
             this.player.updateLastActionTime();
             String s = packetplayinchat.getChatMessage();
@@ -214,7 +214,7 @@ public abstract class ServerPlayNetworkHandlerMixin implements ServerPlayNetwork
                     // CraftBukkit start - threadsafety
                     if (!isSync) {
                         Waitable waitable = new Waitable.Wrapper(()-> {
-                            this.disconnect(new TranslatableText("multiplayer.disconnect.illegal_characters", new Object[0]));
+                            this.disconnect(new TranslatableText("multiplayer.disconnect.illegal_characters"));
                         });
 
                         this.server.processQueue.add(waitable);
@@ -233,6 +233,7 @@ public abstract class ServerPlayNetworkHandlerMixin implements ServerPlayNetwork
                     return;
                 }
             }
+            System.out.println("A");
 
             // CraftBukkit start
             if (isSync) {
@@ -252,17 +253,13 @@ public abstract class ServerPlayNetworkHandlerMixin implements ServerPlayNetwork
 
                 chatmessage.getStyle().setColor(Formatting.RED);
                 this.sendPacket(new ChatMessageS2CPacket(chatmessage));
-            } else if (true) {
+            } else {
                 this.chat(s, true);
                 // CraftBukkit end - the below is for reference. :)
-            } else {
-                TranslatableText chatmessage = new TranslatableText("chat.type.text", new Object[]{this.player.getDisplayName(), s});
-
-                this.server.getPlayerManager().broadcastChatMessage(chatmessage, false);
             }
 
             // CraftBukkit start - replaced with thread safe throttle
-            // this.chatThrottle += 20;
+            // this.bukkitChatThrottle += 20;
             if (chatSpamField.addAndGet(this, 20) > 200 && !this.server.getPlayerManager().isOperator(this.player.getGameProfile())) {
                 if (!isSync) {
                     Waitable waitable = new Waitable.Wrapper(()-> {

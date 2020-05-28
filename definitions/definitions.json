@@ -1299,6 +1299,11 @@
         "type": "I"
       },
       {
+        "name": "bukkitChatThrottle",
+        "type": "I",
+        "access": 65
+      },
+      {
         "access": 1,
         "name": "lastTick",
         "type": "I"
