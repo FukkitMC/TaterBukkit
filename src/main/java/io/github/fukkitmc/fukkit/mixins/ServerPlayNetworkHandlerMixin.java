@@ -11,9 +11,10 @@ import net.minecraft.network.packet.s2c.play.ChatMessageS2CPacket;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.Logger;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
@@ -34,6 +35,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.atomic.AtomicIntegerFieldUpdater;
 
 @Mixin(ServerPlayNetworkHandler.class)
 public abstract class ServerPlayNetworkHandlerMixin implements ServerPlayNetworkHandlerExtra {
@@ -44,6 +46,12 @@ public abstract class ServerPlayNetworkHandlerMixin implements ServerPlayNetwork
 
     @Shadow public static Logger LOGGER;
 
+
+    @Shadow public abstract void disconnect(Text reason);
+
+    @Shadow public abstract void sendPacket(Packet<?> packet);
+
+    @Shadow public static AtomicIntegerFieldUpdater chatSpamField;
 
     @Inject(method = "<init>",at =  @At("TAIL"))
     public void constructor(MinecraftServer minecraftServer, ClientConnection clientConnection, ServerPlayerEntity serverPlayerEntity, CallbackInfo ci){
@@ -169,11 +177,113 @@ public abstract class ServerPlayNetworkHandlerMixin implements ServerPlayNetwork
 
     @Override
     public CraftPlayer getPlayer() {
-        return null;
+        return this.player.getBukkitEntity();
     }
 
     @Override
     public void disconnect(String var0) {
 
+    }
+
+    /**
+     * @author
+     */
+    @Overwrite
+    public void onChatMessage(ChatMessageC2SPacket packetplayinchat) {
+        // CraftBukkit start - async chat
+        // SPIGOT-3638
+        if (this.server.isStopped()) {
+            return;
+        }
+
+        boolean isSync = packetplayinchat.getChatMessage().startsWith("/");
+        if (packetplayinchat.getChatMessage().startsWith("/")) {
+            NetworkThreadUtils.forceMainThread(packetplayinchat, ((ServerPlayNetworkHandler)(Object)this), this.player.getServerWorld());
+        }
+        // CraftBukkit end
+        if (this.player.removed || this.player.getClientChatVisibility() == ChatVisibility.HIDDEN) { // CraftBukkit - dead men tell no tales
+            this.sendPacket(new ChatMessageS2CPacket((new TranslatableText("chat.cannotSend", new Object[0])).formatted(Formatting.RED)));
+        } else {
+            this.player.updateLastActionTime();
+            String s = packetplayinchat.getChatMessage();
+
+            s = StringUtils.normalizeSpace(s);
+
+            for (int i = 0; i < s.length(); ++i) {
+                if (!SharedConstants.isValidChar(s.charAt(i))) {
+                    // CraftBukkit start - threadsafety
+                    if (!isSync) {
+                        Waitable waitable = new Waitable.Wrapper(()-> {
+                            this.disconnect(new TranslatableText("multiplayer.disconnect.illegal_characters", new Object[0]));
+                        });
+
+                        this.server.processQueue.add(waitable);
+
+                        try {
+                            waitable.get();
+                        } catch (InterruptedException e) {
+                            Thread.currentThread().interrupt();
+                        } catch (ExecutionException e) {
+                            throw new RuntimeException(e);
+                        }
+                    } else {
+                        this.disconnect(new TranslatableText("multiplayer.disconnect.illegal_characters", new Object[0]));
+                    }
+                    // CraftBukkit end
+                    return;
+                }
+            }
+
+            // CraftBukkit start
+            if (isSync) {
+                try {
+                    this.server.server.playerCommandState = true;
+                    this.executeCommand(s);
+                } finally {
+                    this.server.server.playerCommandState = false;
+                }
+            } else if (s.isEmpty()) {
+                LOGGER.warn(this.player.getEntityName() + " tried to send an empty message");
+            } else if (getPlayer().isConversing()) {
+                final String conversationInput = s;
+                this.server.processQueue.add((Runnable) () -> getPlayer().acceptConversationInput(conversationInput));
+            } else if (this.player.getClientChatVisibility() == ChatVisibility.SYSTEM) { // Re-add "Command Only" flag check
+                TranslatableText chatmessage = new TranslatableText("chat.cannotSend", new Object[0]);
+
+                chatmessage.getStyle().setColor(Formatting.RED);
+                this.sendPacket(new ChatMessageS2CPacket(chatmessage));
+            } else if (true) {
+                this.chat(s, true);
+                // CraftBukkit end - the below is for reference. :)
+            } else {
+                TranslatableText chatmessage = new TranslatableText("chat.type.text", new Object[]{this.player.getDisplayName(), s});
+
+                this.server.getPlayerManager().broadcastChatMessage(chatmessage, false);
+            }
+
+            // CraftBukkit start - replaced with thread safe throttle
+            // this.chatThrottle += 20;
+            if (chatSpamField.addAndGet(this, 20) > 200 && !this.server.getPlayerManager().isOperator(this.player.getGameProfile())) {
+                if (!isSync) {
+                    Waitable waitable = new Waitable.Wrapper(()-> {
+                        this.disconnect(new TranslatableText("disconnect.spam", new Object[0]));
+                    });
+
+                    this.server.processQueue.add(waitable);
+
+                    try {
+                        waitable.get();
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                    } catch (ExecutionException e) {
+                        throw new RuntimeException(e);
+                    }
+                } else {
+                    this.disconnect(new TranslatableText("disconnect.spam", new Object[0]));
+                }
+                // CraftBukkit end
+            }
+
+        }
     }
 }
