@@ -9,6 +9,7 @@
     "net.minecraft.entity.EntityMixin",
     "net.minecraft.server.MinecraftServerMixin",
     "net.minecraft.server.PlayerManagerMixin",
+    "net.minecraft.server.ServerNetworkIoMixin",
     "net.minecraft.server.command.CommandManagerMixin",
     "net.minecraft.server.command.ServerCommandSourceMixin",
     "net.minecraft.server.dedicated.DedicatedServerMixin",

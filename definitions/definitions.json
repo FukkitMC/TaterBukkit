@@ -2522,7 +2522,7 @@
       {
         "access": 1,
         "name": "world",
-        "type": "Lnet/minecraft/server/WorldServer;"
+        "type": "Lnet/minecraft/server/world/ServerWorld;"
       }
     ],
     "syntheticMethods": []
