@@ -9,13 +9,33 @@ import net.minecraft.particle.ParticleEffect;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.profiler.Profiler;
+import net.minecraft.world.World;
+import net.minecraft.world.chunk.ChunkManager;
+import net.minecraft.world.dimension.Dimension;
+import net.minecraft.world.dimension.DimensionType;
+import net.minecraft.world.level.LevelInfo;
+import net.minecraft.world.level.LevelProperties;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.weather.LightningStrikeEvent;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import java.util.function.BiFunction;
 
 @Mixin(ServerWorld.class)
-public class ServerWorldMixin implements ServerWorldExtra {
+public abstract class ServerWorldMixin extends World implements ServerWorldExtra{
 
+    protected ServerWorldMixin(LevelProperties levelProperties, DimensionType dimensionType, BiFunction<World, Dimension, ChunkManager> chunkManagerProvider, Profiler profiler, boolean isClient) {
+        super(levelProperties, dimensionType, chunkManagerProvider, profiler, isClient);
+    }
+
+    @Inject(method = "init", at = @At("HEAD"))
+    public void init(LevelInfo levelInfo, CallbackInfo ci){
+        getCraftServer().addWorld(this.getCraftWorld()); // CraftBukkit
+    }
 
     @Override
     public boolean addEntitySerialized(Entity var0, CreatureSpawnEvent.SpawnReason var1) {
