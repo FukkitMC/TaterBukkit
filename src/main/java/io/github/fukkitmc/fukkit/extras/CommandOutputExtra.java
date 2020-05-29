@@ -5,5 +5,8 @@ package io.github.fukkitmc.fukkit.extras;
  */
 public interface CommandOutputExtra {
 
-    org.bukkit.command.CommandSender getBukkitSender(net.minecraft.server.command.ServerCommandSource var0);
+    default org.bukkit.command.CommandSender getBukkitSender(net.minecraft.server.command.ServerCommandSource var0){
+        System.out.println("getBukkitSender not implemented in class" + this.getClass().getName());
+        throw new RuntimeException("getBukkitSender not implemented in class" + this.getClass().getName());
+    }
 }

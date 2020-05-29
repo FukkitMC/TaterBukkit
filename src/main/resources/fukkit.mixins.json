@@ -9,12 +9,15 @@
     "ServerPlayNetworkHandlerMixinTwo",
     "net.minecraft.entity.EntityMixin",
     "net.minecraft.server.MinecraftServerMixin",
+    "net.minecraft.server.PlayerManagerMixin",
     "net.minecraft.server.command.CommandManagerMixin",
     "net.minecraft.server.command.ServerCommandSourceMixin",
     "net.minecraft.server.dedicated.DedicatedServerMixin",
+    "net.minecraft.server.network.ServerLoginNetworkHandlerMixin",
     "net.minecraft.server.network.ServerPlayerEntityMixin",
     "net.minecraft.server.world.ServerWorldMixin",
-    "net.minecraft.world.WorldMixin"
+    "net.minecraft.world.WorldMixin",
+    "net.minecraft.world.dimension.DimensionTypeMixin"
   ],
   "client": [
   ],

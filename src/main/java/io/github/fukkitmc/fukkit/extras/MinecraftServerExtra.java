@@ -1,9 +1,5 @@
 package io.github.fukkitmc.fukkit.extras;
 
-import net.minecraft.server.MinecraftServer;
-import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.CraftServer;
-
 /**
  * Extra for {@link net.minecraft.server.MinecraftServer}
  */
@@ -19,7 +15,7 @@ public interface MinecraftServerExtra {
 
     void executeModerately();
 
-    org.bukkit.command.CommandSender getBukkitSender(net.minecraft.server.command.ServerCommandSource var0);
+    org.bukkit.command.CommandSender getBukkitSender2(net.minecraft.server.command.ServerCommandSource var0);
 
     boolean isDebugging();
 }

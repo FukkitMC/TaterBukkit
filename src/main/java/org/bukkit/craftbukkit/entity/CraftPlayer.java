@@ -5,6 +5,7 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.io.BaseEncoding;
 import com.mojang.authlib.GameProfile;
 import io.netty.buffer.Unpooled;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
@@ -23,6 +24,7 @@ import java.util.WeakHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Nullable;
+
 import net.minecraft.advancement.AdvancementProgress;
 import net.minecraft.advancement.PlayerAdvancementTracker;
 import net.minecraft.block.entity.SignBlockEntity;
@@ -117,22 +119,29 @@ import org.bukkit.scoreboard.Scoreboard;
 
 @DelegateDeserialization(CraftOfflinePlayer.class)
 public class CraftPlayer extends CraftHumanEntity implements Player {
-    private long firstPlayed = 0;
-    private long lastPlayed = 0;
-    private boolean hasPlayedBefore = false;
+    private static final WeakHashMap<Plugin, WeakReference<Plugin>> pluginWeakReferences = new WeakHashMap<>();
     private final ConversationTracker conversationTracker = new ConversationTracker();
     private final Set<String> channels = new HashSet<String>();
     private final Map<UUID, Set<WeakReference<Plugin>>> hiddenPlayers = new HashMap<>();
-    private static final WeakHashMap<Plugin, WeakReference<Plugin>> pluginWeakReferences = new WeakHashMap<>();
+    private long firstPlayed = 0;
+    private long lastPlayed = 0;
+    private boolean hasPlayedBefore = false;
     private int hash = 0;
     private double health = 20;
     private boolean scaledHealth = false;
     private double healthScale = 20;
+    private Text playerListHeader;
+    private Text playerListFooter;
 
     public CraftPlayer(CraftServer server, ServerPlayerEntity entity) {
         super(server, entity);
 
         firstPlayed = System.currentTimeMillis();
+    }
+
+    @Nullable
+    private static WeakReference<Plugin> getPluginWeakReference(@Nullable Plugin plugin) {
+        return (plugin == null) ? null : pluginWeakReferences.computeIfAbsent(plugin, WeakReference::new);
     }
 
     public GameProfile getProfile() {
@@ -234,23 +243,20 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         }
     }
 
-    private Text playerListHeader;
-    private Text playerListFooter;
-
     @Override
     public String getPlayerListHeader() {
         return (playerListHeader == null) ? null : CraftChatMessage.fromComponent(playerListHeader);
     }
 
     @Override
-    public String getPlayerListFooter() {
-        return (playerListFooter == null) ? null : CraftChatMessage.fromComponent(playerListFooter);
-    }
-
-    @Override
     public void setPlayerListHeader(String header) {
         this.playerListHeader = CraftChatMessage.fromStringOrNull(header, true);
         updatePlayerListHeaderFooter();
+    }
+
+    @Override
+    public String getPlayerListFooter() {
+        return (playerListFooter == null) ? null : CraftChatMessage.fromComponent(playerListFooter);
     }
 
     @Override
@@ -303,16 +309,16 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
     }
 
     @Override
+    public Location getCompassTarget() {
+        return getHandle().compassTarget;
+    }
+
+    @Override
     public void setCompassTarget(Location loc) {
         if (getHandle().networkHandler == null) return;
 
         // Do not directly assign here, from the packethandler we'll assign it.
         getHandle().networkHandler.sendPacket(new PlayerSpawnPositionS2CPacket(new BlockPos(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ())));
-    }
-
-    @Override
-    public Location getCompassTarget() {
-        return getHandle().compassTarget;
     }
 
     @Override
@@ -333,36 +339,36 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
 
         String instrumentName = null;
         switch (instrument) {
-        case 0:
-            instrumentName = "harp";
-            break;
-        case 1:
-            instrumentName = "basedrum";
-            break;
-        case 2:
-            instrumentName = "snare";
-            break;
-        case 3:
-            instrumentName = "hat";
-            break;
-        case 4:
-            instrumentName = "bass";
-            break;
-        case 5:
-            instrumentName = "flute";
-            break;
-        case 6:
-            instrumentName = "bell";
-            break;
-        case 7:
-            instrumentName = "guitar";
-            break;
-        case 8:
-            instrumentName = "chime";
-            break;
-        case 9:
-            instrumentName = "xylophone";
-            break;
+            case 0:
+                instrumentName = "harp";
+                break;
+            case 1:
+                instrumentName = "basedrum";
+                break;
+            case 2:
+                instrumentName = "snare";
+                break;
+            case 3:
+                instrumentName = "hat";
+                break;
+            case 4:
+                instrumentName = "bass";
+                break;
+            case 5:
+                instrumentName = "flute";
+                break;
+            case 6:
+                instrumentName = "bell";
+                break;
+            case 7:
+                instrumentName = "guitar";
+                break;
+            case 8:
+                instrumentName = "chime";
+                break;
+            case 9:
+                instrumentName = "xylophone";
+                break;
         }
 
         float f = (float) Math.pow(2.0D, (note - 12.0D) / 12.0D);
@@ -522,7 +528,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
 
     @Override
     public void sendSignChange(Location loc, String[] lines) {
-       sendSignChange(loc, lines, DyeColor.BLACK);
+        sendSignChange(loc, lines, DyeColor.BLACK);
     }
 
     @Override
@@ -618,7 +624,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         }
 
         if (entity.networkHandler == null) {
-           return false;
+            return false;
         }
 
         if (entity.hasPassengers()) {
@@ -669,13 +675,13 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
     }
 
     @Override
-    public void setSneaking(boolean sneak) {
-        getHandle().setSneaking(sneak);
+    public boolean isSneaking() {
+        return getHandle().isSneaking();
     }
 
     @Override
-    public boolean isSneaking() {
-        return getHandle().isSneaking();
+    public void setSneaking(boolean sneak) {
+        getHandle().setSneaking(sneak);
     }
 
     @Override
@@ -705,14 +711,14 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
     }
 
     @Override
-    public void setSleepingIgnored(boolean isSleeping) {
-        getHandle().fauxSleeping = isSleeping;
-        ((CraftWorld) getWorld()).getHandle().updatePlayersSleeping();
+    public boolean isSleepingIgnored() {
+        return getHandle().fauxSleeping;
     }
 
     @Override
-    public boolean isSleepingIgnored() {
-        return getHandle().fauxSleeping;
+    public void setSleepingIgnored(boolean isSleeping) {
+        getHandle().fauxSleeping = isSleeping;
+        ((CraftWorld) getWorld()).getHandle().updatePlayersSleeping();
     }
 
     @Override
@@ -832,13 +838,13 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
     }
 
     @Override
-    public void setPlayerWeather(WeatherType type) {
-        getHandle().setPlayerWeather(type, true);
+    public WeatherType getPlayerWeather() {
+        return getHandle().getPlayerWeather();
     }
 
     @Override
-    public WeatherType getPlayerWeather() {
-        return getHandle().getPlayerWeather();
+    public void setPlayerWeather(WeatherType type) {
+        getHandle().setPlayerWeather(type, true);
     }
 
     @Override
@@ -866,6 +872,11 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
     }
 
     @Override
+    public GameMode getGameMode() {
+        return GameMode.getByValue(getHandle().interactionManager.getGameMode().getId());
+    }
+
+    @Override
     public void setGameMode(GameMode mode) {
         if (getHandle().networkHandler == null) return;
 
@@ -874,11 +885,6 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         }
 
         getHandle().setGameMode(net.minecraft.world.GameMode.byId(mode.getValue()));
-    }
-
-    @Override
-    public GameMode getGameMode() {
-        return GameMode.getByValue(getHandle().interactionManager.getGameMode().getId());
     }
 
     @Override
@@ -972,11 +978,6 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
     @Override
     public void setFoodLevel(int value) {
         getHandle().getHungerManager().foodLevel = value;
-    }
-
-    @Nullable
-    private static WeakReference<Plugin> getPluginWeakReference(@Nullable Plugin plugin) {
-        return (plugin == null) ? null : pluginWeakReferences.computeIfAbsent(plugin, WeakReference::new);
     }
 
     @Override
@@ -1113,6 +1114,10 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         return firstPlayed;
     }
 
+    public void setFirstPlayed(long firstPlayed) {
+        this.firstPlayed = firstPlayed;
+    }
+
     @Override
     public long getLastPlayed() {
         return lastPlayed;
@@ -1121,10 +1126,6 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
     @Override
     public boolean hasPlayedBefore() {
         return hasPlayedBefore;
-    }
-
-    public void setFirstPlayed(long firstPlayed) {
-        this.firstPlayed = firstPlayed;
     }
 
     public void readExtraData(CompoundTag nbttagcompound) {
@@ -1343,6 +1344,11 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
     }
 
     @Override
+    public float getFlySpeed() {
+        return (float) getHandle().abilities.flySpeed * 2f;
+    }
+
+    @Override
     public void setFlySpeed(float value) {
         validateSpeed(value);
         ServerPlayerEntity player = getHandle();
@@ -1352,21 +1358,16 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
     }
 
     @Override
+    public float getWalkSpeed() {
+        return getHandle().abilities.walkSpeed * 2f;
+    }
+
+    @Override
     public void setWalkSpeed(float value) {
         validateSpeed(value);
         ServerPlayerEntity player = getHandle();
         player.abilities.walkSpeed = value / 2f;
         player.sendAbilitiesUpdate();
-    }
-
-    @Override
-    public float getFlySpeed() {
-        return (float) getHandle().abilities.flySpeed * 2f;
-    }
-
-    @Override
-    public float getWalkSpeed() {
-        return getHandle().abilities.walkSpeed * 2f;
     }
 
     private void validateSpeed(float value) {
@@ -1396,6 +1397,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
 
     @Override
     public CraftScoreboard getScoreboard() {
+        System.out.println(server);
         return this.server.getScoreboardManager().getPlayerBoard(this);
     }
 
@@ -1414,6 +1416,11 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
     }
 
     @Override
+    public double getHealthScale() {
+        return healthScale;
+    }
+
+    @Override
     public void setHealthScale(double value) {
         Validate.isTrue((float) value > 0F, "Must be greater than 0");
         healthScale = value;
@@ -1422,8 +1429,8 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
     }
 
     @Override
-    public double getHealthScale() {
-        return healthScale;
+    public boolean isHealthScaled() {
+        return scaledHealth;
     }
 
     @Override
@@ -1431,11 +1438,6 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         if (scaledHealth != (scaledHealth = scale)) {
             updateScaledHealth();
         }
-    }
-
-    @Override
-    public boolean isHealthScaled() {
-        return scaledHealth;
     }
 
     public float getScaledHealth() {

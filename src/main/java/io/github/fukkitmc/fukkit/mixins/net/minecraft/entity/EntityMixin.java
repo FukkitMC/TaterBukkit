@@ -65,7 +65,7 @@ public class EntityMixin implements EntityExtra {
 
     @Override
     public CommandSender getBukkitSender(ServerCommandSource var0) {
-        return null;
+        return getBukkitEntity();
     }
 
     @Override
