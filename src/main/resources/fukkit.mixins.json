@@ -6,7 +6,6 @@
   "mixins": [
     "PlayerManagerMixin",
     "ServerPlayNetworkHandlerMixin",
-    "ServerPlayNetworkHandlerMixinTwo",
     "net.minecraft.entity.EntityMixin",
     "net.minecraft.server.MinecraftServerMixin",
     "net.minecraft.server.PlayerManagerMixin",
@@ -17,7 +16,9 @@
     "net.minecraft.server.network.ServerPlayerEntityMixin",
     "net.minecraft.server.world.ServerWorldMixin",
     "net.minecraft.world.WorldMixin",
-    "net.minecraft.world.dimension.DimensionTypeMixin"
+    "net.minecraft.world.WorldSaveHandlerMixin",
+    "net.minecraft.world.dimension.DimensionTypeMixin",
+    "net.minecraft.world.level.LevelPropertiesMixin"
   ],
   "client": [
   ],

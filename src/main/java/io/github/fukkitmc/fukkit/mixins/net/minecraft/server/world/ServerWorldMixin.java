@@ -32,8 +32,8 @@ public abstract class ServerWorldMixin extends World implements ServerWorldExtra
         super(levelProperties, dimensionType, chunkManagerProvider, profiler, isClient);
     }
 
-    @Inject(method = "init", at = @At("HEAD"))
-    public void init(LevelInfo levelInfo, CallbackInfo ci){
+    @Inject(method = "<init>", at = @At("TAIL"))
+    public void init(CallbackInfo ci){
         getCraftServer().addWorld(this.getCraftWorld()); // CraftBukkit
     }
 

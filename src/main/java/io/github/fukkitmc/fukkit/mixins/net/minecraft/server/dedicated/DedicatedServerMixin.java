@@ -5,7 +5,6 @@ import com.mojang.authlib.GameProfileRepository;
 import com.mojang.authlib.minecraft.MinecraftSessionService;
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 import com.mojang.datafixers.DataFixer;
-import io.github.fukkitmc.fukkit.threads.MixinThreadWrapper;
 import net.minecraft.SharedConstants;
 import net.minecraft.block.entity.SkullBlockEntity;
 import net.minecraft.item.ItemGroup;
@@ -20,7 +19,6 @@ import net.minecraft.server.dedicated.*;
 import net.minecraft.server.rcon.QueryResponseHandler;
 import net.minecraft.server.rcon.RconServer;
 import net.minecraft.util.*;
-import net.minecraft.world.GameMode;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.level.LevelGeneratorType;
 import net.minecraft.world.level.storage.LevelStorage;
@@ -29,10 +27,6 @@ import org.apache.logging.log4j.LogManager;
 import org.bukkit.craftbukkit.LoggerOutputStream;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.io.File;
 import java.io.IOException;
@@ -55,51 +49,6 @@ public abstract class DedicatedServerMixin extends MinecraftServer {
      */
     @Overwrite
     public boolean setupServer() throws IOException {
-        Thread thread = new MixinThreadWrapper(() -> {
-            // CraftBukkit start
-            if (!org.bukkit.craftbukkit.Main.useConsole) {
-                return;
-            }
-            jline.console.ConsoleReader bufferedreader = reader;
-
-            // MC-33041, SPIGOT-5538: if System.in is not valid due to javaw, then return
-            try {
-                System.in.available();
-            } catch (IOException ex) {
-                return;
-            }
-            // CraftBukkit end
-
-            String s;
-
-            try {
-                // CraftBukkit start - JLine disabling compatibility
-                while (!((MinecraftDedicatedServer)(Object)this).isStopped() && ((MinecraftDedicatedServer)(Object)this).isRunning()) {
-                    if (org.bukkit.craftbukkit.Main.useJline) {
-                        s = bufferedreader.readLine(">", null);
-                    } else {
-                        s = bufferedreader.readLine();
-                    }
-
-                    // SPIGOT-5220: Throttle if EOF (ctrl^d) or stdin is /dev/null
-                    if (s == null) {
-                        try {
-                            Thread.sleep(50L);
-                        } catch (InterruptedException ex) {
-                            Thread.currentThread().interrupt();
-                        }
-                        continue;
-                    }
-                    if (s.trim().length() > 0) { // Trim to filter lines which are just spaces
-                        ((MinecraftDedicatedServer)(Object)this).enqueueCommand(s, ((MinecraftDedicatedServer)(Object)this).getCommandSource());
-                    }
-                    // CraftBukkit end
-                }
-            } catch (IOException ioexception) {
-                MinecraftDedicatedServer.LOGGER.error("Exception handling console input", ioexception);
-            }
-        });
-
         // CraftBukkit start - TODO: handle command-line logging arguments
         java.util.logging.Logger global = java.util.logging.Logger.getLogger("");
         global.setUseParentHandlers(false);
@@ -120,10 +69,10 @@ public abstract class DedicatedServerMixin extends MinecraftServer {
         System.setOut(new PrintStream(new LoggerOutputStream(logger, Level.INFO), true));
         System.setErr(new PrintStream(new LoggerOutputStream(logger, Level.WARN), true));
         // CraftBukkit end
-
-        thread.setDaemon(true);
-        thread.setUncaughtExceptionHandler(new UncaughtExceptionLogger(MinecraftDedicatedServer.LOGGER));
-        thread.start();
+//
+//        thread.setDaemon(true);
+//        thread.setUncaughtExceptionHandler(new UncaughtExceptionLogger(MinecraftDedicatedServer.LOGGER));
+//        thread.start();
         MinecraftDedicatedServer.LOGGER.info("Starting minecraft server version " + SharedConstants.getGameVersion().getName());
         if (Runtime.getRuntime().maxMemory() / 1024L / 1024L < 512L) {
             MinecraftDedicatedServer.LOGGER.warn("To start the server with more ram, launch it as \"java -Xmx1024M -Xms1024M -jar minecraft_server.jar\"");

@@ -1397,7 +1397,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
 
     @Override
     public CraftScoreboard getScoreboard() {
-        System.out.println(server);
+        System.out.println(server.getScoreboardManager());
         return this.server.getScoreboardManager().getPlayerBoard(this);
     }
 
