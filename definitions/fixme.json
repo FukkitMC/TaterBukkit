@@ -1,0 +1,35 @@
+[
+  {
+    "name": "net/minecraft/server/TileEntityLectern/LecternInventory",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/LecternInventoryExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "maxStack",
+        "type": "I"
+      },
+      {
+        "access": 1,
+        "name": "transaction",
+        "type": "Ljava/util/List;"
+      }
+    ],
+    "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/server/Shape",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/ShapeExtra"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "blocks",
+        "type": "Ljava/util/List;"
+      }
+    ],
+    "syntheticMethods": []
+  }
+]

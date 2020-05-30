@@ -45,7 +45,7 @@
       {
         "access": 1,
         "name": "world",
-        "type": "Lnet/minecraft/server/WorldServer;"
+        "type": "Lnet/minecraft/server/ServerWorld;"
       }
     ],
     "syntheticMethods": []
@@ -597,17 +597,17 @@
       {
         "access": 1,
         "name": "inventorylargechest",
-        "type": "Lnet/minecraft/server/InventoryLargeChest;"
+        "type": "Lnet/minecraft/inventory/DoubleInventory;"
       },
       {
         "access": 1,
         "name": "tileentitychest",
-        "type": "Lnet/minecraft/server/TileEntityChest;"
+        "type": "Lnet/minecraft/block/entity/ChestBlockEntity;"
       },
       {
         "access": 1,
         "name": "tileentitychest1",
-        "type": "Lnet/minecraft/server/TileEntityChest;"
+        "type": "Lnet/minecraft/block/entity/ChestBlockEntity;"
       }
     ],
     "syntheticMethods": []
@@ -705,25 +705,6 @@
         "access": 1,
         "name": "target",
         "type": "Lnet/minecraft/entity/LivingEntity;"
-      }
-    ],
-    "syntheticMethods": []
-  },
-  {
-    "name": "net/minecraft/server/TileEntityLectern/LecternInventory",
-    "injectInterfaces": [
-      "io/github/fukkitmc/fukkit/extras/LecternInventoryExtra"
-    ],
-    "syntheticFields": [
-      {
-        "access": 1,
-        "name": "maxStack",
-        "type": "I"
-      },
-      {
-        "access": 1,
-        "name": "transaction",
-        "type": "Ljava/util/List;"
       }
     ],
     "syntheticMethods": []
@@ -1008,7 +989,7 @@
       {
         "access": 1,
         "name": "playerInventory",
-        "type": "Lnet/minecraft/server/PlayerInventory;"
+        "type": "Lnet/minecraft/entity/player/PlayerInventory;"
       }
     ],
     "syntheticMethods": []
@@ -1022,7 +1003,7 @@
       {
         "access": 1,
         "name": "player",
-        "type": "Lnet/minecraft/server/PlayerInventory;"
+        "type": "Lnet/minecraft/entity/player/PlayerInventory;"
       },
       {
         "access": 1,
@@ -1114,7 +1095,7 @@
       {
         "access": 1,
         "name": "player",
-        "type": "Lnet/minecraft/server/PlayerInventory;"
+        "type": "Lnet/minecraft/entity/player/PlayerInventory;"
       },
       {
         "access": 1,
@@ -1138,7 +1119,7 @@
       {
         "access": 1,
         "name": "playerInventory",
-        "type": "Lnet/minecraft/server/PlayerInventory;"
+        "type": "Lnet/minecraft/entity/player/PlayerInventory;"
       }
     ],
     "syntheticMethods": []
@@ -1182,7 +1163,7 @@
       {
         "access": 1,
         "name": "explosionSource",
-        "type": "Lnet/minecraft/server/Explosion;"
+        "type": "Lnet/minecraft/world/explosion/Explosion;"
       }
     ],
     "syntheticMethods": []
@@ -1419,7 +1400,7 @@
       {
         "access": 1,
         "name": "player",
-        "type": "Lnet/minecraft/server/PlayerInventory;"
+        "type": "Lnet/minecraft/entity/player/PlayerInventory;"
       },
       {
         "access": 1,
@@ -1464,12 +1445,12 @@
       {
         "access": 1,
         "name": "type",
-        "type": "Lnet/minecraft/server/MobEffectList;"
+        "type": "Lnet/minecraft/entity/effect/StatusEffect;"
       },
       {
         "access": 1,
         "name": "effect",
-        "type": "Lnet/minecraft/server/MobEffect;"
+        "type": "Lnet/minecraft/entity/effect/StatusEffectInstance;"
       },
       {
         "access": 1,
@@ -1488,7 +1469,7 @@
       {
         "access": 1,
         "name": "player",
-        "type": "Lnet/minecraft/server/PlayerInventory;"
+        "type": "Lnet/minecraft/entity/player/PlayerInventory;"
       },
       {
         "access": 1,
@@ -1672,20 +1653,6 @@
     "syntheticMethods": []
   },
   {
-    "name": "net/minecraft/server/Shape",
-    "injectInterfaces": [
-      "io/github/fukkitmc/fukkit/extras/ShapeExtra"
-    ],
-    "syntheticFields": [
-      {
-        "access": 1,
-        "name": "blocks",
-        "type": "Ljava/util/List;"
-      }
-    ],
-    "syntheticMethods": []
-  },
-  {
     "name": "net/minecraft/container/PlayerContainer",
     "injectInterfaces": [
       "io/github/fukkitmc/fukkit/extras/PlayerContainerExtra"
@@ -1694,7 +1661,7 @@
       {
         "access": 1,
         "name": "player",
-        "type": "Lnet/minecraft/server/PlayerInventory;"
+        "type": "Lnet/minecraft/entity/player/PlayerInventory;"
       },
       {
         "access": 1,
@@ -1825,12 +1792,12 @@
       {
         "access": 1,
         "name": "currentRecipe",
-        "type": "Lnet/minecraft/server/IRecipe;"
+        "type": "Lnet/minecraft/recipe/Recipe;"
       },
       {
         "access": 1,
         "name": "resultInventory",
-        "type": "Lnet/minecraft/server/IInventory;"
+        "type": "Lnet/minecraft/inventory/Inventory;"
       },
       {
         "access": 1,
@@ -1845,7 +1812,7 @@
       {
         "access": 1,
         "name": "owner",
-        "type": "Lnet/minecraft/server/EntityHuman;"
+        "type": "Lnet/minecraft/entity/player/PlayerEntity;"
       }
     ],
     "syntheticMethods": []
@@ -1983,7 +1950,7 @@
       {
         "access": 1,
         "name": "player",
-        "type": "Lnet/minecraft/server/PlayerInventory;"
+        "type": "Lnet/minecraft/entity/player/PlayerInventory;"
       },
       {
         "access": 1,
@@ -2036,7 +2003,7 @@
       {
         "access": 1,
         "name": "entityhuman",
-        "type": "Lnet/minecraft/server/EntityHuman;"
+        "type": "Lnet/minecraft/entity/player/PlayerEntity;"
       }
     ],
     "syntheticMethods": []
@@ -2097,7 +2064,7 @@
       {
         "access": 1,
         "name": "player",
-        "type": "Lnet/minecraft/server/PlayerInventory;"
+        "type": "Lnet/minecraft/entity/player/PlayerInventory;"
       },
       {
         "access": 1,
@@ -2114,7 +2081,7 @@
       {
         "access": 9,
         "name": "openSign",
-        "type": "Lnet/minecraft/server/BlockPosition;"
+        "type": "Lnet/minecraft/util/math/BlockPos;"
       }
     ],
     "syntheticMethods": []
@@ -2169,7 +2136,7 @@
       {
         "access": 1,
         "name": "player",
-        "type": "Lnet/minecraft/server/PlayerInventory;"
+        "type": "Lnet/minecraft/entity/player/PlayerInventory;"
       },
       {
         "access": 1,
@@ -2536,7 +2503,7 @@
       {
         "access": 1,
         "name": "owner",
-        "type": "Lnet/minecraft/server/EntityHuman;"
+        "type": "Lnet/minecraft/entity/player/PlayerEntity;"
       }
     ],
     "syntheticMethods": []
@@ -2592,7 +2559,7 @@
       {
         "access": 1,
         "name": "player",
-        "type": "Lnet/minecraft/server/EntityPlayer;"
+        "type": "Lnet/minecraft/server/network/ServerPlayerEntity;"
       },
       {
         "access": 1,

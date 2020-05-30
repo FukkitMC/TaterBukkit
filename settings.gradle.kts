@@ -1,7 +1,5 @@
 rootProject.name = "craftbukkit"
 
-
-
 pluginManagement {
     repositories {
         gradlePluginPortal()
@@ -14,7 +12,7 @@ pluginManagement {
 
         maven {
             name = "Fukkit"
-            url = uri("E:\\dev\\fabric\\fukkit-repo")
+            url = uri("https://raw.githubusercontent.com/FukkitMC/fukkit-repo/master")
         }
     }
 }
