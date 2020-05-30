@@ -96,7 +96,7 @@ public abstract class DedicatedServerMixin extends MinecraftServer {
         ((MinecraftDedicatedServer)(Object)this).setResourcePack(dedicatedserverproperties.resourcePack, ((MinecraftDedicatedServer)(Object)this).createResourcePackHash());
         ((MinecraftDedicatedServer)(Object)this).setMotd(dedicatedserverproperties.motd);
         ((MinecraftDedicatedServer)(Object)this).setForceGameMode(dedicatedserverproperties.forceGameMode);
-        super.setPlayerIdleTimeout((Integer) dedicatedserverproperties.playerIdleTimeout.get());
+        super.setPlayerIdleTimeout(dedicatedserverproperties.playerIdleTimeout.get());
         ((MinecraftDedicatedServer)(Object)this).setEnforceWhitelist(dedicatedserverproperties.enforceWhitelist);
         ((MinecraftDedicatedServer)(Object)this).defaultGameMode = dedicatedserverproperties.gameMode;
         MinecraftDedicatedServer.LOGGER.info("Default game type: {}", ((MinecraftDedicatedServer)(Object)this).defaultGameMode);

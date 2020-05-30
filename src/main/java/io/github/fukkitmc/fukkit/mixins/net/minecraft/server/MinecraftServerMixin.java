@@ -7,6 +7,7 @@ import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 import com.mojang.datafixers.DataFixer;
 import io.github.fukkitmc.fukkit.extras.MinecraftServerExtra;
 import jline.console.ConsoleReader;
+import net.minecraft.SharedConstants;
 import net.minecraft.command.DataCommandStorage;
 import net.minecraft.entity.boss.BossBarManager;
 import net.minecraft.server.*;
@@ -16,11 +17,14 @@ import net.minecraft.server.dedicated.MinecraftDedicatedServer;
 import net.minecraft.server.world.ChunkTicketType;
 import net.minecraft.server.world.SecondaryServerWorld;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.UserCache;
+import net.minecraft.util.Util;
 import net.minecraft.util.crash.CrashException;
 import net.minecraft.util.crash.CrashReport;
+import net.minecraft.util.profiler.DisableableProfiler;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.PersistentStateManager;
 import net.minecraft.world.WorldSaveHandler;
@@ -39,11 +43,15 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import javax.annotation.Nullable;
 import java.io.File;
 import java.io.IOException;
 import java.net.Proxy;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 import java.util.concurrent.Executor;
+import java.util.function.BooleanSupplier;
 
 @Mixin(MinecraftServer.class)
 public abstract class MinecraftServerMixin implements MinecraftServerExtra {
@@ -59,6 +67,50 @@ public abstract class MinecraftServerMixin implements MinecraftServerExtra {
     @Shadow public abstract boolean isNetherAllowed();
 
     @Shadow public Executor workerExecutor;
+
+    @Shadow public abstract void exit();
+
+    @Shadow public ConsoleReader reader;
+
+    @Shadow public abstract void shutdown();
+
+    @Shadow public boolean stopped;
+
+    @Shadow public abstract void setCrashReport(CrashReport crashReport);
+
+    @Shadow public abstract File getRunDirectory();
+
+    @Shadow public abstract CrashReport populateCrashReport(CrashReport crashReport);
+
+    @Shadow public boolean field_19249;
+
+    @Shadow public long field_19248;
+
+    @Shadow public abstract void method_16208();
+
+    @Shadow public DisableableProfiler profiler;
+
+    @Shadow public volatile boolean loading;
+
+    @Shadow public abstract boolean shouldKeepTicking();
+
+    @Shadow public abstract void tick(BooleanSupplier shouldKeepTicking);
+
+    @Shadow public long timeReference;
+
+    @Shadow public boolean profilerStartQueued;
+
+    @Shadow public long field_4557;
+
+    @Shadow public volatile boolean running;
+
+    @Shadow public ServerMetadata metadata;
+
+    @Shadow public abstract void setFavicon(ServerMetadata metadata);
+
+    @Shadow public abstract boolean setupServer() throws IOException;
+
+    @Shadow @Nullable public String motd;
 
     @Inject(method = "<init>", at = @At("TAIL"))
     public void init(File gameDir, Proxy proxy, DataFixer dataFixer, CommandManager commandManager, YggdrasilAuthenticationService authService, MinecraftSessionService sessionService, GameProfileRepository gameProfileRepository, UserCache userCache, WorldGenerationProgressListenerFactory worldGenerationProgressListenerFactory, String levelName, CallbackInfo ci) throws IOException {
@@ -76,11 +128,10 @@ public abstract class MinecraftServerMixin implements MinecraftServerExtra {
 
     @Inject(method = "main", at = @At("HEAD"))
     private static void yes(String[] args, CallbackInfo ci){
-        Main.main(args);
-
         //Define things that are static and should start with a variable
         ChunkTicketType.PLUGIN = ChunkTicketType.create("plugin", (a, b) -> 0); // CraftBukkit
 
+        Main.main(args);
     }
 
     /**
@@ -303,4 +354,90 @@ public abstract class MinecraftServerMixin implements MinecraftServerExtra {
     public boolean isDebugging() {
         return false;
     }
+
+    /**
+     * @author fukkit
+     * @reason i dont really feel like making this good someone else please fix
+     */
+    @Overwrite
+    public void run() {
+        try {
+            if (this.setupServer()) {
+                this.timeReference = Util.getMeasuringTimeMs();
+                this.metadata.setDescription(new LiteralText(this.motd));
+                this.metadata.setVersion(new ServerMetadata.Version(SharedConstants.getGameVersion().getName(), SharedConstants.getGameVersion().getProtocolVersion()));
+                this.setFavicon(this.metadata);
+
+                while (this.running) {
+                    long i = Util.getMeasuringTimeMs() - this.timeReference;
+
+                    if (i > 5000L && this.timeReference - this.field_4557 >= 30000L) { // CraftBukkit
+                        long j = i / 50L;
+
+                        if (server.getWarnOnOverload()) // CraftBukkit
+                            MinecraftServer.LOGGER.warn("Can't keep up! Is the server overloaded? Running {}ms or {} ticks behind", i, j);
+                        this.timeReference += j * 50L;
+                        this.field_4557 = this.timeReference;
+                    }
+
+                    MinecraftServer.currentTick = (int) (System.currentTimeMillis() / 50); // CraftBukkit
+                    this.timeReference += 50L;
+                    if (this.profilerStartQueued) {
+                        this.profilerStartQueued = false;
+                        this.profiler.getController().enable();
+                    }
+
+                    this.profiler.startTick();
+                    this.profiler.push("tick");
+                    this.tick(this::shouldKeepTicking);
+                    this.profiler.swap("nextTickWait");
+                    this.field_19249 = true;
+                    this.field_19248 = Math.max(Util.getMeasuringTimeMs() + 50L, this.timeReference);
+                    this.method_16208();
+                    this.profiler.pop();
+                    this.profiler.endTick();
+                    this.loading = true;
+                }
+            } else {
+                this.setCrashReport((CrashReport) null);
+            }
+        } catch (Throwable throwable) {
+            MinecraftServer.LOGGER.error("Encountered an unexpected exception", throwable);
+            CrashReport crashreport;
+
+            if (throwable instanceof CrashException) {
+                crashreport = this.populateCrashReport(((CrashException) throwable).getReport());
+            } else {
+                crashreport = this.populateCrashReport(new CrashReport("Exception in server tick loop", throwable));
+            }
+
+            File file = new File(new File(this.getRunDirectory(), "crash-reports"), "crash-" + (new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss")).format(new Date()) + "-server.txt");
+
+            if (crashreport.writeToFile(file)) {
+                MinecraftServer.LOGGER.error("This crash report has been saved to: {}", file.getAbsolutePath());
+            } else {
+                MinecraftServer.LOGGER.error("We were unable to save this crash report to disk.");
+            }
+
+            this.setCrashReport(crashreport);
+        } finally {
+            try {
+                this.stopped = true;
+                this.shutdown();
+            } catch (Throwable throwable1) {
+                MinecraftServer.LOGGER.error("Exception stopping the server", throwable1);
+            } finally {
+                // CraftBukkit start - Restore terminal to original settings
+                try {
+                    reader.getTerminal().restore();
+                } catch (Exception ignored) {
+                }
+                // CraftBukkit end
+                this.exit();
+            }
+
+        }
+
+    }
+
 }
