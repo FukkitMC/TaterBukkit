@@ -2568,5 +2568,19 @@
       }
     ],
     "syntheticMethods": []
+  },
+  {
+    "name": "net/minecraft/block/NetherPortalBlock$AreaHelper",
+    "injectInterfaces": [
+      "io/github/fukkitmc/fukkit/extras/NetherPortalBlockAreaHelper"
+    ],
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "blocks",
+        "type": "Ljava/util/List;"
+      }
+    ],
+    "syntheticMethods": []
   }
 ]
