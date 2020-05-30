@@ -115,9 +115,9 @@ public abstract class PlayerManagerMixin {
         TranslatableText chatmessage;
 
         if (entityplayer.getGameProfile().getName().equalsIgnoreCase(s)) {
-            chatmessage = new TranslatableText("multiplayer.player.joined", new Object[]{entityplayer.getDisplayName()});
+            chatmessage = new TranslatableText("multiplayer.player.joined", entityplayer.getDisplayName());
         } else {
-            chatmessage = new TranslatableText("multiplayer.player.joined.renamed", new Object[]{entityplayer.getDisplayName(), s});
+            chatmessage = new TranslatableText("multiplayer.player.joined.renamed", entityplayer.getDisplayName(), s);
         }
         // CraftBukkit start
         chatmessage.formatted(Formatting.YELLOW);
@@ -149,7 +149,7 @@ public abstract class PlayerManagerMixin {
         PlayerListS2CPacket packet = new PlayerListS2CPacket(PlayerListS2CPacket.Action.ADD_PLAYER, entityplayer);
 
         for (int i = 0; i < this.players.size(); ++i) {
-            ServerPlayerEntity entityplayer1 = (ServerPlayerEntity) this.players.get(i);
+            ServerPlayerEntity entityplayer1 = this.players.get(i);
 
             if (entityplayer1.getBukkitEntity().canSee(entityplayer.getBukkitEntity())) {
                 entityplayer1.networkHandler.sendPacket(packet);

@@ -124,7 +124,7 @@ public abstract class DedicatedServerMixin extends MinecraftServer {
         }
 
         // CraftBukkit start
-        ((MinecraftDedicatedServer)(Object)this).setPlayerManager((PlayerManager) (new DedicatedPlayerManager(((MinecraftDedicatedServer)(Object)this))));
+        ((MinecraftDedicatedServer)(Object)this).setPlayerManager(new DedicatedPlayerManager(((MinecraftDedicatedServer)(Object)this)));
         server.loadPlugins();
         server.enablePlugins(org.bukkit.plugin.PluginLoadOrder.STARTUP);
         // CraftBukkit end
@@ -188,7 +188,7 @@ public abstract class DedicatedServerMixin extends MinecraftServer {
 
             MinecraftDedicatedServer.LOGGER.info("Done ({})! For help, type \"help\"", s2);
             if (dedicatedserverproperties.announcePlayerAchievements != null) {
-                ((GameRules.BooleanRule) ((MinecraftDedicatedServer)(Object)this).getGameRules().get(GameRules.ANNOUNCE_ADVANCEMENTS)).set(dedicatedserverproperties.announcePlayerAchievements, (MinecraftServer) ((MinecraftDedicatedServer)(Object)this));
+                ((MinecraftDedicatedServer)(Object)this).getGameRules().get(GameRules.ANNOUNCE_ADVANCEMENTS).set(dedicatedserverproperties.announcePlayerAchievements, (MinecraftServer) ((MinecraftDedicatedServer)(Object)this));
             }
 
             if (dedicatedserverproperties.enableQuery) {
