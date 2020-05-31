@@ -43,6 +43,8 @@ dependencies {
     implementation("org.bukkit:bukkit:1.15.2-R0.1-SNAPSHOT")
     implementation("org.xerial:sqlite-jdbc:3.30.1")
     implementation("org.yaml:snakeyaml:1.25")
+    compileOnly("org.projectlombok:lombok:1.18.12")
+    annotationProcessor("org.projectlombok:lombok:1.18.12")
 }
 
 tasks.withType<JavaCompile> {

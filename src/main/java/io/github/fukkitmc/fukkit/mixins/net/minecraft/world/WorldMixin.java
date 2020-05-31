@@ -28,8 +28,6 @@ public abstract class WorldMixin implements WorldExtra {
 
     @Shadow public abstract WorldChunk getChunk(int i, int j);
 
-    @Shadow public CraftWorld craftWorld;
-
     @Override
     public WorldChunk getChunkIfLoaded(int var0, int var1) {
         return getChunk(var0, var1);//TODO: craftbukkitify
@@ -42,7 +40,7 @@ public abstract class WorldMixin implements WorldExtra {
 
     @Inject(method = "<init>", at = @At("TAIL"))
     public void init(LevelProperties levelProperties, DimensionType dimensionType, BiFunction<World, Dimension, ChunkManager> chunkManagerProvider, Profiler profiler, boolean isClient, CallbackInfo ci){
-        this.craftWorld = new CraftWorld(((ServerWorld)(Object)this), null, null);
+        ((ServerWorld)(Object)this).craftWorld = new CraftWorld(((ServerWorld)(Object)this), null, null);
     }
 
     @Override

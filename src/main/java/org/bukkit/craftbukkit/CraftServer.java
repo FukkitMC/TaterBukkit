@@ -217,7 +217,7 @@ public final class CraftServer implements Server {
     private int waterAnimalSpawn = -1;
     private int ambientSpawn = -1;
     private File container;
-    private WarningState warningState = WarningState.DEFAULT;
+    private WarningState warningState;
     public String minimumAPI;
     public CraftScoreboardManager scoreboardManager;
     public boolean playerCommandState;

@@ -4,9 +4,12 @@
   "package": "io.github.fukkitmc.fukkit.mixins",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "PlayerManagerMixin",
     "ServerPlayNetworkHandlerMixin",
+    "net.minecraft.container.ContainerMixin",
+    "net.minecraft.container.PlayerContainerMixin",
     "net.minecraft.entity.EntityMixin",
+    "net.minecraft.entity.player.PlayerEntityMixin",
+    "net.minecraft.entity.player.PlayerManagerMixin",
     "net.minecraft.server.MinecraftServerMixin",
     "net.minecraft.server.PlayerManagerMixin",
     "net.minecraft.server.ServerNetworkIoMixin",

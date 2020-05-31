@@ -51,12 +51,10 @@ public abstract class ServerPlayNetworkHandlerMixin implements ServerPlayNetwork
 
     @Shadow public abstract void sendPacket(Packet<?> packet);
 
-    @Shadow public static AtomicIntegerFieldUpdater chatSpamField;
-
     @Inject(method = "<init>",at =  @At("TAIL"))
     public void constructor(MinecraftServer minecraftServer, ClientConnection clientConnection, ServerPlayerEntity serverPlayerEntity, CallbackInfo ci){
         ((ServerPlayNetworkHandler) (Object) this).craftServer = minecraftServer.server;
-        chatSpamField = AtomicIntegerFieldUpdater.newUpdater(ServerPlayNetworkHandler.class, "bukkitChatThrottle");
+        ((ServerPlayNetworkHandler) (Object) this).chatSpamField = AtomicIntegerFieldUpdater.newUpdater(ServerPlayNetworkHandler.class, "bukkitChatThrottle");
     }
 
     /**
@@ -260,7 +258,7 @@ public abstract class ServerPlayNetworkHandlerMixin implements ServerPlayNetwork
 
             // CraftBukkit start - replaced with thread safe throttle
             // this.bukkitChatThrottle += 20;
-            if (chatSpamField.addAndGet(this, 20) > 200 && !this.server.getPlayerManager().isOperator(this.player.getGameProfile())) {
+            if (ServerPlayNetworkHandler.chatSpamField.addAndGet(this, 20) > 200 && !this.server.getPlayerManager().isOperator(this.player.getGameProfile())) {
                 if (!isSync) {
                     Waitable waitable = new Waitable.Wrapper(()-> {
                         this.disconnect(new TranslatableText("disconnect.spam", new Object[0]));

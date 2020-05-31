@@ -46,8 +46,6 @@ public abstract class PlayerManagerMixin {
 
     @Shadow public Map<UUID, ServerPlayerEntity> playerMap;
 
-    @Shadow public CraftServer cserver;
-
     @Shadow public abstract void sendScoreboard(ServerScoreboard scoreboard, ServerPlayerEntity player);
 
     @Shadow public abstract void sendCommandTree(ServerPlayerEntity player);
@@ -129,8 +127,8 @@ public abstract class PlayerManagerMixin {
         // this.sendAll(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, new EntityPlayer[]{entityplayer})); // CraftBukkit - replaced with loop below
 
         // CraftBukkit start
-        PlayerJoinEvent playerJoinEvent = new PlayerJoinEvent(cserver.getPlayer(entityplayer), joinMessage);
-        cserver.getPluginManager().callEvent(playerJoinEvent);
+        PlayerJoinEvent playerJoinEvent = new PlayerJoinEvent(((PlayerManager)(Object)this).cserver.getPlayer(entityplayer), joinMessage);
+        ((PlayerManager)(Object)this).cserver.getPluginManager().callEvent(playerJoinEvent);
 
         if (!entityplayer.networkHandler.connection.isOpen()) {
             return;
@@ -159,7 +157,7 @@ public abstract class PlayerManagerMixin {
                 continue;
             }
 
-            entityplayer.networkHandler.sendPacket(new PlayerListS2CPacket(PlayerListS2CPacket.Action.ADD_PLAYER, new ServerPlayerEntity[] { entityplayer1}));
+            entityplayer.networkHandler.sendPacket(new PlayerListS2CPacket(PlayerListS2CPacket.Action.ADD_PLAYER, entityplayer1));
         }
         entityplayer.sentListPacket = true;
         // CraftBukkit end

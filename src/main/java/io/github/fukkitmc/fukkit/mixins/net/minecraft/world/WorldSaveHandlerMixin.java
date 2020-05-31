@@ -14,14 +14,12 @@ import java.util.UUID;
 @Mixin(WorldSaveHandler.class)
 public class WorldSaveHandlerMixin implements WorldSaveHandlerExtra {
 
-
-    @Shadow public File playerDataDir;
-
-    @Shadow public UUID uuid;
-
-    @Shadow public static Logger LOGGER;
-
-    @Shadow public File worldDir;
+    @Shadow
+    public static Logger LOGGER;
+    @Shadow
+    public File playerDataDir;
+    @Shadow
+    public File worldDir;
 
     @Override
     public CompoundTag getPlayerData(String s) {
@@ -35,7 +33,8 @@ public class WorldSaveHandlerMixin implements WorldSaveHandlerExtra {
             LOGGER.warn("Failed to load player data for " + s);
         }
 
-        return null;    }
+        return null;
+    }
 
     @Override
     public File getPlayerDir() {
@@ -44,13 +43,13 @@ public class WorldSaveHandlerMixin implements WorldSaveHandlerExtra {
 
     @Override
     public UUID getUUID() {
-        if (uuid != null) return uuid;
+        if (((WorldSaveHandler)(Object)this).uuid != null) return ((WorldSaveHandler)(Object)this).uuid;
         File file1 = new File(this.worldDir, "uid.dat");
         if (file1.exists()) {
             DataInputStream dis = null;
             try {
                 dis = new DataInputStream(new FileInputStream(file1));
-                return uuid = new UUID(dis.readLong(), dis.readLong());
+                return ((WorldSaveHandler)(Object)this).uuid = new UUID(dis.readLong(), dis.readLong());
             } catch (IOException ex) {
                 LOGGER.warn("Failed to read " + file1 + ", generating new random UUID", ex);
             } finally {
@@ -63,14 +62,14 @@ public class WorldSaveHandlerMixin implements WorldSaveHandlerExtra {
                 }
             }
         }
-        uuid = UUID.randomUUID();
+        ((WorldSaveHandler)(Object)this).uuid = UUID.randomUUID();
         try (DataOutputStream dos = new DataOutputStream(new FileOutputStream(file1))) {
-            dos.writeLong(uuid.getMostSignificantBits());
-            dos.writeLong(uuid.getLeastSignificantBits());
+            dos.writeLong(((WorldSaveHandler)(Object)this).uuid.getMostSignificantBits());
+            dos.writeLong(((WorldSaveHandler)(Object)this).uuid.getLeastSignificantBits());
         } catch (IOException ex) {
             LOGGER.warn("Failed to write " + file1, ex);
         }
         // NOOP
-        return uuid;
+        return ((WorldSaveHandler)(Object)this).uuid;
     }
 }
