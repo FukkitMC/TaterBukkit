@@ -36,13 +36,13 @@ dependencies {
 
     implementation("com.google.code.gson:gson:2.8.0")
     implementation("com.google.guava:guava:21.0")
-    implementation("com.googlecode.json-simple:json-simple:1.1.1")
-    implementation("commons-lang:commons-lang:2.6")
-    implementation("jline:jline:2.12.1")
-    implementation("mysql:mysql-connector-java:5.1.48")
-    implementation("org.bukkit:bukkit:1.15.2-R0.1-SNAPSHOT")
-    implementation("org.xerial:sqlite-jdbc:3.30.1")
-    implementation("org.yaml:snakeyaml:1.25")
+    implementation("com.googlecode.json-simple:json-simple:1.1.1")?.let { include(it) }
+    implementation("commons-lang:commons-lang:2.6")?.let { include(it) }
+    implementation("jline:jline:2.12.1")?.let { include(it) }
+    implementation("mysql:mysql-connector-java:5.1.48")?.let { include(it) }
+    implementation("org.bukkit:bukkit:1.15.2-R0.1-SNAPSHOT")?.let { include(it) }
+    implementation("org.xerial:sqlite-jdbc:3.30.1")?.let { include(it) }
+    implementation("org.yaml:snakeyaml:1.25")?.let { include(it) }
     compileOnly("org.projectlombok:lombok:1.18.12")
     annotationProcessor("org.projectlombok:lombok:1.18.12")
 }

@@ -2,6 +2,7 @@ package io.github.fukkitmc.fukkit.mixins.net.minecraft.container;
 
 import io.github.fukkitmc.fukkit.extras.ContainerExtra;
 import net.minecraft.container.Container;
+import net.minecraft.container.PlayerContainer;
 import net.minecraft.text.Text;
 import org.bukkit.craftbukkit.entity.CraftHumanEntity;
 import org.bukkit.craftbukkit.inventory.CraftInventory;
@@ -12,8 +13,6 @@ import org.spongepowered.asm.mixin.Shadow;
 @Mixin(Container.class)
 public class ContainerMixin implements ContainerExtra {
 
-
-    @Shadow public Text title;
 
     @Override
     public void transferTo(Container other, CraftHumanEntity player) {
@@ -26,11 +25,11 @@ public class ContainerMixin implements ContainerExtra {
 
     @Override
     public Text getTitle() {
-        return this.title;
+        return ((Container) (Object) this).title;
     }
 
     @Override
     public void setTitle(Text var0) {
-        this.title = var0;
+        ((Container) (Object) this).title = var0;
     }
 }

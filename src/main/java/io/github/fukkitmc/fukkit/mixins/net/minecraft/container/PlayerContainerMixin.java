@@ -14,25 +14,20 @@ import org.spongepowered.asm.mixin.Shadow;
 public class PlayerContainerMixin implements PlayerContainerExtra {
 
     @Shadow
-    public CraftInventoryView bukkitEntity;
-
-    @Shadow
     public PlayerInventory player;
 
-    @Shadow
-    public CraftingInventory craftingInventory;
 
     @Shadow
     public CraftingResultInventory craftingResultInventory;
 
     @Override
     public CraftInventoryView getBukkitView() {
-        if (bukkitEntity != null) {
-            return bukkitEntity;
+        if (((PlayerContainer) (Object) this).bukkitEntity != null) {
+            return ((PlayerContainer) (Object) this).bukkitEntity;
         }
 
-        CraftInventoryCrafting inventory = new CraftInventoryCrafting(this.craftingInventory, this.craftingResultInventory);
-        bukkitEntity = new CraftInventoryView(this.player.player.getBukkitEntity(), inventory, ((PlayerContainer) (Object) this));
-        return bukkitEntity;
+        CraftInventoryCrafting inventory = new CraftInventoryCrafting(((PlayerContainer) (Object) this).craftingInventory, this.craftingResultInventory);
+        ((PlayerContainer) (Object) this).bukkitEntity = new CraftInventoryView(this.player.player.getBukkitEntity(), inventory, ((PlayerContainer) (Object) this));
+        return ((PlayerContainer) (Object) this).bukkitEntity;
     }
 }
