@@ -86,7 +86,6 @@ public abstract class MinecraftServerMixin extends ReentrantThreadExecutor<Serve
         //Define things that are static and should start with a variable
         ChunkTicketType.PLUGIN = ChunkTicketType.create("plugin", (a, b) -> 0); // CraftBukkit
         Main.main(args);
-        ci.cancel();
     }
 
     @Inject(method = "loadWorld", at = @At("TAIL"))
