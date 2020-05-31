@@ -54,7 +54,6 @@ import java.util.function.BooleanSupplier;
 @Mixin(MinecraftServer.class)
 public abstract class MinecraftServerMixin extends ReentrantThreadExecutor<ServerTask> implements MinecraftServerExtra {
 
-    private static int currentTick = (int) (System.currentTimeMillis() / 50);
     private static final int SAMPLE_INTERVAL = 100;
     public final double[] recentTps = new double[3];
 
@@ -117,6 +116,18 @@ public abstract class MinecraftServerMixin extends ReentrantThreadExecutor<Serve
     }
 
     @Shadow public DisableableProfiler profiler;
+
+    @Shadow public abstract boolean isRunning();
+
+    @Shadow public abstract void setFavicon(ServerMetadata metadata);
+
+    @Shadow public abstract String getServerMotd();
+
+    @Shadow public abstract File getRunDirectory();
+
+    @Shadow public abstract CrashReport populateCrashReport(CrashReport crashReport);
+
+    @Shadow public static int currentTick;
 
     @Inject(method = "<init>", at = @At("TAIL"))
     public void init(File gameDir, Proxy proxy, DataFixer dataFixer, CommandManager commandManager, YggdrasilAuthenticationService authService, MinecraftSessionService sessionService, GameProfileRepository gameProfileRepository, UserCache userCache, WorldGenerationProgressListenerFactory worldGenerationProgressListenerFactory, String levelName, CallbackInfo ci) throws IOException {
@@ -356,10 +367,6 @@ public abstract class MinecraftServerMixin extends ReentrantThreadExecutor<Serve
         return false;
     }
 
-    public MinecraftServer getServer() {
-        return (MinecraftServer) (Object) this;
-    }
-
     private static double calcTps(double avg, double exp, double tps) {
         return (avg * exp) + (tps * (1 - exp));
     }
@@ -375,13 +382,13 @@ public abstract class MinecraftServerMixin extends ReentrantThreadExecutor<Serve
         try {
             if (this.setupServer()) {
                 this.timeReference = Util.getMeasuringTimeMs();
-                this.metadata.setDescription(new LiteralText(getServer().getServerMotd()));
+                this.metadata.setDescription(new LiteralText(this.getServerMotd()));
                 this.metadata.setVersion(new ServerMetadata.Version(SharedConstants.getGameVersion().getName(), SharedConstants.getGameVersion().getProtocolVersion()));
-                getServer().setFavicon(this.metadata);
+                this.setFavicon(this.metadata);
 
                 Arrays.fill(recentTps, 20);
                 long curTime, tickSection = Util.getMeasuringTimeMs(), tickCount = 1;
-                while (getServer().isRunning()) {
+                while (this.isRunning()) {
                     long i = (curTime = Util.getMeasuringTimeMs()) - this.timeReference;
 
                     if (i > 5000L && this.timeReference - this.field_4557 >= 30000L) { // CraftBukkit
@@ -421,9 +428,9 @@ public abstract class MinecraftServerMixin extends ReentrantThreadExecutor<Serve
             } else this.setCrashReport(null);
         } catch (Throwable throwable) {
             LOGGER.error("Encountered an unexpected exception", throwable);
-            CrashReport crashReport = getServer().populateCrashReport((throwable instanceof CrashException) ? ((CrashException)throwable).getReport() : new CrashReport("Exception in server tick loop", throwable));
+            CrashReport crashReport = this.populateCrashReport((throwable instanceof CrashException) ? ((CrashException)throwable).getReport() : new CrashReport("Exception in server tick loop", throwable));
 
-            File file = new File(new File(getServer().getRunDirectory(), "crash-reports"), "crash-" + new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss").format(new Date()) + "-server.txt");
+            File file = new File(new File(this.getRunDirectory(), "crash-reports"), "crash-" + new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss").format(new Date()) + "-server.txt");
             LOGGER.error(crashReport.writeToFile(file) ? ("This crash report has been saved to: " + file.getAbsolutePath()) : "We were unable to save this crash report to disk.");
             this.setCrashReport(crashReport);
         } finally {
