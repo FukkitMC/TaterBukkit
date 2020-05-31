@@ -64,7 +64,7 @@ public abstract class DedicatedServerMixin extends MinecraftServer {
             }
         }
 
-        new org.bukkit.craftbukkit.util.TerminalConsoleWriterThread(System.out, ((MinecraftDedicatedServer)(Object)this).reader).start();
+        new org.bukkit.craftbukkit.util.TerminalConsoleWriterThread(System.out, reader).start();
 
         System.setOut(new PrintStream(new LoggerOutputStream(logger, Level.INFO), true));
         System.setErr(new PrintStream(new LoggerOutputStream(logger, Level.WARN), true));

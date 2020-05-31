@@ -231,8 +231,6 @@ public abstract class ServerPlayNetworkHandlerMixin implements ServerPlayNetwork
                     return;
                 }
             }
-            System.out.println("A");
-
             // CraftBukkit start
             if (isSync) {
                 try {
