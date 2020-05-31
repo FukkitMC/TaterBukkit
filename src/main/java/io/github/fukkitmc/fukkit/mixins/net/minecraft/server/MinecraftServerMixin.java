@@ -18,11 +18,13 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ChunkTicketType;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.test.TestManager;
+import net.minecraft.text.LiteralText;
 import net.minecraft.util.UserCache;
 import net.minecraft.util.Util;
 import net.minecraft.util.crash.CrashException;
 import net.minecraft.util.crash.CrashReport;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.profiler.DisableableProfiler;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.thread.ReentrantThreadExecutor;
 import net.minecraft.world.GameRules;
@@ -45,6 +47,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.io.File;
 import java.io.IOException;
 import java.net.Proxy;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.function.BooleanSupplier;
 
@@ -94,8 +97,6 @@ public abstract class MinecraftServerMixin extends ReentrantThreadExecutor<Serve
     @Shadow
     private long field_19248;
 
-    @Shadow
-    private DisableableProfiler profiler;
 
     @Shadow
     protected void method_16208() {
@@ -114,6 +115,8 @@ public abstract class MinecraftServerMixin extends ReentrantThreadExecutor<Serve
     @Shadow
     protected void shutdown() {
     }
+
+    @Shadow public DisableableProfiler profiler;
 
     @Inject(method = "<init>", at = @At("TAIL"))
     public void init(File gameDir, Proxy proxy, DataFixer dataFixer, CommandManager commandManager, YggdrasilAuthenticationService authService, MinecraftSessionService sessionService, GameProfileRepository gameProfileRepository, UserCache userCache, WorldGenerationProgressListenerFactory worldGenerationProgressListenerFactory, String levelName, CallbackInfo ci) throws IOException {
