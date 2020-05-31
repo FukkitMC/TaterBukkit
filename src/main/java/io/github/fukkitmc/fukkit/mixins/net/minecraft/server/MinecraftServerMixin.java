@@ -9,7 +9,6 @@ import com.mojang.datafixers.DataFixer;
 import io.github.fukkitmc.fukkit.extras.MinecraftServerExtra;
 import jline.console.ConsoleReader;
 import net.minecraft.SharedConstants;
-import net.minecraft.command.DataCommandStorage;
 import net.minecraft.network.packet.s2c.play.WorldTimeUpdateS2CPacket;
 import net.minecraft.server.*;
 import net.minecraft.server.command.CommandManager;
@@ -34,7 +33,6 @@ import net.minecraft.world.level.LevelInfo;
 import net.minecraft.world.level.LevelProperties;
 import org.apache.logging.log4j.Logger;
 import org.bukkit.command.CommandSender;
-import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.craftbukkit.Main;
 import org.bukkit.event.server.ServerLoadEvent;
 import org.spongepowered.asm.mixin.Mixin;
@@ -51,50 +49,57 @@ import java.util.*;
 import java.util.function.BooleanSupplier;
 
 @Mixin(MinecraftServer.class)
-public abstract class MinecraftServerMixin extends ReentrantThreadExecutor<ServerTask>  implements MinecraftServerExtra {
+public abstract class MinecraftServerMixin extends ReentrantThreadExecutor<ServerTask> implements MinecraftServerExtra {
 
     public MinecraftServerMixin(String name) {
         super(name);
     }
 
-    @Shadow public ServerMetadata metadata;
+    @Shadow
+    public ServerMetadata metadata;
 
-    @Shadow public static Logger LOGGER;
+    @Shadow
+    public static Logger LOGGER;
 
-    @Shadow public Random random;
+    @Shadow
+    public Random random;
 
-    @Shadow public Map<DimensionType, ServerWorld> worlds;
+    @Shadow
+    public Map<DimensionType, ServerWorld> worlds;
 
-    @Shadow public abstract void initScoreboard(PersistentStateManager persistentStateManager);
-
+    @Shadow
+    public abstract void initScoreboard(PersistentStateManager persistentStateManager);
 
     @Inject(method = "<init>", at = @At("TAIL"))
     public void init(File gameDir, Proxy proxy, DataFixer dataFixer, CommandManager commandManager, YggdrasilAuthenticationService authService, MinecraftSessionService sessionService, GameProfileRepository gameProfileRepository, UserCache userCache, WorldGenerationProgressListenerFactory worldGenerationProgressListenerFactory, String levelName, CallbackInfo ci) throws IOException {
-        ((MinecraftServer) (Object)this).processQueue = new java.util.concurrent.ConcurrentLinkedQueue<Runnable>();
-        ((MinecraftServer) (Object)this).options = Main.serverOptions;
-        ((MinecraftServer) (Object)this).reader = new ConsoleReader(System.in, System.out);
-        ((MinecraftServer) (Object)this).commandManager = ((MinecraftServer) (Object)this).vanillaCommandDispatcher = commandManager; // CraftBukkit
+        MinecraftServer self = (MinecraftServer) (Object) this;
+
+        self.processQueue = new java.util.concurrent.ConcurrentLinkedQueue<Runnable>();
+        self.options = Main.serverOptions;
+        self.reader = new ConsoleReader(System.in, System.out);
+        self.commandManager = self.vanillaCommandDispatcher = commandManager; // CraftBukkit
 
     }
 
     @Inject(method = "main", at = @At("HEAD"))
-    private static void yes(String[] args, CallbackInfo ci){
+    private static void yes(String[] args, CallbackInfo ci) {
         //Define things that are static and should start with a variable
         ChunkTicketType.PLUGIN = ChunkTicketType.create("plugin", (a, b) -> 0); // CraftBukkit
         Main.main(args);
+        ci.cancel();
     }
 
     @Inject(method = "loadWorld", at = @At("TAIL"))
     public void loadWorld(String name, String serverName, long seed, LevelGeneratorType generatorType, JsonElement generatorSettings, CallbackInfo ci) {
-        ((MinecraftDedicatedServer) (Object)this).server.enablePlugins(org.bukkit.plugin.PluginLoadOrder.POSTWORLD);
-        ((MinecraftDedicatedServer) (Object)this).server.getPluginManager().callEvent(new ServerLoadEvent(ServerLoadEvent.LoadType.STARTUP));
-        ((MinecraftDedicatedServer) (Object)this).networkIo.acceptConnections();
+        ((MinecraftDedicatedServer) (Object) this).server.enablePlugins(org.bukkit.plugin.PluginLoadOrder.POSTWORLD);
+        ((MinecraftDedicatedServer) (Object) this).server.getPluginManager().callEvent(new ServerLoadEvent(ServerLoadEvent.LoadType.STARTUP));
+        ((MinecraftDedicatedServer) (Object) this).networkIo.acceptConnections();
         // CraftBukkit end
         // Fukkit start
-        for(ServerWorld world : worlds.values()) {
+        for (ServerWorld world : worlds.values()) {
             PersistentStateManager worldpersistentdata = world.getPersistentStateManager();
             this.initScoreboard(worldpersistentdata);
-            ((MinecraftDedicatedServer) (Object)this).server.scoreboardManager = new org.bukkit.craftbukkit.scoreboard.CraftScoreboardManager(((MinecraftDedicatedServer) (Object)this), world.getScoreboard());
+            ((MinecraftDedicatedServer) (Object) this).server.scoreboardManager = new org.bukkit.craftbukkit.scoreboard.CraftScoreboardManager(((MinecraftDedicatedServer) (Object) this), world.getScoreboard());
         }
     }
 
@@ -104,48 +109,50 @@ public abstract class MinecraftServerMixin extends ReentrantThreadExecutor<Serve
      */
     @Overwrite
     public void tick(BooleanSupplier shouldKeepTicking) {
-        long l = Util.getMeasuringTimeNano();
-        ++((MinecraftServer)(Object)this).ticks;
-        ((MinecraftServer)(Object)this).tickWorlds(shouldKeepTicking);
-        if (l - ((MinecraftServer)(Object)this).lastPlayerSampleUpdate >= 5000000000L) {
-            ((MinecraftServer)(Object)this).lastPlayerSampleUpdate = l;
-            ((MinecraftServer)(Object)this).metadata.setPlayers(new ServerMetadata.Players(((MinecraftServer)(Object)this).getMaxPlayerCount(), ((MinecraftServer)(Object)this).getCurrentPlayerCount()));
-            GameProfile[] gameProfiles = new GameProfile[Math.min(((MinecraftServer)(Object)this).getCurrentPlayerCount(), 12)];
-            int i = MathHelper.nextInt(((MinecraftServer)(Object)this).random, 0, ((MinecraftServer)(Object)this).getCurrentPlayerCount() - gameProfiles.length);
+        MinecraftServer self = (MinecraftServer) (Object) this;
 
-            for(int j = 0; j < gameProfiles.length; ++j) {
-                gameProfiles[j] = ((MinecraftServer)(Object)this).playerManager.getPlayerList().get(i + j).getGameProfile();
+        long l = Util.getMeasuringTimeNano();
+        self.ticks++;
+        self.tickWorlds(shouldKeepTicking);
+        if (l - self.lastPlayerSampleUpdate >= 5000000000L) {
+            self.lastPlayerSampleUpdate = l;
+            self.metadata.setPlayers(new ServerMetadata.Players(self.getMaxPlayerCount(), self.getCurrentPlayerCount()));
+            GameProfile[] gameProfiles = new GameProfile[Math.min(self.getCurrentPlayerCount(), 12)];
+            int i = MathHelper.nextInt(self.random, 0, self.getCurrentPlayerCount() - gameProfiles.length);
+
+            for (int j = 0; j < gameProfiles.length; ++j) {
+                gameProfiles[j] = self.playerManager.getPlayerList().get(i + j).getGameProfile();
             }
 
             Collections.shuffle(Arrays.asList(gameProfiles));
-            ((MinecraftServer)(Object)this).metadata.getPlayers().setSample(gameProfiles);
+            self.metadata.getPlayers().setSample(gameProfiles);
         }
 
-        if (((MinecraftServer)(Object)this).ticks % 6000 == 0) {
+        if (self.ticks % 6000 == 0) {
             LOGGER.debug("Autosave started");
-            ((MinecraftServer)(Object)this).profiler.push("save");
-            ((MinecraftServer)(Object)this).playerManager.saveAllPlayerData();
-            ((MinecraftServer)(Object)this).save(true, false, false);
-            ((MinecraftServer)(Object)this).profiler.pop();
+            self.profiler.push("save");
+            self.playerManager.saveAllPlayerData();
+            self.save(true, false, false);
+            self.profiler.pop();
             LOGGER.debug("Autosave finished");
         }
 
-        ((MinecraftServer)(Object)this).profiler.push("snooper");
-        if (!((MinecraftServer)(Object)this).snooper.isActive() && ((MinecraftServer)(Object)this).ticks > 100) {
-            ((MinecraftServer)(Object)this).snooper.method_5482();
+        self.profiler.push("snooper");
+        if (!self.snooper.isActive() && self.ticks > 100) {
+            self.snooper.method_5482();
         }
 
-        if (((MinecraftServer)(Object)this).ticks % 6000 == 0) {
-            ((MinecraftServer)(Object)this).snooper.update();
+        if (self.ticks % 6000 == 0) {
+            self.snooper.update();
         }
 
-        ((MinecraftServer)(Object)this).profiler.pop();
-        ((MinecraftServer)(Object)this).profiler.push("tallying");
-        long m = ((MinecraftServer)(Object)this).lastTickLengths[((MinecraftServer)(Object)this).ticks % 100] = Util.getMeasuringTimeNano() - l;
-        ((MinecraftServer)(Object)this).tickTime = ((MinecraftServer)(Object)this).tickTime * 0.8F + (float)m / 1000000.0F * 0.19999999F;
+        self.profiler.pop();
+        self.profiler.push("tallying");
+        long m = self.lastTickLengths[self.ticks % 100] = Util.getMeasuringTimeNano() - l;
+        self.tickTime = self.tickTime * 0.8F + (float) m / 1000000.0F * 0.19999999F;
         long n = Util.getMeasuringTimeNano();
-        ((MinecraftServer)(Object)this).metricsData.pushSample(n - l);
-        ((MinecraftServer)(Object)this).profiler.pop();
+        self.metricsData.pushSample(n - l);
+        self.profiler.pop();
     }
 
     /**
@@ -153,22 +160,24 @@ public abstract class MinecraftServerMixin extends ReentrantThreadExecutor<Serve
      */
     @Overwrite
     public void tickWorlds(BooleanSupplier booleansupplier) {
-        ((MinecraftServer)(Object)this).server.getScheduler().mainThreadHeartbeat(((MinecraftServer)(Object)this).ticks); // CraftBukkit
-        ((MinecraftServer)(Object)this).profiler.push("commandFunctions");
-        ((MinecraftServer)(Object)this).getCommandFunctionManager().tick();
-        ((MinecraftServer)(Object)this).profiler.swap("levels");
-        Iterator iterator = ((MinecraftServer)(Object)this).getWorlds().iterator();
+        MinecraftServer self = (MinecraftServer) (Object) this;
+
+        self.server.getScheduler().mainThreadHeartbeat(self.ticks); // CraftBukkit
+        self.profiler.push("commandFunctions");
+        self.getCommandFunctionManager().tick();
+        self.profiler.swap("levels");
+        Iterator iterator = self.getWorlds().iterator();
 
         // CraftBukkit start
         // Run tasks that are waiting on processing
-        while (!((MinecraftServer)(Object)this).processQueue.isEmpty()) {
-            ((Runnable)((MinecraftServer)(Object)this).processQueue.remove()).run();
+        while (!self.processQueue.isEmpty()) {
+            ((Runnable) self.processQueue.remove()).run();
         }
 
         // Send time updates to everyone, it will get the right time from the world the player is in.
-        if (((MinecraftServer)(Object)this).ticks % 20 == 0) {
-            for (int i = 0; i < ((MinecraftServer)(Object)this).getPlayerManager().players.size(); ++i) {
-                ServerPlayerEntity entityplayer = ((MinecraftServer)(Object)this).getPlayerManager().players.get(i);
+        if (self.ticks % 20 == 0) {
+            for (int i = 0; i < self.getPlayerManager().players.size(); ++i) {
+                ServerPlayerEntity entityplayer = self.getPlayerManager().players.get(i);
                 entityplayer.networkHandler.sendPacket(new WorldTimeUpdateS2CPacket(entityplayer.world.getTime(), entityplayer.getPlayerTime(), entityplayer.world.getGameRules().getBoolean(GameRules.DO_DAYLIGHT_CYCLE))); // Add support for per player time
             }
         }
@@ -176,8 +185,8 @@ public abstract class MinecraftServerMixin extends ReentrantThreadExecutor<Serve
         while (iterator.hasNext()) {
             ServerWorld worldserver = (ServerWorld) iterator.next();
 
-            if (true || worldserver.dimension.getType() == DimensionType.OVERWORLD || ((MinecraftServer)(Object)this).isNetherAllowed()) { // CraftBukkit
-                ((MinecraftServer)(Object)this).profiler.push(() -> {
+            if (true || worldserver.dimension.getType() == DimensionType.OVERWORLD || self.isNetherAllowed()) { // CraftBukkit
+                self.profiler.push(() -> {
                     return worldserver.getLevelProperties().getLevelName() + " " + Registry.DIMENSION_TYPE.getId(worldserver.dimension.getType());
                 });
                 /* Drop global time updates
@@ -188,7 +197,7 @@ public abstract class MinecraftServerMixin extends ReentrantThreadExecutor<Serve
                 }
                 // CraftBukkit end */
 
-                ((MinecraftServer)(Object)this).profiler.push("tick");
+                self.profiler.push("tick");
 
                 try {
                     worldserver.tick(booleansupplier);
@@ -199,26 +208,26 @@ public abstract class MinecraftServerMixin extends ReentrantThreadExecutor<Serve
                     throw new CrashException(crashreport);
                 }
 
-                ((MinecraftServer)(Object)this).profiler.pop();
-                ((MinecraftServer)(Object)this).profiler.pop();
+                self.profiler.pop();
+                self.profiler.pop();
             }
         }
 
-        ((MinecraftServer)(Object)this).profiler.swap("connection");
-        ((MinecraftServer)(Object)this).getNetworkIo().tick();
-        ((MinecraftServer)(Object)this).profiler.swap("players");
-        ((MinecraftServer)(Object)this).playerManager.updatePlayerLatency();
+        self.profiler.swap("connection");
+        self.getNetworkIo().tick();
+        self.profiler.swap("players");
+        self.playerManager.updatePlayerLatency();
         if (SharedConstants.isDevelopment) {
             TestManager.INSTANCE.tick();
         }
 
-        ((MinecraftServer)(Object)this).profiler.swap("server gui refresh");
+        self.profiler.swap("server gui refresh");
 
-        for (Runnable serverGuiTickable : ((MinecraftServer)(Object)this).serverGuiTickables) {
+        for (Runnable serverGuiTickable : self.serverGuiTickables) {
             serverGuiTickable.run();
         }
 
-        ((MinecraftServer)(Object)this).profiler.pop();
+        self.profiler.pop();
     }
 
     /**
@@ -226,13 +235,17 @@ public abstract class MinecraftServerMixin extends ReentrantThreadExecutor<Serve
      */
     @Overwrite
     public boolean shouldKeepTicking() {
+        MinecraftServer self = (MinecraftServer) (Object) this;
+
         // CraftBukkit start
-        return ((MinecraftServer)(Object)this).forceTicks || ((MinecraftServer)(Object)this).hasRunningTasks() || Util.getMeasuringTimeMs() < (((MinecraftServer)(Object)this).field_19249 ? ((MinecraftServer)(Object)this).field_19248 : ((MinecraftServer)(Object)this).timeReference);
+        return self.forceTicks || self.hasRunningTasks() || Util.getMeasuringTimeMs() < (self.field_19249 ? self.field_19248 : self.timeReference);
     }
 
     // CraftBukkit start
     @Override
     public void initWorld(ServerWorld worldserver1, LevelProperties worlddata, LevelInfo worldsettings) {
+        MinecraftServer self = (MinecraftServer) (Object) this;
+
         worldserver1.getWorldBorder().load(worlddata);
 
         // CraftBukkit start
@@ -245,7 +258,7 @@ public abstract class MinecraftServerMixin extends ReentrantThreadExecutor<Serve
             try {
                 worldserver1.init(worldsettings);
                 if (worlddata.getGeneratorType() == LevelGeneratorType.DEBUG_ALL_BLOCK_STATES) {
-                    ((MinecraftServer)(Object)this).setToDebugWorldProperties(worlddata);
+                    self.setToDebugWorldProperties(worlddata);
                 }
 
                 worlddata.setInitialized(true);
@@ -271,7 +284,9 @@ public abstract class MinecraftServerMixin extends ReentrantThreadExecutor<Serve
 
     @Override
     public boolean hasStopped() {
-        return ((MinecraftServer)(Object)this).hasStopped;
+        MinecraftServer self = (MinecraftServer) (Object) this;
+
+        return self.hasStopped;
     }
 
     @Override
@@ -293,7 +308,6 @@ public abstract class MinecraftServerMixin extends ReentrantThreadExecutor<Serve
     public boolean isDebugging() {
         return false;
     }
-
 
 
 }
