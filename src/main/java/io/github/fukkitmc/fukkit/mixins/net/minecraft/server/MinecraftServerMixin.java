@@ -51,6 +51,10 @@ import java.util.function.BooleanSupplier;
 @Mixin(MinecraftServer.class)
 public abstract class MinecraftServerMixin extends ReentrantThreadExecutor<ServerTask> implements MinecraftServerExtra {
 
+    private static int currentTick = (int) (System.currentTimeMillis() / 50);
+    private static final int SAMPLE_INTERVAL = 100;
+    public final double[] recentTps = new double[3];
+
     public MinecraftServerMixin(String name) {
         super(name);
     }
@@ -69,6 +73,47 @@ public abstract class MinecraftServerMixin extends ReentrantThreadExecutor<Serve
 
     @Shadow
     public abstract void initScoreboard(PersistentStateManager persistentStateManager);
+
+    @Shadow
+    public boolean setupServer() {
+        return false;
+    }
+
+    @Shadow
+    private long timeReference = Util.getMeasuringTimeMs();
+
+    @Shadow
+    private long field_4557;
+
+    @Shadow
+    private boolean profilerStartQueued;
+
+    @Shadow
+    private boolean field_19249;
+
+    @Shadow
+    private long field_19248;
+
+    @Shadow
+    private DisableableProfiler profiler;
+
+    @Shadow
+    protected void method_16208() {
+    }
+
+    @Shadow
+    protected void setCrashReport(CrashReport crashReport) {
+    }
+
+    @Shadow
+    private volatile boolean loading;
+
+    @Shadow
+    private boolean stopped;
+
+    @Shadow
+    protected void shutdown() {
+    }
 
     @Inject(method = "<init>", at = @At("TAIL"))
     public void init(File gameDir, Proxy proxy, DataFixer dataFixer, CommandManager commandManager, YggdrasilAuthenticationService authService, MinecraftSessionService sessionService, GameProfileRepository gameProfileRepository, UserCache userCache, WorldGenerationProgressListenerFactory worldGenerationProgressListenerFactory, String levelName, CallbackInfo ci) throws IOException {
@@ -308,5 +353,84 @@ public abstract class MinecraftServerMixin extends ReentrantThreadExecutor<Serve
         return false;
     }
 
+    public MinecraftServer getServer() {
+        return (MinecraftServer) (Object) this;
+    }
+
+    private static double calcTps(double avg, double exp, double tps) {
+        return (avg * exp) + (tps * (1 - exp));
+    }
+
+    /**
+     * Optimized Tick Loop for Fabric
+     * This ports "0044-Highly-Optimized-Tick-Loop.patch"
+     *
+     * @author Bukkit4Fabric
+     */
+    @Overwrite
+    public void run() {
+        try {
+            if (this.setupServer()) {
+                this.timeReference = Util.getMeasuringTimeMs();
+                this.metadata.setDescription(new LiteralText(getServer().getServerMotd()));
+                this.metadata.setVersion(new ServerMetadata.Version(SharedConstants.getGameVersion().getName(), SharedConstants.getGameVersion().getProtocolVersion()));
+                getServer().setFavicon(this.metadata);
+
+                Arrays.fill(recentTps, 20);
+                long curTime, tickSection = Util.getMeasuringTimeMs(), tickCount = 1;
+                while (getServer().isRunning()) {
+                    long i = (curTime = Util.getMeasuringTimeMs()) - this.timeReference;
+
+                    if (i > 5000L && this.timeReference - this.field_4557 >= 30000L) { // CraftBukkit
+                        long j = i / 50L;
+
+                        LOGGER.warn("Can't keep up! Is the server overloaded? Running {}ms or {} ticks behind", i, j);
+                        this.timeReference += j * 50L;
+                        this.field_4557 = this.timeReference;
+                    }
+
+                    if ( tickCount++ % SAMPLE_INTERVAL == 0 ) {
+                        double currentTps = 1E3 / ( curTime - tickSection ) * SAMPLE_INTERVAL;
+                        recentTps[0] = calcTps(recentTps[0], 0.92, currentTps);
+                        recentTps[1] = calcTps(recentTps[1], 0.9835, currentTps);
+                        recentTps[2] = calcTps(recentTps[2], 0.9945, currentTps);
+                        tickSection = curTime;
+                    }
+                    // Spigot end
+
+                    currentTick = (int) (System.currentTimeMillis() / 50); // CraftBukkit
+                    this.timeReference += 50L;
+                    if (this.profilerStartQueued) {
+                        this.profilerStartQueued = false;
+                        this.profiler.getController().enable();
+                    }
+                    this.profiler.startTick();
+                    this.profiler.push("tick");
+                    this.tick(this::shouldKeepTicking);
+                    this.profiler.swap("nextTickWait");
+                    this.field_19249 = true;
+                    this.field_19248 = Math.max(Util.getMeasuringTimeMs() + 50L, this.timeReference);
+                    this.method_16208();
+                    this.profiler.pop();
+                    this.profiler.endTick();
+                    this.loading = true;
+                }
+            } else this.setCrashReport(null);
+        } catch (Throwable throwable) {
+            LOGGER.error("Encountered an unexpected exception", throwable);
+            CrashReport crashReport = getServer().populateCrashReport((throwable instanceof CrashException) ? ((CrashException)throwable).getReport() : new CrashReport("Exception in server tick loop", throwable));
+
+            File file = new File(new File(getServer().getRunDirectory(), "crash-reports"), "crash-" + new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss").format(new Date()) + "-server.txt");
+            LOGGER.error(crashReport.writeToFile(file) ? ("This crash report has been saved to: " + file.getAbsolutePath()) : "We were unable to save this crash report to disk.");
+            this.setCrashReport(crashReport);
+        } finally {
+            try {
+                this.stopped = true;
+                this.shutdown();
+            } catch (Throwable throwable) {
+                LOGGER.error("Exception stopping the server", throwable);
+            } finally {System.exit(1);}
+        }
+    }
 
 }
