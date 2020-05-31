@@ -4,11 +4,16 @@ import java.util.Map;
 import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.SimpleCommandMap;
+import io.github.fukkitmc.fukkit.VersionCommand;
 
 public class CraftCommandMap extends SimpleCommandMap {
 
     public CraftCommandMap(Server server) {
         super(server);
+
+        // Register our own custom version command
+        register("bukkit", new VersionCommand("version"));
+        register("bukkit", new VersionCommand("ver"));
     }
 
     public Map<String, Command> getKnownCommands() {

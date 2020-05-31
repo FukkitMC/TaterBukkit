@@ -1,5 +1,12 @@
 plugins {
     id("fabric-loom") version "g0.4.0-SNAPSHOT"
+    id("com.peterabeles.gversion") version "1.2.4"
+}
+
+gversion {
+    srcDir = ("src/main/java/")
+    classPackage = ("io.github.fukkitmc.fukkit")
+    className = ("GitVersion")
 }
 
 group = "io.github.fukkitmc"
