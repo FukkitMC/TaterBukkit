@@ -652,7 +652,7 @@ public final class CraftServer implements Server {
 
     @Override
     public List<World> getWorlds() {
-        return new ArrayList<World>(worlds.values());
+        return new ArrayList<>(worlds.values());
     }
 
     public DedicatedPlayerManager getHandle() {

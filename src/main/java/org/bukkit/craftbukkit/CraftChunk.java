@@ -51,7 +51,7 @@ public class CraftChunk implements Chunk {
 
     @Override
     public World getWorld() {
-        return (World) worldServer.getWorld();
+        return worldServer.getCraftWorld();
     }
 
     public CraftWorld getCraftWorld() {

@@ -349,7 +349,7 @@ public abstract class MinecraftServerMixin extends ReentrantThreadExecutor<Serve
 
     @Override
     public boolean isMainThread() {
-        return true;
+        return isOnThread();
     }
 
     @Override
@@ -375,8 +375,8 @@ public abstract class MinecraftServerMixin extends ReentrantThreadExecutor<Serve
      * Optimized Tick Loop for Fabric
      * This ports "0044-Highly-Optimized-Tick-Loop.patch"
      *
-     * @author Bukkit4Fabric
      */
+    //FIXME: overwrite bad
     @Overwrite
     public void run() {
         try {

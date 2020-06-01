@@ -1,45 +1,34 @@
 package io.github.fukkitmc.fukkit.extras;
 
+import net.minecraft.item.ItemStack;
+import net.minecraft.recipe.Recipe;
+import org.bukkit.craftbukkit.entity.CraftHumanEntity;
+import org.bukkit.entity.HumanEntity;
+
 /**
  * Extra for {@link net.minecraft.inventory.Inventory}
  */
 public interface InventoryExtra {
 
-    default void onClose(org.bukkit.craftbukkit.entity.CraftHumanEntity var0) {
-        throw new RuntimeException("Not implemented");
+    // CraftBukkit start
+    java.util.List<ItemStack> getContents();
+
+    void onOpen(CraftHumanEntity who);
+
+    void onClose(CraftHumanEntity who);
+
+    java.util.List<org.bukkit.entity.HumanEntity> getViewers();
+
+    org.bukkit.inventory.InventoryHolder getOwner();
+
+    void setMaxStackSize(int size);
+
+    org.bukkit.Location getLocation();
+
+    default Recipe<?> getCurrentRecipe() {
+        return null;
     }
 
-    default java.util.List getViewers() {
-        throw new RuntimeException("Not implemented");
-    }
-
-    default org.bukkit.Location getLocation() {
-        throw new RuntimeException("Not implemented");
-    }
-
-    default org.bukkit.inventory.InventoryHolder getOwner() {
-        throw new RuntimeException("Not implemented");
-    }
-
-    default void onOpen(org.bukkit.craftbukkit.entity.CraftHumanEntity var0) {
-        throw new RuntimeException("Not implemented");
-    }
-
-    default java.util.List getContents() {
-        throw new RuntimeException("Not implemented");
-    }
-
-    default void setMaxStackSize(int var0) {
-        throw new RuntimeException("Not implemented");
-
-    }
-
-    default void setCurrentRecipe(net.minecraft.recipe.Recipe var0) {
-        throw new RuntimeException("Not implemented");
-
-    }
-
-    default net.minecraft.recipe.Recipe getCurrentRecipe() {
-        throw new RuntimeException("Not implemented");
+    default void setCurrentRecipe(Recipe<?> recipe) {
     }
 }

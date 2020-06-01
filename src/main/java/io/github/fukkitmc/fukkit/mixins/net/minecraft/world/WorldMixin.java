@@ -39,8 +39,9 @@ public abstract class WorldMixin implements WorldExtra {
     }
 
     @Inject(method = "<init>", at = @At("TAIL"))
+    //TODO: yes yes ye sye ys FIXME: FIXME: FIXME:
     public void init(LevelProperties levelProperties, DimensionType dimensionType, BiFunction<World, Dimension, ChunkManager> chunkManagerProvider, Profiler profiler, boolean isClient, CallbackInfo ci){
-        ((ServerWorld)(Object)this).craftWorld = new CraftWorld(((ServerWorld)(Object)this), null, null);
+        ((ServerWorld)(Object)this).craftWorld = new CraftWorld(((ServerWorld)(Object)this), null, org.bukkit.World.Environment.NORMAL);
     }
 
     @Override

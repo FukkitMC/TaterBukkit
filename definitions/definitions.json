@@ -2373,7 +2373,8 @@
       {
         "access": 1,
         "name": "capturedTileEntities",
-        "type": "Ljava/util/Map;"
+        "type": "Ljava/util/Map;",
+        "signature": "Ljava/util/Map<Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/entity/BlockEntity;>;"
       },
       {
         "access": 1,
