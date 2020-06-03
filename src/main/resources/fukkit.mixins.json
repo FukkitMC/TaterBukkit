@@ -24,6 +24,7 @@
     "net.minecraft.server.network.ServerPlayerEntityMixin",
     "net.minecraft.server.world.ChunkHolderMixin",
     "net.minecraft.server.world.ServerWorldMixin",
+    "net.minecraft.world.ModifiableWorldMixin",
     "net.minecraft.world.WorldMixin",
     "net.minecraft.world.WorldSaveHandlerMixin",
     "net.minecraft.world.chunk.WorldChunkMixin",
