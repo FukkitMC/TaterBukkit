@@ -8,12 +8,14 @@ import net.minecraft.network.NetworkThreadUtils;
 import net.minecraft.network.Packet;
 import net.minecraft.network.packet.c2s.play.ChatMessageC2SPacket;
 import net.minecraft.network.packet.s2c.play.ChatMessageS2CPacket;
+import net.minecraft.network.packet.s2c.play.PlayerPositionLookS2CPacket;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
+import net.minecraft.util.math.Vec3d;
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.Logger;
 import org.bukkit.Location;
@@ -33,6 +35,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.Collections;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicIntegerFieldUpdater;
@@ -50,6 +53,26 @@ public abstract class ServerPlayNetworkHandlerMixin implements ServerPlayNetwork
     @Shadow public abstract void disconnect(Text reason);
 
     @Shadow public abstract void sendPacket(Packet<?> packet);
+
+    @Shadow public int teleportRequestTick;
+
+    @Shadow public int ticks;
+
+    @Shadow public boolean justTeleported;
+
+    @Shadow public Vec3d requestedTeleportPos;
+
+    @Shadow public int requestedTeleportId;
+
+    @Shadow public double lastPosX;
+
+    @Shadow public double lastPosY;
+
+    @Shadow public double lastPosZ;
+
+    @Shadow public float lastYaw;
+
+    @Shadow public float lastPitch;
 
     @Inject(method = "<init>",at =  @At("TAIL"))
     public void constructor(MinecraftServer minecraftServer, ClientConnection clientConnection, ServerPlayerEntity serverPlayerEntity, CallbackInfo ci){
@@ -80,8 +103,39 @@ public abstract class ServerPlayNetworkHandlerMixin implements ServerPlayNetwork
     }
 
     @Override
-    public void internalTeleport(double var0, double var1, double var2, float var3, float var4, Set var5) {
+    public void internalTeleport(double d0, double d1, double d2, float f, float f1, Set<PlayerPositionLookS2CPacket.Flag> set) {
+        // CraftBukkit start
+        if (Float.isNaN(f)) {
+            f = 0;
+        }
+        if (Float.isNaN(f1)) {
+            f1 = 0;
+        }
 
+        this.justTeleported = true;
+        // CraftBukkit end
+        double d3 = set.contains(PlayerPositionLookS2CPacket.Flag.X) ? this.player.getX() : 0.0D;
+        double d4 = set.contains(PlayerPositionLookS2CPacket.Flag.Y) ? this.player.getY() : 0.0D;
+        double d5 = set.contains(PlayerPositionLookS2CPacket.Flag.Z) ? this.player.getZ() : 0.0D;
+        float f2 = set.contains(PlayerPositionLookS2CPacket.Flag.Y_ROT) ? this.player.yaw : 0.0F;
+        float f3 = set.contains(PlayerPositionLookS2CPacket.Flag.X_ROT) ? this.player.pitch : 0.0F;
+
+        this.requestedTeleportPos = new Vec3d(d0, d1, d2);
+        if (++this.requestedTeleportId == Integer.MAX_VALUE) {
+            this.requestedTeleportId = 0;
+        }
+
+        // CraftBukkit start - update last location
+        this.lastPosX = this.requestedTeleportPos.x;
+        this.lastPosY = this.requestedTeleportPos.y;
+        this.lastPosZ = this.requestedTeleportPos.z;
+        this.lastYaw = f;
+        this.lastPitch = f1;
+        // CraftBukkit end
+
+        this.teleportRequestTick = this.ticks;
+        this.player.updatePositionAndAngles(d0, d1, d2, f, f1);
+        this.player.networkHandler.sendPacket(new PlayerPositionLookS2CPacket(d0 - d3, d1 - d4, d2 - d5, f - f2, f1 - f3, set, this.requestedTeleportId));
     }
 
     @Override
@@ -165,8 +219,8 @@ public abstract class ServerPlayNetworkHandlerMixin implements ServerPlayNetwork
     }
 
     @Override
-    public void teleport(Location var0) {
-
+    public void teleport(Location dest) {
+        internalTeleport(dest.getX(), dest.getY(), dest.getZ(), dest.getYaw(), dest.getPitch(), Collections.<PlayerPositionLookS2CPacket.Flag>emptySet());
     }
 
     @Override
