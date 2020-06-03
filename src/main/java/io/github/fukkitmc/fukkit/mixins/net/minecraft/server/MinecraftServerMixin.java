@@ -348,11 +348,6 @@ public abstract class MinecraftServerMixin extends ReentrantThreadExecutor<Serve
     }
 
     @Override
-    public boolean isMainThread() {
-        return isOnThread();
-    }
-
-    @Override
     public void executeModerately() {
 
     }

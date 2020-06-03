@@ -11,8 +11,6 @@ public interface MinecraftServerExtra {
 
     boolean hasStopped();
 
-    boolean isMainThread();
-
     void executeModerately();
 
     org.bukkit.command.CommandSender getBukkitSender2(net.minecraft.server.command.ServerCommandSource var0);
