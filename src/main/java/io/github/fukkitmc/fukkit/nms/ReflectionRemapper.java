@@ -1,5 +1,7 @@
 package io.github.fukkitmc.fukkit.nms;
 
+import net.fabricmc.loader.api.FabricLoader;
+
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
@@ -13,7 +15,7 @@ import java.util.Arrays;
 @SuppressWarnings("unused")
 public class ReflectionRemapper {
 
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = FabricLoader.getInstance().isDevelopmentEnvironment();
 
     // As concerning as it is, we should just insert the "version" (R1_15_2) thing here
     public static String class_getName(Class<?> clazz) {
