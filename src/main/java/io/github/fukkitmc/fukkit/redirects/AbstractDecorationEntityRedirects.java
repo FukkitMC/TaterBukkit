@@ -48,5 +48,4 @@ public interface AbstractDecorationEntityRedirects {
     static double doSomething(int i) { // CraftBukkit - static
         return i % 32 == 0 ? 0.5D : 0.0D;
     }
-    
 }

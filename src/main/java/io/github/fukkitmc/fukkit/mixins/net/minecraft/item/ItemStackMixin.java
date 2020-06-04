@@ -46,29 +46,42 @@ import java.util.Objects;
 @Mixin(ItemStack.class)
 public abstract class ItemStackMixin implements ItemStackExtra {
 
-    @Shadow public abstract CompoundTag toTag(CompoundTag tag);
+    @Shadow
+    public abstract CompoundTag toTag(CompoundTag tag);
 
-    @Shadow public CompoundTag tag;
+    @Shadow
+    public CompoundTag tag;
 
-    @Shadow public abstract void setTag(@Nullable CompoundTag tag);
+    @Shadow
+    public abstract void setTag(@Nullable CompoundTag tag);
 
-    @Shadow @Deprecated public Item item;
+    @Shadow
+    @Deprecated
+    public Item item;
 
-    @Shadow public int count;
+    @Shadow
+    public int count;
 
-    @Shadow public abstract Item getItem();
+    @Shadow
+    public abstract Item getItem();
 
-    @Shadow public abstract void setDamage(int damage);
+    @Shadow
+    public abstract void setDamage(int damage);
 
-    @Shadow public abstract int getDamage();
+    @Shadow
+    public abstract int getDamage();
 
-    @Shadow public abstract void decrement(int amount);
+    @Shadow
+    public abstract void decrement(int amount);
 
-    @Shadow public abstract void setCount(int count);
+    @Shadow
+    public abstract void setCount(int count);
 
-    @Shadow public abstract int getCount();
+    @Shadow
+    public abstract int getCount();
 
-    @Shadow public abstract boolean canPlaceOn(RegistryTagManager manager, CachedBlockPosition pos);
+    @Shadow
+    public abstract boolean canPlaceOn(RegistryTagManager manager, CachedBlockPosition pos);
 
     @Override
     public void convertStack(int version) {

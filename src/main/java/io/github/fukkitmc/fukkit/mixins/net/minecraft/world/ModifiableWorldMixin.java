@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.Mixin;
 public interface ModifiableWorldMixin extends ModifiableWorldExtra {
 
     @Override
-    default boolean addEntity(net.minecraft.entity.Entity var0, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason var1){
+    default boolean addEntity(net.minecraft.entity.Entity var0, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason var1) {
         return true;
     }
 

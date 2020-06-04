@@ -3,7 +3,6 @@ package io.github.fukkitmc.fukkit.extras;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Recipe;
 import org.bukkit.craftbukkit.entity.CraftHumanEntity;
-import org.bukkit.entity.HumanEntity;
 
 /**
  * Extra for {@link net.minecraft.inventory.Inventory}

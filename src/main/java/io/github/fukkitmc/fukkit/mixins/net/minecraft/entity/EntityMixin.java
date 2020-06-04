@@ -2,7 +2,6 @@ package io.github.fukkitmc.fukkit.mixins.net.minecraft.entity;
 
 import io.github.fukkitmc.fukkit.extras.EntityExtra;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -11,14 +10,12 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.craftbukkit.entity.CraftEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Entity.class)
 public class EntityMixin implements EntityExtra {
 
-    @Shadow public World world;
+    @Shadow
+    public World world;
 
     @Override
     public boolean isChunkLoaded() {
@@ -32,15 +29,15 @@ public class EntityMixin implements EntityExtra {
 
     @Override
     public CraftEntity getBukkitEntity() {
-        if (((Entity)(Object)this).bukkitEntity == null) {
-            ((Entity)(Object)this).bukkitEntity = CraftEntity.getEntity(world.getCraftServer(), ((Entity)(Object)this));
+        if (((Entity) (Object) this).bukkitEntity == null) {
+            ((Entity) (Object) this).bukkitEntity = CraftEntity.getEntity(world.getCraftServer(), ((Entity) (Object) this));
         }
-        return ((Entity)(Object)this).bukkitEntity;
+        return ((Entity) (Object) this).bukkitEntity;
     }
 
     @Override
     public CraftEntity getRawBukkitEntity() {
-        return ((Entity)(Object)this).getBukkitEntity();
+        return ((Entity) (Object) this).getBukkitEntity();
     }
 
     @Override

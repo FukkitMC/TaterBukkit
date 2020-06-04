@@ -3,7 +3,7 @@ package io.github.fukkitmc.fukkit.extras;
 /**
  * Extra for {@link net.minecraft.entity.player.PlayerInventory}
  */
-public interface PlayerInventoryExtra extends InventoryExtra{
+public interface PlayerInventoryExtra extends InventoryExtra {
 
     int canHold(net.minecraft.item.ItemStack var0);
 

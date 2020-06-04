@@ -19,10 +19,8 @@ import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.PacketByteBuf;
 import net.minecraft.util.UserCache;
-import net.minecraft.world.GameMode;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.level.LevelProperties;
-import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.craftbukkit.util.CraftChatMessage;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.spongepowered.asm.mixin.Mixin;
@@ -38,25 +36,36 @@ import java.util.UUID;
 @Mixin(PlayerManager.class)
 public abstract class PlayerManagerMixin {
 
-    @Shadow public abstract void sendWorldInfo(ServerPlayerEntity player, ServerWorld world);
+    @Shadow
+    public abstract void sendWorldInfo(ServerPlayerEntity player, ServerWorld world);
 
-    @Shadow public MinecraftServer server;
+    @Shadow
+    public MinecraftServer server;
 
-    @Shadow public List<ServerPlayerEntity> players;
+    @Shadow
+    public List<ServerPlayerEntity> players;
 
-    @Shadow public Map<UUID, ServerPlayerEntity> playerMap;
+    @Shadow
+    public Map<UUID, ServerPlayerEntity> playerMap;
 
-    @Shadow public abstract void sendScoreboard(ServerScoreboard scoreboard, ServerPlayerEntity player);
+    @Shadow
+    public abstract void sendScoreboard(ServerScoreboard scoreboard, ServerPlayerEntity player);
 
-    @Shadow public abstract void sendCommandTree(ServerPlayerEntity player);
+    @Shadow
+    public abstract void sendCommandTree(ServerPlayerEntity player);
 
-    @Shadow @Nullable public abstract CompoundTag loadPlayerData(ServerPlayerEntity player);
+    @Shadow
+    @Nullable
+    public abstract CompoundTag loadPlayerData(ServerPlayerEntity player);
 
-    @Shadow public abstract MinecraftServer getServer();
+    @Shadow
+    public abstract MinecraftServer getServer();
 
-    @Shadow public abstract int getMaxPlayerCount();
+    @Shadow
+    public abstract int getMaxPlayerCount();
 
-    @Shadow public int viewDistance;
+    @Shadow
+    public int viewDistance;
 
     /**
      * @author fukkit
@@ -127,8 +136,8 @@ public abstract class PlayerManagerMixin {
         // this.sendAll(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, new EntityPlayer[]{entityplayer})); // CraftBukkit - replaced with loop below
 
         // CraftBukkit start
-        PlayerJoinEvent playerJoinEvent = new PlayerJoinEvent(((PlayerManager)(Object)this).cserver.getPlayer(entityplayer), joinMessage);
-        ((PlayerManager)(Object)this).cserver.getPluginManager().callEvent(playerJoinEvent);
+        PlayerJoinEvent playerJoinEvent = new PlayerJoinEvent(((PlayerManager) (Object) this).cserver.getPlayer(entityplayer), joinMessage);
+        ((PlayerManager) (Object) this).cserver.getPluginManager().callEvent(playerJoinEvent);
 
         if (!entityplayer.networkHandler.connection.isOpen()) {
             return;

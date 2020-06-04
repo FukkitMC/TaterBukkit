@@ -31,18 +31,20 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.function.BiFunction;
 
 @Mixin(ServerWorld.class)
-public abstract class ServerWorldMixin extends World implements ServerWorldExtra{
+public abstract class ServerWorldMixin extends World implements ServerWorldExtra {
 
-    @Shadow public abstract boolean checkUuid(Entity entity);
+    @Shadow
+    public abstract boolean checkUuid(Entity entity);
 
-    @Shadow public abstract void loadEntityUnchecked(Entity entity);
+    @Shadow
+    public abstract void loadEntityUnchecked(Entity entity);
 
     protected ServerWorldMixin(LevelProperties levelProperties, DimensionType dimensionType, BiFunction<World, Dimension, ChunkManager> chunkManagerProvider, Profiler profiler, boolean isClient) {
         super(levelProperties, dimensionType, chunkManagerProvider, profiler, isClient);
     }
 
     @Inject(method = "<init>", at = @At("TAIL"))
-    public void init(CallbackInfo ci){
+    public void init(CallbackInfo ci) {
         getCraftServer().addWorld(this.getCraftWorld()); // CraftBukkit
     }
 

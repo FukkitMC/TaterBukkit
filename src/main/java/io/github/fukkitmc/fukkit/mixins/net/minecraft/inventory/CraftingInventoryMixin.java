@@ -8,7 +8,6 @@ import net.minecraft.recipe.Recipe;
 import net.minecraft.util.DefaultedList;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.entity.CraftHumanEntity;
-import org.bukkit.craftbukkit.inventory.CraftInventory;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.InventoryHolder;
@@ -23,16 +22,20 @@ import java.util.List;
 @Mixin(CraftingInventory.class)
 public class CraftingInventoryMixin implements CraftingInventoryExtra {
 
-    @Shadow public List transaction;
+    @Shadow
+    public List transaction;
 
-    @Shadow public PlayerEntity owner;
+    @Shadow
+    public PlayerEntity owner;
 
-    @Shadow public int maxStack;
+    @Shadow
+    public int maxStack;
 
-    @Shadow public DefaultedList<ItemStack> stacks;
+    @Shadow
+    public DefaultedList<ItemStack> stacks;
 
     @Inject(method = "<init>", at = @At("TAIL"))
-    public void constructor(CallbackInfo ci){
+    public void constructor(CallbackInfo ci) {
         transaction = new java.util.ArrayList<HumanEntity>();
     }
 

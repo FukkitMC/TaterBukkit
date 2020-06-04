@@ -19,13 +19,16 @@ public abstract class ChunkHolderMixin implements ChunkHolderExtra {
         return null;
     }
 
-    @Shadow public int lastTickLevel;
+    @Shadow
+    public int lastTickLevel;
 
-    @Shadow public abstract CompletableFuture<Either<Chunk, ChunkHolder.Unloaded>> getFuture(ChunkStatus leastStatus);
+    @Shadow
+    public abstract CompletableFuture<Either<Chunk, ChunkHolder.Unloaded>> getFuture(ChunkStatus leastStatus);
 
     @Override
     public WorldChunk getFullChunk() {
-        if (!getLevelType(this.lastTickLevel).isAfter(ChunkHolder.LevelType.BORDER)) return null; // note: using oldTicketLevel for isLoaded checks
+        if (!getLevelType(this.lastTickLevel).isAfter(ChunkHolder.LevelType.BORDER))
+            return null; // note: using oldTicketLevel for isLoaded checks
         CompletableFuture<Either<Chunk, ChunkHolder.Unloaded>> statusFuture = this.getFuture(ChunkStatus.FULL);
         Either<Chunk, ChunkHolder.Unloaded> either = (Either<Chunk, ChunkHolder.Unloaded>) statusFuture.getNow(null);
         return either == null ? null : (WorldChunk) either.left().orElse(null);

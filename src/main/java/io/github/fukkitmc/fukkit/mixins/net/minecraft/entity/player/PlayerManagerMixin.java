@@ -38,29 +38,36 @@ import java.util.*;
 @Mixin(PlayerManager.class)
 public abstract class PlayerManagerMixin implements PlayerManagerExtra {
 
-    @Shadow public MinecraftServer server;
+    @Shadow
+    public MinecraftServer server;
 
-    @Shadow public abstract void savePlayerData(ServerPlayerEntity player);
+    @Shadow
+    public abstract void savePlayerData(ServerPlayerEntity player);
 
-    @Shadow public abstract void method_14594(ServerPlayerEntity player);
+    @Shadow
+    public abstract void method_14594(ServerPlayerEntity player);
 
-    @Shadow public Map<UUID, ServerPlayerEntity> playerMap;
+    @Shadow
+    public Map<UUID, ServerPlayerEntity> playerMap;
 
-    @Shadow public List<ServerPlayerEntity> players;
+    @Shadow
+    public List<ServerPlayerEntity> players;
 
-    @Shadow public abstract void sendCommandTree(ServerPlayerEntity player);
+    @Shadow
+    public abstract void sendCommandTree(ServerPlayerEntity player);
 
-    @Shadow public abstract void sendWorldInfo(ServerPlayerEntity player, ServerWorld world);
+    @Shadow
+    public abstract void sendWorldInfo(ServerPlayerEntity player, ServerWorld world);
 
     @Inject(method = "<init>", at = @At("TAIL"))
-    public void init(MinecraftServer server, int maxPlayers, CallbackInfo ci){
-        if(FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT){
+    public void init(MinecraftServer server, int maxPlayers, CallbackInfo ci) {
+        if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
             //TODO: add a constructor for the client
             throw new RuntimeException("Not implemented yet!");
-        }else{
-            ((PlayerManager)(Object)this).cserver = new CraftServer((MinecraftDedicatedServer)server, ((PlayerManager)(Object)this));
+        } else {
+            ((PlayerManager) (Object) this).cserver = new CraftServer((MinecraftDedicatedServer) server, ((PlayerManager) (Object) this));
         }
-        server.server = ((PlayerManager)(Object)this).cserver;
+        server.server = ((PlayerManager) (Object) this).cserver;
         server.console = org.bukkit.craftbukkit.command.ColouredConsoleSender.getInstance();
         server.reader.addCompleter(new org.bukkit.craftbukkit.command.ConsoleCommandCompleter(server.server));
     }
@@ -135,9 +142,9 @@ public abstract class PlayerManagerMixin implements PlayerManagerExtra {
                 location = new Location(cworld, (float) blockposition.getX() + 0.5F, (double) ((float) blockposition.getY() + 0.1F), (double) ((float) blockposition.getZ() + 0.5F));
             }
 
-            Player respawnPlayer = ((PlayerManager)(Object)this).cserver.getPlayer(entityplayer1);
+            Player respawnPlayer = ((PlayerManager) (Object) this).cserver.getPlayer(entityplayer1);
             PlayerRespawnEvent respawnEvent = new PlayerRespawnEvent(respawnPlayer, location, isBedSpawn);
-            ((PlayerManager)(Object)this).cserver.getPluginManager().callEvent(respawnEvent);
+            ((PlayerManager) (Object) this).cserver.getPluginManager().callEvent(respawnEvent);
 
             location = respawnEvent.getRespawnLocation();
             if (!flag) entityplayer.reset(); // SPIGOT-4785
@@ -159,7 +166,7 @@ public abstract class PlayerManagerMixin implements PlayerManagerExtra {
 
         LevelProperties worlddata = worldserver.getLevelProperties();
 
-        entityplayer1.networkHandler.sendPacket(new PlayerRespawnS2CPacket(worldserver.dimension.getType().getType(),  LevelProperties.sha256Hash(worldserver.getLevelProperties().getSeed()), worldserver.getLevelProperties().getGeneratorType(), entityplayer1.interactionManager.getGameMode()));
+        entityplayer1.networkHandler.sendPacket(new PlayerRespawnS2CPacket(worldserver.dimension.getType().getType(), LevelProperties.sha256Hash(worldserver.getLevelProperties().getSeed()), worldserver.getLevelProperties().getGeneratorType(), entityplayer1.interactionManager.getGameMode()));
         entityplayer1.setWorld(worldserver);
         entityplayer1.removed = false;
         entityplayer1.networkHandler.teleport(new Location(worldserver.getCraftWorld(), entityplayer1.getX(), entityplayer1.getY(), entityplayer1.getZ(), entityplayer1.yaw, entityplayer1.pitch));

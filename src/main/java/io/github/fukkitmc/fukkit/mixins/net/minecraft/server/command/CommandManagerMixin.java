@@ -34,7 +34,8 @@ public abstract class CommandManagerMixin implements CommandManagerExtra {
     @Shadow
     public CommandDispatcher<ServerCommandSource> dispatcher;
 
-    @Shadow public abstract void makeTreeForSource(CommandNode<ServerCommandSource> tree, CommandNode<CommandSource> result, ServerCommandSource source, Map<CommandNode<ServerCommandSource>, CommandNode<CommandSource>> resultNodes);
+    @Shadow
+    public abstract void makeTreeForSource(CommandNode<ServerCommandSource> tree, CommandNode<CommandSource> result, ServerCommandSource source, Map<CommandNode<ServerCommandSource>, CommandNode<CommandSource>> resultNodes);
 
     @Override
     public int dispatchServerCommand(ServerCommandSource sender, String command) {

@@ -8,7 +8,8 @@ import org.spongepowered.asm.mixin.Shadow;
 @Mixin(LevelProperties.class)
 public abstract class LevelPropertiesMixin implements LevelPropertiesExtra {
 
-    @Shadow public String levelName;
+    @Shadow
+    public String levelName;
 
     public void checkName(String name) {
         if (!this.levelName.equals(name)) {

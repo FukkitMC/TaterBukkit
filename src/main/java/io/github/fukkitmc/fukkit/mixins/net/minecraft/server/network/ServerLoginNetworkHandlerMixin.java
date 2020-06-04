@@ -10,7 +10,8 @@ import org.spongepowered.asm.mixin.Shadow;
 @Mixin(ServerLoginNetworkHandler.class)
 public abstract class ServerLoginNetworkHandlerMixin implements ServerLoginNetworkHandlerExtra {
 
-    @Shadow public abstract void disconnect(Text reason);
+    @Shadow
+    public abstract void disconnect(Text reason);
 
     @Override
     public void disconnect(String var0) {

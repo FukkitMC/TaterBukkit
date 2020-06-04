@@ -9,7 +9,7 @@ public class DimensionTypeMixin implements DimensionTypeExtra {
 
     @Override
     public DimensionType getType() {
-        return (((DimensionType)(Object)this).type == null) ? ((DimensionType)(Object)this) : ((DimensionType)(Object)this).type;
+        return (((DimensionType) (Object) this).type == null) ? ((DimensionType) (Object) this) : ((DimensionType) (Object) this).type;
     }
 
 }

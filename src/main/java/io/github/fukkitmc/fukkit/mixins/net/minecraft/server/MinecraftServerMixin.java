@@ -115,19 +115,26 @@ public abstract class MinecraftServerMixin extends ReentrantThreadExecutor<Serve
     protected void shutdown() {
     }
 
-    @Shadow public DisableableProfiler profiler;
+    @Shadow
+    public DisableableProfiler profiler;
 
-    @Shadow public abstract boolean isRunning();
+    @Shadow
+    public abstract boolean isRunning();
 
-    @Shadow public abstract void setFavicon(ServerMetadata metadata);
+    @Shadow
+    public abstract void setFavicon(ServerMetadata metadata);
 
-    @Shadow public abstract String getServerMotd();
+    @Shadow
+    public abstract String getServerMotd();
 
-    @Shadow public abstract File getRunDirectory();
+    @Shadow
+    public abstract File getRunDirectory();
 
-    @Shadow public abstract CrashReport populateCrashReport(CrashReport crashReport);
+    @Shadow
+    public abstract CrashReport populateCrashReport(CrashReport crashReport);
 
-    @Shadow public static int currentTick;
+    @Shadow
+    public static int currentTick;
 
     @Inject(method = "<init>", at = @At("TAIL"))
     public void init(File gameDir, Proxy proxy, DataFixer dataFixer, CommandManager commandManager, YggdrasilAuthenticationService authService, MinecraftSessionService sessionService, GameProfileRepository gameProfileRepository, UserCache userCache, WorldGenerationProgressListenerFactory worldGenerationProgressListenerFactory, String levelName, CallbackInfo ci) throws IOException {
@@ -369,7 +376,6 @@ public abstract class MinecraftServerMixin extends ReentrantThreadExecutor<Serve
     /**
      * Optimized Tick Loop for Fabric
      * This ports "0044-Highly-Optimized-Tick-Loop.patch"
-     *
      */
     //FIXME: overwrite bad
     @Overwrite
@@ -394,8 +400,8 @@ public abstract class MinecraftServerMixin extends ReentrantThreadExecutor<Serve
                         this.field_4557 = this.timeReference;
                     }
 
-                    if ( tickCount++ % SAMPLE_INTERVAL == 0 ) {
-                        double currentTps = 1E3 / ( curTime - tickSection ) * SAMPLE_INTERVAL;
+                    if (tickCount++ % SAMPLE_INTERVAL == 0) {
+                        double currentTps = 1E3 / (curTime - tickSection) * SAMPLE_INTERVAL;
                         recentTps[0] = calcTps(recentTps[0], 0.92, currentTps);
                         recentTps[1] = calcTps(recentTps[1], 0.9835, currentTps);
                         recentTps[2] = calcTps(recentTps[2], 0.9945, currentTps);
@@ -423,7 +429,7 @@ public abstract class MinecraftServerMixin extends ReentrantThreadExecutor<Serve
             } else this.setCrashReport(null);
         } catch (Throwable throwable) {
             LOGGER.error("Encountered an unexpected exception", throwable);
-            CrashReport crashReport = this.populateCrashReport((throwable instanceof CrashException) ? ((CrashException)throwable).getReport() : new CrashReport("Exception in server tick loop", throwable));
+            CrashReport crashReport = this.populateCrashReport((throwable instanceof CrashException) ? ((CrashException) throwable).getReport() : new CrashReport("Exception in server tick loop", throwable));
 
             File file = new File(new File(this.getRunDirectory(), "crash-reports"), "crash-" + new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss").format(new Date()) + "-server.txt");
             LOGGER.error(crashReport.writeToFile(file) ? ("This crash report has been saved to: " + file.getAbsolutePath()) : "We were unable to save this crash report to disk.");
@@ -434,7 +440,9 @@ public abstract class MinecraftServerMixin extends ReentrantThreadExecutor<Serve
                 this.shutdown();
             } catch (Throwable throwable) {
                 LOGGER.error("Exception stopping the server", throwable);
-            } finally {System.exit(1);}
+            } finally {
+                System.exit(1);
+            }
         }
     }
 

@@ -10,7 +10,8 @@ import org.spongepowered.asm.mixin.Shadow;
 public class ServerCommandSourceMixin implements ServerCommandSourceExtra {
 
 
-    @Shadow public CommandOutput output;
+    @Shadow
+    public CommandOutput output;
 
     @Override
     public boolean hasPermission(int var0, String var1) {
@@ -19,6 +20,6 @@ public class ServerCommandSourceMixin implements ServerCommandSourceExtra {
 
     @Override
     public org.bukkit.command.CommandSender getBukkitSender() {
-        return output.getBukkitSender(((ServerCommandSource)(Object)this));
+        return output.getBukkitSender(((ServerCommandSource) (Object) this));
     }
 }

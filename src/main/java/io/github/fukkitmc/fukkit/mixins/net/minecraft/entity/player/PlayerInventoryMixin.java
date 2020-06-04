@@ -23,7 +23,7 @@ import java.util.List;
 public abstract class PlayerInventoryMixin implements PlayerInventoryExtra {
 
     @Inject(method = "<init>", at = @At("TAIL"))
-    public void constructor(PlayerEntity player, CallbackInfo ci){
+    public void constructor(PlayerEntity player, CallbackInfo ci) {
         transaction = new java.util.ArrayList<HumanEntity>();
     }
 
