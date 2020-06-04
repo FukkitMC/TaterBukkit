@@ -22,56 +22,44 @@ import java.util.List;
 @Mixin(CraftingInventory.class)
 public class CraftingInventoryMixin implements CraftingInventoryExtra {
 
-    @Shadow
-    public List transaction;
-
-    @Shadow
-    public PlayerEntity owner;
-
-    @Shadow
-    public int maxStack;
-
-    @Shadow
-    public DefaultedList<ItemStack> stacks;
-
     @Inject(method = "<init>", at = @At("TAIL"))
     public void constructor(CallbackInfo ci) {
-        transaction = new java.util.ArrayList<HumanEntity>();
+        ((CraftingInventory)(Object)this).transaction = new java.util.ArrayList<HumanEntity>();
     }
 
     @Override
     public List getViewers() {
-        return transaction;
+        return ((CraftingInventory)(Object)this).transaction;
     }
 
     @Override
     public InventoryHolder getOwner() {
-        return (owner == null) ? null : owner.getBukkitEntity();
+        return (((CraftingInventory)(Object)this).owner == null) ? null : ((CraftingInventory)(Object)this).owner.getBukkitEntity();
     }
 
     @Override
     public int getMaxStackSize() {
-        return maxStack;
+        return ((CraftingInventory)(Object)this).maxStack;
     }
 
     @Override
     public void setMaxStackSize(int var0) {
-        maxStack = var0;
+        ((CraftingInventory)(Object)this).maxStack = var0;
     }
 
     @Override
     public InventoryType getInvType() {
-        return stacks.size() == 4 ? InventoryType.CRAFTING : InventoryType.WORKBENCH;
+        return ((CraftingInventory)(Object)this).stacks.size() == 4 ? InventoryType.CRAFTING : InventoryType.WORKBENCH;
     }
 
     @Override
     public void onOpen(CraftHumanEntity who) {
-        transaction.add(who);
+        ((CraftingInventory)(Object)this).transaction.add(who);
     }
 
     @Override
     public List<ItemStack> getContents() {
-        return stacks;
+        return ((CraftingInventory)(Object)this).stacks;
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.mojang.datafixers.util.Either;
 import io.github.fukkitmc.fukkit.extras.PlayerEntityExtra;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -16,9 +17,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(PlayerEntity.class)
 public abstract class PlayerEntityMixin implements PlayerEntityExtra {
-
-    @Shadow
-    public String spawnWorld;
 
     @Override
     public Either getBedResult(BlockPos var0, Direction var1) {
@@ -47,9 +45,9 @@ public abstract class PlayerEntityMixin implements PlayerEntityExtra {
 
     @Inject(method = "readCustomDataFromTag", at = @At("TAIL"))
     public void readCustomDataFromTag(CompoundTag nbtTagCompound, CallbackInfo ci) {
-        this.spawnWorld = nbtTagCompound.getString("SpawnWorld");
-        if ("".equals(spawnWorld)) {
-            this.spawnWorld = ((PlayerEntity) (Object) this).world.getCraftServer().getWorlds().get(0).getName();
+        ((PlayerEntity)(Object)this).spawnWorld = nbtTagCompound.getString("SpawnWorld");
+        if ("".equals(((PlayerEntity)(Object)this).spawnWorld)) {
+            ((PlayerEntity)(Object)this).spawnWorld = ((PlayerEntity) (Object) this).world.getCraftServer().getWorlds().get(0).getName();
         }
     }
 

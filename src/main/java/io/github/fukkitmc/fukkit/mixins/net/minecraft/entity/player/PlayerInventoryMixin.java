@@ -3,7 +3,9 @@ package io.github.fukkitmc.fukkit.mixins.net.minecraft.entity.player;
 import io.github.fukkitmc.fukkit.extras.PlayerInventoryExtra;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.util.DefaultedList;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.entity.CraftHumanEntity;
@@ -24,7 +26,7 @@ public abstract class PlayerInventoryMixin implements PlayerInventoryExtra {
 
     @Inject(method = "<init>", at = @At("TAIL"))
     public void constructor(PlayerEntity player, CallbackInfo ci) {
-        transaction = new java.util.ArrayList<HumanEntity>();
+        ((PlayerInventory)(Object)this).transaction = new java.util.ArrayList<HumanEntity>();
     }
 
     @Shadow
@@ -33,10 +35,6 @@ public abstract class PlayerInventoryMixin implements PlayerInventoryExtra {
     @Shadow
     @Final
     public DefaultedList<ItemStack> armor;
-    @Shadow
-    public List transaction;
-    @Shadow
-    public int maxStack;
     @Shadow
     @Final
     public PlayerEntity player;
@@ -75,12 +73,12 @@ public abstract class PlayerInventoryMixin implements PlayerInventoryExtra {
 
     @Override
     public void onClose(CraftHumanEntity who) {
-        transaction.remove(who);
+        ((PlayerInventory) (Object)this).transaction.remove(who);
     }
 
     @Override
     public List getViewers() {
-        return transaction;
+        return ((PlayerInventory) (Object)this).transaction;
     }
 
     @Override
@@ -105,17 +103,17 @@ public abstract class PlayerInventoryMixin implements PlayerInventoryExtra {
 
     @Override
     public int getMaxStackSize() {
-        return maxStack;
+        return ((PlayerInventory)(Object)this).maxStack;
     }
 
     @Override
     public void setMaxStackSize(int size) {
-        maxStack = size;
+        ((PlayerInventory)(Object)this).maxStack = size;
     }
 
     @Override
     public void onOpen(CraftHumanEntity who) {
-        transaction.add(who);
+        ((PlayerInventory) (Object)this).transaction.add(who);
     }
 
     @Override

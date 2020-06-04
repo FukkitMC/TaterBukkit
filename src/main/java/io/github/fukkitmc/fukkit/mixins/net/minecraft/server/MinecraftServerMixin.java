@@ -133,9 +133,6 @@ public abstract class MinecraftServerMixin extends ReentrantThreadExecutor<Serve
     @Shadow
     public abstract CrashReport populateCrashReport(CrashReport crashReport);
 
-    @Shadow
-    public static int currentTick;
-
     @Inject(method = "<init>", at = @At("TAIL"))
     public void init(File gameDir, Proxy proxy, DataFixer dataFixer, CommandManager commandManager, YggdrasilAuthenticationService authService, MinecraftSessionService sessionService, GameProfileRepository gameProfileRepository, UserCache userCache, WorldGenerationProgressListenerFactory worldGenerationProgressListenerFactory, String levelName, CallbackInfo ci) throws IOException {
         MinecraftServer self = (MinecraftServer) (Object) this;
@@ -409,7 +406,7 @@ public abstract class MinecraftServerMixin extends ReentrantThreadExecutor<Serve
                     }
                     // Spigot end
 
-                    currentTick = (int) (System.currentTimeMillis() / 50); // CraftBukkit
+                    MinecraftServer.currentTick = (int) (System.currentTimeMillis() / 50); // CraftBukkit
                     this.timeReference += 50L;
                     if (this.profilerStartQueued) {
                         this.profilerStartQueued = false;

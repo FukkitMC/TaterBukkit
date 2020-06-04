@@ -3,6 +3,7 @@ package io.github.fukkitmc.fukkit.mixins;
 import io.github.fukkitmc.fukkit.extras.ServerPlayNetworkHandlerExtra;
 import net.minecraft.SharedConstants;
 import net.minecraft.client.options.ChatVisibility;
+import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.network.ClientConnection;
 import net.minecraft.network.NetworkThreadUtils;
 import net.minecraft.network.Packet;
@@ -12,6 +13,7 @@ import net.minecraft.network.packet.s2c.play.PlayerPositionLookS2CPacket;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
@@ -66,28 +68,10 @@ public abstract class ServerPlayNetworkHandlerMixin implements ServerPlayNetwork
     public int ticks;
 
     @Shadow
-    public boolean justTeleported;
-
-    @Shadow
     public Vec3d requestedTeleportPos;
 
     @Shadow
     public int requestedTeleportId;
-
-    @Shadow
-    public double lastPosX;
-
-    @Shadow
-    public double lastPosY;
-
-    @Shadow
-    public double lastPosZ;
-
-    @Shadow
-    public float lastYaw;
-
-    @Shadow
-    public float lastPitch;
 
     @Inject(method = "<init>", at = @At("TAIL"))
     public void constructor(MinecraftServer minecraftServer, ClientConnection clientConnection, ServerPlayerEntity serverPlayerEntity, CallbackInfo ci) {
@@ -127,7 +111,7 @@ public abstract class ServerPlayNetworkHandlerMixin implements ServerPlayNetwork
             f1 = 0;
         }
 
-        this.justTeleported = true;
+        ((ServerPlayNetworkHandler)(Object)this).justTeleported = true;
         // CraftBukkit end
         double d3 = set.contains(PlayerPositionLookS2CPacket.Flag.X) ? this.player.getX() : 0.0D;
         double d4 = set.contains(PlayerPositionLookS2CPacket.Flag.Y) ? this.player.getY() : 0.0D;
@@ -141,11 +125,11 @@ public abstract class ServerPlayNetworkHandlerMixin implements ServerPlayNetwork
         }
 
         // CraftBukkit start - update last location
-        this.lastPosX = this.requestedTeleportPos.x;
-        this.lastPosY = this.requestedTeleportPos.y;
-        this.lastPosZ = this.requestedTeleportPos.z;
-        this.lastYaw = f;
-        this.lastPitch = f1;
+        ((ServerPlayNetworkHandler) (Object) this).lastPosX = this.requestedTeleportPos.x;
+        ((ServerPlayNetworkHandler) (Object) this).lastPosY = this.requestedTeleportPos.y;
+        ((ServerPlayNetworkHandler) (Object) this).lastPosZ = this.requestedTeleportPos.z;
+        ((ServerPlayNetworkHandler) (Object) this).lastYaw = f;
+        ((ServerPlayNetworkHandler) (Object)this).lastPitch = f1;
         // CraftBukkit end
 
         this.teleportRequestTick = this.ticks;
@@ -250,7 +234,7 @@ public abstract class ServerPlayNetworkHandlerMixin implements ServerPlayNetwork
 
     @Override
     public void disconnect(String var0) {
-
+        this.disconnect(new LiteralText(var0));
     }
 
     /**

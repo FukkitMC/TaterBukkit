@@ -6,6 +6,7 @@ import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
@@ -31,9 +32,6 @@ import java.util.function.Consumer;
 public abstract class WorldChunkMixin implements WorldChunkExtra {
 
     @Shadow
-    public Chunk bukkitChunk;
-
-    @Shadow
     public World world;
 
     @Shadow
@@ -50,12 +48,6 @@ public abstract class WorldChunkMixin implements WorldChunkExtra {
     public ChunkSection[] sections;
 
     @Shadow
-    public boolean mustNotSave;
-
-    @Shadow
-    public boolean needsDecoration;
-
-    @Shadow
     public ChunkPos pos;
 
     @Shadow
@@ -63,12 +55,12 @@ public abstract class WorldChunkMixin implements WorldChunkExtra {
 
     @Inject(method = "<init>(Lnet/minecraft/world/World;Lnet/minecraft/util/math/ChunkPos;Lnet/minecraft/world/biome/source/BiomeArray;Lnet/minecraft/world/chunk/UpgradeData;Lnet/minecraft/world/TickScheduler;Lnet/minecraft/world/TickScheduler;J[Lnet/minecraft/world/chunk/ChunkSection;Ljava/util/function/Consumer;)V", at = @At("TAIL"))
     public void constructor(World world, ChunkPos chunkPos, BiomeArray biomeArray, UpgradeData upgradeData, TickScheduler<Block> tickScheduler, TickScheduler<Fluid> tickScheduler2, long l, ChunkSection[] chunkSections, Consumer<WorldChunk> consumer, CallbackInfo ci) {
-        this.bukkitChunk = new org.bukkit.craftbukkit.CraftChunk(((WorldChunk) (Object) this));
+        ((WorldChunk)(Object)this).bukkitChunk = new org.bukkit.craftbukkit.CraftChunk(((WorldChunk) (Object) this));
     }
 
     @Override
     public Chunk getBukkitChunk() {
-        return bukkitChunk;
+        return ((WorldChunk)(Object)this).bukkitChunk;
     }
 
     @Override
@@ -149,10 +141,10 @@ public abstract class WorldChunkMixin implements WorldChunkExtra {
     @Override
     public void unloadCallback() {
         org.bukkit.Server server = this.world.getCraftServer();
-        org.bukkit.event.world.ChunkUnloadEvent unloadEvent = new org.bukkit.event.world.ChunkUnloadEvent(this.bukkitChunk, this.needsSaving());
+        org.bukkit.event.world.ChunkUnloadEvent unloadEvent = new org.bukkit.event.world.ChunkUnloadEvent(((WorldChunk)(Object)this).bukkitChunk, this.needsSaving());
         server.getPluginManager().callEvent(unloadEvent);
         // note: saving can be prevented, but not forced if no saving is actually required
-        this.mustNotSave = !unloadEvent.isSaveChunk();
+        ((WorldChunk)(Object)this).mustNotSave = !unloadEvent.isSaveChunk();
     }
 
     @Override
@@ -164,10 +156,10 @@ public abstract class WorldChunkMixin implements WorldChunkExtra {
              * the World constructor. We can't reliably alter that, so we have
              * no way of creating a CraftWorld/CraftServer at that point.
              */
-            server.getPluginManager().callEvent(new org.bukkit.event.world.ChunkLoadEvent(this.bukkitChunk, this.needsDecoration));
+            server.getPluginManager().callEvent(new org.bukkit.event.world.ChunkLoadEvent(((WorldChunk)(Object)this).bukkitChunk, ((WorldChunk)(Object)this).needsDecoration));
 
-            if (this.needsDecoration) {
-                this.needsDecoration = false;
+            if (((WorldChunk)(Object)this).needsDecoration) {
+                ((WorldChunk)(Object)this).needsDecoration = false;
                 java.util.Random random = new java.util.Random();
                 random.setSeed(world.getSeed());
                 long xRand = random.nextLong() / 2L * 2L + 1L;
@@ -179,13 +171,13 @@ public abstract class WorldChunkMixin implements WorldChunkExtra {
                     this.world.populating = true;
                     try {
                         for (org.bukkit.generator.BlockPopulator populator : world.getPopulators()) {
-                            populator.populate(world, random, bukkitChunk);
+                            populator.populate(world, random, ((WorldChunk)(Object)this).bukkitChunk);
                         }
                     } finally {
                         this.world.populating = false;
                     }
                 }
-                server.getPluginManager().callEvent(new org.bukkit.event.world.ChunkPopulateEvent(bukkitChunk));
+                server.getPluginManager().callEvent(new org.bukkit.event.world.ChunkPopulateEvent(((WorldChunk)(Object)this).bukkitChunk));
             }
         }
     }
