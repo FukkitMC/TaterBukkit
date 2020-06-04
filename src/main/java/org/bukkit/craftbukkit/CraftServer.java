@@ -335,9 +335,11 @@ public final class CraftServer implements Server {
         File pluginFolder = (File) console.options.valueOf("plugins");
 
         if (pluginFolder.exists()) {
-            Plugin[] plugins = new Plugin[0];
+            Plugin[] plugins;
+
             try {
-                plugins = pluginManager.loadPlugins(PluginRemapper.remapDirectory(pluginFolder));
+                PluginRemapper.remapDirectory(pluginFolder);
+                plugins = pluginManager.loadPlugins(pluginFolder);
             } catch (IOException exception) {
                 throw new RuntimeException(exception);
             }

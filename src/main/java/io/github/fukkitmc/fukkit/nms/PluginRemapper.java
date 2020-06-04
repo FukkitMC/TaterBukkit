@@ -5,6 +5,7 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.launch.common.FabricLauncherBase;
 import net.fabricmc.loader.launch.common.MappingConfiguration;
 import net.fabricmc.loader.util.mappings.TinyRemapperMappingsHelper;
+import net.fabricmc.tinyremapper.NonClassCopyMode;
 import net.fabricmc.tinyremapper.OutputConsumerPath;
 import net.fabricmc.tinyremapper.TinyRemapper;
 
@@ -21,6 +22,8 @@ public class PluginRemapper {
 
     private static final Path FUKKIT = FabricLoader.getInstance().getGameDirectory().toPath().resolve(".fukkit");
     private static final Path REMAPPED_OUTPUT = FUKKIT.resolve("remapped_plugins");
+
+    private static final int VERSION = 0;
 
     private static Path remap(Path plugin) throws IOException {
         MappingConfiguration mappingConfiguration = FabricLauncherBase.getLauncher().getMappingConfiguration();
@@ -44,6 +47,7 @@ public class PluginRemapper {
                         && !clsName.startsWith("com/google/thirdparty/")
                         && !clsName.startsWith("org/apache/logging/log4j/"))
                 .build()) {
+            outputConsumer.addNonClassFiles(plugin, NonClassCopyMode.FIX_META_INF, remapper);
             remapper.readClassPath(FabricLauncherBase.minecraftJar);
             remapper.readInputs(plugin);
             remapper.apply(outputConsumer);
@@ -51,7 +55,6 @@ public class PluginRemapper {
             remapper.finish();
         }
 
-        System.err.println("HAHAYES " + result);
         return result;
     }
 
@@ -60,18 +63,25 @@ public class PluginRemapper {
                 .putBytes(Files.readAllBytes(path))
                 .putString(targetNamespace, StandardCharsets.UTF_8)
                 .putString(path.toString(), StandardCharsets.UTF_8)
-                .toString());
+                .putInt(VERSION)
+                .hash()
+                .toString()
+                + ".jar");
     }
 
-    public static File remapDirectory(File pluginFolder) throws IOException {
-        Path temp = Files.createTempDirectory(FUKKIT, "plugins");
+    public static void remapDirectory(File pluginFolder) throws IOException {
+        Files.createDirectories(FUKKIT);
 
         for (File file : pluginFolder.listFiles()) {
-            if (file.toString().endsWith(".jar")) {
-                Files.copy(remap(file.toPath()), pluginFolder.toPath().relativize(file.toPath()));
+            String name = file.getName();
+
+            if (name.endsWith(".jar") && !name.startsWith("fukkit-")) {
+                Path p = file.toPath();
+                Path f = p.getParent().resolve("fukkit-" + file.getName());
+
+                Files.deleteIfExists(f);
+                Files.copy(remap(p), f);
             }
         }
-
-        return temp.toFile();
     }
 }
