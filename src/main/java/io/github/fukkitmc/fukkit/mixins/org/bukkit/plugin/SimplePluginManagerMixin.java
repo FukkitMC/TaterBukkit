@@ -10,7 +10,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 
-@Mixin(SimplePluginManager.class)
+@Mixin(value = SimplePluginManager.class, remap = false)
 public class SimplePluginManagerMixin {
 
     @Redirect(method = "loadPlugins", at = @At(value = "INVOKE", target = "Ljava/io/File;listFiles()[Ljava/io/File;"))

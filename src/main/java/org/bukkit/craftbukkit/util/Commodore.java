@@ -12,6 +12,8 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.jar.JarOutputStream;
 import java.util.zip.ZipEntry;
+
+import io.github.fukkitmc.fukkit.nms.ReflectionRedirectingMethodVisitor;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import joptsimple.OptionSpec;
@@ -133,7 +135,7 @@ public class Commodore
             @Override
             public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions)
             {
-                return new MethodVisitor( api, super.visitMethod( access, name, desc, signature, exceptions ) )
+                return new MethodVisitor( api, new ReflectionRedirectingMethodVisitor(super.visitMethod( access, name, desc, signature, exceptions )) )
                 {
 
                     @Override

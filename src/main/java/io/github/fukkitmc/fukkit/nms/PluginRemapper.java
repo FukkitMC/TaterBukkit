@@ -7,7 +7,6 @@ import net.fabricmc.loader.launch.common.MappingConfiguration;
 import net.fabricmc.loader.util.mappings.TinyRemapperMappingsHelper;
 import net.fabricmc.tinyremapper.OutputConsumerPath;
 import net.fabricmc.tinyremapper.TinyRemapper;
-import org.objectweb.asm.*;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -35,6 +34,7 @@ public class PluginRemapper {
                 .rebuildSourceFilenames(true)
                 .build();
 
+        Files.createDirectories(result.getParent());
         try (OutputConsumerPath outputConsumer = new OutputConsumerPath.Builder(result)
                 .assumeArchive(true)
                 .filter(clsName -> !clsName.startsWith("com/google/common/")
@@ -44,16 +44,7 @@ public class PluginRemapper {
                 .build()) {
             remapper.readClassPath(FabricLauncherBase.minecraftJar);
             remapper.readInputs(plugin);
-            remapper.apply((s, bytes) -> {
-                ClassWriter writer = new ClassWriter(0);
-                new ClassReader(bytes).accept(new ClassVisitor(Opcodes.ASM8, writer) {
-                    @Override
-                    public MethodVisitor visitMethod(int access, String name, String descriptor, String signature, String[] exceptions) {
-                        return new ReflectionRedirectingMethodVisitor(super.visitMethod(access, name, descriptor, signature, exceptions));
-                    }
-                }, 0);
-                outputConsumer.accept(s, writer.toByteArray());
-            });
+            remapper.apply(outputConsumer);
         } finally {
             remapper.finish();
         }
