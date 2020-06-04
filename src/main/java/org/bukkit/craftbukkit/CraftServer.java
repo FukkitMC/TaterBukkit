@@ -14,6 +14,7 @@ import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.tree.CommandNode;
 import com.mojang.brigadier.tree.LiteralCommandNode;
+import io.github.fukkitmc.fukkit.nms.PluginRemapper;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufOutputStream;
 import io.netty.buffer.Unpooled;
@@ -334,7 +335,13 @@ public final class CraftServer implements Server {
         File pluginFolder = (File) console.options.valueOf("plugins");
 
         if (pluginFolder.exists()) {
-            Plugin[] plugins = pluginManager.loadPlugins(pluginFolder);
+            Plugin[] plugins = new Plugin[0];
+            try {
+                plugins = pluginManager.loadPlugins(PluginRemapper.remapDirectory(pluginFolder));
+            } catch (IOException exception) {
+                throw new RuntimeException(exception);
+            }
+
             for (Plugin plugin : plugins) {
                 try {
                     String message = String.format("Loading %s", plugin.getDescription().getFullName());

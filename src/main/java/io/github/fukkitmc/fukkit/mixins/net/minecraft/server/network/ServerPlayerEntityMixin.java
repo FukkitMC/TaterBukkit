@@ -15,18 +15,16 @@ import net.minecraft.world.dimension.DimensionType;
 import org.bukkit.WeatherType;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.event.player.PlayerTeleportEvent;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ServerPlayerEntity.class)
-public class ServerPlayerEntityMixin implements ServerPlayerEntityExtra{
+public class ServerPlayerEntityMixin implements ServerPlayerEntityExtra {
 
     @Inject(method = "<init>", at = @At("TAIL"))
-    public void init(MinecraftServer server, ServerWorld world, GameProfile profile, ServerPlayerInteractionManager interactionManager, CallbackInfo ci){
+    public void init(MinecraftServer server, ServerWorld world, GameProfile profile, ServerPlayerInteractionManager interactionManager, CallbackInfo ci) {
     }
 
     @Override
@@ -36,7 +34,7 @@ public class ServerPlayerEntityMixin implements ServerPlayerEntityExtra{
 
     @Override
     public CraftPlayer getBukkitEntity() {
-        return (CraftPlayer) ((ServerPlayerEntity)(Object)this).getRawBukkitEntity();
+        return (CraftPlayer) ((ServerPlayerEntity) (Object) this).getRawBukkitEntity();
     }
 
     @Override
@@ -61,7 +59,7 @@ public class ServerPlayerEntityMixin implements ServerPlayerEntityExtra{
 
     @Override
     public Entity a(DimensionType var0, PlayerTeleportEvent.TeleportCause var1) {
-        return ((ServerPlayerEntity)(Object)this);
+        return ((ServerPlayerEntity) (Object) this);
     }
 
     @Override
@@ -91,7 +89,7 @@ public class ServerPlayerEntityMixin implements ServerPlayerEntityExtra{
 
     @Override
     public Either sleep(BlockPos var0, boolean var1) {
-        return Either.left(((ServerPlayerEntity)(Object)this));
+        return Either.left(((ServerPlayerEntity) (Object) this));
     }
 
     @Override

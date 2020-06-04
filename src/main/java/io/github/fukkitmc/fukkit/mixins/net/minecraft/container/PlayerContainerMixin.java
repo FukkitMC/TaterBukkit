@@ -9,7 +9,6 @@ import net.minecraft.inventory.CraftingResultInventory;
 import net.minecraft.text.TranslatableText;
 import org.bukkit.craftbukkit.inventory.CraftInventoryCrafting;
 import org.bukkit.craftbukkit.inventory.CraftInventoryView;
-import org.bukkit.entity.HumanEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -23,7 +22,7 @@ public abstract class PlayerContainerMixin implements PlayerContainerExtra {
     public CraftingResultInventory craftingResultInventory;
 
     @Inject(method = "<init>", at = @At("TAIL"))
-    public void constructor(PlayerInventory playerinventory, boolean onServer, PlayerEntity owner, CallbackInfo ci){
+    public void constructor(PlayerInventory playerinventory, boolean onServer, PlayerEntity owner, CallbackInfo ci) {
         this.craftingResultInventory = new CraftingResultInventory(); // CraftBukkit - moved to before InventoryCrafting construction
         ((PlayerContainer) (Object) this).craftingInventory = new CraftingInventory(((PlayerContainer) (Object) this), 2, 2); // CraftBukkit - pass player
         ((PlayerContainer) (Object) this).craftingInventory.resultInventory = this.craftingResultInventory; // CraftBukkit - let InventoryCrafting know about its result slot

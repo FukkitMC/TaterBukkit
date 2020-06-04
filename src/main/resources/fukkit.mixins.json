@@ -29,8 +29,7 @@
     "net.minecraft.world.WorldSaveHandlerMixin",
     "net.minecraft.world.chunk.WorldChunkMixin",
     "net.minecraft.world.dimension.DimensionTypeMixin",
-    "net.minecraft.world.level.LevelPropertiesMixin",
-    "org.bukkit.plugin.SimplePluginManagerMixin"
+    "net.minecraft.world.level.LevelPropertiesMixin"
   ],
   "client": [
   ],

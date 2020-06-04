@@ -30,28 +30,39 @@ import java.util.function.Consumer;
 @Mixin(WorldChunk.class)
 public abstract class WorldChunkMixin implements WorldChunkExtra {
 
-    @Shadow public Chunk bukkitChunk;
+    @Shadow
+    public Chunk bukkitChunk;
 
-    @Shadow public World world;
+    @Shadow
+    public World world;
 
-    @Shadow @Nullable public abstract BlockEntity getBlockEntity(BlockPos pos, WorldChunk.CreationType creationType);
+    @Shadow
+    @Nullable
+    public abstract BlockEntity getBlockEntity(BlockPos pos, WorldChunk.CreationType creationType);
 
-    @Shadow public volatile boolean shouldSave;
+    @Shadow
+    public volatile boolean shouldSave;
 
-    @Shadow public Map<Heightmap.Type, Heightmap> heightmaps;
+    @Shadow
+    public Map<Heightmap.Type, Heightmap> heightmaps;
 
-    @Shadow public ChunkSection[] sections;
+    @Shadow
+    public ChunkSection[] sections;
 
-    @Shadow public boolean mustNotSave;
+    @Shadow
+    public boolean mustNotSave;
 
-    @Shadow public boolean needsDecoration;
+    @Shadow
+    public boolean needsDecoration;
 
-    @Shadow public ChunkPos pos;
+    @Shadow
+    public ChunkPos pos;
 
-    @Shadow public abstract boolean needsSaving();
+    @Shadow
+    public abstract boolean needsSaving();
 
     @Inject(method = "<init>(Lnet/minecraft/world/World;Lnet/minecraft/util/math/ChunkPos;Lnet/minecraft/world/biome/source/BiomeArray;Lnet/minecraft/world/chunk/UpgradeData;Lnet/minecraft/world/TickScheduler;Lnet/minecraft/world/TickScheduler;J[Lnet/minecraft/world/chunk/ChunkSection;Ljava/util/function/Consumer;)V", at = @At("TAIL"))
-    public void constructor(World world, ChunkPos chunkPos, BiomeArray biomeArray, UpgradeData upgradeData, TickScheduler<Block> tickScheduler, TickScheduler<Fluid> tickScheduler2, long l, ChunkSection[] chunkSections, Consumer<WorldChunk> consumer, CallbackInfo ci){
+    public void constructor(World world, ChunkPos chunkPos, BiomeArray biomeArray, UpgradeData upgradeData, TickScheduler<Block> tickScheduler, TickScheduler<Fluid> tickScheduler2, long l, ChunkSection[] chunkSections, Consumer<WorldChunk> consumer, CallbackInfo ci) {
         this.bukkitChunk = new org.bukkit.craftbukkit.CraftChunk(((WorldChunk) (Object) this));
     }
 

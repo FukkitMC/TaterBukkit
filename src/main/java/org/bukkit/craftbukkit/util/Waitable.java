@@ -1,21 +1,11 @@
 package org.bukkit.craftbukkit.util;
 
-import io.github.fukkitmc.fukkit.mixins.ServerPlayNetworkHandlerMixin;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.network.ServerPlayNetworkHandler;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.TranslatableText;
-import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerChatEvent;
-
 import java.util.concurrent.ExecutionException;
-
 
 public abstract class Waitable<T> implements Runnable {
     Throwable t = null;
     T value = null;
     Status status = Status.WAITING;
-
 
     @Override
     public final void run() {

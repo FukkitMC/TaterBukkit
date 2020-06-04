@@ -26,7 +26,8 @@ import java.util.function.BiFunction;
 @Mixin(World.class)
 public abstract class WorldMixin implements WorldExtra {
 
-    @Shadow public abstract WorldChunk getChunk(int i, int j);
+    @Shadow
+    public abstract WorldChunk getChunk(int i, int j);
 
     @Override
     public WorldChunk getChunkIfLoaded(int var0, int var1) {
@@ -40,8 +41,8 @@ public abstract class WorldMixin implements WorldExtra {
 
     @Inject(method = "<init>", at = @At("TAIL"))
     //TODO: yes yes ye sye ys FIXME: FIXME: FIXME:
-    public void init(LevelProperties levelProperties, DimensionType dimensionType, BiFunction<World, Dimension, ChunkManager> chunkManagerProvider, Profiler profiler, boolean isClient, CallbackInfo ci){
-        ((ServerWorld)(Object)this).craftWorld = new CraftWorld(((ServerWorld)(Object)this), null, org.bukkit.World.Environment.NORMAL);
+    public void init(LevelProperties levelProperties, DimensionType dimensionType, BiFunction<World, Dimension, ChunkManager> chunkManagerProvider, Profiler profiler, boolean isClient, CallbackInfo ci) {
+        ((ServerWorld) (Object) this).craftWorld = new CraftWorld(((ServerWorld) (Object) this), null, org.bukkit.World.Environment.NORMAL);
     }
 
     @Override
@@ -51,7 +52,7 @@ public abstract class WorldMixin implements WorldExtra {
 
     @Override
     public CraftWorld getCraftWorld() {
-        return ((World)(Object)this).craftWorld;
+        return ((World) (Object) this).craftWorld;
     }
 
     @Override

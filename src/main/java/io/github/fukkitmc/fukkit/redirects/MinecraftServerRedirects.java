@@ -6,8 +6,7 @@ import org.bukkit.craftbukkit.CraftServer;
 
 public interface MinecraftServerRedirects {
 
-    static MinecraftServer getServer(){
+    static MinecraftServer getServer() {
         return ((CraftServer) Bukkit.getServer()).getServer();
     }
-
 }

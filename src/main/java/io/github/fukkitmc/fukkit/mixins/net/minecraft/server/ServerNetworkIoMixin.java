@@ -11,7 +11,8 @@ import java.util.List;
 @Mixin(ServerNetworkIo.class)
 public class ServerNetworkIoMixin implements ServerNetworkIoExtra {
 
-    @Shadow public List<ChannelFuture> channels;
+    @Shadow
+    public List<ChannelFuture> channels;
 
     @Override
     public void acceptConnections() {

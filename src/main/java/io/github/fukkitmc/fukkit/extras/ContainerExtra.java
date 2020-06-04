@@ -7,7 +7,7 @@ public interface ContainerExtra {
 
     void transferTo(net.minecraft.container.Container var0, org.bukkit.craftbukkit.entity.CraftHumanEntity var1);
 
-    default org.bukkit.inventory.InventoryView getBukkitView(){
+    default org.bukkit.inventory.InventoryView getBukkitView() {
         throw new RuntimeException("getBukkitView() not implemented in " + this.getClass().getName());
     }
 

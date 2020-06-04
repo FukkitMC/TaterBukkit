@@ -43,39 +43,54 @@ import java.util.concurrent.atomic.AtomicIntegerFieldUpdater;
 @Mixin(ServerPlayNetworkHandler.class)
 public abstract class ServerPlayNetworkHandlerMixin implements ServerPlayNetworkHandlerExtra {
 
-    @Shadow public MinecraftServer server;
+    @Shadow
+    public MinecraftServer server;
 
-    @Shadow public ServerPlayerEntity player;
+    @Shadow
+    public ServerPlayerEntity player;
 
-    @Shadow public static Logger LOGGER;
+    @Shadow
+    public static Logger LOGGER;
 
 
-    @Shadow public abstract void disconnect(Text reason);
+    @Shadow
+    public abstract void disconnect(Text reason);
 
-    @Shadow public abstract void sendPacket(Packet<?> packet);
+    @Shadow
+    public abstract void sendPacket(Packet<?> packet);
 
-    @Shadow public int teleportRequestTick;
+    @Shadow
+    public int teleportRequestTick;
 
-    @Shadow public int ticks;
+    @Shadow
+    public int ticks;
 
-    @Shadow public boolean justTeleported;
+    @Shadow
+    public boolean justTeleported;
 
-    @Shadow public Vec3d requestedTeleportPos;
+    @Shadow
+    public Vec3d requestedTeleportPos;
 
-    @Shadow public int requestedTeleportId;
+    @Shadow
+    public int requestedTeleportId;
 
-    @Shadow public double lastPosX;
+    @Shadow
+    public double lastPosX;
 
-    @Shadow public double lastPosY;
+    @Shadow
+    public double lastPosY;
 
-    @Shadow public double lastPosZ;
+    @Shadow
+    public double lastPosZ;
 
-    @Shadow public float lastYaw;
+    @Shadow
+    public float lastYaw;
 
-    @Shadow public float lastPitch;
+    @Shadow
+    public float lastPitch;
 
-    @Inject(method = "<init>",at =  @At("TAIL"))
-    public void constructor(MinecraftServer minecraftServer, ClientConnection clientConnection, ServerPlayerEntity serverPlayerEntity, CallbackInfo ci){
+    @Inject(method = "<init>", at = @At("TAIL"))
+    public void constructor(MinecraftServer minecraftServer, ClientConnection clientConnection, ServerPlayerEntity serverPlayerEntity, CallbackInfo ci) {
         ((ServerPlayNetworkHandler) (Object) this).craftServer = minecraftServer.server;
         ((ServerPlayNetworkHandler) (Object) this).chatSpamField = AtomicIntegerFieldUpdater.newUpdater(ServerPlayNetworkHandler.class, "bukkitChatThrottle");
     }
@@ -90,7 +105,7 @@ public abstract class ServerPlayNetworkHandlerMixin implements ServerPlayNetwork
         LOGGER.info(this.player.getName().getString() + " issued server command: " + string);
         CraftPlayer player = this.player.getBukkitEntity();
         PlayerCommandPreprocessEvent event = new PlayerCommandPreprocessEvent(player, string, new LazyPlayerSet(server));
-        ((ServerPlayNetworkHandler)(Object)this).craftServer.getPluginManager().callEvent(event);
+        ((ServerPlayNetworkHandler) (Object) this).craftServer.getPluginManager().callEvent(event);
         if (event.isCancelled()) {
             return;
         }
@@ -161,13 +176,13 @@ public abstract class ServerPlayNetworkHandlerMixin implements ServerPlayNetwork
         } else {
             Player player = this.getPlayer();
             AsyncPlayerChatEvent event = new AsyncPlayerChatEvent(async, player, s, new LazyPlayerSet(server));
-            ((ServerPlayNetworkHandler)(Object)this).craftServer.getPluginManager().callEvent(event);
+            ((ServerPlayNetworkHandler) (Object) this).craftServer.getPluginManager().callEvent(event);
 
             if (PlayerChatEvent.getHandlerList().getRegisteredListeners().length != 0) {
                 // Evil plugins still listening to deprecated event
                 final PlayerChatEvent queueEvent = new PlayerChatEvent(player, event.getMessage(), event.getFormat(), event.getRecipients());
                 queueEvent.setCancelled(event.isCancelled());
-                Waitable waitable = new Waitable.Wrapper(()-> {
+                Waitable waitable = new Waitable.Wrapper(() -> {
                     org.bukkit.Bukkit.getPluginManager().callEvent(queueEvent);
 
                     if (queueEvent.isCancelled()) {
@@ -249,7 +264,7 @@ public abstract class ServerPlayNetworkHandlerMixin implements ServerPlayNetwork
 
         boolean isSync = packetplayinchat.getChatMessage().startsWith("/");
         if (packetplayinchat.getChatMessage().startsWith("/")) {
-            NetworkThreadUtils.forceMainThread(packetplayinchat, ((ServerPlayNetworkHandler)(Object)this), this.player.getServerWorld());
+            NetworkThreadUtils.forceMainThread(packetplayinchat, ((ServerPlayNetworkHandler) (Object) this), this.player.getServerWorld());
         }
 
         // CraftBukkit end
@@ -265,7 +280,7 @@ public abstract class ServerPlayNetworkHandlerMixin implements ServerPlayNetwork
                 if (!SharedConstants.isValidChar(s.charAt(i))) {
                     // CraftBukkit start - threadsafety
                     if (!isSync) {
-                        Waitable waitable = new Waitable.Wrapper(()-> {
+                        Waitable waitable = new Waitable.Wrapper(() -> {
                             this.disconnect(new TranslatableText("multiplayer.disconnect.illegal_characters"));
                         });
 
@@ -312,7 +327,7 @@ public abstract class ServerPlayNetworkHandlerMixin implements ServerPlayNetwork
             // this.bukkitChatThrottle += 20;
             if (ServerPlayNetworkHandler.chatSpamField.addAndGet(this, 20) > 200 && !this.server.getPlayerManager().isOperator(this.player.getGameProfile())) {
                 if (!isSync) {
-                    Waitable waitable = new Waitable.Wrapper(()-> {
+                    Waitable waitable = new Waitable.Wrapper(() -> {
                         this.disconnect(new TranslatableText("disconnect.spam", new Object[0]));
                     });
 

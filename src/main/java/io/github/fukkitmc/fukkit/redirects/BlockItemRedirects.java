@@ -31,5 +31,4 @@ public interface BlockItemRedirects {
         }
         return BlockState1;
     }
-    
 }
