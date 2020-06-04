@@ -15,36 +15,41 @@ import java.util.Arrays;
 @SuppressWarnings("unused")
 public class ReflectionRemapper {
 
+    private static final String VERSION = "1_15_R2";
     private static final boolean DEBUG = FabricLoader.getInstance().isDevelopmentEnvironment();
 
     // As concerning as it is, we should just insert the "version" (R1_15_2) thing here
     public static String class_getName(Class<?> clazz) {
         if (DEBUG) {
-            System.out.println("clazz = " + clazz);
+            System.err.println("clazz = " + clazz);
         }
 
-        return clazz.getName();
+        String s = clazz.getName();
+
+        if (s.startsWith("net.minecraft.server.")) {
+            return "net.minecraft.server." + VERSION + s.substring(20); // Up to the .
+        } else if (s.startsWith("org.bukkit.craftbukkit.")) {
+            return "org.bukkit.craftbukkit." + VERSION + s.substring(22);
+        }
+
+        return s;
     }
 
     public static String mapClassName(String className) {
         if (DEBUG) {
-            System.out.println("className = " + className);
+            System.err.println("className = " + className);
         }
 
         return className;
     }
 
     public static Class<?> class_forName(String name, boolean initialize, ClassLoader loader) throws ClassNotFoundException {
-        if (DEBUG) {
-            System.out.println("name = " + name + ", initialize = " + initialize + ", loader = " + loader);
-        }
-
-        return Class.forName(name, initialize, loader);
+        return Class.forName(mapClassName(name), initialize, loader);
     }
 
     public static Class<?> classloader_loadClass(ClassLoader loader, String name) throws ClassNotFoundException {
         if (DEBUG) {
-            System.out.println("loader = " + loader + ", name = " + name);
+            System.err.println("loader = " + loader + ", name = " + name);
         }
 
         return loader.loadClass(name);
@@ -59,7 +64,7 @@ public class ReflectionRemapper {
 
     public static Field class_getDeclaredField(Class<?> c, String name) throws NoSuchFieldException {
         if (DEBUG) {
-            System.out.println("c = " + c + ", name = " + name);
+            System.err.println("c = " + c + ", name = " + name);
         }
 
         return c.getDeclaredField(name);
@@ -74,7 +79,7 @@ public class ReflectionRemapper {
 
     public static Method class_getDeclaredMethod(Class<?> c, String name, Class<?>[] parameterTypes) throws NoSuchMethodException {
         if (DEBUG) {
-            System.out.println("c = " + c + ", name = " + name + ", parameterTypes = " + Arrays.deepToString(parameterTypes));
+            System.err.println("c = " + c + ", name = " + name + ", parameterTypes = " + Arrays.deepToString(parameterTypes));
         }
 
         return c.getDeclaredMethod(name, parameterTypes);
@@ -82,7 +87,7 @@ public class ReflectionRemapper {
 
     public static MethodHandle lookup_findGetter(MethodHandles.Lookup lookup, Class<?> refc, String name, Class<?> type) throws NoSuchFieldException, IllegalAccessException {
         if (DEBUG) {
-            System.out.println("lookup = " + lookup + ", refc = " + refc + ", name = " + name + ", type = " + type);
+            System.err.println("lookup = " + lookup + ", refc = " + refc + ", name = " + name + ", type = " + type);
         }
 
         return lookup.findGetter(refc, name, type);
@@ -90,7 +95,7 @@ public class ReflectionRemapper {
 
     public static MethodHandle lookup_findStaticGetter(MethodHandles.Lookup lookup, Class<?> refc, String name, Class<?> type) throws NoSuchFieldException, IllegalAccessException {
         if (DEBUG) {
-            System.out.println("lookup = " + lookup + ", refc = " + refc + ", name = " + name + ", type = " + type);
+            System.err.println("lookup = " + lookup + ", refc = " + refc + ", name = " + name + ", type = " + type);
         }
 
         return lookup.findStaticGetter(refc, name, type);
@@ -98,7 +103,7 @@ public class ReflectionRemapper {
 
     public static MethodHandle lookup_findSetter(MethodHandles.Lookup lookup, Class<?> refc, String name, Class<?> type) throws NoSuchFieldException, IllegalAccessException {
         if (DEBUG) {
-            System.out.println("lookup = " + lookup + ", refc = " + refc + ", name = " + name + ", type = " + type);
+            System.err.println("lookup = " + lookup + ", refc = " + refc + ", name = " + name + ", type = " + type);
         }
 
         return lookup.findSetter(refc, name, type);
@@ -106,7 +111,7 @@ public class ReflectionRemapper {
 
     public static MethodHandle lookup_findStaticSetter(MethodHandles.Lookup lookup, Class<?> refc, String name, Class<?> type) throws NoSuchFieldException, IllegalAccessException {
         if (DEBUG) {
-            System.out.println("lookup = " + lookup + ", refc = " + refc + ", name = " + name + ", type = " + type);
+            System.err.println("lookup = " + lookup + ", refc = " + refc + ", name = " + name + ", type = " + type);
         }
 
         return lookup.findStaticSetter(refc, name, type);
@@ -114,7 +119,7 @@ public class ReflectionRemapper {
 
     public static MethodHandle lookup_findVirtual(MethodHandles.Lookup lookup, Class<?> refc, String name, MethodType type) throws IllegalAccessException, NoSuchMethodException {
         if (DEBUG) {
-            System.out.println("lookup = " + lookup + ", refc = " + refc + ", name = " + name + ", type = " + type);
+            System.err.println("lookup = " + lookup + ", refc = " + refc + ", name = " + name + ", type = " + type);
         }
 
         return lookup.findVirtual(refc, name, type);
@@ -122,7 +127,7 @@ public class ReflectionRemapper {
 
     public static MethodHandle lookup_findStatic(MethodHandles.Lookup lookup, Class<?> refc, String name, MethodType type) throws IllegalAccessException, NoSuchMethodException {
         if (DEBUG) {
-            System.out.println("lookup = " + lookup + ", refc = " + refc + ", name = " + name + ", type = " + type);
+            System.err.println("lookup = " + lookup + ", refc = " + refc + ", name = " + name + ", type = " + type);
         }
 
         return lookup.findStatic(refc, name, type);
@@ -130,7 +135,7 @@ public class ReflectionRemapper {
 
     public static MethodHandle lookup_findSpecial(MethodHandles.Lookup lookup, Class<?> refc, String name, MethodType type, Class<?> specialCaller) throws IllegalAccessException, NoSuchMethodException {
         if (DEBUG) {
-            System.out.println("lookup = " + lookup + ", refc = " + refc + ", name = " + name + ", type = " + type + ", specialCaller = " + specialCaller);
+            System.err.println("lookup = " + lookup + ", refc = " + refc + ", name = " + name + ", type = " + type + ", specialCaller = " + specialCaller);
         }
 
         return lookup.findSpecial(refc, name, type, specialCaller);
