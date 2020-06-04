@@ -8,3 +8,4 @@ sorted in severity
 ## Medium Severity
 
 ## Low Severity
+* ReflectionRedirectingMethodVisitor
