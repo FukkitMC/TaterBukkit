@@ -8,6 +8,7 @@ import net.fabricmc.loader.util.mappings.TinyRemapperMappingsHelper;
 import net.fabricmc.tinyremapper.OutputConsumerPath;
 import net.fabricmc.tinyremapper.TinyRemapper;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -18,9 +19,10 @@ import java.nio.file.Path;
  */
 public class PluginRemapper {
 
-    private static final Path REMAPPED_OUTPUT = FabricLoader.getInstance().getGameDirectory().toPath().resolve(".fukkit").resolve("remapped");
+    private static final Path FUKKIT = FabricLoader.getInstance().getGameDirectory().toPath().resolve(".fukkit");
+    private static final Path REMAPPED_OUTPUT = FUKKIT.resolve("remapped_plugins");
 
-    public static Path remap(Path plugin) throws IOException {
+    private static Path remap(Path plugin) throws IOException {
         MappingConfiguration mappingConfiguration = FabricLauncherBase.getLauncher().getMappingConfiguration();
         String targetNamespace = mappingConfiguration.getTargetNamespace();
         Path result = getResult(targetNamespace, plugin.toAbsolutePath()).toAbsolutePath();
@@ -59,5 +61,17 @@ public class PluginRemapper {
                 .putString(targetNamespace, StandardCharsets.UTF_8)
                 .putString(path.toString(), StandardCharsets.UTF_8)
                 .toString());
+    }
+
+    public static File remapDirectory(File pluginFolder) throws IOException {
+        Path temp = Files.createTempDirectory(FUKKIT, "plugins");
+
+        for (File file : pluginFolder.listFiles()) {
+            if (file.toString().endsWith(".jar")) {
+                Files.copy(remap(file.toPath()), pluginFolder.toPath().relativize(file.toPath()));
+            }
+        }
+
+        return temp.toFile();
     }
 }
