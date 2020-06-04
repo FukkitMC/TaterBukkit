@@ -22,7 +22,7 @@ public class ReflectionRedirectingMethodVisitor extends MethodVisitor {
         Member m = REMAPPED.get(new Member(owner, name, descriptor));
 
         // TODO: Deal with custom ClassLoaders?
-        if (m != null && opcode == Opcodes.INVOKEVIRTUAL) {
+        if (m != null && (opcode == Opcodes.INVOKESTATIC || opcode == Opcodes.INVOKEVIRTUAL)) {
             super.visitMethodInsn(Opcodes.INVOKESTATIC, m.owner, m.name, m.descriptor, false);
         } else {
             super.visitMethodInsn(opcode, owner, name, descriptor, isInterface);
@@ -33,7 +33,7 @@ public class ReflectionRedirectingMethodVisitor extends MethodVisitor {
         register("java/lang/Class", "getName", "()Ljava/lang/String;", "class_getName", "(Ljava/lang/Class;)Ljava/lang/String;");
         register("java/lang/Class", "forName", "(Ljava/lang/String;)Ljava/lang/Class;", "class_forName", "(Ljava/lang/String;)Ljava/lang/Class;");
         register("java/lang/Class", "forName", "(Ljava/lang/String;ZLjava/lang/ClassLoader;)Ljava/lang/Class;", "class_forName", "(Ljava/lang/String;ZLjava/lang/ClassLoader;)Ljava/lang/Class;");
-        register("java/lang/ClassLoader", "loadClass", "(Ljava/lang/String;)Ljava/lang/Class;", "classloader_loadClass", "(Ljava/lang/ClassLoader;Ljava/lang/Class;)Ljava/lang/String;");
+        register("java/lang/ClassLoader", "loadClass", "(Ljava/lang/String;)Ljava/lang/Class;", "classloader_loadClass", "(Ljava/lang/ClassLoader;Ljava/lang/String;)Ljava/lang/Class;");
         register("java/lang/Class", "getField", "(Ljava/lang/String;)Ljava/lang/reflect/Field;", "class_getField", "(Ljava/lang/Class;Ljava/lang/String;)Ljava/lang/reflect/Field;");
         register("java/lang/Class", "getDeclaredField", "(Ljava/lang/String;)Ljava/lang/reflect/Field;", "class_getDeclaredField", "(Ljava/lang/Class;Ljava/lang/String;)Ljava/lang/reflect/Field;");
         register("java/lang/Class", "getMethod", "(Ljava/lang/String;[Ljava/lang/Class;)Ljava/lang/reflect/Method;", "class_getMethod", "(Ljava/lang/Class;Ljava/lang/String;[Ljava/lang/Class;)Ljava/lang/reflect/Method;");

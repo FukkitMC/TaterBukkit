@@ -49,6 +49,7 @@ public class PluginRemapper {
             remapper.finish();
         }
 
+        System.err.println("HAHAYES " + result);
         return result;
     }
 

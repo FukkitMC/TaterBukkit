@@ -49,7 +49,9 @@ public class ReflectionRemapper {
 
     public static Field class_getField(Class<?> c, String name) throws NoSuchFieldException {
         // Since the JVM is going to think *we* called it, so access checks might crab
-        return class_getDeclaredField(c, name);
+        Field field = class_getDeclaredField(c, name);
+        field.setAccessible(true);
+        return field;
     }
 
     public static Field class_getDeclaredField(Class<?> c, String name) throws NoSuchFieldException {
@@ -62,7 +64,9 @@ public class ReflectionRemapper {
 
     public static Method class_getMethod(Class<?> c, String name, Class<?>[] parameterTypes) throws NoSuchMethodException {
         // Since the JVM is going to think *we* called it, so access checks might crab
-        return class_getDeclaredMethod(c, name, parameterTypes);
+        Method method = class_getDeclaredMethod(c, name, parameterTypes);
+        method.setAccessible(true);
+        return method;
     }
 
     public static Method class_getDeclaredMethod(Class<?> c, String name, Class<?>[] parameterTypes) throws NoSuchMethodException {
