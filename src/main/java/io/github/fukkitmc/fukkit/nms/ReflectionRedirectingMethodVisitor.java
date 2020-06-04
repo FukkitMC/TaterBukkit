@@ -25,13 +25,16 @@ public class ReflectionRedirectingMethodVisitor extends MethodVisitor {
         if (m != null && (opcode == Opcodes.INVOKESTATIC || opcode == Opcodes.INVOKEVIRTUAL)) {
             super.visitMethodInsn(Opcodes.INVOKESTATIC, m.owner, m.name, m.descriptor, false);
         } else {
+            if (opcode == Opcodes.INVOKESTATIC && "java/lang/Class".equals(owner) && "forName".equals(name) && "(Ljava/lang/String;)Ljava/lang/Class;".equals(descriptor)) {
+                super.visitMethodInsn(Opcodes.INVOKESTATIC, "io/github/fukkitmc/fukkit/nms/ReflectionRemapper", "mapClassName", "(Ljava/lang/String;)Ljava/lang/String;", false);
+            }
+
             super.visitMethodInsn(opcode, owner, name, descriptor, isInterface);
         }
     }
 
     static {
         register("java/lang/Class", "getName", "()Ljava/lang/String;", "class_getName", "(Ljava/lang/Class;)Ljava/lang/String;");
-        register("java/lang/Class", "forName", "(Ljava/lang/String;)Ljava/lang/Class;", "class_forName", "(Ljava/lang/String;)Ljava/lang/Class;");
         register("java/lang/Class", "forName", "(Ljava/lang/String;ZLjava/lang/ClassLoader;)Ljava/lang/Class;", "class_forName", "(Ljava/lang/String;ZLjava/lang/ClassLoader;)Ljava/lang/Class;");
         register("java/lang/ClassLoader", "loadClass", "(Ljava/lang/String;)Ljava/lang/Class;", "classloader_loadClass", "(Ljava/lang/ClassLoader;Ljava/lang/String;)Ljava/lang/Class;");
         register("java/lang/Class", "getField", "(Ljava/lang/String;)Ljava/lang/reflect/Field;", "class_getField", "(Ljava/lang/Class;Ljava/lang/String;)Ljava/lang/reflect/Field;");

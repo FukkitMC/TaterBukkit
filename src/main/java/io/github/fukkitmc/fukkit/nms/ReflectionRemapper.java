@@ -10,6 +10,7 @@ import java.util.Arrays;
 /**
  * Remaps reflection and method handles
  */
+@SuppressWarnings("unused")
 public class ReflectionRemapper {
 
     private static final boolean DEBUG = true;
@@ -23,12 +24,12 @@ public class ReflectionRemapper {
         return clazz.getName();
     }
 
-    public static Class<?> class_forName(String className) throws ClassNotFoundException {
+    public static String mapClassName(String className) {
         if (DEBUG) {
             System.out.println("className = " + className);
         }
 
-        return Class.forName(className);
+        return className;
     }
 
     public static Class<?> class_forName(String name, boolean initialize, ClassLoader loader) throws ClassNotFoundException {
