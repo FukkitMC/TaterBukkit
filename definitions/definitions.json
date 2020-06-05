@@ -1280,11 +1280,6 @@
         "type": "I"
       },
       {
-        "name": "bukkitChatThrottle",
-        "type": "I",
-        "access": 65
-      },
-      {
         "access": 1,
         "name": "lastTick",
         "type": "I"
@@ -1303,11 +1298,6 @@
         "access": 1,
         "name": "justTeleported",
         "type": "Z"
-      },
-      {
-        "access": 9,
-        "name": "chatSpamField",
-        "type": "Ljava/util/concurrent/atomic/AtomicIntegerFieldUpdater;"
       },
       {
         "access": 1,

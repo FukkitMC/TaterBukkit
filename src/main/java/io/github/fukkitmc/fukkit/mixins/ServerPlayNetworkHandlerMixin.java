@@ -50,6 +50,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.Collections;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicIntegerFieldUpdater;
 
 @Mixin(ServerPlayNetworkHandler.class)
@@ -63,7 +64,6 @@ public abstract class ServerPlayNetworkHandlerMixin implements ServerPlayNetwork
 
     @Shadow
     public static Logger LOGGER;
-
 
     @Shadow
     public abstract void disconnect(Text reason);
@@ -83,10 +83,11 @@ public abstract class ServerPlayNetworkHandlerMixin implements ServerPlayNetwork
     @Shadow
     public int requestedTeleportId;
 
+    private AtomicInteger chatSpamField = new AtomicInteger();
+
     @Inject(method = "<init>", at = @At("TAIL"))
     public void constructor(MinecraftServer minecraftServer, ClientConnection clientConnection, ServerPlayerEntity serverPlayerEntity, CallbackInfo ci) {
         ((ServerPlayNetworkHandler) (Object) this).craftServer = minecraftServer.server;
-        ServerPlayNetworkHandler.chatSpamField = AtomicIntegerFieldUpdater.newUpdater(ServerPlayNetworkHandler.class, "bukkitChatThrottle");
     }
 
     /**
@@ -404,7 +405,7 @@ public abstract class ServerPlayNetworkHandlerMixin implements ServerPlayNetwork
 
             // CraftBukkit start - replaced with thread safe throttle
             // this.bukkitChatThrottle += 20;
-            if (ServerPlayNetworkHandler.chatSpamField.addAndGet(this, 20) > 200 && !this.server.getPlayerManager().isOperator(this.player.getGameProfile())) {
+            if (chatSpamField.addAndGet(20) > 200 && !this.server.getPlayerManager().isOperator(this.player.getGameProfile())) {
                 if (!isSync) {
                     Waitable waitable = new Waitable.Wrapper(() -> {
                         this.disconnect(new TranslatableText("disconnect.spam"));
