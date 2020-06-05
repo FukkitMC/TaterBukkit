@@ -4,32 +4,42 @@ import io.github.fukkitmc.fukkit.extras.ServerPlayNetworkHandlerExtra;
 import net.minecraft.SharedConstants;
 import net.minecraft.client.options.ChatVisibility;
 import net.minecraft.inventory.CraftingInventory;
+import net.minecraft.item.ItemStack;
 import net.minecraft.network.ClientConnection;
 import net.minecraft.network.NetworkThreadUtils;
 import net.minecraft.network.Packet;
 import net.minecraft.network.packet.c2s.play.ChatMessageC2SPacket;
+import net.minecraft.network.packet.c2s.play.HandSwingC2SPacket;
+import net.minecraft.network.packet.c2s.play.PlayerInteractItemC2SPacket;
 import net.minecraft.network.packet.s2c.play.ChatMessageS2CPacket;
 import net.minecraft.network.packet.s2c.play.PlayerPositionLookS2CPacket;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
+import net.minecraft.util.Hand;
+import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.hit.HitResult;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.GameMode;
+import net.minecraft.world.RayTraceContext;
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.Logger;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
+import org.bukkit.craftbukkit.event.CraftEventFactory;
 import org.bukkit.craftbukkit.util.CraftChatMessage;
 import org.bukkit.craftbukkit.util.LazyPlayerSet;
 import org.bukkit.craftbukkit.util.Waitable;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.event.player.PlayerChatEvent;
-import org.bukkit.event.player.PlayerCommandPreprocessEvent;
-import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.event.Event;
+import org.bukkit.event.block.Action;
+import org.bukkit.event.player.*;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -76,7 +86,7 @@ public abstract class ServerPlayNetworkHandlerMixin implements ServerPlayNetwork
     @Inject(method = "<init>", at = @At("TAIL"))
     public void constructor(MinecraftServer minecraftServer, ClientConnection clientConnection, ServerPlayerEntity serverPlayerEntity, CallbackInfo ci) {
         ((ServerPlayNetworkHandler) (Object) this).craftServer = minecraftServer.server;
-        ((ServerPlayNetworkHandler) (Object) this).chatSpamField = AtomicIntegerFieldUpdater.newUpdater(ServerPlayNetworkHandler.class, "bukkitChatThrottle");
+        ServerPlayNetworkHandler.chatSpamField = AtomicIntegerFieldUpdater.newUpdater(ServerPlayNetworkHandler.class, "bukkitChatThrottle");
     }
 
     /**
@@ -237,8 +247,93 @@ public abstract class ServerPlayNetworkHandlerMixin implements ServerPlayNetwork
         this.disconnect(new LiteralText(var0));
     }
 
+    @Inject(method = "onHandSwing", at = @At(value = "INVOKE", target = "Lnet/minecraft/network/NetworkThreadUtils;forceMainThread(Lnet/minecraft/network/Packet;Lnet/minecraft/network/listener/PacketListener;Lnet/minecraft/server/world/ServerWorld;)V", shift = At.Shift.AFTER), cancellable = true)
+    public void onHandSwing(HandSwingC2SPacket handSwingC2SPacket, CallbackInfo ci){
+        if (this.player.isImmobile()) return; // CraftBukkit
+        this.player.updateLastActionTime();
+        // CraftBukkit start - Raytrace to look for 'rogue armswings'
+        float f1 = this.player.pitch;
+        float f2 = this.player.yaw;
+        double d0 = this.player.getX();
+        double d1 = this.player.getY() + (double) this.player.getStandingEyeHeight();
+        double d2 = this.player.getZ();
+        Vec3d vec3d = new Vec3d(d0, d1, d2);
+
+        float f3 = MathHelper.cos(-f2 * 0.017453292F - 3.1415927F);
+        float f4 = MathHelper.sin(-f2 * 0.017453292F - 3.1415927F);
+        float f5 = -MathHelper.cos(-f1 * 0.017453292F);
+        float f6 = MathHelper.sin(-f1 * 0.017453292F);
+        float f7 = f4 * f5;
+        float f8 = f3 * f5;
+        double d3 = player.interactionManager.getGameMode()== GameMode.CREATIVE ? 5.0D : 4.5D;
+        Vec3d vec3d1 = vec3d.add((double) f7 * d3, (double) f6 * d3, (double) f8 * d3);
+        HitResult movingobjectposition = this.player.world.rayTrace(new RayTraceContext(vec3d, vec3d1, RayTraceContext.ShapeType.OUTLINE, RayTraceContext.FluidHandling.NONE, player));
+
+        if (movingobjectposition == null || movingobjectposition.getType() != HitResult.Type.BLOCK) {
+            CraftEventFactory.callPlayerInteractEvent(this.player, Action.LEFT_CLICK_AIR, this.player.inventory.getMainHandStack(), Hand.MAIN_HAND);
+        }
+
+        // Arm swing animation
+        PlayerAnimationEvent event = new PlayerAnimationEvent(this.getPlayer());
+        ((ServerPlayNetworkHandler) (Object) this).craftServer.getPluginManager().callEvent(event);
+
+        if (event.isCancelled()) return;
+        // CraftBukkit end
+        this.player.swingHand(handSwingC2SPacket.getHand());
+    }
+
+    @Inject(method = "onPlayerInteractItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/network/ServerPlayerInteractionManager;interactItem(Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/world/World;Lnet/minecraft/item/ItemStack;Lnet/minecraft/util/Hand;)Lnet/minecraft/util/ActionResult;"), cancellable = true)
+    public void onPlayerInteractItem(PlayerInteractItemC2SPacket playerInteractItemC2SPacket, CallbackInfo ci){
+        ci.cancel();
+        ServerWorld worldserver = this.server.getWorld(this.player.dimension);
+        Hand enumhand = playerInteractItemC2SPacket.getHand();
+        ItemStack itemstack = this.player.getStackInHand(enumhand);
+
+        // CraftBukkit start
+        // Raytrace to look for 'rogue armswings'
+        float f1 = this.player.pitch;
+        float f2 = this.player.yaw;
+        double d0 = this.player.getX();
+        double d1 = this.player.getY() + (double) this.player.getStandingEyeHeight();
+        double d2 = this.player.getZ();
+        Vec3d vec3d = new Vec3d(d0, d1, d2);
+
+        float f3 = MathHelper.cos(-f2 * 0.017453292F - 3.1415927F);
+        float f4 = MathHelper.sin(-f2 * 0.017453292F - 3.1415927F);
+        float f5 = -MathHelper.cos(-f1 * 0.017453292F);
+        float f6 = MathHelper.sin(-f1 * 0.017453292F);
+        float f7 = f4 * f5;
+        float f8 = f3 * f5;
+        double d3 = player.interactionManager.getGameMode()== GameMode.CREATIVE ? 5.0D : 4.5D;
+        Vec3d vec3d1 = vec3d.add((double) f7 * d3, (double) f6 * d3, (double) f8 * d3);
+        HitResult movingobjectposition = this.player.world.rayTrace(new RayTraceContext(vec3d, vec3d1, RayTraceContext.ShapeType.OUTLINE, RayTraceContext.FluidHandling.NONE, player));
+
+        boolean cancelled;
+        if (movingobjectposition == null || movingobjectposition.getType() != HitResult.Type.BLOCK) {
+            org.bukkit.event.player.PlayerInteractEvent event = CraftEventFactory.callPlayerInteractEvent(this.player, Action.RIGHT_CLICK_AIR, itemstack, enumhand);
+            cancelled = event.useItemInHand() == Event.Result.DENY;
+        } else {
+            if (player.interactionManager.firedInteract) {
+                player.interactionManager.firedInteract = false;
+                cancelled = player.interactionManager.interactResult;
+            } else {
+                BlockHitResult movingobjectpositionblock = (BlockHitResult) movingobjectposition;
+                org.bukkit.event.player.PlayerInteractEvent event = CraftEventFactory.callPlayerInteractEvent(player, Action.RIGHT_CLICK_BLOCK, movingobjectpositionblock.getBlockPos(), movingobjectpositionblock.getSide(), itemstack, true, enumhand);
+                cancelled = event.useItemInHand() == Event.Result.DENY;
+            }
+        }
+
+        if (cancelled) {
+            this.player.getBukkitEntity().updateInventory(); // SPIGOT-2524
+        } else {
+            this.player.interactionManager.interactItem(this.player, worldserver, itemstack, enumhand);
+        }
+        // CraftBukkit end
+    }
+
     /**
-     * @author
+     * @author fukkit
+     * @reason commands?
      */
     @Overwrite
     public void onChatMessage(ChatMessageC2SPacket packetplayinchat) {
