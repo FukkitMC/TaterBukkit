@@ -82,37 +82,37 @@ public abstract class MinecraftServerMixin extends ReentrantThreadExecutor<Serve
     }
 
     @Shadow
-    private long timeReference = Util.getMeasuringTimeMs();
+    public long timeReference = Util.getMeasuringTimeMs();
 
     @Shadow
-    private long field_4557;
+    public long field_4557;
 
     @Shadow
-    private boolean profilerStartQueued;
+    public boolean profilerStartQueued;
 
     @Shadow
-    private boolean field_19249;
+    public boolean field_19249;
 
     @Shadow
-    private long field_19248;
+    public long field_19248;
 
 
     @Shadow
-    protected void method_16208() {
+    public void method_16208() {
     }
 
     @Shadow
-    protected void setCrashReport(CrashReport crashReport) {
+    public void setCrashReport(CrashReport crashReport) {
     }
 
     @Shadow
-    private volatile boolean loading;
+    public volatile boolean loading;
 
     @Shadow
-    private boolean stopped;
+    public boolean stopped;
 
     @Shadow
-    protected void shutdown() {
+    public void shutdown() {
     }
 
     @Shadow
