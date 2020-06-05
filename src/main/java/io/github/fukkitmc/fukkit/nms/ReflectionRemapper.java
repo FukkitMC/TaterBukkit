@@ -15,7 +15,7 @@ import java.util.Arrays;
 @SuppressWarnings("unused")
 public class ReflectionRemapper {
 
-    private static final String VERSION = "1_15_R2";
+    private static final String VERSION = "v1_15_R2";
     private static final boolean DEBUG = FabricLoader.getInstance().isDevelopmentEnvironment();
 
     // As concerning as it is, we should just insert the "version" (R1_15_2) thing here
@@ -40,6 +40,16 @@ public class ReflectionRemapper {
             System.err.println("className = " + className);
         }
 
+        if (className.startsWith("org.bukkit.craftbukkit." + VERSION + ".")) {
+            return "org.bukkit.craftbukkit." + className.substring(23 + VERSION.length() + 1);
+        }
+
+        if (className.startsWith("net.minecraft.server." + VERSION + ".")) {
+            String c = className.substring(21 + VERSION.length() + 1);
+
+            // TODO: Map class name
+        }
+
         return className;
     }
 
@@ -48,11 +58,7 @@ public class ReflectionRemapper {
     }
 
     public static Class<?> classloader_loadClass(ClassLoader loader, String name) throws ClassNotFoundException {
-        if (DEBUG) {
-            System.err.println("loader = " + loader + ", name = " + name);
-        }
-
-        return loader.loadClass(name);
+        return loader.loadClass(mapClassName(name));
     }
 
     public static Field class_getField(Class<?> c, String name) throws NoSuchFieldException {
