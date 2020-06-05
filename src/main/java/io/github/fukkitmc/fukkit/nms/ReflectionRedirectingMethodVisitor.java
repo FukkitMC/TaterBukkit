@@ -34,6 +34,7 @@ public class ReflectionRedirectingMethodVisitor extends MethodVisitor {
     }
 
     static {
+        register("java/lang/Package", "getName", "()Ljava/lang/String;", "package_getName", "(Ljava/lang/Package;)Ljava/lang/String;");
         register("java/lang/Class", "getName", "()Ljava/lang/String;", "class_getName", "(Ljava/lang/Class;)Ljava/lang/String;");
         register("java/lang/Class", "forName", "(Ljava/lang/String;ZLjava/lang/ClassLoader;)Ljava/lang/Class;", "class_forName", "(Ljava/lang/String;ZLjava/lang/ClassLoader;)Ljava/lang/Class;");
         register("java/lang/ClassLoader", "loadClass", "(Ljava/lang/String;)Ljava/lang/Class;", "classloader_loadClass", "(Ljava/lang/ClassLoader;Ljava/lang/String;)Ljava/lang/Class;");

@@ -19,6 +19,26 @@ public class ReflectionRemapper {
     private static final boolean DEBUG = FabricLoader.getInstance().isDevelopmentEnvironment();
 
     // As concerning as it is, we should just insert the "version" (R1_15_2) thing here
+    public static String package_getName(Package pckg) {
+        if (DEBUG) {
+            System.out.println("pckg = " + pckg);
+        }
+
+        String s = pckg.getName();
+
+        if (s.equals("net.minecraft.server")) {
+            return "net.minecraft.server." + VERSION;
+        } else if (s.startsWith("net.minecraft.server.")) {
+            return "net.minecraft.server." + VERSION + s.substring(20);
+        } else if (s.equals("org.bukkit.craftbukkit")) {
+            return "org.bukkit.craftbukkit." + VERSION;
+        } else if (s.startsWith("org.bukkit.craftbukkit.")) {
+            return "org.bukkit.craftbukkit." + VERSION + s.substring(22);
+        } else {
+            return s;
+        }
+    }
+
     public static String class_getName(Class<?> clazz) {
         if (DEBUG) {
             System.err.println("clazz = " + clazz);

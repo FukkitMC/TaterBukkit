@@ -16,7 +16,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 /**
- * Remaps jars with direct references to NMS. Also makes reflection use {@link ReflectionRemapper}
+ * Remaps jars with direct references to NMS
  */
 public class PluginRemapper {
 
