@@ -407,7 +407,7 @@ public abstract class ServerPlayNetworkHandlerMixin implements ServerPlayNetwork
             if (ServerPlayNetworkHandler.chatSpamField.addAndGet(this, 20) > 200 && !this.server.getPlayerManager().isOperator(this.player.getGameProfile())) {
                 if (!isSync) {
                     Waitable waitable = new Waitable.Wrapper(() -> {
-                        this.disconnect(new TranslatableText("disconnect.spam", new Object[0]));
+                        this.disconnect(new TranslatableText("disconnect.spam"));
                     });
 
                     this.server.processQueue.add(waitable);
@@ -420,7 +420,7 @@ public abstract class ServerPlayNetworkHandlerMixin implements ServerPlayNetwork
                         throw new RuntimeException(e);
                     }
                 } else {
-                    this.disconnect(new TranslatableText("disconnect.spam", new Object[0]));
+                    this.disconnect(new TranslatableText("disconnect.spam"));
                 }
                 // CraftBukkit end
             }
