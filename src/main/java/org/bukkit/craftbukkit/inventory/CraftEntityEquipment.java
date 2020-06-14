@@ -2,6 +2,9 @@ package org.bukkit.craftbukkit.inventory;
 
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.mob.MobEntity;
+
+import org.bukkit.craftbukkit.CraftEquipmentSlot;
+import org.bukkit.craftbukkit.entity.CraftItem;
 import org.bukkit.craftbukkit.entity.CraftLivingEntity;
 import org.bukkit.entity.Entity;
 import org.bukkit.inventory.EntityEquipment;
@@ -13,6 +16,16 @@ public class CraftEntityEquipment implements EntityEquipment {
 
     public CraftEntityEquipment(CraftLivingEntity entity) {
         this.entity = entity;
+    }
+
+    @Override
+    public void setItem(org.bukkit.inventory.EquipmentSlot slot, ItemStack item) {
+        this.entity.getHandle().equipStack(CraftEquipmentSlot.getNMS(slot), CraftItemStack.asNMSCopy(item));
+    }
+
+    @Override
+    public ItemStack getItem(org.bukkit.inventory.EquipmentSlot slot) {
+        return CraftItemStack.asBukkitCopy(this.entity.getHandle().getEquippedStack(CraftEquipmentSlot.getNMS(slot)));
     }
 
     @Override
