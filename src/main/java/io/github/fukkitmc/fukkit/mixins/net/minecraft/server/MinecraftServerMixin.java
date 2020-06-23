@@ -55,23 +55,47 @@ import java.util.function.BooleanSupplier;
 public abstract class MinecraftServerMixin extends ReentrantThreadExecutor<ServerTask> implements MinecraftServerExtra {
 
     private static final int SAMPLE_INTERVAL = 100;
+    @Shadow
+    public static Logger LOGGER;
     public final double[] recentTps = new double[3];
+    @Shadow
+    public ServerMetadata metadata;
+    @Shadow
+    public Random random;
+    @Shadow
+    public Map<DimensionType, ServerWorld> worlds;
+    @Shadow
+    public long timeReference = Util.getMeasuringTimeMs();
+    @Shadow
+    public long field_4557;
+    @Shadow
+    public boolean profilerStartQueued;
+    @Shadow
+    public boolean field_19249;
+    @Shadow
+    public long field_19248;
+    @Shadow
+    public volatile boolean loading;
+    @Shadow
+    public boolean stopped;
+    @Shadow
+    public DisableableProfiler profiler;
+
 
     public MinecraftServerMixin(String name) {
         super(name);
     }
 
-    @Shadow
-    public ServerMetadata metadata;
+    @Inject(method = "main", at = @At("HEAD"))
+    private static void yes(String[] args, CallbackInfo ci) {
+        //Define things that are static and should start with a variable
+        ChunkTicketType.PLUGIN = ChunkTicketType.create("plugin", (a, b) -> 0); // CraftBukkit
+        Main.main(args);
+    }
 
-    @Shadow
-    public static Logger LOGGER;
-
-    @Shadow
-    public Random random;
-
-    @Shadow
-    public Map<DimensionType, ServerWorld> worlds;
+    private static double calcTps(double avg, double exp, double tps) {
+        return (avg * exp) + (tps * (1 - exp));
+    }
 
     @Shadow
     public abstract void initScoreboard(PersistentStateManager persistentStateManager);
@@ -82,22 +106,6 @@ public abstract class MinecraftServerMixin extends ReentrantThreadExecutor<Serve
     }
 
     @Shadow
-    public long timeReference = Util.getMeasuringTimeMs();
-
-    @Shadow
-    public long field_4557;
-
-    @Shadow
-    public boolean profilerStartQueued;
-
-    @Shadow
-    public boolean field_19249;
-
-    @Shadow
-    public long field_19248;
-
-
-    @Shadow
     public void method_16208() {
     }
 
@@ -106,17 +114,8 @@ public abstract class MinecraftServerMixin extends ReentrantThreadExecutor<Serve
     }
 
     @Shadow
-    public volatile boolean loading;
-
-    @Shadow
-    public boolean stopped;
-
-    @Shadow
     public void shutdown() {
     }
-
-    @Shadow
-    public DisableableProfiler profiler;
 
     @Shadow
     public abstract boolean isRunning();
@@ -142,13 +141,6 @@ public abstract class MinecraftServerMixin extends ReentrantThreadExecutor<Serve
         self.reader = new ConsoleReader(System.in, System.out);
         self.commandManager = self.vanillaCommandDispatcher = commandManager; // CraftBukkit
 
-    }
-
-    @Inject(method = "main", at = @At("HEAD"))
-    private static void yes(String[] args, CallbackInfo ci) {
-        //Define things that are static and should start with a variable
-        ChunkTicketType.PLUGIN = ChunkTicketType.create("plugin", (a, b) -> 0); // CraftBukkit
-        Main.main(args);
     }
 
     @Inject(method = "loadWorld", at = @At("TAIL"))
@@ -364,10 +356,6 @@ public abstract class MinecraftServerMixin extends ReentrantThreadExecutor<Serve
     @Override
     public boolean isDebugging() {
         return false;
-    }
-
-    private static double calcTps(double avg, double exp, double tps) {
-        return (avg * exp) + (tps * (1 - exp));
     }
 
     /**

@@ -3,14 +3,18 @@ package io.github.fukkitmc.fukkit.mixins;
 import io.github.fukkitmc.fukkit.extras.ServerPlayNetworkHandlerExtra;
 import net.minecraft.SharedConstants;
 import net.minecraft.client.options.ChatVisibility;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.ClientConnection;
+import net.minecraft.network.MessageType;
 import net.minecraft.network.NetworkThreadUtils;
 import net.minecraft.network.Packet;
 import net.minecraft.network.packet.c2s.play.ChatMessageC2SPacket;
 import net.minecraft.network.packet.c2s.play.HandSwingC2SPacket;
+import net.minecraft.network.packet.c2s.play.PlayerInteractBlockC2SPacket;
 import net.minecraft.network.packet.c2s.play.PlayerInteractItemC2SPacket;
+import net.minecraft.network.packet.s2c.play.BlockUpdateS2CPacket;
 import net.minecraft.network.packet.s2c.play.ChatMessageS2CPacket;
 import net.minecraft.network.packet.s2c.play.PlayerPositionLookS2CPacket;
 import net.minecraft.server.MinecraftServer;
@@ -20,10 +24,13 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.GameMode;
@@ -40,6 +47,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.*;
+import org.bukkit.util.NumberConversions;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -83,7 +91,7 @@ public abstract class ServerPlayNetworkHandlerMixin implements ServerPlayNetwork
     @Shadow
     public int requestedTeleportId;
 
-    private AtomicInteger chatSpamField = new AtomicInteger();
+    private final AtomicInteger chatSpamField = new AtomicInteger();
 
     @Inject(method = "<init>", at = @At("TAIL"))
     public void constructor(MinecraftServer minecraftServer, ClientConnection clientConnection, ServerPlayerEntity serverPlayerEntity, CallbackInfo ci) {
@@ -228,9 +236,42 @@ public abstract class ServerPlayNetworkHandlerMixin implements ServerPlayNetwork
         }
     }
 
+    @Inject(method = "onPlayerInteractBlock", at = @At(value = "INVOKE", target = "Lnet/minecraft/network/NetworkThreadUtils;forceMainThread(Lnet/minecraft/network/Packet;Lnet/minecraft/network/listener/PacketListener;Lnet/minecraft/server/world/ServerWorld;)V", shift = At.Shift.AFTER), cancellable = true)
+    public void onPlayerInteractBlock(PlayerInteractBlockC2SPacket packetplayinuseitem, CallbackInfo ci) {
+        ci.cancel();
+        if (this.player.isImmobile()) return; // CraftBukkit
+        ServerWorld worldserver = this.server.getWorld(this.player.dimension);
+        Hand enumhand = packetplayinuseitem.getHand();
+        ItemStack itemstack = this.player.getStackInHand(enumhand);
+        BlockHitResult movingobjectpositionblock = packetplayinuseitem.getHitY();
+        BlockPos blockposition = movingobjectpositionblock.getBlockPos();
+        Direction enumdirection = movingobjectpositionblock.getSide();
+
+        this.player.updateLastActionTime();
+        if (blockposition.getY() >= this.server.getWorldHeight() - 1 && (enumdirection == Direction.UP || blockposition.getY() >= this.server.getWorldHeight())) {
+            Text ichatbasecomponent = (new TranslatableText("build.tooHigh", this.server.getWorldHeight())).formatted(Formatting.RED);
+
+            this.player.networkHandler.sendPacket(new ChatMessageS2CPacket(ichatbasecomponent, MessageType.GAME_INFO));
+        } else if (this.requestedTeleportPos == null && this.player.squaredDistanceTo((double) blockposition.getX() + 0.5D, (double) blockposition.getY() + 0.5D, (double) blockposition.getZ() + 0.5D) < 64.0D && worldserver.canPlayerModifyAt(this.player, blockposition)) {
+            // CraftBukkit start - Check if we can actually do something over this large a distance
+            Location eyeLoc = this.getPlayer().getEyeLocation();
+            double reachDistance = NumberConversions.square(eyeLoc.getX() - blockposition.getX()) + NumberConversions.square(eyeLoc.getY() - blockposition.getY()) + NumberConversions.square(eyeLoc.getZ() - blockposition.getZ());
+            this.player.stopUsingItem(); // SPIGOT-4706
+            // CraftBukkit end
+            ActionResult enuminteractionresult = this.player.interactionManager.interactBlock(this.player, worldserver, itemstack, enumhand, movingobjectpositionblock);
+
+            if (enuminteractionresult.shouldSwingHand()) {
+                this.player.swingHand(enumhand, true);
+            }
+        }
+
+        this.player.networkHandler.sendPacket(new BlockUpdateS2CPacket(worldserver, blockposition));
+        this.player.networkHandler.sendPacket(new BlockUpdateS2CPacket(worldserver, blockposition.offset(enumdirection)));
+    }
+
     @Override
     public void teleport(Location dest) {
-        internalTeleport(dest.getX(), dest.getY(), dest.getZ(), dest.getYaw(), dest.getPitch(), Collections.<PlayerPositionLookS2CPacket.Flag>emptySet());
+        internalTeleport(dest.getX(), dest.getY(), dest.getZ(), dest.getYaw(), dest.getPitch(), Collections.emptySet());
     }
 
     @Override
@@ -374,7 +415,7 @@ public abstract class ServerPlayNetworkHandlerMixin implements ServerPlayNetwork
                             throw new RuntimeException(e);
                         }
                     } else {
-                        this.disconnect(new TranslatableText("multiplayer.disconnect.illegal_characters", new Object[0]));
+                        this.disconnect(new TranslatableText("multiplayer.disconnect.illegal_characters"));
                     }
                     // CraftBukkit end
                     return;
@@ -394,7 +435,7 @@ public abstract class ServerPlayNetworkHandlerMixin implements ServerPlayNetwork
                 final String conversationInput = s;
                 this.server.processQueue.add((Runnable) () -> getPlayer().acceptConversationInput(conversationInput));
             } else if (this.player.getClientChatVisibility() == ChatVisibility.SYSTEM) { // Re-add "Command Only" flag check
-                TranslatableText chatmessage = new TranslatableText("chat.cannotSend", new Object[0]);
+                TranslatableText chatmessage = new TranslatableText("chat.cannotSend");
 
                 chatmessage.getStyle().setColor(Formatting.RED);
                 this.sendPacket(new ChatMessageS2CPacket(chatmessage));
