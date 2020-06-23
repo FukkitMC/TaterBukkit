@@ -221,7 +221,7 @@ public abstract class ItemStackMixin implements ItemStackExtra {
                     // PAIL: checkme on updates.
                     if (this.item instanceof MusicDiscItem) {
                         ((JukeboxBlock) Blocks.JUKEBOX).setRecord(world, blockposition, world.getBlockState(blockposition), ((ItemStack) (Object) this));
-                        world.playLevelEvent((PlayerEntity) null, 1010, blockposition, Item.getRawId(this.item));
+                        world.playLevelEvent(null, 1010, blockposition, Item.getRawId(this.item));
                         this.decrement(1);
                         entityhuman.incrementStat(Stats.PLAY_RECORD);
                     }
@@ -271,11 +271,11 @@ public abstract class ItemStackMixin implements ItemStackExtra {
 
     @Override
     public void load(CompoundTag nbttagcompound) {
-        this.item = (Item) Registry.ITEM.get(new Identifier(nbttagcompound.getString("id")));
+        this.item = Registry.ITEM.get(new Identifier(nbttagcompound.getString("id")));
         this.count = nbttagcompound.getByte("Count");
         if (nbttagcompound.contains("tag", 10)) {
             // CraftBukkit start - make defensive copy as this data may be coming from the save thread
-            this.tag = (CompoundTag) nbttagcompound.getCompound("tag").copy();
+            this.tag = nbttagcompound.getCompound("tag").copy();
             this.getItem().postProcessTag(this.tag);
             // CraftBukkit end
         }

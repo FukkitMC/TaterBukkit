@@ -322,7 +322,6 @@ public abstract class MinecraftServerMixin extends ReentrantThreadExecutor<Serve
                 try {
                     worldserver1.addDetailsToCrashReport(crashreport);
                 } catch (Throwable ignored) {
-                    ;
                 }
 
                 throw new CrashException(crashreport);

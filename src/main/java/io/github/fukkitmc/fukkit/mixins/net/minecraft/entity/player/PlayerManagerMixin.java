@@ -126,7 +126,7 @@ public abstract class PlayerManagerMixin implements PlayerManagerExtra {
                 Optional<Vec3d> optional = PlayerEntity.findRespawnPosition(cworld.getHandle(), blockposition, flag1);
 
                 if (optional.isPresent()) {
-                    Vec3d vec3d = (Vec3d) optional.get();
+                    Vec3d vec3d = optional.get();
 
                     isBedSpawn = true;
                     location = new Location(cworld, vec3d.x, vec3d.y, vec3d.z);
@@ -139,7 +139,7 @@ public abstract class PlayerManagerMixin implements PlayerManagerExtra {
             if (location == null) {
                 cworld = (CraftWorld) this.server.server.getWorlds().get(0);
                 blockposition = entityplayer1.getSpawnPoint(cworld.getHandle());
-                location = new Location(cworld, (float) blockposition.getX() + 0.5F, (double) ((float) blockposition.getY() + 0.1F), (double) ((float) blockposition.getZ() + 0.5F));
+                location = new Location(cworld, (float) blockposition.getX() + 0.5F, (float) blockposition.getY() + 0.1F, (float) blockposition.getZ() + 0.5F);
             }
 
             Player respawnPlayer = ((PlayerManager) (Object) this).cserver.getPlayer(entityplayer1);

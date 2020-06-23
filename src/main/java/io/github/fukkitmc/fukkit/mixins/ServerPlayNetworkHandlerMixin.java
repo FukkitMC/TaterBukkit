@@ -3,8 +3,6 @@ package io.github.fukkitmc.fukkit.mixins;
 import io.github.fukkitmc.fukkit.extras.ServerPlayNetworkHandlerExtra;
 import net.minecraft.SharedConstants;
 import net.minecraft.client.options.ChatVisibility;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.ClientConnection;
 import net.minecraft.network.MessageType;
@@ -59,7 +57,6 @@ import java.util.Collections;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicIntegerFieldUpdater;
 
 @Mixin(ServerPlayNetworkHandler.class)
 public abstract class ServerPlayNetworkHandlerMixin implements ServerPlayNetworkHandlerExtra {
@@ -130,7 +127,7 @@ public abstract class ServerPlayNetworkHandlerMixin implements ServerPlayNetwork
             f1 = 0;
         }
 
-        ((ServerPlayNetworkHandler)(Object)this).justTeleported = true;
+        ((ServerPlayNetworkHandler) (Object) this).justTeleported = true;
         // CraftBukkit end
         double d3 = set.contains(PlayerPositionLookS2CPacket.Flag.X) ? this.player.getX() : 0.0D;
         double d4 = set.contains(PlayerPositionLookS2CPacket.Flag.Y) ? this.player.getY() : 0.0D;
@@ -148,7 +145,7 @@ public abstract class ServerPlayNetworkHandlerMixin implements ServerPlayNetwork
         ((ServerPlayNetworkHandler) (Object) this).lastPosY = this.requestedTeleportPos.y;
         ((ServerPlayNetworkHandler) (Object) this).lastPosZ = this.requestedTeleportPos.z;
         ((ServerPlayNetworkHandler) (Object) this).lastYaw = f;
-        ((ServerPlayNetworkHandler) (Object)this).lastPitch = f1;
+        ((ServerPlayNetworkHandler) (Object) this).lastPitch = f1;
         // CraftBukkit end
 
         this.teleportRequestTick = this.ticks;
@@ -290,7 +287,7 @@ public abstract class ServerPlayNetworkHandlerMixin implements ServerPlayNetwork
     }
 
     @Inject(method = "onHandSwing", at = @At(value = "INVOKE", target = "Lnet/minecraft/network/NetworkThreadUtils;forceMainThread(Lnet/minecraft/network/Packet;Lnet/minecraft/network/listener/PacketListener;Lnet/minecraft/server/world/ServerWorld;)V", shift = At.Shift.AFTER), cancellable = true)
-    public void onHandSwing(HandSwingC2SPacket handSwingC2SPacket, CallbackInfo ci){
+    public void onHandSwing(HandSwingC2SPacket handSwingC2SPacket, CallbackInfo ci) {
         if (this.player.isImmobile()) return; // CraftBukkit
         this.player.updateLastActionTime();
         // CraftBukkit start - Raytrace to look for 'rogue armswings'
@@ -307,7 +304,7 @@ public abstract class ServerPlayNetworkHandlerMixin implements ServerPlayNetwork
         float f6 = MathHelper.sin(-f1 * 0.017453292F);
         float f7 = f4 * f5;
         float f8 = f3 * f5;
-        double d3 = player.interactionManager.getGameMode()== GameMode.CREATIVE ? 5.0D : 4.5D;
+        double d3 = player.interactionManager.getGameMode() == GameMode.CREATIVE ? 5.0D : 4.5D;
         Vec3d vec3d1 = vec3d.add((double) f7 * d3, (double) f6 * d3, (double) f8 * d3);
         HitResult movingobjectposition = this.player.world.rayTrace(new RayTraceContext(vec3d, vec3d1, RayTraceContext.ShapeType.OUTLINE, RayTraceContext.FluidHandling.NONE, player));
 
@@ -325,7 +322,7 @@ public abstract class ServerPlayNetworkHandlerMixin implements ServerPlayNetwork
     }
 
     @Inject(method = "onPlayerInteractItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/network/ServerPlayerInteractionManager;interactItem(Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/world/World;Lnet/minecraft/item/ItemStack;Lnet/minecraft/util/Hand;)Lnet/minecraft/util/ActionResult;"), cancellable = true)
-    public void onPlayerInteractItem(PlayerInteractItemC2SPacket playerInteractItemC2SPacket, CallbackInfo ci){
+    public void onPlayerInteractItem(PlayerInteractItemC2SPacket playerInteractItemC2SPacket, CallbackInfo ci) {
         ci.cancel();
         ServerWorld worldserver = this.server.getWorld(this.player.dimension);
         Hand enumhand = playerInteractItemC2SPacket.getHand();
@@ -346,7 +343,7 @@ public abstract class ServerPlayNetworkHandlerMixin implements ServerPlayNetwork
         float f6 = MathHelper.sin(-f1 * 0.017453292F);
         float f7 = f4 * f5;
         float f8 = f3 * f5;
-        double d3 = player.interactionManager.getGameMode()== GameMode.CREATIVE ? 5.0D : 4.5D;
+        double d3 = player.interactionManager.getGameMode() == GameMode.CREATIVE ? 5.0D : 4.5D;
         Vec3d vec3d1 = vec3d.add((double) f7 * d3, (double) f6 * d3, (double) f8 * d3);
         HitResult movingobjectposition = this.player.world.rayTrace(new RayTraceContext(vec3d, vec3d1, RayTraceContext.ShapeType.OUTLINE, RayTraceContext.FluidHandling.NONE, player));
 

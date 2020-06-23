@@ -27,7 +27,7 @@ public class WorldSaveHandlerMixin implements WorldSaveHandlerExtra {
             File file1 = new File(this.playerDataDir, s + ".dat");
 
             if (file1.exists()) {
-                return NbtIo.readCompressed((InputStream) (new FileInputStream(file1)));
+                return NbtIo.readCompressed(new FileInputStream(file1));
             }
         } catch (Exception exception) {
             LOGGER.warn("Failed to load player data for " + s);

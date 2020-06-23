@@ -3,9 +3,7 @@ package io.github.fukkitmc.fukkit.mixins.net.minecraft.entity.player;
 import io.github.fukkitmc.fukkit.extras.PlayerInventoryExtra;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.util.DefaultedList;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.entity.CraftHumanEntity;
@@ -26,7 +24,7 @@ public abstract class PlayerInventoryMixin implements PlayerInventoryExtra {
 
     @Inject(method = "<init>", at = @At("TAIL"))
     public void constructor(PlayerEntity player, CallbackInfo ci) {
-        ((PlayerInventory)(Object)this).transaction = new java.util.ArrayList<HumanEntity>();
+        ((PlayerInventory) (Object) this).transaction = new java.util.ArrayList<HumanEntity>();
     }
 
     @Shadow
@@ -73,12 +71,12 @@ public abstract class PlayerInventoryMixin implements PlayerInventoryExtra {
 
     @Override
     public void onClose(CraftHumanEntity who) {
-        ((PlayerInventory) (Object)this).transaction.remove(who);
+        ((PlayerInventory) (Object) this).transaction.remove(who);
     }
 
     @Override
     public List getViewers() {
-        return ((PlayerInventory) (Object)this).transaction;
+        return ((PlayerInventory) (Object) this).transaction;
     }
 
     @Override
@@ -103,17 +101,17 @@ public abstract class PlayerInventoryMixin implements PlayerInventoryExtra {
 
     @Override
     public int getMaxStackSize() {
-        return ((PlayerInventory)(Object)this).maxStack;
+        return ((PlayerInventory) (Object) this).maxStack;
     }
 
     @Override
     public void setMaxStackSize(int size) {
-        ((PlayerInventory)(Object)this).maxStack = size;
+        ((PlayerInventory) (Object) this).maxStack = size;
     }
 
     @Override
     public void onOpen(CraftHumanEntity who) {
-        ((PlayerInventory) (Object)this).transaction.add(who);
+        ((PlayerInventory) (Object) this).transaction.add(who);
     }
 
     @Override

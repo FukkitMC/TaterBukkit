@@ -19,9 +19,9 @@ public interface ItemFrameEntityRedirects {
             if (entity != null) {
                 entity.setPos(d1, d2, d3);
             }
-            double d4 = (double) width;
-            double d5 = (double) height;
-            double d6 = (double) width;
+            double d4 = width;
+            double d5 = height;
+            double d6 = width;
             Direction.Axis enumdirection_enumaxis = direction.getAxis();
 
             switch (enumdirection_enumaxis) {

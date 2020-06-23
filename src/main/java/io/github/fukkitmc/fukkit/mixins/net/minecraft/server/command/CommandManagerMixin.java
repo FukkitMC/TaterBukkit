@@ -166,11 +166,11 @@ public abstract class CommandManagerMixin implements CommandManagerExtra {
         RootCommandNode vanillaRoot = new RootCommandNode();
         RootCommandNode<ServerCommandSource> vanilla = entityplayer.server.vanillaCommandDispatcher.getDispatcher().getRoot();
         map.put(vanilla, vanillaRoot);
-        this.makeTreeForSource(vanilla, vanillaRoot, entityplayer.getCommandSource(), (Map) map);
+        this.makeTreeForSource(vanilla, vanillaRoot, entityplayer.getCommandSource(), map);
         // Now build the global commands in a second pass
         RootCommandNode<CommandSource> rootcommandnode = new RootCommandNode();
         map.put(this.dispatcher.getRoot(), rootcommandnode);
-        this.makeTreeForSource(this.dispatcher.getRoot(), rootcommandnode, entityplayer.getCommandSource(), (Map) map);
+        this.makeTreeForSource(this.dispatcher.getRoot(), rootcommandnode, entityplayer.getCommandSource(), map);
         Collection<String> bukkit = new LinkedHashSet<>();
         for (CommandNode node : rootcommandnode.getChildren()) {
             bukkit.add(node.getName());
