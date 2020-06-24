@@ -103,6 +103,16 @@ public class CraftArrow extends AbstractProjectile implements AbstractArrow {
     }
 
     @Override
+    public boolean isShotFromCrossbow() {
+        throw new RuntimeException("i was too lazy to implement this");
+    }
+
+    @Override
+    public void setShotFromCrossbow(boolean shotFromCrossbow) {
+        throw new RuntimeException("i was too lazy to implement this");
+    }
+
+    @Override
     public void setTicksLived(int value) {
         super.setTicksLived(value);
 
