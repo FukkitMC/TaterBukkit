@@ -64,7 +64,15 @@ public class ServerPlayerEntityMixin implements ServerPlayerEntityExtra {
 
     @Override
     public long getPlayerTime() {
-        return 0;
+        ServerPlayerEntity self = (ServerPlayerEntity) (Object) this;
+
+        if (self.relativeTime) {
+            // Adds timeOffset to the current server time.
+            return self.world.getTimeOfDay() + self.timeOffset;
+        } else {
+            // Adds timeOffset to the beginning of this day.
+            return self.world.getTimeOfDay() - (self.world.getTimeOfDay() % 24000) + self.timeOffset;
+        }
     }
 
     @Override
