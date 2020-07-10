@@ -21,9 +21,6 @@ import lombok.ToString;
  * <br>
  * As of 1.12.2, a bug ( MC-56373 ) prevents full usage within hover events.
  */
-@ToString
-@AllArgsConstructor
-@EqualsAndHashCode(callSuper = true)
 public final class ScoreComponent extends BaseComponent {
 
     /**

@@ -3,8 +3,6 @@ package net.md_5.bungee.api.chat;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-@ToString
-@EqualsAndHashCode
 public final class HoverEvent {
 
     private Action action;

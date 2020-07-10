@@ -4,9 +4,6 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-@ToString
-@NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
 public final class KeybindComponent extends BaseComponent {
 
     /**

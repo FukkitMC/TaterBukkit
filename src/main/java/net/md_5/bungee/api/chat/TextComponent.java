@@ -8,7 +8,6 @@ import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@EqualsAndHashCode(callSuper = true)
 public final class TextComponent extends BaseComponent {
 
     private static final Pattern url = Pattern.compile("^(?:(https?)://)?([-\\w_\\.]{2,}\\.[a-z]{2,4})(/\\S*)?$");

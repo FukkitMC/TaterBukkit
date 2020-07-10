@@ -8,8 +8,6 @@ import net.md_5.bungee.api.chat.ComponentBuilder.FormatRetention;
 import java.util.ArrayList;
 import java.util.List;
 
-@ToString(exclude = "parent")
-@EqualsAndHashCode(exclude = "parent")
 public abstract class BaseComponent {
 
     BaseComponent parent;
@@ -68,15 +66,6 @@ public abstract class BaseComponent {
 
     private HoverEvent hoverEvent;
 
-    /**
-     * Default constructor.
-     *
-     * @deprecated for use by internal classes only, will be removed.
-     */
-    @Deprecated
-    public BaseComponent() {
-    }
-
     BaseComponent(BaseComponent old) {
         copyFormatting(old, FormatRetention.ALL, true);
 
@@ -85,6 +74,10 @@ public abstract class BaseComponent {
                 addExtra(extra.duplicate());
             }
         }
+    }
+
+    public BaseComponent() {
+
     }
 
     /**

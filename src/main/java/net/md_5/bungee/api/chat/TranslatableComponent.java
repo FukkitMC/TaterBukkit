@@ -9,9 +9,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@ToString
-@NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
 public final class TranslatableComponent extends BaseComponent {
 
     private final Pattern format = Pattern.compile("%(?:(\\d+)\\$)?([A-Za-z%]|$)");

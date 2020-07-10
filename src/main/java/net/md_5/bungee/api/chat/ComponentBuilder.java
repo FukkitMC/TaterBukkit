@@ -26,7 +26,6 @@ import java.util.List;
  * part's formatting
  * </p>
  */
-@NoArgsConstructor
 public final class ComponentBuilder {
 
     @Getter
