@@ -62,33 +62,26 @@ import java.util.concurrent.atomic.AtomicInteger;
 public abstract class ServerPlayNetworkHandlerMixin implements ServerPlayNetworkHandlerExtra {
 
     @Shadow
+    public static Logger LOGGER;
+    private final AtomicInteger chatSpamField = new AtomicInteger();
+    @Shadow
     public MinecraftServer server;
-
     @Shadow
     public ServerPlayerEntity player;
-
     @Shadow
-    public static Logger LOGGER;
+    public int teleportRequestTick;
+    @Shadow
+    public int ticks;
+    @Shadow
+    public Vec3d requestedTeleportPos;
+    @Shadow
+    public int requestedTeleportId;
 
     @Shadow
     public abstract void disconnect(Text reason);
 
     @Shadow
     public abstract void sendPacket(Packet<?> packet);
-
-    @Shadow
-    public int teleportRequestTick;
-
-    @Shadow
-    public int ticks;
-
-    @Shadow
-    public Vec3d requestedTeleportPos;
-
-    @Shadow
-    public int requestedTeleportId;
-
-    private final AtomicInteger chatSpamField = new AtomicInteger();
 
     @Inject(method = "<init>", at = @At("TAIL"))
     public void constructor(MinecraftServer minecraftServer, ClientConnection clientConnection, ServerPlayerEntity serverPlayerEntity, CallbackInfo ci) {
