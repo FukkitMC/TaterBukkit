@@ -1,7 +1,7 @@
 package org.bukkit.craftbukkit.entity;
 
 import java.util.Random;
-import net.minecraft.entity.FireworkEntity;
+import net.minecraft.entity.projectile.FireworkRocketEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import org.bukkit.Material;
@@ -16,14 +16,14 @@ public class CraftFirework extends CraftEntity implements Firework {
     private final Random random = new Random();
     private final CraftItemStack item;
 
-    public CraftFirework(CraftServer server, FireworkEntity entity) {
+    public CraftFirework(CraftServer server, FireworkRocketEntity entity) {
         super(server, entity);
 
-        ItemStack item = getHandle().getDataTracker().get(FireworkEntity.ITEM);
+        ItemStack item = getHandle().getDataTracker().get(FireworkRocketEntity.ITEM);
 
         if (item.isEmpty()) {
             item = new ItemStack(Items.FIREWORK_ROCKET);
-            getHandle().getDataTracker().set(FireworkEntity.ITEM, item);
+            getHandle().getDataTracker().set(FireworkRocketEntity.ITEM, item);
         }
 
         this.item = CraftItemStack.asCraftMirror(item);
@@ -35,8 +35,8 @@ public class CraftFirework extends CraftEntity implements Firework {
     }
 
     @Override
-    public FireworkEntity getHandle() {
-        return (FireworkEntity) entity;
+    public FireworkRocketEntity getHandle() {
+        return (FireworkRocketEntity) entity;
     }
 
     @Override
@@ -61,7 +61,7 @@ public class CraftFirework extends CraftEntity implements Firework {
         // Copied from EntityFireworks constructor, update firework lifetime/power
         getHandle().lifeTime = 10 * (1 + meta.getPower()) + random.nextInt(6) + random.nextInt(7);
 
-        getHandle().getDataTracker().markDirty(FireworkEntity.ITEM);
+        getHandle().getDataTracker().markDirty(FireworkRocketEntity.ITEM);
     }
 
     @Override
@@ -76,6 +76,6 @@ public class CraftFirework extends CraftEntity implements Firework {
 
     @Override
     public void setShotAtAngle(boolean shotAtAngle) {
-        getHandle().getDataTracker().set(FireworkEntity.SHOT_AT_ANGLE, shotAtAngle);
+        getHandle().getDataTracker().set(FireworkRocketEntity.SHOT_AT_ANGLE, shotAtAngle);
     }
 }

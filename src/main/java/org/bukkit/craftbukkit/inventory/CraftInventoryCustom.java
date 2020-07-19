@@ -6,7 +6,7 @@ import java.util.List;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.DefaultedList;
+import net.minecraft.util.collection.DefaultedList;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.entity.CraftHumanEntity;
@@ -63,22 +63,22 @@ public class CraftInventoryCustom extends CraftInventory {
         }
 
         @Override
-        public int getInvSize() {
+        public int size() {
             return items.size();
         }
 
         @Override
-        public ItemStack getInvStack(int i) {
+        public ItemStack getStack(int i) {
             return items.get(i);
         }
 
         @Override
-        public ItemStack takeInvStack(int i, int j) {
-            ItemStack stack = this.getInvStack(i);
+        public ItemStack removeStack(int i, int j) {
+            ItemStack stack = this.getStack(i);
             ItemStack result;
             if (stack == ItemStack.EMPTY) return stack;
             if (stack.getCount() <= j) {
-                this.setInvStack(i, ItemStack.EMPTY);
+                this.setStack(i, ItemStack.EMPTY);
                 result = stack;
             } else {
                 result = CraftItemStack.copyNMSStack(stack, j);
@@ -89,12 +89,12 @@ public class CraftInventoryCustom extends CraftInventory {
         }
 
         @Override
-        public ItemStack removeInvStack(int i) {
-            ItemStack stack = this.getInvStack(i);
+        public ItemStack removeStack(int i) {
+            ItemStack stack = this.getStack(i);
             ItemStack result;
             if (stack == ItemStack.EMPTY) return stack;
             if (stack.getCount() <= 1) {
-                this.setInvStack(i, null);
+                this.setStack(i, null);
                 result = stack;
             } else {
                 result = CraftItemStack.copyNMSStack(stack, 1);
@@ -104,15 +104,15 @@ public class CraftInventoryCustom extends CraftInventory {
         }
 
         @Override
-        public void setInvStack(int i, ItemStack itemstack) {
+        public void setStack(int i, ItemStack itemstack) {
             items.set(i, itemstack);
-            if (itemstack != ItemStack.EMPTY && this.getInvMaxStackAmount() > 0 && itemstack.getCount() > this.getInvMaxStackAmount()) {
-                itemstack.setCount(this.getInvMaxStackAmount());
+            if (itemstack != ItemStack.EMPTY && this.getMaxCountPerStack() > 0 && itemstack.getCount() > this.getMaxCountPerStack()) {
+                itemstack.setCount(this.getMaxCountPerStack());
             }
         }
 
         @Override
-        public int getInvMaxStackAmount() {
+        public int getMaxCountPerStack() {
             return maxStack;
         }
 
@@ -125,7 +125,7 @@ public class CraftInventoryCustom extends CraftInventory {
         public void markDirty() {}
 
         @Override
-        public boolean canPlayerUseInv(PlayerEntity entityhuman) {
+        public boolean canPlayerUse(PlayerEntity entityhuman) {
             return true;
         }
 
@@ -159,17 +159,17 @@ public class CraftInventoryCustom extends CraftInventory {
         }
 
         @Override
-        public boolean isValidInvStack(int i, ItemStack itemstack) {
+        public boolean isValid(int i, ItemStack itemstack) {
             return true;
         }
 
         @Override
-        public void onInvOpen(PlayerEntity entityHuman) {
+        public void onOpen(PlayerEntity entityHuman) {
 
         }
 
         @Override
-        public void onInvClose(PlayerEntity entityHuman) {
+        public void onClose(PlayerEntity entityHuman) {
 
         }
 
@@ -188,7 +188,7 @@ public class CraftInventoryCustom extends CraftInventory {
         }
 
         @Override
-        public boolean isInvEmpty() {
+        public boolean isEmpty() {
             Iterator iterator = this.items.iterator();
 
             ItemStack itemstack;

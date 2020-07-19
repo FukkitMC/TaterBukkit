@@ -1,7 +1,7 @@
 package org.bukkit.craftbukkit.inventory;
 
 import net.minecraft.block.ChestBlock;
-import net.minecraft.container.NameableContainerFactory;
+import net.minecraft.screen.NamedScreenHandlerFactory;
 import org.bukkit.Location;
 import org.bukkit.block.DoubleChest;
 import org.bukkit.craftbukkit.subclasses.DoubleInventory;
@@ -10,7 +10,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 public class CraftInventoryDoubleChest extends CraftInventory implements DoubleChestInventory {
-    public NameableContainerFactory tile;
+    public NamedScreenHandlerFactory tile;
     private final CraftInventory left;
     private final CraftInventory right;
 
@@ -47,8 +47,8 @@ public class CraftInventoryDoubleChest extends CraftInventory implements DoubleC
 
     @Override
     public void setContents(ItemStack[] items) {
-        if (getInventory().getInvSize() < items.length) {
-            throw new IllegalArgumentException("Invalid inventory size; expected " + getInventory().getInvSize() + " or less");
+        if (getInventory().size() < items.length) {
+            throw new IllegalArgumentException("Invalid inventory size; expected " + getInventory().size() + " or less");
         }
         ItemStack[] leftItems = new ItemStack[left.getSize()], rightItems = new ItemStack[right.getSize()];
         System.arraycopy(items, 0, leftItems, 0, Math.min(left.getSize(), items.length));

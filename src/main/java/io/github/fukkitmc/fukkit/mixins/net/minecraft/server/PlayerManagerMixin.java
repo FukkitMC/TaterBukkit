@@ -7,6 +7,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.ClientConnection;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.packet.s2c.play.*;
 import net.minecraft.scoreboard.ServerScoreboard;
 import net.minecraft.server.MinecraftServer;
@@ -17,7 +18,6 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
-import net.minecraft.util.PacketByteBuf;
 import net.minecraft.util.UserCache;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.level.LevelProperties;
@@ -147,7 +147,7 @@ public abstract class PlayerManagerMixin {
 
         if (joinMessage != null && joinMessage.length() > 0) {
             for (Text line : org.bukkit.craftbukkit.util.CraftChatMessage.fromString(joinMessage)) {
-                server.getPlayerManager().sendToAll(new ChatMessageS2CPacket(line));
+                server.getPlayerManager().sendToAll(new GameMessageS2CPacket(line));
             }
         }
         // CraftBukkit end
@@ -235,7 +235,7 @@ public abstract class PlayerManagerMixin {
             }
         }
 
-        entityplayer.method_14235();
+        entityplayer.onSpawn();
         // CraftBukkit - Moved from above, added world
         PlayerManager.LOGGER.info("{}[{}] logged in with entity id {} at ([{}]{}, {}, {})", entityplayer.getName().getString(), s1, entityplayer.getEntityId(), entityplayer.world.properties.getLevelName(), entityplayer.getX(), entityplayer.getY(), entityplayer.getZ());
     }

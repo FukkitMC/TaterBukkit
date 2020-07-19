@@ -6,8 +6,8 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldAccess;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 
@@ -27,7 +27,7 @@ public final class CapturedBlockState extends CraftBlockState {
 
         // SPIGOT-5537: Horrible hack to manually add bees given World.captureTreeGeneration does not support tiles
         if (this.treeBlock && getType() == Material.BEE_NEST) {
-            IWorld generatoraccess = this.world.getHandle();
+            WorldAccess generatoraccess = this.world.getHandle();
             BlockPos blockposition1 = this.getPosition();
             Random random = generatoraccess.getRandom();
 

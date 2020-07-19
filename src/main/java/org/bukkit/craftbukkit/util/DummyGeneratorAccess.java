@@ -28,7 +28,7 @@ import net.minecraft.world.dimension.Dimension;
 import net.minecraft.world.level.LevelProperties;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 
-public class DummyGeneratorAccess implements IWorld {
+public class DummyGeneratorAccess implements WorldAccess {
 
     protected DummyGeneratorAccess() {
     }
@@ -94,7 +94,7 @@ public class DummyGeneratorAccess implements IWorld {
     }
 
     @Override
-    public void playLevelEvent(PlayerEntity eh, int i, BlockPos bp, int i1) {
+    public void syncWorldEvent(PlayerEntity eh, int i, BlockPos bp, int i1) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

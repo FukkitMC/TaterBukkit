@@ -29,7 +29,7 @@ public class CraftBlockCommandSender extends ServerCommandSender implements Bloc
     @Override
     public void sendMessage(String message) {
         for (Text component : CraftChatMessage.fromString(message)) {
-            block.output.sendMessage(component);
+            block.output.sendSystemMessage(component);
         }
     }
 

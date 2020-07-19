@@ -1,6 +1,6 @@
 package org.bukkit.craftbukkit.entity;
 
-import net.minecraft.entity.decoration.EnderCrystalEntity;
+import net.minecraft.entity.decoration.EndCrystalEntity;
 import net.minecraft.util.math.BlockPos;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.CraftServer;
@@ -8,7 +8,7 @@ import org.bukkit.entity.EnderCrystal;
 import org.bukkit.entity.EntityType;
 
 public class CraftEnderCrystal extends CraftEntity implements EnderCrystal {
-    public CraftEnderCrystal(CraftServer server, EnderCrystalEntity entity) {
+    public CraftEnderCrystal(CraftServer server, EndCrystalEntity entity) {
         super(server, entity);
     }
 
@@ -40,8 +40,8 @@ public class CraftEnderCrystal extends CraftEntity implements EnderCrystal {
     }
 
     @Override
-    public EnderCrystalEntity getHandle() {
-        return (EnderCrystalEntity) entity;
+    public EndCrystalEntity getHandle() {
+        return (EndCrystalEntity) entity;
     }
 
     @Override

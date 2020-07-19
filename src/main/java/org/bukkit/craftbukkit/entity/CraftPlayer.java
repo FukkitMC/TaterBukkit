@@ -28,7 +28,6 @@ import javax.annotation.Nullable;
 import net.minecraft.advancement.AdvancementProgress;
 import net.minecraft.advancement.PlayerAdvancementTracker;
 import net.minecraft.block.entity.SignBlockEntity;
-import net.minecraft.container.Container;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.ClampedEntityAttribute;
@@ -37,11 +36,12 @@ import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributeInstanceImpl;
 import net.minecraft.item.map.MapIcon;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.packet.s2c.play.BlockUpdateS2CPacket;
-import net.minecraft.network.packet.s2c.play.ChatMessageS2CPacket;
 import net.minecraft.network.packet.s2c.play.CustomPayloadS2CPacket;
 import net.minecraft.network.packet.s2c.play.EntityAttributesS2CPacket;
 import net.minecraft.network.packet.s2c.play.ExperienceBarUpdateS2CPacket;
+import net.minecraft.network.packet.s2c.play.GameMessageS2CPacket;
 import net.minecraft.network.packet.s2c.play.HealthUpdateS2CPacket;
 import net.minecraft.network.packet.s2c.play.MapUpdateS2CPacket;
 import net.minecraft.network.packet.s2c.play.ParticleS2CPacket;
@@ -53,6 +53,7 @@ import net.minecraft.network.packet.s2c.play.PlayerSpawnPositionS2CPacket;
 import net.minecraft.network.packet.s2c.play.StopSoundS2CPacket;
 import net.minecraft.network.packet.s2c.play.TitleS2CPacket;
 import net.minecraft.network.packet.s2c.play.WorldEventS2CPacket;
+import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.WhitelistEntry;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -62,7 +63,6 @@ import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.PacketByteBuf;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import org.apache.commons.lang.NotImplementedException;
@@ -197,7 +197,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         if (getHandle().networkHandler == null) return;
 
         for (Text component : CraftChatMessage.fromString(message)) {
-            getHandle().networkHandler.sendPacket(new ChatMessageS2CPacket(component));
+            getHandle().networkHandler.sendPacket(new GameMessageS2CPacket(component));
         }
     }
 
@@ -661,8 +661,8 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         ServerWorld toWorld = ((CraftWorld) to.getWorld()).getHandle();
 
         // Close any foreign inventory
-        if (getHandle().container != getHandle().playerContainer) {
-            getHandle().closeContainer();
+        if (getHandle().currentScreenHandler != getHandle().playerScreenHandler) {
+            getHandle().closeHandledScreen();
         }
 
         // Check if the fromWorld and toWorld are the same.
@@ -707,7 +707,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
     @Deprecated
     @Override
     public void updateInventory() {
-        getHandle().openContainer(getHandle().container);
+        getHandle().openHandledScreen(getHandle().currentScreenHandler);
     }
 
     @Override
@@ -718,7 +718,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
     @Override
     public void setSleepingIgnored(boolean isSleeping) {
         getHandle().fauxSleeping = isSleeping;
-        ((CraftWorld) getWorld()).getHandle().updatePlayersSleeping();
+        ((CraftWorld) getWorld()).getHandle().updateSleepingPlayers();
     }
 
     @Override
@@ -1291,11 +1291,11 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
 
     @Override
     public boolean setWindowProperty(Property prop, int value) {
-        Container container = getHandle().container;
+        ScreenHandler container = getHandle().currentScreenHandler;
         if (container.getBukkitView().getType() != prop.getType()) {
             return false;
         }
-        getHandle().onContainerPropertyUpdate(container, prop.getId(), value);
+        getHandle().onPropertyUpdate(container, prop.getId(), value);
         return true;
     }
 
@@ -1336,8 +1336,8 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
 
     @Override
     public int getNoDamageTicks() {
-        if (getHandle().field_13998 > 0) {
-            return Math.max(getHandle().field_13998, getHandle().timeUntilRegen);
+        if (getHandle().joinInvulnerabilityTicks > 0) {
+            return Math.max(getHandle().joinInvulnerabilityTicks, getHandle().timeUntilRegen);
         } else {
             return getHandle().timeUntilRegen;
         }

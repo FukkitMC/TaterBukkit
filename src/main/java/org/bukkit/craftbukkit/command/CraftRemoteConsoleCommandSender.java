@@ -1,20 +1,20 @@
 package org.bukkit.craftbukkit.command;
 
-import net.minecraft.server.dedicated.ServerCommandOutput;
+import net.minecraft.server.rcon.RconCommandOutput;
 import net.minecraft.text.LiteralText;
 import org.bukkit.command.RemoteConsoleCommandSender;
 
 public class CraftRemoteConsoleCommandSender extends ServerCommandSender implements RemoteConsoleCommandSender {
 
-    private final ServerCommandOutput listener;
+    private final RconCommandOutput listener;
 
-    public CraftRemoteConsoleCommandSender(ServerCommandOutput listener) {
+    public CraftRemoteConsoleCommandSender(RconCommandOutput listener) {
         this.listener = listener;
     }
 
     @Override
     public void sendMessage(String message) {
-        listener.sendMessage(new LiteralText(message + "\n")); // Send a newline after each message, to preserve formatting.
+        listener.sendSystemMessage(new LiteralText(message + "\n")); // Send a newline after each message, to preserve formatting.
     }
 
     @Override

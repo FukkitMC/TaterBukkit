@@ -6,15 +6,15 @@ import net.minecraft.block.entity.DispenserBlockEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.entity.projectile.ExplosiveProjectileEntity;
-import net.minecraft.entity.projectile.ProjectileEntity;
+import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.SmallFireballEntity;
 import net.minecraft.entity.projectile.SpectralArrowEntity;
-import net.minecraft.entity.thrown.SnowballEntity;
-import net.minecraft.entity.thrown.ThrownEggEntity;
-import net.minecraft.entity.thrown.ThrownEnderpearlEntity;
-import net.minecraft.entity.thrown.ThrownEntity;
-import net.minecraft.entity.thrown.ThrownExperienceBottleEntity;
-import net.minecraft.entity.thrown.ThrownPotionEntity;
+import net.minecraft.entity.projectile.thrown.EggEntity;
+import net.minecraft.entity.projectile.thrown.EnderPearlEntity;
+import net.minecraft.entity.projectile.thrown.ExperienceBottleEntity;
+import net.minecraft.entity.projectile.thrown.PotionEntity;
+import net.minecraft.entity.projectile.thrown.SnowballEntity;
+import net.minecraft.entity.projectile.thrown.ThrownEntity;
 import net.minecraft.util.math.BlockPointerImpl;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
@@ -74,19 +74,19 @@ public class CraftBlockProjectileSource implements BlockProjectileSource {
         if (Snowball.class.isAssignableFrom(projectile)) {
             launch = new SnowballEntity(world, iposition.getX(), iposition.getY(), iposition.getZ());
         } else if (Egg.class.isAssignableFrom(projectile)) {
-            launch = new ThrownEggEntity(world, iposition.getX(), iposition.getY(), iposition.getZ());
+            launch = new EggEntity(world, iposition.getX(), iposition.getY(), iposition.getZ());
         } else if (EnderPearl.class.isAssignableFrom(projectile)) {
-            launch = new ThrownEnderpearlEntity(world, null);
+            launch = new EnderPearlEntity(world, null);
             launch.updatePosition(iposition.getX(), iposition.getY(), iposition.getZ());
         } else if (ThrownExpBottle.class.isAssignableFrom(projectile)) {
-            launch = new ThrownExperienceBottleEntity(world, iposition.getX(), iposition.getY(), iposition.getZ());
+            launch = new ExperienceBottleEntity(world, iposition.getX(), iposition.getY(), iposition.getZ());
         } else if (ThrownPotion.class.isAssignableFrom(projectile)) {
             if (LingeringPotion.class.isAssignableFrom(projectile)) {
-                launch = new ThrownPotionEntity(world, iposition.getX(), iposition.getY(), iposition.getZ());
-                ((ThrownPotionEntity) launch).setItemStack(CraftItemStack.asNMSCopy(new ItemStack(org.bukkit.Material.LINGERING_POTION, 1)));
+                launch = new PotionEntity(world, iposition.getX(), iposition.getY(), iposition.getZ());
+                ((PotionEntity) launch).setItemStack(CraftItemStack.asNMSCopy(new ItemStack(org.bukkit.Material.LINGERING_POTION, 1)));
             } else {
-                launch = new ThrownPotionEntity(world, iposition.getX(), iposition.getY(), iposition.getZ());
-                ((ThrownPotionEntity) launch).setItemStack(CraftItemStack.asNMSCopy(new ItemStack(org.bukkit.Material.SPLASH_POTION, 1)));
+                launch = new PotionEntity(world, iposition.getX(), iposition.getY(), iposition.getZ());
+                ((PotionEntity) launch).setItemStack(CraftItemStack.asNMSCopy(new ItemStack(org.bukkit.Material.SPLASH_POTION, 1)));
             }
         } else if (AbstractArrow.class.isAssignableFrom(projectile)) {
             if (TippedArrow.class.isAssignableFrom(projectile)) {
@@ -97,8 +97,8 @@ public class CraftBlockProjectileSource implements BlockProjectileSource {
             } else {
                 launch = new ArrowEntity(world, iposition.getX(), iposition.getY(), iposition.getZ());
             }
-            ((ProjectileEntity) launch).pickupType = ProjectileEntity.PickupPermission.ALLOWED;
-            ((ProjectileEntity) launch).projectileSource = this;
+            ((PersistentProjectileEntity) launch).pickupType = PersistentProjectileEntity.PickupPermission.ALLOWED;
+            ((PersistentProjectileEntity) launch).projectileSource = this;
         } else if (Fireball.class.isAssignableFrom(projectile)) {
             double d0 = iposition.getX() + (double) ((float) enumdirection.getOffsetX() * 0.3F);
             double d1 = iposition.getY() + (double) ((float) enumdirection.getOffsetY() * 0.3F);
@@ -133,20 +133,20 @@ public class CraftBlockProjectileSource implements BlockProjectileSource {
 
         Validate.notNull(launch, "Projectile not supported");
 
-        if (launch instanceof net.minecraft.entity.projectile.Projectile) {
+        if (launch instanceof net.minecraft.entity.projectile.ProjectileEntity) {
             if (launch instanceof ThrownEntity) {
                 ((ThrownEntity) launch).projectileSource = this;
             }
             // Values from DispenseBehaviorProjectile
             float a = 6.0F;
             float b = 1.1F;
-            if (launch instanceof ThrownPotionEntity || launch instanceof ThrownExpBottle) {
+            if (launch instanceof PotionEntity || launch instanceof ThrownExpBottle) {
                 // Values from respective DispenseBehavior classes
                 a *= 0.5F;
                 b *= 1.25F;
             }
             // Copied from DispenseBehaviorProjectile
-            ((net.minecraft.entity.projectile.Projectile) launch).setVelocity((double) enumdirection.getOffsetX(), (double) ((float) enumdirection.getOffsetY() + 0.1F), (double) enumdirection.getOffsetZ(), b, a);
+            ((net.minecraft.entity.projectile.ProjectileEntity) launch).setVelocity((double) enumdirection.getOffsetX(), (double) ((float) enumdirection.getOffsetY() + 0.1F), (double) enumdirection.getOffsetZ(), b, a);
         }
 
         if (velocity != null) {

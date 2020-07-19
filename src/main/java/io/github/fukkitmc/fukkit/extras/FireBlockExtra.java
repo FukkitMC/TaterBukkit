@@ -5,7 +5,7 @@ package io.github.fukkitmc.fukkit.extras;
  */
 public interface FireBlockExtra {
 
-    void fireExtinguished(net.minecraft.world.IWorld var0, net.minecraft.util.math.BlockPos var1);
+    void fireExtinguished(net.minecraft.world.WorldAccess var0, net.minecraft.util.math.BlockPos var1);
 
     void a(net.minecraft.world.World var0, net.minecraft.util.math.BlockPos var1, int var2, java.util.Random var3, int var4, net.minecraft.util.math.BlockPos var5);
 }

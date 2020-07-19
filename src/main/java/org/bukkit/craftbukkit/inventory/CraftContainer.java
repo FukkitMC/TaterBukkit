@@ -1,31 +1,31 @@
 package org.bukkit.craftbukkit.inventory;
 
-import net.minecraft.container.AnvilContainer;
-import net.minecraft.container.ArrayPropertyDelegate;
-import net.minecraft.container.BeaconContainer;
-import net.minecraft.container.BlastFurnaceContainer;
-import net.minecraft.container.BrewingStandContainer;
-import net.minecraft.container.CartographyTableContainer;
-import net.minecraft.container.Container;
-import net.minecraft.container.ContainerType;
-import net.minecraft.container.CraftingTableContainer;
-import net.minecraft.container.EnchantingTableContainer;
-import net.minecraft.container.FurnaceContainer;
-import net.minecraft.container.Generic3x3Container;
-import net.minecraft.container.GenericContainer;
-import net.minecraft.container.GrindstoneContainer;
-import net.minecraft.container.HopperContainer;
-import net.minecraft.container.LecternContainer;
-import net.minecraft.container.LoomContainer;
-import net.minecraft.container.MerchantContainer;
-import net.minecraft.container.ShulkerBoxContainer;
-import net.minecraft.container.Slot;
-import net.minecraft.container.SmokerContainer;
-import net.minecraft.container.StonecutterContainer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.packet.s2c.play.OpenContainerS2CPacket;
+import net.minecraft.network.packet.s2c.play.OpenScreenS2CPacket;
+import net.minecraft.screen.AnvilScreenHandler;
+import net.minecraft.screen.ArrayPropertyDelegate;
+import net.minecraft.screen.BeaconScreenHandler;
+import net.minecraft.screen.BlastFurnaceScreenHandler;
+import net.minecraft.screen.BrewingStandScreenHandler;
+import net.minecraft.screen.CartographyTableScreenHandler;
+import net.minecraft.screen.CraftingScreenHandler;
+import net.minecraft.screen.EnchantmentScreenHandler;
+import net.minecraft.screen.FurnaceScreenHandler;
+import net.minecraft.screen.Generic3x3ContainerScreenHandler;
+import net.minecraft.screen.GenericContainerScreenHandler;
+import net.minecraft.screen.GrindstoneScreenHandler;
+import net.minecraft.screen.HopperScreenHandler;
+import net.minecraft.screen.LecternScreenHandler;
+import net.minecraft.screen.LoomScreenHandler;
+import net.minecraft.screen.MerchantScreenHandler;
+import net.minecraft.screen.ScreenHandler;
+import net.minecraft.screen.ScreenHandlerType;
+import net.minecraft.screen.ShulkerBoxScreenHandler;
+import net.minecraft.screen.SmokerScreenHandler;
+import net.minecraft.screen.StonecutterScreenHandler;
+import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import org.bukkit.craftbukkit.entity.CraftHumanEntity;
@@ -35,12 +35,12 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 
-public class CraftContainer extends Container {
+public class CraftContainer extends ScreenHandler {
 
     private final InventoryView view;
     private InventoryType cachedType;
     private String cachedTitle;
-    private Container delegate;
+    private ScreenHandler delegate;
     private final int cachedSize;
 
     public CraftContainer(InventoryView view, PlayerEntity player, int id) {
@@ -85,7 +85,7 @@ public class CraftContainer extends Container {
     }
 
     @Override
-    public void transferTo(Container var0, CraftHumanEntity var1) {
+    public void transferTo(ScreenHandler var0, CraftHumanEntity var1) {
         
     }
 
@@ -121,7 +121,7 @@ public class CraftContainer extends Container {
         cachedTitle = view.getTitle();
         if (view.getPlayer() instanceof CraftPlayer) {
             CraftPlayer player = (CraftPlayer) view.getPlayer();
-            ContainerType<?> type = getNotchInventoryType(view.getTopInventory());
+            ScreenHandlerType<?> type = getNotchInventoryType(view.getTopInventory());
             net.minecraft.inventory.Inventory top = ((CraftInventory) view.getTopInventory()).getInventory();
             PlayerInventory bottom = (PlayerInventory) ((CraftInventory) view.getBottomInventory()).getInventory();
             this.trackedStacks.clear();
@@ -130,13 +130,13 @@ public class CraftContainer extends Container {
                 setupSlots(top, bottom, player.getHandle());
             }
             int size = getSize();
-            player.getHandle().networkHandler.sendPacket(new OpenContainerS2CPacket(this.syncId, type, new LiteralText(cachedTitle)));
+            player.getHandle().networkHandler.sendPacket(new OpenScreenS2CPacket(this.syncId, type, new LiteralText(cachedTitle)));
             player.updateInventory();
         }
         return true;
     }
 
-    public static ContainerType getNotchInventoryType(Inventory inventory) {
+    public static ScreenHandlerType getNotchInventoryType(Inventory inventory) {
         switch (inventory.getType()) {
             case PLAYER:
             case CHEST:
@@ -144,62 +144,62 @@ public class CraftContainer extends Container {
             case BARREL:
                 switch (inventory.getSize()) {
                     case 9:
-                        return ContainerType.GENERIC_9X1;
+                        return ScreenHandlerType.GENERIC_9X1;
                     case 18:
-                        return ContainerType.GENERIC_9X2;
+                        return ScreenHandlerType.GENERIC_9X2;
                     case 27:
-                        return ContainerType.GENERIC_9X3;
+                        return ScreenHandlerType.GENERIC_9X3;
                     case 36:
                     case 41: // PLAYER
-                        return ContainerType.GENERIC_9X4;
+                        return ScreenHandlerType.GENERIC_9X4;
                     case 45:
-                        return ContainerType.GENERIC_9X5;
+                        return ScreenHandlerType.GENERIC_9X5;
                     case 54:
-                        return ContainerType.GENERIC_9X6;
+                        return ScreenHandlerType.GENERIC_9X6;
                     default:
                         throw new IllegalArgumentException("Unsupported custom inventory size " + inventory.getSize());
                 }
             case WORKBENCH:
-                return ContainerType.CRAFTING;
+                return ScreenHandlerType.CRAFTING;
             case FURNACE:
-                return ContainerType.FURNACE;
+                return ScreenHandlerType.FURNACE;
             case DISPENSER:
-                return ContainerType.GENERIC_3X3;
+                return ScreenHandlerType.GENERIC_3X3;
             case ENCHANTING:
-                return ContainerType.ENCHANTMENT;
+                return ScreenHandlerType.ENCHANTMENT;
             case BREWING:
-                return ContainerType.BREWING_STAND;
+                return ScreenHandlerType.BREWING_STAND;
             case BEACON:
-                return ContainerType.BEACON;
+                return ScreenHandlerType.BEACON;
             case ANVIL:
-                return ContainerType.ANVIL;
+                return ScreenHandlerType.ANVIL;
             case HOPPER:
-                return ContainerType.HOPPER;
+                return ScreenHandlerType.HOPPER;
             case DROPPER:
-                return ContainerType.GENERIC_3X3;
+                return ScreenHandlerType.GENERIC_3X3;
             case SHULKER_BOX:
-                return ContainerType.SHULKER_BOX;
+                return ScreenHandlerType.SHULKER_BOX;
             case BLAST_FURNACE:
-                return ContainerType.BLAST_FURNACE;
+                return ScreenHandlerType.BLAST_FURNACE;
             case LECTERN:
-                return ContainerType.LECTERN;
+                return ScreenHandlerType.LECTERN;
             case SMOKER:
-                return ContainerType.SMOKER;
+                return ScreenHandlerType.SMOKER;
             case LOOM:
-                return ContainerType.LOOM;
+                return ScreenHandlerType.LOOM;
             case CARTOGRAPHY:
-                return ContainerType.CARTOGRAPHY_TABLE;
+                return ScreenHandlerType.CARTOGRAPHY_TABLE;
             case GRINDSTONE:
-                return ContainerType.GRINDSTONE;
+                return ScreenHandlerType.GRINDSTONE;
             case STONECUTTER:
-                return ContainerType.STONECUTTER;
+                return ScreenHandlerType.STONECUTTER;
             case CREATIVE:
             case CRAFTING:
             case MERCHANT:
                 throw new IllegalArgumentException("Can't open a " + inventory.getType() + " inventory!");
             default:
                 // TODO: If it reaches the default case, should we throw an error?
-                return ContainerType.GENERIC_9X3;
+                return ScreenHandlerType.GENERIC_9X3;
         }
     }
 
@@ -212,60 +212,60 @@ public class CraftContainer extends Container {
             case CHEST:
             case ENDER_CHEST:
             case BARREL:
-                delegate = new GenericContainer(ContainerType.GENERIC_9X3, windowId, bottom, top, top.getInvSize() / 9);
+                delegate = new GenericContainerScreenHandler(ScreenHandlerType.GENERIC_9X3, windowId, bottom, top, top.size() / 9);
                 break;
             case DISPENSER:
             case DROPPER:
-                delegate = new Generic3x3Container(windowId, bottom, top);
+                delegate = new Generic3x3ContainerScreenHandler(windowId, bottom, top);
                 break;
             case FURNACE:
-                delegate = new FurnaceContainer(windowId, bottom, top, new ArrayPropertyDelegate(4));
+                delegate = new FurnaceScreenHandler(windowId, bottom, top, new ArrayPropertyDelegate(4));
                 break;
             case CRAFTING: // TODO: This should be an error?
             case WORKBENCH:
                 setupWorkbench(top, bottom); // SPIGOT-3812 - manually set up slots so we can use the delegated inventory and not the automatically created one
                 break;
             case ENCHANTING:
-                delegate = new EnchantingTableContainer(windowId, bottom);
+                delegate = new EnchantmentScreenHandler(windowId, bottom);
                 break;
             case BREWING:
-                delegate = new BrewingStandContainer(windowId, bottom, top, new ArrayPropertyDelegate(2));
+                delegate = new BrewingStandScreenHandler(windowId, bottom, top, new ArrayPropertyDelegate(2));
                 break;
             case HOPPER:
-                delegate = new HopperContainer(windowId, bottom, top);
+                delegate = new HopperScreenHandler(windowId, bottom, top);
                 break;
             case ANVIL:
-                delegate = new AnvilContainer(windowId, bottom);
+                delegate = new AnvilScreenHandler(windowId, bottom);
                 break;
             case BEACON:
-                delegate = new BeaconContainer(windowId, bottom);
+                delegate = new BeaconScreenHandler(windowId, bottom);
                 break;
             case SHULKER_BOX:
-                delegate = new ShulkerBoxContainer(windowId, bottom, top);
+                delegate = new ShulkerBoxScreenHandler(windowId, bottom, top);
                 break;
             case BLAST_FURNACE:
-                delegate = new BlastFurnaceContainer(windowId, bottom, top, new ArrayPropertyDelegate(4));
+                delegate = new BlastFurnaceScreenHandler(windowId, bottom, top, new ArrayPropertyDelegate(4));
                 break;
             case LECTERN:
-                delegate = new LecternContainer(windowId, top, new ArrayPropertyDelegate(1));
+                delegate = new LecternScreenHandler(windowId, top, new ArrayPropertyDelegate(1));
                 break;
             case SMOKER:
-                delegate = new SmokerContainer(windowId, bottom, top, new ArrayPropertyDelegate(4));
+                delegate = new SmokerScreenHandler(windowId, bottom, top, new ArrayPropertyDelegate(4));
                 break;
             case LOOM:
-                delegate = new LoomContainer(windowId, bottom);
+                delegate = new LoomScreenHandler(windowId, bottom);
                 break;
             case CARTOGRAPHY:
-                delegate = new CartographyTableContainer(windowId, bottom);
+                delegate = new CartographyTableScreenHandler(windowId, bottom);
                 break;
             case GRINDSTONE:
-                delegate = new GrindstoneContainer(windowId, bottom);
+                delegate = new GrindstoneScreenHandler(windowId, bottom);
                 break;
             case STONECUTTER:
-                delegate = new StonecutterContainer(windowId, bottom);
+                delegate = new StonecutterScreenHandler(windowId, bottom);
                 break;
             case MERCHANT:
-                delegate = new MerchantContainer(windowId, bottom);
+                delegate = new MerchantScreenHandler(windowId, bottom);
                 break;
         }
 
@@ -276,7 +276,7 @@ public class CraftContainer extends Container {
 
         // SPIGOT-4598 - we should still delegate the shift click handler
         if (cachedType == InventoryType.WORKBENCH) {
-            delegate = new CraftingTableContainer(windowId, bottom);
+            delegate = new CraftingScreenHandler(windowId, bottom);
         }
     }
 
@@ -316,7 +316,7 @@ public class CraftContainer extends Container {
     }
 
     @Override
-    public ContainerType<?> getType() {
+    public ScreenHandlerType<?> getType() {
         return getNotchInventoryType(view.getTopInventory());
     }
 }

@@ -1,7 +1,7 @@
 package org.bukkit.craftbukkit.entity.memory;
 
-import net.minecraft.util.GlobalPos;
 import net.minecraft.util.Timestamp;
+import net.minecraft.util.dynamic.GlobalPos;
 import net.minecraft.util.math.BlockPos;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

@@ -1891,7 +1891,7 @@ public final class CraftServer implements Server {
         Validate.notNull(key, "NamespacedKey cannot be null");
 
         LootManager registry = getServer().getLootManager();
-        return new CraftLootTable(key, registry.getSupplier(CraftNamespacedKey.toMinecraft(key)));
+        return new CraftLootTable(key, registry.getTable(CraftNamespacedKey.toMinecraft(key)));
     }
 
     @Override

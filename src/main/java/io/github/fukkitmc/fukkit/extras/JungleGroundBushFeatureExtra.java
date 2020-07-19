@@ -5,5 +5,5 @@ package io.github.fukkitmc.fukkit.extras;
  */
 public interface JungleGroundBushFeatureExtra {
 
-    boolean generate(net.minecraft.world.IWorld var0, net.minecraft.world.gen.chunk.ChunkGenerator var1, java.util.Random var2, net.minecraft.util.math.BlockPos var3, net.minecraft.world.gen.feature.TreeFeatureConfig var4);
+    boolean generate(net.minecraft.world.WorldAccess var0, net.minecraft.world.gen.chunk.ChunkGenerator var1, java.util.Random var2, net.minecraft.util.math.BlockPos var3, net.minecraft.world.gen.feature.TreeFeatureConfig var4);
 }

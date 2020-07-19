@@ -69,11 +69,11 @@ public class CraftTameableAnimal extends CraftAnimals implements Tameable, Creat
     }
 
     public boolean isSitting() {
-        return getHandle().isSitting();
+        return getHandle().isInSittingPose();
     }
 
     public void setSitting(boolean sitting) {
-        getHandle().setSitting(sitting);
+        getHandle().setInSittingPose(sitting);
         getHandle().getSitGoal().setEnabledWithOwner(sitting);
     }
 

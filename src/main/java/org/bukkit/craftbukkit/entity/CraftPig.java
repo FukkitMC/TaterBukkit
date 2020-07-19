@@ -17,7 +17,7 @@ public class CraftPig extends CraftAnimals implements Pig {
 
     @Override
     public void setSaddle(boolean saddled) {
-        getHandle().setSaddled(saddled);
+        getHandle().saddle(saddled);
     }
 
     @Override

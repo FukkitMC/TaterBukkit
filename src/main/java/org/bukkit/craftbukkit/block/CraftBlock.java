@@ -18,9 +18,9 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.world.IWorld;
 import net.minecraft.world.LightType;
 import net.minecraft.world.RayTraceContext;
+import net.minecraft.world.WorldAccess;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Chunk;
 import org.bukkit.FluidCollisionMode;
@@ -50,15 +50,15 @@ import org.bukkit.util.RayTraceResult;
 import org.bukkit.util.Vector;
 
 public class CraftBlock implements Block {
-    private final net.minecraft.world.IWorld world;
+    private final net.minecraft.world.WorldAccess world;
     private final BlockPos position;
 
-    public CraftBlock(IWorld world, BlockPos position) {
+    public CraftBlock(WorldAccess world, BlockPos position) {
         this.world = world;
         this.position = position.toImmutable();
     }
 
-    public static CraftBlock at(IWorld world, BlockPos position) {
+    public static CraftBlock at(WorldAccess world, BlockPos position) {
         return new CraftBlock(world, position);
     }
 
@@ -686,6 +686,6 @@ public class CraftBlock implements Block {
         }
 
         Box aabb = shape.getBoundingBox();
-        return new BoundingBox(getX() + aabb.x1, getY() + aabb.y1, getZ() + aabb.z1, getX() + aabb.x2, getY() + aabb.y2, getZ() + aabb.z2);
+        return new BoundingBox(getX() + aabb.minX, getY() + aabb.minY, getZ() + aabb.minZ, getX() + aabb.maxX, getY() + aabb.maxY, getZ() + aabb.maxZ);
     }
 }

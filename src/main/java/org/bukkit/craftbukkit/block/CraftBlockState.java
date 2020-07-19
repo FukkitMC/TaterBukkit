@@ -3,7 +3,7 @@ package org.bukkit.craftbukkit.block;
 import com.google.common.base.Preconditions;
 import java.util.List;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorld;
+import net.minecraft.world.WorldAccess;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -47,7 +47,7 @@ public class CraftBlockState implements BlockState {
         position = BlockPos.ORIGIN;
     }
 
-    public static CraftBlockState getBlockState(IWorld world, net.minecraft.util.math.BlockPos pos) {
+    public static CraftBlockState getBlockState(WorldAccess world, net.minecraft.util.math.BlockPos pos) {
         return new CraftBlockState(CraftBlock.at(world, pos));
     }
 

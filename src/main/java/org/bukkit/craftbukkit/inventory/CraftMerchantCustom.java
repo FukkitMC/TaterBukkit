@@ -101,7 +101,7 @@ public class CraftMerchantCustom extends CraftMerchant {
         }
 
         @Override
-        public boolean isLevelledTrader() {
+        public boolean isLeveledTrader() {
             return false; // is-regular-villager flag (hides some gui elements: xp bar, name suffix)
         }
 

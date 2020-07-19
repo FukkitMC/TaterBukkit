@@ -1,16 +1,16 @@
 package org.bukkit.craftbukkit.subclasses;
 
 import net.minecraft.block.entity.ChestBlockEntity;
-import net.minecraft.container.Container;
-import net.minecraft.container.GenericContainer;
-import net.minecraft.container.NameableContainerFactory;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.screen.GenericContainerScreenHandler;
+import net.minecraft.screen.NamedScreenHandlerFactory;
+import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 
 
-public class DoubleInventory implements NameableContainerFactory {
+public class DoubleInventory implements NamedScreenHandlerFactory {
 
     private final ChestBlockEntity tileentitychest;
     private final ChestBlockEntity tileentitychest1;
@@ -23,11 +23,11 @@ public class DoubleInventory implements NameableContainerFactory {
     }
 
     @Override
-    public Container createMenu(int i, PlayerInventory playerinventory, PlayerEntity entityhuman) {
-        if (tileentitychest.canPlayerUseInv(entityhuman) && tileentitychest1.canPlayerUseInv(entityhuman)) {
+    public ScreenHandler createMenu(int i, PlayerInventory playerinventory, PlayerEntity entityhuman) {
+        if (tileentitychest.canPlayerUse(entityhuman) && tileentitychest1.canPlayerUse(entityhuman)) {
             tileentitychest.checkLootInteraction(playerinventory.player);
             tileentitychest1.checkLootInteraction(playerinventory.player);
-            return GenericContainer.createGeneric9x6(i, playerinventory, inventorylargechest);
+            return GenericContainerScreenHandler.createGeneric9x6(i, playerinventory, inventorylargechest);
         } else {
             return null;
         }

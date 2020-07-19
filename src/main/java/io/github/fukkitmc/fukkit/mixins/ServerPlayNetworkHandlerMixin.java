@@ -13,7 +13,7 @@ import net.minecraft.network.packet.c2s.play.HandSwingC2SPacket;
 import net.minecraft.network.packet.c2s.play.PlayerInteractBlockC2SPacket;
 import net.minecraft.network.packet.c2s.play.PlayerInteractItemC2SPacket;
 import net.minecraft.network.packet.s2c.play.BlockUpdateS2CPacket;
-import net.minecraft.network.packet.s2c.play.ChatMessageS2CPacket;
+import net.minecraft.network.packet.s2c.play.GameMessageS2CPacket;
 import net.minecraft.network.packet.s2c.play.PlayerPositionLookS2CPacket;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
@@ -233,7 +233,7 @@ public abstract class ServerPlayNetworkHandlerMixin implements ServerPlayNetwork
         ServerWorld worldserver = this.server.getWorld(this.player.dimension);
         Hand enumhand = packetplayinuseitem.getHand();
         ItemStack itemstack = this.player.getStackInHand(enumhand);
-        BlockHitResult movingobjectpositionblock = packetplayinuseitem.getHitY();
+        BlockHitResult movingobjectpositionblock = packetplayinuseitem.getBlockHitResult();
         BlockPos blockposition = movingobjectpositionblock.getBlockPos();
         Direction enumdirection = movingobjectpositionblock.getSide();
 
@@ -241,7 +241,7 @@ public abstract class ServerPlayNetworkHandlerMixin implements ServerPlayNetwork
         if (blockposition.getY() >= this.server.getWorldHeight() - 1 && (enumdirection == Direction.UP || blockposition.getY() >= this.server.getWorldHeight())) {
             Text ichatbasecomponent = (new TranslatableText("build.tooHigh", this.server.getWorldHeight())).formatted(Formatting.RED);
 
-            this.player.networkHandler.sendPacket(new ChatMessageS2CPacket(ichatbasecomponent, MessageType.GAME_INFO));
+            this.player.networkHandler.sendPacket(new GameMessageS2CPacket(ichatbasecomponent, MessageType.GAME_INFO));
         } else if (this.requestedTeleportPos == null && this.player.squaredDistanceTo((double) blockposition.getX() + 0.5D, (double) blockposition.getY() + 0.5D, (double) blockposition.getZ() + 0.5D) < 64.0D && worldserver.canPlayerModifyAt(this.player, blockposition)) {
             // CraftBukkit start - Check if we can actually do something over this large a distance
             Location eyeLoc = this.getPlayer().getEyeLocation();
@@ -380,7 +380,7 @@ public abstract class ServerPlayNetworkHandlerMixin implements ServerPlayNetwork
 
         // CraftBukkit end
         if (this.player.removed || this.player.getClientChatVisibility() == ChatVisibility.HIDDEN) { // CraftBukkit - dead men tell no tales
-            this.sendPacket(new ChatMessageS2CPacket((new TranslatableText("chat.cannotSend")).formatted(Formatting.RED)));
+            this.sendPacket(new GameMessageS2CPacket((new TranslatableText("chat.cannotSend")).formatted(Formatting.RED)));
         } else {
             this.player.updateLastActionTime();
             String s = packetplayinchat.getChatMessage();
@@ -427,8 +427,8 @@ public abstract class ServerPlayNetworkHandlerMixin implements ServerPlayNetwork
             } else if (this.player.getClientChatVisibility() == ChatVisibility.SYSTEM) { // Re-add "Command Only" flag check
                 TranslatableText chatmessage = new TranslatableText("chat.cannotSend");
 
-                chatmessage.getStyle().setColor(Formatting.RED);
-                this.sendPacket(new ChatMessageS2CPacket(chatmessage));
+                chatmessage.getStyle().withColor(Formatting.RED);
+                this.sendPacket(new GameMessageS2CPacket(chatmessage));
             } else {
                 this.chat(s, true);
                 // CraftBukkit end - the below is for reference. :)

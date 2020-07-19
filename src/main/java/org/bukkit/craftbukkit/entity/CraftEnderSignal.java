@@ -1,7 +1,7 @@
 package org.bukkit.craftbukkit.entity;
 
 import com.google.common.base.Preconditions;
-import net.minecraft.entity.EnderEyeEntity;
+import net.minecraft.entity.EyeOfEnderEntity;
 import net.minecraft.util.math.BlockPos;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.CraftServer;
@@ -9,13 +9,13 @@ import org.bukkit.entity.EnderSignal;
 import org.bukkit.entity.EntityType;
 
 public class CraftEnderSignal extends CraftEntity implements EnderSignal {
-    public CraftEnderSignal(CraftServer server, EnderEyeEntity entity) {
+    public CraftEnderSignal(CraftServer server, EyeOfEnderEntity entity) {
         super(server, entity);
     }
 
     @Override
-    public EnderEyeEntity getHandle() {
-        return (EnderEyeEntity) entity;
+    public EyeOfEnderEntity getHandle() {
+        return (EyeOfEnderEntity) entity;
     }
 
     @Override

@@ -3,7 +3,7 @@ package org.bukkit.craftbukkit.inventory;
 import java.util.List;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.DefaultedList;
+import net.minecraft.util.collection.DefaultedList;
 import org.bukkit.NamespacedKey;
 import org.bukkit.craftbukkit.util.CraftNamespacedKey;
 import org.bukkit.inventory.ItemStack;

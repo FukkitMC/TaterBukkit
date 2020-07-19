@@ -3,7 +3,7 @@ package org.bukkit.craftbukkit.entity;
 import com.google.common.collect.ImmutableList;
 import java.util.Collection;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.thrown.ThrownPotionEntity;
+import net.minecraft.entity.projectile.thrown.PotionEntity;
 import net.minecraft.potion.PotionUtil;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Material;
@@ -16,7 +16,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 
 public class CraftThrownPotion extends CraftProjectile implements ThrownPotion {
-    public CraftThrownPotion(CraftServer server, ThrownPotionEntity entity) {
+    public CraftThrownPotion(CraftServer server, PotionEntity entity) {
         super(server, entity);
     }
 
@@ -46,8 +46,8 @@ public class CraftThrownPotion extends CraftProjectile implements ThrownPotion {
     }
 
     @Override
-    public ThrownPotionEntity getHandle() {
-        return (ThrownPotionEntity) entity;
+    public PotionEntity getHandle() {
+        return (PotionEntity) entity;
     }
 
     @Override

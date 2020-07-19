@@ -71,10 +71,10 @@ public final class CraftChatMessage {
                     } else if (format.isModifier()) {
                         switch (format) {
                         case BOLD:
-                            modifier.setBold(Boolean.TRUE);
+                            modifier.withBold(Boolean.TRUE);
                             break;
                         case ITALIC:
-                            modifier.setItalic(Boolean.TRUE);
+                            modifier.withItalic(Boolean.TRUE);
                             break;
                         case STRIKETHROUGH:
                             modifier.setStrikethrough(Boolean.TRUE);
@@ -89,7 +89,7 @@ public final class CraftChatMessage {
                             throw new AssertionError("Unexpected message format");
                         }
                     } else { // Color resets formatting
-                        modifier = new Style().setColor(format);
+                        modifier = new Style().withColor(format);
                     }
                     break;
                 case 2:
@@ -103,9 +103,9 @@ public final class CraftChatMessage {
                     if (!(match.startsWith("http://") || match.startsWith("https://"))) {
                         match = "http://" + match;
                     }
-                    modifier.setClickEvent(new ClickEvent(Action.OPEN_URL, match));
+                    modifier.withClickEvent(new ClickEvent(Action.OPEN_URL, match));
                     appendNewComponent(matcher.end(groupId));
-                    modifier.setClickEvent((ClickEvent) null);
+                    modifier.withClickEvent((ClickEvent) null);
                 }
                 currentIndex = matcher.end(groupId);
             }
@@ -226,7 +226,7 @@ public final class CraftChatMessage {
 
                     LiteralText link = new LiteralText(matcher.group());
                     Style linkModi = modifier.deepCopy();
-                    linkModi.setClickEvent(new ClickEvent(Action.OPEN_URL, match));
+                    linkModi.withClickEvent(new ClickEvent(Action.OPEN_URL, match));
                     link.setStyle(linkModi);
                     extras.add(link);
 

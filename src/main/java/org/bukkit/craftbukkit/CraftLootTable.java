@@ -40,7 +40,7 @@ public class CraftLootTable implements org.bukkit.loot.LootTable {
     @Override
     public Collection<ItemStack> populateLoot(Random random, LootContext context) {
         net.minecraft.loot.context.LootContext nmsContext = convertContext(context);
-        List<net.minecraft.item.ItemStack> nmsItems = handle.getDrops(nmsContext);
+        List<net.minecraft.item.ItemStack> nmsItems = handle.generateLoot(nmsContext);
         Collection<ItemStack> bukkit = new ArrayList<>(nmsItems.size());
 
         for (net.minecraft.item.ItemStack item : nmsItems) {
@@ -78,22 +78,22 @@ public class CraftLootTable implements org.bukkit.loot.LootTable {
 
             if (context.getLootedEntity() != null) {
                 Entity nmsLootedEntity = ((CraftEntity) context.getLootedEntity()).getHandle();
-                builder.put(LootContextParameters.THIS_ENTITY, nmsLootedEntity);
-                builder.put(LootContextParameters.DAMAGE_SOURCE, DamageSource.GENERIC);
-                builder.put(LootContextParameters.POSITION, new BlockPos(nmsLootedEntity));
+                builder.parameter(LootContextParameters.THIS_ENTITY, nmsLootedEntity);
+                builder.parameter(LootContextParameters.DAMAGE_SOURCE, DamageSource.GENERIC);
+                builder.parameter(LootContextParameters.POSITION, new BlockPos(nmsLootedEntity));
             }
 
             if (context.getKiller() != null) {
                 PlayerEntity nmsKiller = ((CraftHumanEntity) context.getKiller()).getHandle();
-                builder.put(LootContextParameters.KILLER_ENTITY, nmsKiller);
+                builder.parameter(LootContextParameters.KILLER_ENTITY, nmsKiller);
                 // If there is a player killer, damage source should reflect that in case loot tables use that information
-                builder.put(LootContextParameters.DAMAGE_SOURCE, DamageSource.player(nmsKiller));
-                builder.put(LootContextParameters.LAST_DAMAGE_PLAYER, nmsKiller); // SPIGOT-5603 - Set minecraft:killed_by_player
+                builder.parameter(LootContextParameters.DAMAGE_SOURCE, DamageSource.player(nmsKiller));
+                builder.parameter(LootContextParameters.LAST_DAMAGE_PLAYER, nmsKiller); // SPIGOT-5603 - Set minecraft:killed_by_player
             }
 
             // SPIGOT-5603 - Use LootContext#lootingModifier
             if (context.getLootingModifier() != LootContext.DEFAULT_LOOT_MODIFIER) {
-                builder.put(LootContextParameters.LOOTING_MOD, context.getLootingModifier());
+                builder.parameter(LootContextParameters.LOOTING_MOD, context.getLootingModifier());
             }
         }
 

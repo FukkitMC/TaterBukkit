@@ -1,7 +1,7 @@
 package org.bukkit.craftbukkit.entity;
 
 import com.google.common.base.Preconditions;
-import net.minecraft.entity.projectile.ProjectileEntity;
+import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.util.math.BlockPos;
 import org.apache.commons.lang.Validate;
 import org.bukkit.block.Block;
@@ -13,7 +13,7 @@ import org.bukkit.projectiles.ProjectileSource;
 
 public class CraftArrow extends AbstractProjectile implements AbstractArrow {
 
-    public CraftArrow(CraftServer server, ProjectileEntity entity) {
+    public CraftArrow(CraftServer server, PersistentProjectileEntity entity) {
         super(server, entity);
     }
 
@@ -99,7 +99,7 @@ public class CraftArrow extends AbstractProjectile implements AbstractArrow {
     @Override
     public void setPickupStatus(PickupStatus status) {
         Preconditions.checkNotNull(status, "status");
-        getHandle().pickupType = ProjectileEntity.PickupPermission.fromOrdinal(status.ordinal());
+        getHandle().pickupType = PersistentProjectileEntity.PickupPermission.fromOrdinal(status.ordinal());
     }
 
     @Override
@@ -121,8 +121,8 @@ public class CraftArrow extends AbstractProjectile implements AbstractArrow {
     }
 
     @Override
-    public ProjectileEntity getHandle() {
-        return (ProjectileEntity) entity;
+    public PersistentProjectileEntity getHandle() {
+        return (PersistentProjectileEntity) entity;
     }
 
     @Override
