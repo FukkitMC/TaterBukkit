@@ -19,8 +19,10 @@ import net.minecraft.server.dedicated.DedicatedServerWatchdog;
 import net.minecraft.server.dedicated.MinecraftDedicatedServer;
 import net.minecraft.server.dedicated.ServerPropertiesHandler;
 import net.minecraft.server.rcon.QueryResponseHandler;
-import net.minecraft.server.rcon.RconServer;
+import net.minecraft.server.rcon.RconListener;
 import net.minecraft.util.*;
+import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.util.logging.UncaughtExceptionHandler;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.level.LevelGeneratorType;
 import net.minecraft.world.level.storage.LevelStorage;
@@ -202,7 +204,7 @@ public abstract class DedicatedServerMixin extends MinecraftServer {
 
             if (dedicatedserverproperties.enableRcon) {
                 MinecraftDedicatedServer.LOGGER.info("Starting remote control listener");
-                self.rconServer = new RconServer(self);
+                self.rconServer = new RconListener(self);
                 self.rconServer.start();
                 self.remoteConsole = new org.bukkit.craftbukkit.command.CraftRemoteConsoleCommandSender(self.rconCommandOutput); // CraftBukkit
             }

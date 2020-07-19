@@ -237,7 +237,7 @@ public abstract class MinecraftServerMixin extends ReentrantThreadExecutor<Serve
         MinecraftServer self = (MinecraftServer) (Object) this;
 
         // CraftBukkit start
-        return self.forceTicks || self.hasRunningTasks() || Util.getMeasuringTimeMs() < (self.field_19249 ? self.field_19248 : self.timeReference);
+        return self.forceTicks || self.hasRunningTasks() || Util.getMeasuringTimeMs() < (self.waitingForNextTick ? self.field_19248 : self.timeReference);
     }
 
     // CraftBukkit start

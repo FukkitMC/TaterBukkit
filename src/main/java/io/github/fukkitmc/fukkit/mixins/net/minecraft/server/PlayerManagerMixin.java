@@ -7,6 +7,8 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.ClientConnection;
+import net.minecraft.network.MessageType;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.packet.s2c.play.*;
 import net.minecraft.scoreboard.ServerScoreboard;
 import net.minecraft.server.MinecraftServer;
@@ -17,12 +19,15 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
-import net.minecraft.util.PacketByteBuf;
 import net.minecraft.util.UserCache;
+import net.minecraft.util.Util;
+import net.minecraft.util.registry.RegistryTracker;
 import net.minecraft.world.GameRules;
-import net.minecraft.world.level.LevelProperties;
+import net.minecraft.world.WorldProperties;
+import net.minecraft.world.biome.source.BiomeAccess;
 import org.bukkit.craftbukkit.util.CraftChatMessage;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -67,9 +72,13 @@ public abstract class PlayerManagerMixin {
     @Shadow
     public int viewDistance;
 
+    @Final
+    @Shadow
+    private RegistryTracker.Modifiable registryTracker;
+
     /**
      * @author fukkit
-     * @reason craftbukkit basicly rewrote this method ffs
+     * @reason craftbukkit basically rewrote this method ffs
      */
     @Overwrite
     public void onPlayerConnect(ClientConnection networkmanager, ServerPlayerEntity entityplayer) {
@@ -80,7 +89,7 @@ public abstract class PlayerManagerMixin {
 
         usercache.add(gameprofile);
         CompoundTag nbttagcompound = this.loadPlayerData(entityplayer);
-        ServerWorld worldserver = this.server.getWorld(entityplayer.dimension);
+        ServerWorld worldserver = (ServerWorld) entityplayer.world;
         // CraftBukkit start - Better rename detection
         if (nbttagcompound != null && nbttagcompound.contains("bukkit")) {
             CompoundTag bukkit = nbttagcompound.getCompound("bukkit");
@@ -98,15 +107,15 @@ public abstract class PlayerManagerMixin {
 
         // CraftBukkit - Moved message to after join
         // PlayerList.LOGGER.info("{}[{}] logged in with entity id {} at ({}, {}, {})", entityplayer.getDisplayName().getString(), s1, entityplayer.getId(), entityplayer.locX(), entityplayer.locY(), entityplayer.locZ());
-        LevelProperties worlddata = worldserver.getLevelProperties();
+        WorldProperties worlddata = worldserver.getLevelProperties();
 
         ServerPlayNetworkHandler playerconnection = new ServerPlayNetworkHandler(this.server, networkmanager, entityplayer);
         GameRules gamerules = worldserver.getGameRules();
-        boolean flag = gamerules.getBoolean(GameRules.DO_IMMEDIATE_RESPAWN);
-        boolean flag1 = gamerules.getBoolean(GameRules.REDUCED_DEBUG_INFO);
+        boolean immediateRespawn = gamerules.getBoolean(GameRules.DO_IMMEDIATE_RESPAWN);
+        boolean reducedDebugInfo = gamerules.getBoolean(GameRules.REDUCED_DEBUG_INFO);
 
         // CraftBukkit - getType()
-        playerconnection.sendPacket(new GameJoinS2CPacket(entityplayer.getEntityId(), entityplayer.interactionManager.getGameMode(), LevelProperties.sha256Hash(worlddata.getSeed()), worlddata.isHardcore(), worldserver.dimension.getType().getType(), this.getMaxPlayerCount(), worlddata.getGeneratorType(), this.viewDistance, flag1, !flag));
+        playerconnection.sendPacket(new GameJoinS2CPacket(entityplayer.getEntityId(), entityplayer.interactionManager.getGameMode(), entityplayer.interactionManager.method_30119(), BiomeAccess.hashSeed(worldserver.getSeed()), worlddata.isHardcore(), this.server.getWorldRegistryKeys(), this.registryTracker, worldserver.getDimensionRegistryKey(), worldserver.getRegistryKey(), this.getMaxPlayerCount(), this.viewDistance, reducedDebugInfo, !immediateRespawn, worldserver.isDebugWorld(), worldserver.isFlat()));
         entityplayer.getBukkitEntity().sendSupportedChannels(); // CraftBukkit
         playerconnection.sendPacket(new CustomPayloadS2CPacket(CustomPayloadS2CPacket.BRAND, (new PacketByteBuf(Unpooled.buffer())).writeString(this.getServer().getServerModName())));
         playerconnection.sendPacket(new DifficultyS2CPacket(worlddata.getDifficulty(), worlddata.isDifficultyLocked()));
@@ -147,7 +156,7 @@ public abstract class PlayerManagerMixin {
 
         if (joinMessage != null && joinMessage.length() > 0) {
             for (Text line : org.bukkit.craftbukkit.util.CraftChatMessage.fromString(joinMessage)) {
-                server.getPlayerManager().sendToAll(new ChatMessageS2CPacket(line));
+                server.getPlayerManager().sendToAll(new GameMessageS2CPacket(line, MessageType.SYSTEM, Util.NIL_UUID));
             }
         }
         // CraftBukkit end
@@ -155,9 +164,7 @@ public abstract class PlayerManagerMixin {
         // CraftBukkit start - sendAll above replaced with this loop
         PlayerListS2CPacket packet = new PlayerListS2CPacket(PlayerListS2CPacket.Action.ADD_PLAYER, entityplayer);
 
-        for (int i = 0; i < this.players.size(); ++i) {
-            ServerPlayerEntity entityplayer1 = this.players.get(i);
-
+        for (ServerPlayerEntity entityplayer1 : this.players) {
             if (entityplayer1.getBukkitEntity().canSee(entityplayer.getBukkitEntity())) {
                 entityplayer1.networkHandler.sendPacket(packet);
             }
@@ -179,18 +186,14 @@ public abstract class PlayerManagerMixin {
             this.server.getBossBarManager().onPlayerConnect(entityplayer);
         }
 
-        worldserver = server.getWorld(entityplayer.dimension);  // CraftBukkit - Update in case join event changed it
+        worldserver = (ServerWorld) entityplayer.world;  // CraftBukkit - Update in case join event changed it
         // CraftBukkit end
         this.sendWorldInfo(entityplayer, worldserver);
         if (!this.server.getResourcePackUrl().isEmpty()) {
             entityplayer.sendResourcePackUrl(this.server.getResourcePackUrl(), this.server.getResourcePackHash());
         }
 
-        Iterator iterator = entityplayer.getStatusEffects().iterator();
-
-        while (iterator.hasNext()) {
-            StatusEffectInstance mobeffect = (StatusEffectInstance) iterator.next();
-
+        for (StatusEffectInstance mobeffect : entityplayer.getStatusEffects()) {
             playerconnection.sendPacket(new EntityStatusEffectS2CPacket(entityplayer.getEntityId(), mobeffect));
         }
 
@@ -235,9 +238,9 @@ public abstract class PlayerManagerMixin {
             }
         }
 
-        entityplayer.method_14235();
+        entityplayer.onSpawn();
         // CraftBukkit - Moved from above, added world
-        PlayerManager.LOGGER.info("{}[{}] logged in with entity id {} at ([{}]{}, {}, {})", entityplayer.getName().getString(), s1, entityplayer.getEntityId(), entityplayer.world.properties.getLevelName(), entityplayer.getX(), entityplayer.getY(), entityplayer.getZ());
+        PlayerManager.LOGGER.info("{}[{}] logged in with entity id {} at ([{}]{}, {}, {})", entityplayer.getName().getString(), s1, entityplayer.getEntityId(), entityplayer.world.craftWorld.getName(), entityplayer.getX(), entityplayer.getY(), entityplayer.getZ());
     }
 
 }

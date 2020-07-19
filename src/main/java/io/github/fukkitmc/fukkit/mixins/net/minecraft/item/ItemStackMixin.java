@@ -221,7 +221,7 @@ public abstract class ItemStackMixin implements ItemStackExtra {
                     // PAIL: checkme on updates.
                     if (this.item instanceof MusicDiscItem) {
                         ((JukeboxBlock) Blocks.JUKEBOX).setRecord(world, blockposition, world.getBlockState(blockposition), ((ItemStack) (Object) this));
-                        world.playLevelEvent(null, 1010, blockposition, Item.getRawId(this.item));
+                        world.syncWorldEvent(null, 1010, blockposition, Item.getRawId(this.item));
                         this.decrement(1);
                         entityhuman.incrementStat(Stats.PLAY_RECORD);
                     }
