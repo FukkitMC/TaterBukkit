@@ -1,5 +1,3 @@
-rootProject.name = "craftbukkit"
-
 pluginManagement {
     repositories {
         gradlePluginPortal()
@@ -21,3 +19,5 @@ pluginManagement {
         }
     }
 }
+
+rootProject.name = "craftbukkit"
