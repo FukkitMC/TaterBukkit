@@ -10,8 +10,8 @@ configurations {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_14
+    targetCompatibility = JavaVersion.VERSION_14
 }
 
 minecraft {
@@ -25,14 +25,16 @@ repositories {
         name = "SpigotMC"
         url = uri("https://hub.spigotmc.org/nexus/content/groups/public/")
     }
+
+    mavenLocal()
 }
 
 dependencies {
-    "ecj"("org.eclipse.jdt:ecj:3.21.0")
-    minecraft("net.minecraft", "minecraft", "1.15.2")
-    mappings("net.fabricmc", "yarn", "1.15.2+build.15", classifier = "v2")
-    modCompile("net.fabricmc", "fabric-loader", "0.8.2+build.194")
-    compileOnly("com.google.code.findbugs", "jsr305", "3.0.2")
+    "ecj"("org.eclipse.jdt:ecj:3.22.0")
+    minecraft("net.minecraft:minecraft:1.16.1")
+    mappings("net.fabricmc:yarn:1.16.1+build.21:v2")
+    modCompile("net.fabricmc:fabric-loader:0.9.0+build.204")
+    compileOnly("com.google.code.findbugs:jsr305:3.0.2")
 
     implementation("com.google.code.gson:gson:2.8.0")
     implementation("com.google.guava:guava:21.0")
@@ -40,25 +42,27 @@ dependencies {
     implementation("commons-lang:commons-lang:2.6")
     implementation("jline:jline:2.12.1")
     implementation("mysql:mysql-connector-java:5.1.48")
-    implementation("org.bukkit:bukkit:1.15.2-R0.1-SNAPSHOT")
+    implementation("org.bukkit:bukkit:1.16.1-R0.1-SNAPSHOT")
     implementation("org.xerial:sqlite-jdbc:3.30.1")
     implementation("org.yaml:snakeyaml:1.25")
     include("com.googlecode.json-simple:json-simple:1.1.1")
     include("commons-lang:commons-lang:2.6")
     include("jline:jline:2.12.1")
     include("mysql:mysql-connector-java:5.1.48")
-    include("org.bukkit:bukkit:1.15.2-R0.1-SNAPSHOT")
+    include("org.bukkit:bukkit:1.16.1-R0.1-SNAPSHOT")
     include("org.xerial:sqlite-jdbc:3.30.1")
     include("org.yaml:snakeyaml:1.25")
     compileOnly("org.projectlombok:lombok:1.18.12")
     annotationProcessor("org.projectlombok:lombok:1.18.12")
 }
 
-tasks.withType<JavaCompile> {
-    options.isFork = true
+tasks.withType(JavaCompile) {
+    options.headerOutputDirectory.convention(null)
 
-    options.forkOptions.apply {
+    options.fork = true
+
+    options.forkOptions.with {
         executable = "java"
-        jvmArgs = listOf("-classpath", project.configurations["ecj"].asPath, "org.eclipse.jdt.internal.compiler.batch.Main", "-nowarn", "-g", "-verbose", "-referenceInfo")
+        jvmArgs = ["-classpath", project.configurations["ecj"].asPath, "org.eclipse.jdt.internal.compiler.batch.Main", "-nowarn", "-g", "-verbose", "-referenceInfo"]
     }
 }
