@@ -5,13 +5,16 @@ import com.google.common.collect.ImmutableMap.Builder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import net.minecraft.text.ClickEvent;
 import net.minecraft.text.ClickEvent.Action;
 import net.minecraft.text.LiteralText;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
+import net.minecraft.text.TextColor;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
 import org.bukkit.ChatColor;
@@ -38,13 +41,18 @@ public final class CraftChatMessage {
     }
 
     private static final class StringMessage {
-        private static final Pattern INCREMENTAL_PATTERN = Pattern.compile("(" + String.valueOf(org.bukkit.ChatColor.COLOR_CHAR) + "[0-9a-fk-or])|(\\n)|((?:(?:https?):\\/\\/)?(?:[-\\w_\\.]{2,}\\.[a-z]{2,4}.*?(?=[\\.\\?!,;:]?(?:[" + String.valueOf(org.bukkit.ChatColor.COLOR_CHAR) + " \\n]|$))))", Pattern.CASE_INSENSITIVE);
+        private static final Pattern INCREMENTAL_PATTERN = Pattern.compile("(" + String.valueOf(org.bukkit.ChatColor.COLOR_CHAR) + "[0-9a-fk-orx])|((?:(?:https?):\\/\\/)?(?:[-\\w_\\.]{2,}\\.[a-z]{2,4}.*?(?=[\\.\\?!,;:]?(?:[" + String.valueOf(org.bukkit.ChatColor.COLOR_CHAR) + " \\n]|$))))|(\\n)", Pattern.CASE_INSENSITIVE);
+        // Separate pattern with no group 3, new lines are part of previous string
+        private static final Pattern INCREMENTAL_PATTERN_KEEP_NEWLINES = Pattern.compile("(" + String.valueOf(org.bukkit.ChatColor.COLOR_CHAR) + "[0-9a-fk-orx])|((?:(?:https?):\\/\\/)?(?:[-\\w_\\.]{2,}\\.[a-z]{2,4}.*?(?=[\\.\\?!,;:]?(?:[" + String.valueOf(org.bukkit.ChatColor.COLOR_CHAR) + " ]|$))))", Pattern.CASE_INSENSITIVE);
+        // ChatColor.b does not explicitly reset, its more of empty
+        private static final Style RESET = Style.b.withBold(false).withItalic(false).setUnderline(false).setStrikethrough(false).setRandom(false);
 
         private final List<Text> list = new ArrayList<Text>();
-        private Text currentChatComponent = new LiteralText("");
-        private Style modifier = new Style();
+        private MutableText currentChatComponent = new LiteralText("");
+        private Style modifier = Style.b;
         private final Text[] output;
         private int currentIndex;
+        private StringBuilder hex;
         private final String message;
 
         private StringMessage(String message, boolean keepNewlines) {
@@ -55,62 +63,77 @@ public final class CraftChatMessage {
             }
             list.add(currentChatComponent);
 
-            Matcher matcher = INCREMENTAL_PATTERN.matcher(message);
+            Matcher matcher = (keepNewlines ? INCREMENTAL_PATTERN_KEEP_NEWLINES : INCREMENTAL_PATTERN).matcher(message);
             String match = null;
+            boolean needsAdd = false;
             while (matcher.find()) {
                 int groupId = 0;
                 while ((match = matcher.group(++groupId)) == null) {
                     // NOOP
                 }
-                appendNewComponent(matcher.start(groupId));
+                int index = matcher.start(groupId);
+                if (index > currentIndex) {
+                    needsAdd = false;
+                    appendNewComponent(index);
+                }
                 switch (groupId) {
                 case 1:
-                    Formatting format = formatMap.get(match.toLowerCase(java.util.Locale.ENGLISH).charAt(1));
-                    if (format == Formatting.RESET) {
-                        modifier = new Style();
-                    } else if (format.isModifier()) {
+                    char c = match.toLowerCase(java.util.Locale.ENGLISH).charAt(1);
+                    Formatting format = formatMap.get(c);
+
+                    if (c == 'x') {
+                        hex = new StringBuilder("#");
+                    } else if (hex != null) {
+                        hex.append(c);
+
+                        if (hex.length() == 7) {
+                            modifier = RESET.withColor(TextColor.a(hex.toString()));
+                            hex = null;
+                        }
+                    } else if (format.isModifier() && format != Formatting.RESET) {
                         switch (format) {
                         case BOLD:
-                            modifier.setBold(Boolean.TRUE);
+                            modifier = modifier.withBold(Boolean.TRUE);
                             break;
                         case ITALIC:
-                            modifier.setItalic(Boolean.TRUE);
+                            modifier = modifier.withItalic(Boolean.TRUE);
                             break;
                         case STRIKETHROUGH:
-                            modifier.setStrikethrough(Boolean.TRUE);
+                            modifier = modifier.setStrikethrough(Boolean.TRUE);
                             break;
                         case UNDERLINE:
-                            modifier.setUnderline(Boolean.TRUE);
+                            modifier = modifier.setUnderline(Boolean.TRUE);
                             break;
                         case OBFUSCATED:
-                            modifier.setObfuscated(Boolean.TRUE);
+                            modifier = modifier.setRandom(Boolean.TRUE);
                             break;
                         default:
                             throw new AssertionError("Unexpected message format");
                         }
                     } else { // Color resets formatting
-                        modifier = new Style().setColor(format);
+                        modifier = RESET.withColor(format);
                     }
+                    needsAdd = true;
                     break;
                 case 2:
-                    if (keepNewlines) {
-                        currentChatComponent.append(new LiteralText("\n"));
-                    } else {
-                        currentChatComponent = null;
-                    }
-                    break;
-                case 3:
                     if (!(match.startsWith("http://") || match.startsWith("https://"))) {
                         match = "http://" + match;
                     }
-                    modifier.setClickEvent(new ClickEvent(Action.OPEN_URL, match));
+                    modifier = modifier.withClickEvent(new ClickEvent(Action.OPEN_URL, match));
                     appendNewComponent(matcher.end(groupId));
-                    modifier.setClickEvent((ClickEvent) null);
+                    modifier = modifier.withClickEvent((ClickEvent) null);
+                    break;
+                case 3:
+                    if (needsAdd) {
+                        appendNewComponent(index);
+                    }
+                    currentChatComponent = null;
+                    break;
                 }
                 currentIndex = matcher.end(groupId);
             }
 
-            if (currentIndex < message.length()) {
+            if (currentIndex < message.length() || needsAdd) {
                 appendNewComponent(message.length());
             }
 
@@ -118,12 +141,8 @@ public final class CraftChatMessage {
         }
 
         private void appendNewComponent(int index) {
-            if (index <= currentIndex) {
-                return;
-            }
-            Text addition = new LiteralText(message.substring(currentIndex, index)).setStyle(modifier);
+            Text addition = new LiteralText(message.substring(currentIndex, index)).a(modifier);
             currentIndex = index;
-            modifier = modifier.deepCopy();
             if (currentChatComponent == null) {
                 currentChatComponent = new LiteralText("");
                 list.add(currentChatComponent);
@@ -134,14 +153,6 @@ public final class CraftChatMessage {
         private Text[] getOutput() {
             return output;
         }
-    }
-
-    public static Text wrapOrNull(String message) {
-        return (message == null || message.isEmpty()) ? null : new LiteralText(message);
-    }
-
-    public static Text wrapOrEmpty(String message) {
-        return (message == null) ? new LiteralText("") : new LiteralText(message);
     }
 
     public static Text fromStringOrNull(String message) {
@@ -160,39 +171,60 @@ public final class CraftChatMessage {
         return new StringMessage(message, keepNewlines).getOutput();
     }
 
-    public static String fromComponent(Text component) {
-        return fromComponent(component, Formatting.BLACK);
-    }
-
     public static String toJSON(Text component) {
-        return Text.Serializer.toJson(component);
+        return Text.Serializer.a(component);
     }
 
-    public static String fromComponent(Text component, Formatting defaultColor) {
+    public static String fromComponent(Text component) {
         if (component == null) return "";
         StringBuilder out = new StringBuilder();
 
-        for (Text c : (Iterable<Text>) component) {
+        boolean hadFormat = false;
+        for (Text c : component) {
             Style modi = c.getStyle();
-            out.append(modi.getColor() == null ? defaultColor : modi.getColor());
+            TextColor color = modi.getColor();
+            if (!c.asString().isEmpty() || color != null) {
+                if (color != null) {
+                    if (color.format != null) {
+                        out.append(color.format);
+                    } else {
+                        out.append(ChatColor.COLOR_CHAR).append("x");
+                        for (char magic : color.getName().substring(1).toCharArray()) {
+                            out.append(ChatColor.COLOR_CHAR).append(magic);
+                        }
+                    }
+                    hadFormat = true;
+                } else if (hadFormat) {
+                    out.append(ChatColor.RESET);
+                    hadFormat = false;
+                }
+            }
             if (modi.isBold()) {
                 out.append(Formatting.BOLD);
+                hadFormat = true;
             }
             if (modi.isItalic()) {
                 out.append(Formatting.ITALIC);
+                hadFormat = true;
             }
             if (modi.isUnderlined()) {
                 out.append(Formatting.UNDERLINE);
+                hadFormat = true;
             }
             if (modi.isStrikethrough()) {
                 out.append(Formatting.STRIKETHROUGH);
+                hadFormat = true;
             }
             if (modi.isObfuscated()) {
                 out.append(Formatting.OBFUSCATED);
+                hadFormat = true;
             }
-            out.append(c.asString());
+            c.b((x) -> {
+                out.append(x);
+                return Optional.empty();
+            });
         }
-        return out.toString().replaceFirst("^(" + defaultColor + ")*", "");
+        return out.toString();
     }
 
     public static Text fixComponent(Text component) {
@@ -203,13 +235,13 @@ public final class CraftChatMessage {
     private static Text fixComponent(Text component, Matcher matcher) {
         if (component instanceof LiteralText) {
             LiteralText text = ((LiteralText) component);
-            String msg = text.asString();
+            String msg = text.a();
             if (matcher.reset(msg).find()) {
                 matcher.reset();
 
-                Style modifier = text.getStyle() != null ? text.getStyle() : new Style();
+                Style modifier = text.c();
                 List<Text> extras = new ArrayList<Text>();
-                List<Text> extrasOld = new ArrayList<Text>(text.getSiblings());
+                List<Text> extrasOld = new ArrayList<Text>(text.b());
                 component = text = new LiteralText("");
 
                 int pos = 0;
@@ -221,25 +253,24 @@ public final class CraftChatMessage {
                     }
 
                     LiteralText prev = new LiteralText(msg.substring(pos, matcher.start()));
-                    prev.setStyle(modifier);
+                    prev.a(modifier);
                     extras.add(prev);
 
                     LiteralText link = new LiteralText(matcher.group());
-                    Style linkModi = modifier.deepCopy();
-                    linkModi.setClickEvent(new ClickEvent(Action.OPEN_URL, match));
-                    link.setStyle(linkModi);
+                    Style linkModi = modifier.withClickEvent(new ClickEvent(Action.OPEN_URL, match));
+                    link.a(linkModi);
                     extras.add(link);
 
                     pos = matcher.end();
                 }
 
                 LiteralText prev = new LiteralText(msg.substring(pos));
-                prev.setStyle(modifier);
+                prev.a(modifier);
                 extras.add(prev);
                 extras.addAll(extrasOld);
 
                 for (Text c : extras) {
-                    text.append(c);
+                    text.a(c);
                 }
             }
         }

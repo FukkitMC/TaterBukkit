@@ -1,17 +1,17 @@
 package org.bukkit.craftbukkit.entity;
 
-import net.minecraft.entity.mob.MobEntityWithAi;
+import net.minecraft.entity.mob.PathAwareEntity;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.entity.Creature;
 
 public class CraftCreature extends CraftMob implements Creature {
-    public CraftCreature(CraftServer server, MobEntityWithAi entity) {
+    public CraftCreature(CraftServer server, PathAwareEntity entity) {
         super(server, entity);
     }
 
     @Override
-    public MobEntityWithAi getHandle() {
-        return (MobEntityWithAi) entity;
+    public PathAwareEntity getHandle() {
+        return (PathAwareEntity) entity;
     }
 
     @Override

@@ -13,6 +13,7 @@ import net.minecraft.nbt.DoubleTag;
 import net.minecraft.nbt.FloatTag;
 import net.minecraft.nbt.IntArrayTag;
 import net.minecraft.nbt.IntTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.LongArrayTag;
 import net.minecraft.nbt.LongTag;
 import net.minecraft.nbt.ShortTag;
@@ -110,29 +111,29 @@ public final class CraftPersistentDataTypeRegistry {
             Primitives
          */
         if (Objects.equals(Byte.class, type)) {
-            return createAdapter(Byte.class, ByteTag.class, ByteTag::of, ByteTag::getByte);
+            return createAdapter(Byte.class, ByteTag.class, ByteTag::a, ByteTag::h);
         }
         if (Objects.equals(Short.class, type)) {
-            return createAdapter(Short.class, ShortTag.class, ShortTag::of, ShortTag::getShort);
+            return createAdapter(Short.class, ShortTag.class, ShortTag::a, ShortTag::g);
         }
         if (Objects.equals(Integer.class, type)) {
-            return createAdapter(Integer.class, IntTag.class, IntTag::of, IntTag::getInt);
+            return createAdapter(Integer.class, IntTag.class, IntTag::a, IntTag::f);
         }
         if (Objects.equals(Long.class, type)) {
-            return createAdapter(Long.class, LongTag.class, LongTag::of, LongTag::getLong);
+            return createAdapter(Long.class, LongTag.class, LongTag::a, LongTag::e);
         }
         if (Objects.equals(Float.class, type)) {
-            return createAdapter(Float.class, FloatTag.class, FloatTag::of, FloatTag::getFloat);
+            return createAdapter(Float.class, FloatTag.class, FloatTag::a, FloatTag::j);
         }
         if (Objects.equals(Double.class, type)) {
-            return createAdapter(Double.class, DoubleTag.class, DoubleTag::of, DoubleTag::getDouble);
+            return createAdapter(Double.class, DoubleTag.class, DoubleTag::a, DoubleTag::i);
         }
 
         /*
             String
          */
         if (Objects.equals(String.class, type)) {
-            return createAdapter(String.class, StringTag.class, StringTag::of, StringTag::asString);
+            return createAdapter(String.class, StringTag.class, StringTag::a, StringTag::f_);
         }
 
         /*
@@ -146,6 +147,32 @@ public final class CraftPersistentDataTypeRegistry {
         }
         if (Objects.equals(long[].class, type)) {
             return createAdapter(long[].class, LongArrayTag.class, array -> new LongArrayTag(Arrays.copyOf(array, array.length)), n -> Arrays.copyOf(n.getLongArray(), n.size()));
+        }
+
+        /*
+            Complex Arrays
+         */
+        if (Objects.equals(PersistentDataContainer[].class, type)) {
+            return createAdapter(PersistentDataContainer[].class, ListTag.class,
+                    (containerArray) -> {
+                        ListTag list = new ListTag();
+                        for (int i = 0; i < containerArray.length; i++) {
+                            list.add(((CraftPersistentDataContainer) containerArray[i]).toTagCompound());
+                        }
+                        return list;
+                    },
+                    (tag) -> {
+                        PersistentDataContainer[] containerArray = new CraftPersistentDataContainer[tag.size()];
+                        for (int i = 0; i < tag.size(); i++) {
+                            CraftPersistentDataContainer container = new CraftPersistentDataContainer(this);
+                            CompoundTag compound = tag.getCompound(i);
+                            for (String key : compound.getKeys()) {
+                                container.put(key, compound.get(key));
+                            }
+                            containerArray[i] = container;
+                        }
+                        return containerArray;
+                    });
         }
 
         /*

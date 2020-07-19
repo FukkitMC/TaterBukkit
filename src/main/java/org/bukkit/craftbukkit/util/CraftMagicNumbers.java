@@ -4,8 +4,10 @@ import com.google.common.base.Charsets;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
 import com.google.common.io.Files;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import com.mojang.datafixers.Dynamic;
+import com.mojang.serialization.Dynamic;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
@@ -26,10 +28,12 @@ import net.minecraft.item.Item;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.StringNbtReader;
 import net.minecraft.nbt.Tag;
+import net.minecraft.predicate.entity.AdvancementEntityPredicateDeserializer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.ServerAdvancementLoader;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
+import net.minecraft.util.WorldSavePath;
 import net.minecraft.util.registry.Registry;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -83,11 +87,11 @@ public final class CraftMagicNumbers implements UnsafeValues {
 
     static {
         for (Block block : Registry.BLOCK) {
-            BLOCK_MATERIAL.put(block, Material.getMaterial(Registry.BLOCK.getId(block).getPath().toUpperCase(Locale.ROOT)));
+            BLOCK_MATERIAL.put(block, Material.getMaterial(Registry.BLOCK.b(block).getPath().toUpperCase(Locale.ROOT)));
         }
 
         for (Item item : Registry.ITEM) {
-            ITEM_MATERIAL.put(item, Material.getMaterial(Registry.ITEM.getId(item).getPath().toUpperCase(Locale.ROOT)));
+            ITEM_MATERIAL.put(item, Material.getMaterial(Registry.ITEM.b(item).getPath().toUpperCase(Locale.ROOT)));
         }
 
         for (Material material : Material.values()) {
@@ -96,10 +100,10 @@ public final class CraftMagicNumbers implements UnsafeValues {
             }
 
             Identifier key = key(material);
-            Registry.ITEM.getOrEmpty(key).ifPresent((item) -> {
+            Registry.ITEM.b(key).ifPresent((item) -> {
                 MATERIAL_ITEM.put(material, item);
             });
-            Registry.BLOCK.getOrEmpty(key).ifPresent((block) -> {
+            Registry.BLOCK.b(key).ifPresent((block) -> {
                 MATERIAL_BLOCK.put(material, block);
             });
         }
@@ -175,7 +179,7 @@ public final class CraftMagicNumbers implements UnsafeValues {
         CompoundTag stack = new CompoundTag();
         stack.putString("id", "minecraft:" + material.toLowerCase(Locale.ROOT));
 
-        Dynamic<Tag> converted = Schemas.getFixer().update(TypeReferences.ITEM_STACK, new Dynamic<>(NbtOps.INSTANCE, stack), version, this.getDataVersion());
+        Dynamic<Tag> converted = Schemas.getFixer().update(TypeReferences.ITEM_STACK, new Dynamic<>(NbtOps.a, stack), version, this.getDataVersion());
         String newId = converted.get("id").asString("");
 
         return Material.matchMaterial(newId);
@@ -197,7 +201,7 @@ public final class CraftMagicNumbers implements UnsafeValues {
      * @return string
      */
     public String getMappingsVersion() {
-        return "5684afcc1835d966e1b6eb0ed3f72edb";
+        return "25afc67716a170ea965092c1067ff439";
     }
 
     @Override
@@ -220,19 +224,26 @@ public final class CraftMagicNumbers implements UnsafeValues {
         return stack;
     }
 
+    private static File getBukkitDataPackFolder() {
+        return new File(MinecraftServer.getServer().a(WorldSavePath.DATAPACKS).toFile(), "bukkit");
+    }
+
     @Override
     public Advancement loadAdvancement(NamespacedKey key, String advancement) {
         if (Bukkit.getAdvancement(key) != null) {
             throw new IllegalArgumentException("Advancement " + key + " already exists.");
         }
+        Identifier minecraftkey = CraftNamespacedKey.toMinecraft(key);
 
-        net.minecraft.advancement.Advancement.Task nms = (net.minecraft.advancement.Advancement.Task) JsonHelper.deserialize(ServerAdvancementLoader.GSON, advancement, net.minecraft.advancement.Advancement.Task.class);
+        JsonElement jsonelement = ServerAdvancementLoader.GSON.fromJson(advancement, JsonElement.class);
+        JsonObject jsonobject = JsonHelper.asObject(jsonelement, "advancement");
+        net.minecraft.advancement.Advancement.Task nms = net.minecraft.advancement.Advancement.Task.a(jsonobject, new AdvancementEntityPredicateDeserializer(minecraftkey, MinecraftServer.getServer().aI()));
         if (nms != null) {
-            MinecraftServer.getServer().getAdvancementLoader().manager.load(Maps.newHashMap(Collections.singletonMap(CraftNamespacedKey.toMinecraft(key), nms)));
+            MinecraftServer.getServer().getAdvancementData().manager.load(Maps.newHashMap(Collections.singletonMap(minecraftkey, nms)));
             Advancement bukkit = Bukkit.getAdvancement(key);
 
             if (bukkit != null) {
-                File file = new File(MinecraftServer.getServer().bukkitDataPackFolder, "data" + File.separator + key.getNamespace() + File.separator + "advancements" + File.separator + key.getKey() + ".json");
+                File file = new File(getBukkitDataPackFolder(), "data" + File.separator + key.getNamespace() + File.separator + "advancements" + File.separator + key.getKey() + ".json");
                 file.getParentFile().mkdirs();
 
                 try {
@@ -241,7 +252,7 @@ public final class CraftMagicNumbers implements UnsafeValues {
                     Bukkit.getLogger().log(Level.SEVERE, "Error saving advancement " + key, ex);
                 }
 
-                MinecraftServer.getServer().getPlayerManager().onDataPacksReloaded();
+                MinecraftServer.getServer().getPlayerList().onDataPacksReloaded();
 
                 return bukkit;
             }
@@ -252,11 +263,11 @@ public final class CraftMagicNumbers implements UnsafeValues {
 
     @Override
     public boolean removeAdvancement(NamespacedKey key) {
-        File file = new File(MinecraftServer.getServer().bukkitDataPackFolder, "data" + File.separator + key.getNamespace() + File.separator + "advancements" + File.separator + key.getKey() + ".json");
+        File file = new File(getBukkitDataPackFolder(), "data" + File.separator + key.getNamespace() + File.separator + "advancements" + File.separator + key.getKey() + ".json");
         return file.delete();
     }
 
-    private static final List<String> SUPPORTED_API = Arrays.asList("1.13", "1.14", "1.15");
+    private static final List<String> SUPPORTED_API = Arrays.asList("1.13", "1.14", "1.15", "1.16");
 
     @Override
     public void checkSupported(PluginDescriptionFile pdf) throws InvalidPluginException {

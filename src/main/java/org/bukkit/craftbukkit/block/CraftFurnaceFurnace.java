@@ -4,7 +4,7 @@ import net.minecraft.block.entity.FurnaceBlockEntity;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 
-public class CraftFurnaceFurnace extends CraftFurnace {
+public class CraftFurnaceFurnace extends CraftFurnace<FurnaceBlockEntity> {
 
     public CraftFurnaceFurnace(Block block) {
         super(block, FurnaceBlockEntity.class);

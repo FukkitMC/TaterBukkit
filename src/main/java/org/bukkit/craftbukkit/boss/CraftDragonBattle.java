@@ -30,17 +30,31 @@ public class CraftDragonBattle implements DragonBattle {
 
     @Override
     public Location getEndPortalLocation() {
-        return new Location(handle.world.getCraftWorld(), handle.exitPortalLocation.getX(), handle.exitPortalLocation.getY(), handle.exitPortalLocation.getZ());
+        if (handle.exitPortalLocation == null) {
+            return null;
+        }
+
+        return new Location(handle.world.getWorld(), handle.exitPortalLocation.getX(), handle.exitPortalLocation.getY(), handle.exitPortalLocation.getZ());
+    }
+
+    @Override
+    public boolean generateEndPortal(boolean withPortals) {
+        if (handle.exitPortalLocation != null || handle.j() != null) {
+            return false;
+        }
+
+        this.handle.generateEndPortal(withPortals);
+        return true;
     }
 
     @Override
     public boolean hasBeenPreviouslyKilled() {
-        return handle.hasPreviouslyKilled(); // PAIL rename hasBeenPreviouslyKilled
+        return handle.hasPreviouslyKilled();
     }
 
     @Override
     public void initiateRespawn() {
-        this.handle.respawnDragon(); // PAIL rename initiateRespawn
+        this.handle.respawnDragon();
     }
 
     @Override
@@ -62,7 +76,7 @@ public class CraftDragonBattle implements DragonBattle {
 
     @Override
     public void resetCrystals() {
-        this.handle.resetEndCrystals(); // PAIL rename resetCrystals
+        this.handle.resetEndCrystals();
     }
 
     @Override

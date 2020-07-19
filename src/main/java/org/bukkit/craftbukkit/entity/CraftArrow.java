@@ -1,7 +1,7 @@
 package org.bukkit.craftbukkit.entity;
 
 import com.google.common.base.Preconditions;
-import net.minecraft.entity.projectile.ProjectileEntity;
+import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.util.math.BlockPos;
 import org.apache.commons.lang.Validate;
 import org.bukkit.block.Block;
@@ -13,7 +13,7 @@ import org.bukkit.projectiles.ProjectileSource;
 
 public class CraftArrow extends AbstractProjectile implements AbstractArrow {
 
-    public CraftArrow(CraftServer server, ProjectileEntity entity) {
+    public CraftArrow(CraftServer server, PersistentProjectileEntity entity) {
         super(server, entity);
     }
 
@@ -69,9 +69,9 @@ public class CraftArrow extends AbstractProjectile implements AbstractArrow {
     @Override
     public void setShooter(ProjectileSource shooter) {
         if (shooter instanceof Entity) {
-            getHandle().setOwner(((CraftEntity) shooter).getHandle());
+            getHandle().b(((CraftEntity) shooter).getHandle());
         } else {
-            getHandle().setOwner(null);
+            getHandle().b(null);
         }
         getHandle().projectileSource = shooter;
     }
@@ -99,17 +99,7 @@ public class CraftArrow extends AbstractProjectile implements AbstractArrow {
     @Override
     public void setPickupStatus(PickupStatus status) {
         Preconditions.checkNotNull(status, "status");
-        getHandle().pickupType = ProjectileEntity.PickupPermission.fromOrdinal(status.ordinal());
-    }
-
-    @Override
-    public boolean isShotFromCrossbow() {
-        throw new RuntimeException("i was too lazy to implement this");
-    }
-
-    @Override
-    public void setShotFromCrossbow(boolean shotFromCrossbow) {
-        throw new RuntimeException("i was too lazy to implement this");
+        getHandle().pickupType = PersistentProjectileEntity.PickupPermission.a(status.ordinal());
     }
 
     @Override
@@ -121,8 +111,18 @@ public class CraftArrow extends AbstractProjectile implements AbstractArrow {
     }
 
     @Override
-    public ProjectileEntity getHandle() {
-        return (ProjectileEntity) entity;
+    public boolean isShotFromCrossbow() {
+        return getHandle().isShotFromCrossbow();
+    }
+
+    @Override
+    public void setShotFromCrossbow(boolean shotFromCrossbow) {
+        getHandle().setShotFromCrossbow(shotFromCrossbow);
+    }
+
+    @Override
+    public PersistentProjectileEntity getHandle() {
+        return (PersistentProjectileEntity) entity;
     }
 
     @Override

@@ -6,6 +6,7 @@ import java.util.function.Predicate;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.client.world.DummyClientTickScheduler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluid;
@@ -13,10 +14,14 @@ import net.minecraft.fluid.FluidState;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
-import net.minecraft.world.*;
+import net.minecraft.world.Heightmap;
+import net.minecraft.world.LocalDifficulty;
+import net.minecraft.world.TickScheduler;
+import net.minecraft.world.World;
+import net.minecraft.world.WorldAccess;
+import net.minecraft.world.WorldProperties;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.source.BiomeAccess;
 import net.minecraft.world.border.WorldBorder;
@@ -24,28 +29,23 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkManager;
 import net.minecraft.world.chunk.ChunkStatus;
 import net.minecraft.world.chunk.light.LightingProvider;
-import net.minecraft.world.dimension.Dimension;
-import net.minecraft.world.level.LevelProperties;
-import org.bukkit.event.entity.CreatureSpawnEvent;
+import net.minecraft.world.dimension.DimensionType;
 
-public class DummyGeneratorAccess implements IWorld {
+public class DummyGeneratorAccess implements WorldAccess {
+
+    public static final WorldAccess INSTANCE = new DummyGeneratorAccess();
 
     protected DummyGeneratorAccess() {
     }
 
     @Override
-    public long getSeed() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
     public TickScheduler<Block> getBlockTickScheduler() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return DummyClientTickScheduler.b();
     }
 
     @Override
     public TickScheduler<Fluid> getFluidTickScheduler() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return DummyClientTickScheduler.b();
     }
 
     @Override
@@ -54,7 +54,7 @@ public class DummyGeneratorAccess implements IWorld {
     }
 
     @Override
-    public LevelProperties getLevelProperties() {
+    public WorldProperties getLevelProperties() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -74,16 +74,6 @@ public class DummyGeneratorAccess implements IWorld {
     }
 
     @Override
-    public void updateNeighbors(BlockPos bp, Block block) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public BlockPos getSpawnPos() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
     public void playSound(PlayerEntity eh, BlockPos bp, SoundEvent se, SoundCategory sc, float f, float f1) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
@@ -94,7 +84,7 @@ public class DummyGeneratorAccess implements IWorld {
     }
 
     @Override
-    public void playLevelEvent(PlayerEntity eh, int i, BlockPos bp, int i1) {
+    public void a(PlayerEntity eh, int i, BlockPos bp, int i1) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -104,7 +94,7 @@ public class DummyGeneratorAccess implements IWorld {
     }
 
     @Override
-    public <T extends Entity> List<T> getEntities(Class<? extends T> type, Box aabb, Predicate<? super T> prdct) {
+    public <T extends Entity> List<T> a(Class<? extends T> type, Box aabb, Predicate<? super T> prdct) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -119,7 +109,7 @@ public class DummyGeneratorAccess implements IWorld {
     }
 
     @Override
-    public int getTopY(Heightmap.Type type, int i, int i1) {
+    public int a(Heightmap.Type type, int i, int i1) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -129,12 +119,12 @@ public class DummyGeneratorAccess implements IWorld {
     }
 
     @Override
-    public BiomeAccess getBiomeAccess() {
+    public BiomeAccess d() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public Biome getGeneratorStoredBiome(int i, int i1, int i2) {
+    public Biome a(int i, int i1, int i2) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -149,12 +139,12 @@ public class DummyGeneratorAccess implements IWorld {
     }
 
     @Override
-    public Dimension getDimension() {
+    public DimensionType getDimension() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public LightingProvider getLightingProvider() {
+    public LightingProvider e() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -174,37 +164,27 @@ public class DummyGeneratorAccess implements IWorld {
     }
 
     @Override
-    public WorldBorder getWorldBorder() {
+    public WorldBorder f() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public boolean testBlockState(BlockPos bp, Predicate<BlockState> prdct) {
+    public boolean a(BlockPos bp, Predicate<BlockState> prdct) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public boolean setBlockState(BlockPos blockposition, BlockState iblockdata, int i) {
+    public boolean a(BlockPos blockposition, BlockState iblockdata, int i, int j) {
         return false;
     }
 
     @Override
-    public boolean removeBlock(BlockPos blockposition, boolean flag) {
+    public boolean a(BlockPos blockposition, boolean flag) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public boolean breakBlock(BlockPos blockposition, boolean flag, Entity entity) {
+    public boolean a(BlockPos blockposition, boolean flag, Entity entity, int i) {
         throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public boolean addEntity(Entity var0, CreatureSpawnEvent.SpawnReason var1) {
-        return true;
-    }
-
-    @Override
-    public BlockHitResult rayTraceBlock(RayTraceContext var0, BlockPos var1) {
-        return null;
     }
 }

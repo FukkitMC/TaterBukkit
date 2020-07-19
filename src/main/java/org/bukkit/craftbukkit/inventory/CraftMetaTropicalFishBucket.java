@@ -3,6 +3,7 @@ package org.bukkit.craftbukkit.inventory;
 import com.google.common.collect.ImmutableMap;
 import java.util.Map;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.serialization.DelegateDeserialization;
@@ -15,8 +16,10 @@ import org.bukkit.inventory.meta.TropicalFishBucketMeta;
 @DelegateDeserialization(SerializableMeta.class)
 class CraftMetaTropicalFishBucket extends CraftMetaItem implements TropicalFishBucketMeta {
     static final ItemMetaKey VARIANT = new ItemMetaKey("BucketVariantTag", "fish-variant");
+    static final ItemMetaKey ENTITY_TAG = new ItemMetaKey("EntityTag", "entity-tag");
 
     private Integer variant;
+    private CompoundTag entityTag;
 
     CraftMetaTropicalFishBucket(CraftMetaItem meta) {
         super(meta);
@@ -35,6 +38,10 @@ class CraftMetaTropicalFishBucket extends CraftMetaItem implements TropicalFishB
         if (tag.contains(VARIANT.NBT, CraftMagicNumbers.NBT.TAG_INT)) {
             this.variant = tag.getInt(VARIANT.NBT);
         }
+
+        if (tag.contains(ENTITY_TAG.NBT)) {
+            entityTag = tag.getCompound(ENTITY_TAG.NBT);
+        }
     }
 
     CraftMetaTropicalFishBucket(Map<String, Object> map) {
@@ -47,11 +54,31 @@ class CraftMetaTropicalFishBucket extends CraftMetaItem implements TropicalFishB
     }
 
     @Override
+    void deserializeInternal(CompoundTag tag, Object context) {
+        super.deserializeInternal(tag, context);
+
+        if (tag.contains(ENTITY_TAG.NBT)) {
+            entityTag = tag.getCompound(ENTITY_TAG.NBT);
+        }
+    }
+
+    @Override
+    void serializeInternal(Map<String, Tag> internalTags) {
+        if (entityTag != null && !entityTag.isEmpty()) {
+            internalTags.put(ENTITY_TAG.NBT, entityTag);
+        }
+    }
+
+    @Override
     void applyToItem(CompoundTag tag) {
         super.applyToItem(tag);
 
         if (hasVariant()) {
             tag.putInt(VARIANT.NBT, variant);
+        }
+
+        if (entityTag != null) {
+            tag.put(ENTITY_TAG.NBT, entityTag);
         }
     }
 
@@ -71,7 +98,7 @@ class CraftMetaTropicalFishBucket extends CraftMetaItem implements TropicalFishB
     }
 
     boolean isBucketEmpty() {
-        return !(hasVariant());
+        return !(hasVariant() || entityTag != null);
     }
 
     @Override
@@ -126,7 +153,8 @@ class CraftMetaTropicalFishBucket extends CraftMetaItem implements TropicalFishB
         if (meta instanceof CraftMetaTropicalFishBucket) {
             CraftMetaTropicalFishBucket that = (CraftMetaTropicalFishBucket) meta;
 
-            return (hasVariant() ? that.hasVariant() && this.variant.equals(that.variant) : !that.hasVariant());
+            return (hasVariant() ? that.hasVariant() && this.variant.equals(that.variant) : !that.hasVariant())
+                    && entityTag != null ? that.entityTag != null && this.entityTag.equals(that.entityTag) : entityTag == null;
         }
         return true;
     }
@@ -144,6 +172,9 @@ class CraftMetaTropicalFishBucket extends CraftMetaItem implements TropicalFishB
         if (hasVariant()) {
             hash = 61 * hash + variant;
         }
+        if (entityTag != null) {
+            hash = 61 * hash + entityTag.hashCode();
+        }
 
         return original != hash ? CraftMetaTropicalFishBucket.class.hashCode() ^ hash : hash;
     }
@@ -151,7 +182,13 @@ class CraftMetaTropicalFishBucket extends CraftMetaItem implements TropicalFishB
 
     @Override
     public CraftMetaTropicalFishBucket clone() {
-        return (CraftMetaTropicalFishBucket) super.clone();
+        CraftMetaTropicalFishBucket clone = (CraftMetaTropicalFishBucket) super.clone();
+
+        if (entityTag != null) {
+            clone.entityTag = entityTag.copy();
+        }
+
+        return clone;
     }
 
     @Override

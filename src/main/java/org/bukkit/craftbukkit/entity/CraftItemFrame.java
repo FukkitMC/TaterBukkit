@@ -24,10 +24,10 @@ public class CraftItemFrame extends CraftHanging implements ItemFrame {
     @Override
     public boolean setFacingDirection(BlockFace face, boolean force) {
         AbstractDecorationEntity hanging = getHandle();
-        Direction oldDir = hanging.getHorizontalFacing();
+        Direction oldDir = hanging.bY();
         Direction newDir = CraftBlock.blockFaceToNotch(face);
 
-        getHandle().setFacing(newDir);
+        getHandle().a(newDir);
         if (!force && !hanging.canStayAttached()) {
             hanging.setFacing(oldDir);
             return false;
@@ -43,14 +43,14 @@ public class CraftItemFrame extends CraftHanging implements ItemFrame {
 
         ServerWorld world = ((CraftWorld) getWorld()).getHandle();
         BlockPos position = old.getDecorationBlockPos();
-        Direction direction = old.getHorizontalFacing();
+        Direction direction = old.bY();
         ItemStack item = old.getHeldItemStack() != null ? old.getHeldItemStack().copy() : null;
 
         old.remove();
 
         ItemFrameEntity frame = new ItemFrameEntity(world, position, direction);
         frame.setHeldItemStack(item);
-        world.spawnEntity(frame);
+        world.c(frame);
         this.entity = frame;
     }
 
@@ -126,6 +126,26 @@ public class CraftItemFrame extends CraftHanging implements ItemFrame {
         default:
             throw new IllegalArgumentException(rotation + " is not applicable to an ItemFrame");
         }
+    }
+
+    @Override
+    public boolean isVisible() {
+        return !getHandle().isInvisible();
+    }
+
+    @Override
+    public void setVisible(boolean visible) {
+        getHandle().setInvisible(!visible);
+    }
+
+    @Override
+    public boolean isFixed() {
+        return getHandle().fixed;
+    }
+
+    @Override
+    public void setFixed(boolean fixed) {
+        getHandle().fixed = fixed;
     }
 
     @Override

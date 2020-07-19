@@ -9,7 +9,7 @@ import java.util.logging.Level;
 import net.minecraft.item.map.MapState;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.world.dimension.DimensionType;
+import net.minecraft.util.registry.RegistryKey;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.craftbukkit.CraftWorld;
@@ -60,15 +60,15 @@ public final class CraftMapView implements MapView {
 
     @Override
     public World getWorld() {
-        DimensionType dimension = worldMap.dimension;
-        ServerWorld world = MinecraftServer.getServer().getWorld(dimension);
+        RegistryKey<net.minecraft.world.World> dimension = worldMap.dimension;
+        ServerWorld world = MinecraftServer.getServer().getWorldServer(dimension);
 
-        return (world == null) ? null : world.getCraftWorld();
+        return (world == null) ? null : world.getWorld();
     }
 
     @Override
     public void setWorld(World world) {
-        worldMap.dimension = ((CraftWorld) world).getHandle().getDimension().getType();
+        worldMap.dimension = ((CraftWorld) world).getHandle().getRegistryKey();
     }
 
     @Override
@@ -164,7 +164,7 @@ public final class CraftMapView implements MapView {
             for (int i = 0; i < buf.length; ++i) {
                 byte color = buf[i];
                 // There are 208 valid color id's, 0 -> 127 and -128 -> -49
-                if (color >= 0 || color <= -49) render.buffer[i] = color;
+                if (color >= 0 || color <= -21) render.buffer[i] = color;
             }
 
             for (int i = 0; i < canvas.getCursors().size(); ++i) {

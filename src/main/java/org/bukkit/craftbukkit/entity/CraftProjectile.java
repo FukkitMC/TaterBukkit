@@ -1,13 +1,13 @@
 package org.bukkit.craftbukkit.entity;
 
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.thrown.ThrownEntity;
+import net.minecraft.entity.projectile.ProjectileEntity;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.entity.Projectile;
 import org.bukkit.projectiles.ProjectileSource;
 
 public abstract class CraftProjectile extends AbstractProjectile implements Projectile {
-    public CraftProjectile(CraftServer server, net.minecraft.entity.Entity entity) {
+    public CraftProjectile(CraftServer server, net.minecraft.entity.projectile.ProjectileEntity entity) {
         super(server, entity);
     }
 
@@ -19,18 +19,16 @@ public abstract class CraftProjectile extends AbstractProjectile implements Proj
     @Override
     public void setShooter(ProjectileSource shooter) {
         if (shooter instanceof CraftLivingEntity) {
-            getHandle().owner = (LivingEntity) ((CraftLivingEntity) shooter).entity;
-            getHandle().ownerUuid = ((CraftLivingEntity) shooter).getUniqueId();
+            getHandle().setOwner((LivingEntity) ((CraftLivingEntity) shooter).entity);
         } else {
-            getHandle().owner = null;
-            getHandle().ownerUuid = null;
+            getHandle().setOwner(null);
         }
         getHandle().projectileSource = shooter;
     }
 
     @Override
-    public ThrownEntity getHandle() {
-        return (ThrownEntity) entity;
+    public ProjectileEntity getHandle() {
+        return (ProjectileEntity) entity;
     }
 
     @Override

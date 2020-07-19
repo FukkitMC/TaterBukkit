@@ -41,8 +41,9 @@ public class CraftRabbit extends CraftAnimals implements Rabbit {
         if (getRabbitType() == Type.THE_KILLER_BUNNY) {
             // Reset goals and target finders.
             World world = ((CraftWorld) this.getWorld()).getHandle();
-            entity.goalSelector = new GoalSelector(world != null && world.getProfiler() != null ? world.getProfiler() : null);
-            entity.targetSelector = new GoalSelector(world != null && world.getProfiler() != null ? world.getProfiler() : null);
+            entity.goalSelector = new GoalSelector(world.getProfilerSupplier());
+            entity.targetSelector = new GoalSelector(world.getProfilerSupplier());
+            entity.o();
             entity.initializePathFinderGoals();
         }
 

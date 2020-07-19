@@ -3,7 +3,6 @@ package org.bukkit.craftbukkit.inventory;
 import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableMap;
 import java.util.Map;
-import net.minecraft.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.block.entity.BannerBlockEntity;
 import net.minecraft.block.entity.BarrelBlockEntity;
 import net.minecraft.block.entity.BeaconBlockEntity;
@@ -59,7 +58,7 @@ import org.bukkit.craftbukkit.block.CraftDropper;
 import org.bukkit.craftbukkit.block.CraftEnchantingTable;
 import org.bukkit.craftbukkit.block.CraftEndGateway;
 import org.bukkit.craftbukkit.block.CraftEnderChest;
-import org.bukkit.craftbukkit.block.CraftFurnace;
+import org.bukkit.craftbukkit.block.CraftFurnaceFurnace;
 import org.bukkit.craftbukkit.block.CraftHopper;
 import org.bukkit.craftbukkit.block.CraftJigsaw;
 import org.bukkit.craftbukkit.block.CraftJukebox;
@@ -195,6 +194,8 @@ public class CraftMetaBlockState extends CraftMetaItem implements BlockStateMeta
             case ACACIA_WALL_SIGN:
             case BIRCH_SIGN:
             case BIRCH_WALL_SIGN:
+            case CRIMSON_SIGN:
+            case CRIMSON_WALL_SIGN:
             case DARK_OAK_SIGN:
             case DARK_OAK_WALL_SIGN:
             case JUNGLE_SIGN:
@@ -203,6 +204,8 @@ public class CraftMetaBlockState extends CraftMetaItem implements BlockStateMeta
             case OAK_WALL_SIGN:
             case SPRUCE_SIGN:
             case SPRUCE_WALL_SIGN:
+            case WARPED_SIGN:
+            case WARPED_WALL_SIGN:
             case SPAWNER:
             case BREWING_STAND:
             case ENCHANTING_TABLE:
@@ -237,6 +240,7 @@ public class CraftMetaBlockState extends CraftMetaItem implements BlockStateMeta
             case BELL:
             case BLAST_FURNACE:
             case CAMPFIRE:
+            case SOUL_CAMPFIRE:
             case JIGSAW:
             case LECTERN:
             case SMOKER:
@@ -263,10 +267,12 @@ public class CraftMetaBlockState extends CraftMetaItem implements BlockStateMeta
 
     @Override
     public BlockState getBlockState() {
+        Material stateMaterial = material; // Only actually used for jigsaws
         if (blockEntityTag != null) {
             switch (material) {
                 case SHIELD:
                     blockEntityTag.putString("id", "banner");
+                    stateMaterial = shieldToBannerHack(blockEntityTag);
                     break;
                 case SHULKER_BOX:
                 case WHITE_SHULKER_BOX:
@@ -293,13 +299,15 @@ public class CraftMetaBlockState extends CraftMetaItem implements BlockStateMeta
                     break;
             }
         }
-        BlockEntity te = (blockEntityTag == null) ? null : BlockEntity.createFromTag(blockEntityTag);
+        BlockEntity te = (blockEntityTag == null) ? null : BlockEntity.createFromTag(CraftMagicNumbers.getBlock(stateMaterial).getDefaultState(), blockEntityTag);
 
         switch (material) {
         case ACACIA_SIGN:
         case ACACIA_WALL_SIGN:
         case BIRCH_SIGN:
         case BIRCH_WALL_SIGN:
+        case CRIMSON_SIGN:
+        case CRIMSON_WALL_SIGN:
         case DARK_OAK_SIGN:
         case DARK_OAK_WALL_SIGN:
         case JUNGLE_SIGN:
@@ -308,6 +316,8 @@ public class CraftMetaBlockState extends CraftMetaItem implements BlockStateMeta
         case OAK_WALL_SIGN:
         case SPRUCE_SIGN:
         case SPRUCE_WALL_SIGN:
+        case WARPED_SIGN:
+        case WARPED_WALL_SIGN:
             if (te == null) {
                 te = new SignBlockEntity();
             }
@@ -322,7 +332,7 @@ public class CraftMetaBlockState extends CraftMetaItem implements BlockStateMeta
             if (te == null) {
                 te = new FurnaceBlockEntity();
             }
-            return new CraftFurnace(material, (AbstractFurnaceBlockEntity) te);
+            return new CraftFurnaceFurnace(material, (FurnaceBlockEntity) te);
         case DISPENSER:
             if (te == null) {
                 te = new DispenserBlockEntity();
@@ -489,6 +499,7 @@ public class CraftMetaBlockState extends CraftMetaItem implements BlockStateMeta
             }
             return new CraftBlastFurnace(material, (BlastFurnaceBlockEntity) te);
         case CAMPFIRE:
+        case SOUL_CAMPFIRE:
             if (te == null) {
                 te = new CampfireBlockEntity();
             }
@@ -529,6 +540,8 @@ public class CraftMetaBlockState extends CraftMetaItem implements BlockStateMeta
         case ACACIA_WALL_SIGN:
         case BIRCH_SIGN:
         case BIRCH_WALL_SIGN:
+        case CRIMSON_SIGN:
+        case CRIMSON_WALL_SIGN:
         case DARK_OAK_SIGN:
         case DARK_OAK_WALL_SIGN:
         case JUNGLE_SIGN:
@@ -537,6 +550,8 @@ public class CraftMetaBlockState extends CraftMetaItem implements BlockStateMeta
         case OAK_WALL_SIGN:
         case SPRUCE_SIGN:
         case SPRUCE_WALL_SIGN:
+        case WARPED_SIGN:
+        case WARPED_WALL_SIGN:
             valid = blockState instanceof CraftSign;
             break;
         case CHEST:
@@ -544,7 +559,7 @@ public class CraftMetaBlockState extends CraftMetaItem implements BlockStateMeta
             valid = blockState instanceof CraftChest;
             break;
         case FURNACE:
-            valid = blockState instanceof CraftFurnace;
+            valid = blockState instanceof CraftFurnaceFurnace;
             break;
         case DISPENSER:
             valid = blockState instanceof CraftDispenser;
@@ -668,6 +683,7 @@ public class CraftMetaBlockState extends CraftMetaItem implements BlockStateMeta
             valid = blockState instanceof CraftBlastFurnace;
             break;
         case CAMPFIRE:
+        case SOUL_CAMPFIRE:
             valid = blockState instanceof CraftCampfire;
             break;
         case JIGSAW:

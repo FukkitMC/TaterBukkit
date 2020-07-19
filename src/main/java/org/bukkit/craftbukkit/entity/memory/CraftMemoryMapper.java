@@ -1,7 +1,7 @@
 package org.bukkit.craftbukkit.entity.memory;
 
-import net.minecraft.util.GlobalPos;
-import net.minecraft.util.Timestamp;
+import java.util.UUID;
+import net.minecraft.util.dynamic.GlobalPos;
 import net.minecraft.util.math.BlockPos;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -15,8 +15,12 @@ public final class CraftMemoryMapper {
     public static Object fromNms(Object object) {
         if (object instanceof GlobalPos) {
             return fromNms((GlobalPos) object);
-        } else if (object instanceof Timestamp) {
-            return ((Timestamp) object).getTime();
+        } else if (object instanceof Long) {
+            return (Long) object;
+        } else if (object instanceof UUID) {
+            return (UUID) object;
+        } else if (object instanceof Boolean) {
+            return (Boolean) object;
         }
 
         throw new UnsupportedOperationException("Do not know how to map " + object);
@@ -28,17 +32,21 @@ public final class CraftMemoryMapper {
         } else if (object instanceof Location) {
             return toNms((Location) object);
         } else if (object instanceof Long) {
-            return Timestamp.of((Long) object);
+            return (Long) object;
+        } else if (object instanceof UUID) {
+            return (UUID) object;
+        } else if (object instanceof Boolean) {
+            return (Boolean) object;
         }
 
         throw new UnsupportedOperationException("Do not know how to map " + object);
     }
 
     public static Location fromNms(GlobalPos globalPos) {
-        return new org.bukkit.Location(((CraftServer) Bukkit.getServer()).getServer().getWorld(globalPos.getDimension()).getCraftWorld(), globalPos.getPos().getX(), globalPos.getPos().getY(), globalPos.getPos().getZ());
+        return new org.bukkit.Location(((CraftServer) Bukkit.getServer()).getServer().getWorldServer(globalPos.getDimension()).getWorld(), globalPos.getPos().getX(), globalPos.getPos().getY(), globalPos.getPos().getZ());
     }
 
     public static GlobalPos toNms(Location location) {
-        return GlobalPos.create(((CraftWorld) location.getWorld()).getHandle().getDimension().getType(), new BlockPos(location.getX(), location.getY(), location.getZ()));
+        return GlobalPos.create(((CraftWorld) location.getWorld()).getHandle().getRegistryKey(), new BlockPos(location.getX(), location.getY(), location.getZ()));
     }
 }

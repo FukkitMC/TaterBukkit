@@ -22,7 +22,7 @@ public abstract class CraftTag<N, B extends Keyed> implements Tag<B> {
 
     protected net.minecraft.tag.Tag<N> getHandle() {
         if (version != registry.version) {
-            handle = registry.getOrCreate(tag);
+            handle = registry.b(tag);
             version = registry.version;
         }
 

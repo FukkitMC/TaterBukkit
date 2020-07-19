@@ -75,12 +75,12 @@ public class CraftBee extends CraftAnimals implements Bee {
 
     @Override
     public int getAnger() {
-        return getHandle().getAnger();
+        return getHandle().F_();
     }
 
     @Override
     public void setAnger(int anger) {
-        getHandle().setAnger(anger);
+        getHandle().a_(anger);
     }
 
     @Override

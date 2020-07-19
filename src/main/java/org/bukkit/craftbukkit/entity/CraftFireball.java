@@ -1,7 +1,6 @@
 package org.bukkit.craftbukkit.entity;
 
 import net.minecraft.entity.projectile.ExplosiveProjectileEntity;
-import net.minecraft.util.math.MathHelper;
 import org.apache.commons.lang.Validate;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.entity.EntityType;
@@ -42,9 +41,9 @@ public class CraftFireball extends AbstractProjectile implements Fireball {
     @Override
     public void setShooter(ProjectileSource shooter) {
         if (shooter instanceof CraftLivingEntity) {
-            getHandle().owner = ((CraftLivingEntity) shooter).getHandle();
+            getHandle().setOwner(((CraftLivingEntity) shooter).getHandle());
         } else {
-            getHandle().owner = null;
+            getHandle().setOwner(null);
         }
         getHandle().projectileSource = shooter;
     }
@@ -57,13 +56,7 @@ public class CraftFireball extends AbstractProjectile implements Fireball {
     @Override
     public void setDirection(Vector direction) {
         Validate.notNull(direction, "Direction can not be null");
-        double x = direction.getX();
-        double y = direction.getY();
-        double z = direction.getZ();
-        double magnitude = (double) MathHelper.sqrt(x * x + y * y + z * z);
-        getHandle().posX = x / magnitude * 0.1D;
-        getHandle().posY = y / magnitude * 0.1D;
-        getHandle().posZ = z / magnitude * 0.1D;
+        getHandle().setDirection(direction.getX(), direction.getY(), direction.getZ());
     }
 
     @Override

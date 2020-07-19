@@ -30,6 +30,6 @@ public class CraftSpellcaster extends CraftIllager implements Spellcaster {
     public void setSpell(Spell spell) {
         Preconditions.checkArgument(spell != null, "Use Spell.NONE");
 
-        getHandle().setSpell(SpellcastingIllagerEntity.Spell.byId(spell.ordinal()));
+        getHandle().setSpell(SpellcastingIllagerEntity.Spell.a(spell.ordinal()));
     }
 }

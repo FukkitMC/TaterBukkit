@@ -13,8 +13,8 @@ public class CraftArt {
 
     static {
         ImmutableBiMap.Builder<PaintingMotive, Art> artworkBuilder = ImmutableBiMap.builder();
-        for (Identifier key : Registry.PAINTING_MOTIVE.getIds()) {
-            artworkBuilder.put(Registry.PAINTING_MOTIVE.get(key), Art.getByName(key.getPath()));
+        for (Identifier key : Registry.PAINTING_MOTIVE.b()) {
+            artworkBuilder.put(Registry.PAINTING_MOTIVE.a(key), Art.getByName(key.getPath()));
         }
 
         artwork = artworkBuilder.build();

@@ -47,7 +47,7 @@ public class CraftLectern extends CraftBlockEntityState<LecternBlockEntity> impl
         boolean result = super.update(force, applyPhysics);
 
         if (result && this.isPlaced() && this.getType() == Material.LECTERN) {
-            LecternBlock.setPowered(this.world.getHandle(), this.getPosition(), this.getHandle());
+            LecternBlock.a(this.world.getHandle(), this.getPosition(), this.getHandle());
         }
 
         return result;

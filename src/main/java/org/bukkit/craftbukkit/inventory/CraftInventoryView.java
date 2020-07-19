@@ -1,6 +1,6 @@
 package org.bukkit.craftbukkit.inventory;
 
-import net.minecraft.container.Container;
+import net.minecraft.screen.ScreenHandler;
 import org.bukkit.GameMode;
 import org.bukkit.craftbukkit.entity.CraftHumanEntity;
 import org.bukkit.craftbukkit.util.CraftChatMessage;
@@ -11,11 +11,11 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
 public class CraftInventoryView extends InventoryView {
-    private final Container container;
+    private final ScreenHandler container;
     private final CraftHumanEntity player;
     private final CraftInventory viewing;
 
-    public CraftInventoryView(HumanEntity player, Inventory viewing, Container container) {
+    public CraftInventoryView(HumanEntity player, Inventory viewing, ScreenHandler container) {
         // TODO: Should we make sure it really IS a CraftHumanEntity first? And a CraftInventory?
         this.player = (CraftHumanEntity) player;
         this.viewing = (CraftInventory) viewing;
@@ -73,7 +73,7 @@ public class CraftInventoryView extends InventoryView {
         return rawSlot < viewing.getSize();
     }
 
-    public Container getHandle() {
+    public ScreenHandler getHandle() {
         return container;
     }
 }

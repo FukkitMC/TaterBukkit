@@ -34,6 +34,6 @@ public class CraftEvoker extends CraftSpellcaster implements Evoker {
 
     @Override
     public void setCurrentSpell(Evoker.Spell spell) {
-        getHandle().setSpell(spell == null ? SpellcastingIllagerEntity.Spell.NONE : SpellcastingIllagerEntity.Spell.byId(spell.ordinal()));
+        getHandle().setSpell(spell == null ? SpellcastingIllagerEntity.Spell.NONE : SpellcastingIllagerEntity.Spell.a(spell.ordinal()));
     }
 }

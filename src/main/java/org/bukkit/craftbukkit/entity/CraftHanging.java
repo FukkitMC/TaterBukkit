@@ -26,7 +26,7 @@ public class CraftHanging extends CraftEntity implements Hanging {
     @Override
     public boolean setFacingDirection(BlockFace face, boolean force) {
         AbstractDecorationEntity hanging = getHandle();
-        Direction dir = hanging.getHorizontalFacing();
+        Direction dir = hanging.bY();
         switch (face) {
             case SOUTH:
             default:
@@ -52,7 +52,7 @@ public class CraftHanging extends CraftEntity implements Hanging {
 
     @Override
     public BlockFace getFacing() {
-        Direction direction = this.getHandle().getHorizontalFacing();
+        Direction direction = this.getHandle().bY();
         if (direction == null) return BlockFace.SELF;
         return CraftBlock.notchToBlockFace(direction);
     }

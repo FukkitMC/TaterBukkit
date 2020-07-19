@@ -3,6 +3,7 @@ package org.bukkit.craftbukkit.command;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
+import net.minecraft.util.Util;
 import org.bukkit.block.Block;
 import org.bukkit.command.BlockCommandSender;
 import org.bukkit.craftbukkit.block.CraftBlock;
@@ -29,7 +30,7 @@ public class CraftBlockCommandSender extends ServerCommandSender implements Bloc
     @Override
     public void sendMessage(String message) {
         for (Text component : CraftChatMessage.fromString(message)) {
-            block.output.sendMessage(component);
+            block.output.sendSystemMessage(component, Util.NIL_UUID);
         }
     }
 

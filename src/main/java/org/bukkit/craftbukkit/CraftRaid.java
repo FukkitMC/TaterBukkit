@@ -16,9 +16,9 @@ import org.bukkit.entity.Raider;
 
 public final class CraftRaid implements Raid {
 
-    private final net.minecraft.entity.raid.Raid handle;
+    private final net.minecraft.village.raid.Raid handle;
 
-    public CraftRaid(net.minecraft.entity.raid.Raid handle) {
+    public CraftRaid(net.minecraft.village.raid.Raid handle) {
         this.handle = handle;
     }
 
@@ -48,7 +48,7 @@ public final class CraftRaid implements Raid {
     public Location getLocation() {
         BlockPos pos = handle.getCenter();
         World world = handle.getWorld();
-        return new Location(world.getCraftWorld(), pos.getX(), pos.getY(), pos.getZ());
+        return new Location(world.getWorld(), pos.getX(), pos.getY(), pos.getZ());
     }
 
     @Override
@@ -91,6 +91,11 @@ public final class CraftRaid implements Raid {
 
     @Override
     public List<Raider> getRaiders() {
-        return (List<Raider>) handle.getRaiders().stream().map((Function<RaiderEntity, Raider>) entityRaider -> (Raider) entityRaider.getBukkitEntity()).collect(ImmutableList.toImmutableList());
+        return handle.getRaiders().stream().map(new Function<RaiderEntity, Raider>() {
+            @Override
+            public Raider apply(RaiderEntity entityRaider) {
+                return (Raider) entityRaider.getBukkitEntity();
+            }
+        }).collect(ImmutableList.toImmutableList());
     }
 }

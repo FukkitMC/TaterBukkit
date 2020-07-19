@@ -16,8 +16,6 @@ java {
 
 minecraft {
     accessWidener = file("src/main/resources/craftbukkit.aw")
-
-    loadDefinitions("definitions/definitions.json")
 }
 
 repositories {
@@ -28,33 +26,28 @@ repositories {
 }
 
 dependencies {
-    "ecj"("org.eclipse.jdt:ecj:3.21.0")
-    minecraft("net.minecraft", "minecraft", "1.15.2")
-    mappings("net.fabricmc", "yarn", "1.15.2+build.15", classifier = "v2")
-    modCompile("net.fabricmc", "fabric-loader", "0.8.2+build.194")
+    "ecj"("org.eclipse.jdt:ecj:3.22.0")
+    minecraft("net.minecraft", "minecraft", "1.16.1")
+    mappings("net.fabricmc", "yarn", "1.16.1+build.21", classifier = "v2")
+    modCompile("net.fabricmc", "fabric-loader", "0.9.0+build.204")
     compileOnly("com.google.code.findbugs", "jsr305", "3.0.2")
 
-    implementation("com.google.code.gson:gson:2.8.0")
-    implementation("com.google.guava:guava:21.0")
     implementation("com.googlecode.json-simple:json-simple:1.1.1")
-    implementation("commons-lang:commons-lang:2.6")
     implementation("jline:jline:2.12.1")
-    implementation("mysql:mysql-connector-java:5.1.48")
-    implementation("org.bukkit:bukkit:1.15.2-R0.1-SNAPSHOT")
-    implementation("org.xerial:sqlite-jdbc:3.30.1")
-    implementation("org.yaml:snakeyaml:1.25")
+    implementation("mysql:mysql-connector-java:5.1.49")
+    // Bukkit API is no longer being published to Spigot's Maven
+    implementation("org.spigotmc:spigot-api:1.16.1-R0.1-SNAPSHOT")
+    implementation("org.xerial:sqlite-jdbc:3.32.3")
+
     include("com.googlecode.json-simple:json-simple:1.1.1")
-    include("commons-lang:commons-lang:2.6")
     include("jline:jline:2.12.1")
-    include("mysql:mysql-connector-java:5.1.48")
-    include("org.bukkit:bukkit:1.15.2-R0.1-SNAPSHOT")
-    include("org.xerial:sqlite-jdbc:3.30.1")
-    include("org.yaml:snakeyaml:1.25")
-    compileOnly("org.projectlombok:lombok:1.18.12")
-    annotationProcessor("org.projectlombok:lombok:1.18.12")
+    include("mysql:mysql-connector-java:5.1.49")
+    include("org.spigotmc:spigot-api:1.16.1-R0.1-SNAPSHOT")
+    include("org.xerial:sqlite-jdbc:3.32.3")
 }
 
 tasks.withType<JavaCompile> {
+    options.headerOutputDirectory.convention(objects.directoryProperty())
     options.isFork = true
 
     options.forkOptions.apply {

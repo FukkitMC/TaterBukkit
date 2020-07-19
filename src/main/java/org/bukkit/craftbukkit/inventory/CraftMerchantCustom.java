@@ -12,8 +12,6 @@ import net.minecraft.village.TraderOfferList;
 import net.minecraft.world.World;
 import org.apache.commons.lang.Validate;
 
-import javax.annotation.Nullable;
-
 public class CraftMerchantCustom extends CraftMerchant {
 
     public CraftMerchantCustom(String title) {
@@ -68,18 +66,13 @@ public class CraftMerchantCustom extends CraftMerchant {
         }
 
         @Override
-        public void setOffersFromServer(@Nullable TraderOfferList traderOfferList) {
-
-        }
-
-        @Override
-        public void trade(TradeOffer merchantrecipe) {
+        public void a(TradeOffer merchantrecipe) {
             // increase recipe's uses
             merchantrecipe.use();
         }
 
         @Override
-        public void onSellingItem(ItemStack itemstack) {
+        public void k(ItemStack itemstack) {
         }
 
         public Text getScoreboardDisplayName() {
@@ -87,7 +80,7 @@ public class CraftMerchantCustom extends CraftMerchant {
         }
 
         @Override
-        public World getTraderWorld() {
+        public World getWorld() {
             return this.tradingWorld;
         }
 
@@ -101,7 +94,7 @@ public class CraftMerchantCustom extends CraftMerchant {
         }
 
         @Override
-        public boolean isLevelledTrader() {
+        public boolean isLeveledTrader() {
             return false; // is-regular-villager flag (hides some gui elements: xp bar, name suffix)
         }
 

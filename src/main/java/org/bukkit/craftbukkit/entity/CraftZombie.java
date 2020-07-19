@@ -31,12 +31,12 @@ public class CraftZombie extends CraftMonster implements Zombie {
 
     @Override
     public boolean isBaby() {
-        return getHandle().isBaby();
+        return getHandle().x_();
     }
 
     @Override
     public void setBaby(boolean flag) {
-        getHandle().setBaby(flag);
+        getHandle().a(flag);
     }
 
     @Override

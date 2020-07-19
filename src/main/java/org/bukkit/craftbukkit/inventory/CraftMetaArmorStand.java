@@ -16,6 +16,13 @@ public class CraftMetaArmorStand extends CraftMetaItem {
 
     CraftMetaArmorStand(CraftMetaItem meta) {
         super(meta);
+
+        if (!(meta instanceof CraftMetaArmorStand)) {
+            return;
+        }
+
+        CraftMetaArmorStand armorStand = (CraftMetaArmorStand) meta;
+        this.entityTag = armorStand.entityTag;
     }
 
     CraftMetaArmorStand(CompoundTag tag) {

@@ -19,14 +19,14 @@ public class CraftMerchantRecipe extends MerchantRecipe {
     public CraftMerchantRecipe(ItemStack result, int uses, int maxUses, boolean experienceReward, int experience, float priceMultiplier) {
         super(result, uses, maxUses, experienceReward, experience, priceMultiplier);
         this.handle = new net.minecraft.village.TradeOffer(
-                net.minecraft.item.ItemStack.EMPTY,
-                net.minecraft.item.ItemStack.EMPTY,
+                net.minecraft.item.ItemStack.b,
+                net.minecraft.item.ItemStack.b,
                 CraftItemStack.asNMSCopy(result),
                 uses,
                 maxUses,
                 experience,
-                priceMultiplier
-
+                priceMultiplier,
+                this
         );
         this.setExperienceReward(experienceReward);
     }

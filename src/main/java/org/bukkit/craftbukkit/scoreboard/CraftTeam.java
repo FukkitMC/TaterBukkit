@@ -24,7 +24,7 @@ final class CraftTeam extends CraftScoreboardComponent implements Team {
     public String getName() throws IllegalStateException {
         CraftScoreboard scoreboard = checkState();
 
-        return team.getName();
+        return team.b();
     }
 
     @Override
@@ -37,7 +37,7 @@ final class CraftTeam extends CraftScoreboardComponent implements Team {
     @Override
     public void setDisplayName(String displayName) throws IllegalStateException {
         Validate.notNull(displayName, "Display name cannot be null");
-        Validate.isTrue(displayName.length() <= 128, "Display name '" + displayName + "' is longer than the limit of 128 characters");
+        Validate.isTrue(ChatColor.stripColor(displayName).length() <= 128, "Display name '" + displayName + "' is longer than the limit of 128 characters");
         CraftScoreboard scoreboard = checkState();
 
         team.setDisplayName(CraftChatMessage.fromString(displayName)[0]); // SPIGOT-4112: not nullable
@@ -53,7 +53,7 @@ final class CraftTeam extends CraftScoreboardComponent implements Team {
     @Override
     public void setPrefix(String prefix) throws IllegalStateException, IllegalArgumentException {
         Validate.notNull(prefix, "Prefix cannot be null");
-        Validate.isTrue(prefix.length() <= 64, "Prefix '" + prefix + "' is longer than the limit of 64 characters");
+        Validate.isTrue(ChatColor.stripColor(prefix).length() <= 64, "Prefix '" + prefix + "' is longer than the limit of 64 characters");
         CraftScoreboard scoreboard = checkState();
 
         team.setPrefix(CraftChatMessage.fromStringOrNull(prefix));
@@ -69,7 +69,7 @@ final class CraftTeam extends CraftScoreboardComponent implements Team {
     @Override
     public void setSuffix(String suffix) throws IllegalStateException, IllegalArgumentException {
         Validate.notNull(suffix, "Suffix cannot be null");
-        Validate.isTrue(suffix.length() <= 64, "Suffix '" + suffix + "' is longer than the limit of 64 characters");
+        Validate.isTrue(ChatColor.stripColor(suffix).length() <= 64, "Suffix '" + suffix + "' is longer than the limit of 64 characters");
         CraftScoreboard scoreboard = checkState();
 
         team.setSuffix(CraftChatMessage.fromStringOrNull(suffix));
@@ -79,7 +79,7 @@ final class CraftTeam extends CraftScoreboardComponent implements Team {
     public ChatColor getColor() throws IllegalStateException {
         CraftScoreboard scoreboard = checkState();
 
-        return CraftChatMessage.getColor(team.getColor());
+        return CraftChatMessage.getColor(team.n());
     }
 
     @Override
@@ -94,7 +94,7 @@ final class CraftTeam extends CraftScoreboardComponent implements Team {
     public boolean allowFriendlyFire() throws IllegalStateException {
         CraftScoreboard scoreboard = checkState();
 
-        return team.isFriendlyFireAllowed();
+        return team.h();
     }
 
     @Override
@@ -108,7 +108,7 @@ final class CraftTeam extends CraftScoreboardComponent implements Team {
     public boolean canSeeFriendlyInvisibles() throws IllegalStateException {
         CraftScoreboard scoreboard = checkState();
 
-        return team.shouldShowFriendlyInvisibles();
+        return team.i();
     }
 
     @Override
@@ -122,7 +122,7 @@ final class CraftTeam extends CraftScoreboardComponent implements Team {
     public NameTagVisibility getNameTagVisibility() throws IllegalArgumentException {
         CraftScoreboard scoreboard = checkState();
 
-        return notchToBukkit(team.getNameTagVisibilityRule());
+        return notchToBukkit(team.j());
     }
 
     @Override
@@ -137,7 +137,7 @@ final class CraftTeam extends CraftScoreboardComponent implements Team {
         CraftScoreboard scoreboard = checkState();
 
         ImmutableSet.Builder<OfflinePlayer> players = ImmutableSet.builder();
-        for (String playerName : team.getPlayerList()) {
+        for (String playerName : team.g()) {
             players.add(Bukkit.getOfflinePlayer(playerName));
         }
         return players.build();
@@ -148,7 +148,7 @@ final class CraftTeam extends CraftScoreboardComponent implements Team {
         CraftScoreboard scoreboard = checkState();
 
         ImmutableSet.Builder<String> entries = ImmutableSet.builder();
-        for (String playerName : team.getPlayerList()) {
+        for (String playerName : team.g()) {
             entries.add(playerName);
         }
         return entries.build();
@@ -158,7 +158,7 @@ final class CraftTeam extends CraftScoreboardComponent implements Team {
     public int getSize() throws IllegalStateException {
         CraftScoreboard scoreboard = checkState();
 
-        return team.getPlayerList().size();
+        return team.g().size();
     }
 
     @Override
@@ -186,7 +186,7 @@ final class CraftTeam extends CraftScoreboardComponent implements Team {
         Validate.notNull(entry, "Entry cannot be null");
         CraftScoreboard scoreboard = checkState();
 
-        if (!team.getPlayerList().contains(entry)) {
+        if (!team.g().contains(entry)) {
             return false;
         }
 
@@ -206,7 +206,7 @@ final class CraftTeam extends CraftScoreboardComponent implements Team {
 
         CraftScoreboard scoreboard = checkState();
 
-        return team.getPlayerList().contains(entry);
+        return team.g().contains(entry);
     }
 
     @Override
@@ -222,11 +222,11 @@ final class CraftTeam extends CraftScoreboardComponent implements Team {
 
         switch (option) {
             case NAME_TAG_VISIBILITY:
-                return OptionStatus.values()[team.getNameTagVisibilityRule().ordinal()];
+                return OptionStatus.values()[team.j().ordinal()];
             case DEATH_MESSAGE_VISIBILITY:
-                return OptionStatus.values()[team.getDeathMessageVisibilityRule().ordinal()];
+                return OptionStatus.values()[team.k().ordinal()];
             case COLLISION_RULE:
-                return OptionStatus.values()[team.getCollisionRule().ordinal()];
+                return OptionStatus.values()[team.l().ordinal()];
             default:
                 throw new IllegalArgumentException("Unrecognised option " + option);
         }
@@ -283,7 +283,7 @@ final class CraftTeam extends CraftScoreboardComponent implements Team {
 
     @Override
     CraftScoreboard checkState() throws IllegalStateException {
-        if (getScoreboard().board.getTeam(team.getName()) == null) {
+        if (getScoreboard().board.getTeam(team.b()) == null) {
             throw new IllegalStateException("Unregistered scoreboard component");
         }
 

@@ -7,11 +7,10 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import net.minecraft.entity.AreaEffectCloudEntity;
-import net.minecraft.entity.EnderEyeEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ExperienceOrbEntity;
+import net.minecraft.entity.EyeOfEnderEntity;
 import net.minecraft.entity.FallingBlockEntity;
-import net.minecraft.entity.FireworkEntity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LightningEntity;
 import net.minecraft.entity.LivingEntity;
@@ -22,9 +21,9 @@ import net.minecraft.entity.boss.dragon.EnderDragonPart;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.decoration.AbstractDecorationEntity;
 import net.minecraft.entity.decoration.ArmorStandEntity;
-import net.minecraft.entity.decoration.EnderCrystalEntity;
+import net.minecraft.entity.decoration.EndCrystalEntity;
 import net.minecraft.entity.decoration.ItemFrameEntity;
-import net.minecraft.entity.decoration.LeadKnotEntity;
+import net.minecraft.entity.decoration.LeashKnotEntity;
 import net.minecraft.entity.decoration.painting.PaintingEntity;
 import net.minecraft.entity.mob.AbstractSkeletonEntity;
 import net.minecraft.entity.mob.AmbientEntity;
@@ -41,13 +40,15 @@ import net.minecraft.entity.mob.FlyingEntity;
 import net.minecraft.entity.mob.GhastEntity;
 import net.minecraft.entity.mob.GiantEntity;
 import net.minecraft.entity.mob.GuardianEntity;
+import net.minecraft.entity.mob.HoglinEntity;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.HuskEntity;
 import net.minecraft.entity.mob.IllagerEntity;
 import net.minecraft.entity.mob.IllusionerEntity;
 import net.minecraft.entity.mob.MagmaCubeEntity;
-import net.minecraft.entity.mob.MobEntityWithAi;
+import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.mob.PhantomEntity;
+import net.minecraft.entity.mob.PiglinEntity;
 import net.minecraft.entity.mob.PillagerEntity;
 import net.minecraft.entity.mob.RavagerEntity;
 import net.minecraft.entity.mob.ShulkerEntity;
@@ -62,10 +63,11 @@ import net.minecraft.entity.mob.VindicatorEntity;
 import net.minecraft.entity.mob.WaterCreatureEntity;
 import net.minecraft.entity.mob.WitchEntity;
 import net.minecraft.entity.mob.WitherSkeletonEntity;
+import net.minecraft.entity.mob.ZoglinEntity;
 import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.entity.mob.ZombieHorseEntity;
-import net.minecraft.entity.mob.ZombiePigmanEntity;
 import net.minecraft.entity.mob.ZombieVillagerEntity;
+import net.minecraft.entity.mob.ZombifiedPiglinEntity;
 import net.minecraft.entity.passive.AbstractDonkeyEntity;
 import net.minecraft.entity.passive.AbstractTraderEntity;
 import net.minecraft.entity.passive.AnimalEntity;
@@ -97,6 +99,7 @@ import net.minecraft.entity.passive.SalmonEntity;
 import net.minecraft.entity.passive.SheepEntity;
 import net.minecraft.entity.passive.SnowGolemEntity;
 import net.minecraft.entity.passive.SquidEntity;
+import net.minecraft.entity.passive.StriderEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.passive.TraderLlamaEntity;
 import net.minecraft.entity.passive.TropicalFishEntity;
@@ -109,20 +112,21 @@ import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.entity.projectile.DragonFireballEntity;
 import net.minecraft.entity.projectile.ExplosiveProjectileEntity;
 import net.minecraft.entity.projectile.FireballEntity;
+import net.minecraft.entity.projectile.FireworkRocketEntity;
 import net.minecraft.entity.projectile.FishingBobberEntity;
 import net.minecraft.entity.projectile.LlamaSpitEntity;
-import net.minecraft.entity.projectile.ProjectileEntity;
+import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ShulkerBulletEntity;
 import net.minecraft.entity.projectile.SmallFireballEntity;
 import net.minecraft.entity.projectile.SpectralArrowEntity;
 import net.minecraft.entity.projectile.TridentEntity;
 import net.minecraft.entity.projectile.WitherSkullEntity;
-import net.minecraft.entity.thrown.SnowballEntity;
-import net.minecraft.entity.thrown.ThrownEggEntity;
-import net.minecraft.entity.thrown.ThrownEnderpearlEntity;
-import net.minecraft.entity.thrown.ThrownEntity;
-import net.minecraft.entity.thrown.ThrownExperienceBottleEntity;
-import net.minecraft.entity.thrown.ThrownPotionEntity;
+import net.minecraft.entity.projectile.thrown.EggEntity;
+import net.minecraft.entity.projectile.thrown.EnderPearlEntity;
+import net.minecraft.entity.projectile.thrown.ExperienceBottleEntity;
+import net.minecraft.entity.projectile.thrown.PotionEntity;
+import net.minecraft.entity.projectile.thrown.SnowballEntity;
+import net.minecraft.entity.projectile.thrown.ThrownEntity;
 import net.minecraft.entity.vehicle.AbstractMinecartEntity;
 import net.minecraft.entity.vehicle.BoatEntity;
 import net.minecraft.entity.vehicle.ChestMinecartEntity;
@@ -135,7 +139,6 @@ import net.minecraft.entity.vehicle.TntMinecartEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import org.bukkit.EntityEffect;
@@ -203,7 +206,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
                 else if (entity instanceof DolphinEntity) { return new CraftDolphin(server, (DolphinEntity) entity); }
                 else { return new CraftWaterMob(server, (WaterCreatureEntity) entity); }
             }
-            else if (entity instanceof MobEntityWithAi) {
+            else if (entity instanceof PathAwareEntity) {
                 // Animals
                 if (entity instanceof AnimalEntity) {
                     if (entity instanceof ChickenEntity) { return new CraftChicken(server, (ChickenEntity) entity); }
@@ -235,12 +238,14 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
                     else if (entity instanceof PandaEntity) { return new CraftPanda(server, (PandaEntity) entity); }
                     else if (entity instanceof FoxEntity) { return new CraftFox(server, (FoxEntity) entity); }
                     else if (entity instanceof BeeEntity) { return new CraftBee(server, (BeeEntity) entity); }
+                    else if (entity instanceof HoglinEntity) { return new CraftHoglin(server, (HoglinEntity) entity); }
+                    else if (entity instanceof StriderEntity) { return new CraftStrider(server, (StriderEntity) entity); }
                     else  { return new CraftAnimals(server, (AnimalEntity) entity); }
                 }
                 // Monsters
                 else if (entity instanceof HostileEntity) {
                     if (entity instanceof ZombieEntity) {
-                        if (entity instanceof ZombiePigmanEntity) { return new CraftPigZombie(server, (ZombiePigmanEntity) entity); }
+                        if (entity instanceof ZombifiedPiglinEntity) { return new CraftPigZombie(server, (ZombifiedPiglinEntity) entity); }
                         else if (entity instanceof HuskEntity) { return new CraftHusk(server, (HuskEntity) entity); }
                         else if (entity instanceof ZombieVillagerEntity) { return new CraftVillagerZombie(server, (ZombieVillagerEntity) entity); }
                         else if (entity instanceof DrownedEntity) { return new CraftDrowned(server, (DrownedEntity) entity); }
@@ -279,6 +284,8 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
                         else { return new CraftIllager(server, (IllagerEntity) entity); }
                     }
                     else if (entity instanceof RavagerEntity) { return new CraftRavager(server, (RavagerEntity) entity); }
+                    else if (entity instanceof PiglinEntity) { return new CraftPiglin(server, (PiglinEntity) entity); }
+                    else if (entity instanceof ZoglinEntity) { return new CraftZoglin(server, (ZoglinEntity) entity); }
 
                     else  { return new CraftMonster(server, (HostileEntity) entity); }
                 }
@@ -292,7 +299,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
                     else if (entity instanceof WanderingTraderEntity) { return new CraftWanderingTrader(server, (WanderingTraderEntity) entity); }
                     else { return new CraftAbstractVillager(server, (AbstractTraderEntity) entity); }
                 }
-                else { return new CraftCreature(server, (MobEntityWithAi) entity); }
+                else { return new CraftCreature(server, (PathAwareEntity) entity); }
             }
             // Slimes are a special (and broken) case
             else if (entity instanceof SlimeEntity) {
@@ -324,17 +331,17 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
         else if (entity instanceof ExperienceOrbEntity) { return new CraftExperienceOrb(server, (ExperienceOrbEntity) entity); }
         else if (entity instanceof ArrowEntity) { return new CraftTippedArrow(server, (ArrowEntity) entity); }
         else if (entity instanceof SpectralArrowEntity) { return new CraftSpectralArrow(server, (SpectralArrowEntity) entity); }
-        else if (entity instanceof ProjectileEntity) {
+        else if (entity instanceof PersistentProjectileEntity) {
             if (entity instanceof TridentEntity) { return new CraftTrident(server, (TridentEntity) entity); }
-            else { return new CraftArrow(server, (ProjectileEntity) entity); }
+            else { return new CraftArrow(server, (PersistentProjectileEntity) entity); }
         }
         else if (entity instanceof BoatEntity) { return new CraftBoat(server, (BoatEntity) entity); }
         else if (entity instanceof ThrownEntity) {
-            if (entity instanceof ThrownEggEntity) { return new CraftEgg(server, (ThrownEggEntity) entity); }
+            if (entity instanceof EggEntity) { return new CraftEgg(server, (EggEntity) entity); }
             else if (entity instanceof SnowballEntity) { return new CraftSnowball(server, (SnowballEntity) entity); }
-            else if (entity instanceof ThrownPotionEntity) { return new CraftThrownPotion(server, (ThrownPotionEntity) entity); }
-            else if (entity instanceof ThrownEnderpearlEntity) { return new CraftEnderPearl(server, (ThrownEnderpearlEntity) entity); }
-            else if (entity instanceof ThrownExperienceBottleEntity) { return new CraftThrownExpBottle(server, (ThrownExperienceBottleEntity) entity); }
+            else if (entity instanceof PotionEntity) { return new CraftThrownPotion(server, (PotionEntity) entity); }
+            else if (entity instanceof EnderPearlEntity) { return new CraftEnderPearl(server, (EnderPearlEntity) entity); }
+            else if (entity instanceof ExperienceBottleEntity) { return new CraftThrownExpBottle(server, (ExperienceBottleEntity) entity); }
         }
         else if (entity instanceof FallingBlockEntity) { return new CraftFallingBlock(server, (FallingBlockEntity) entity); }
         else if (entity instanceof ExplosiveProjectileEntity) {
@@ -344,8 +351,8 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
             else if (entity instanceof DragonFireballEntity) { return new CraftDragonFireball(server, (DragonFireballEntity) entity); }
             else { return new CraftFireball(server, (ExplosiveProjectileEntity) entity); }
         }
-        else if (entity instanceof EnderEyeEntity) { return new CraftEnderSignal(server, (EnderEyeEntity) entity); }
-        else if (entity instanceof EnderCrystalEntity) { return new CraftEnderCrystal(server, (EnderCrystalEntity) entity); }
+        else if (entity instanceof EyeOfEnderEntity) { return new CraftEnderSignal(server, (EyeOfEnderEntity) entity); }
+        else if (entity instanceof EndCrystalEntity) { return new CraftEnderCrystal(server, (EndCrystalEntity) entity); }
         else if (entity instanceof FishingBobberEntity) { return new CraftFishHook(server, (FishingBobberEntity) entity); }
         else if (entity instanceof ItemEntity) { return new CraftItem(server, (ItemEntity) entity); }
         else if (entity instanceof LightningEntity) { return new CraftLightningStrike(server, (LightningEntity) entity); }
@@ -360,11 +367,11 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
         } else if (entity instanceof AbstractDecorationEntity) {
             if (entity instanceof PaintingEntity) { return new CraftPainting(server, (PaintingEntity) entity); }
             else if (entity instanceof ItemFrameEntity) { return new CraftItemFrame(server, (ItemFrameEntity) entity); }
-            else if (entity instanceof LeadKnotEntity) { return new CraftLeash(server, (LeadKnotEntity) entity); }
+            else if (entity instanceof LeashKnotEntity) { return new CraftLeash(server, (LeashKnotEntity) entity); }
             else { return new CraftHanging(server, (AbstractDecorationEntity) entity); }
         }
         else if (entity instanceof TntEntity) { return new CraftTNTPrimed(server, (TntEntity) entity); }
-        else if (entity instanceof FireworkEntity) { return new CraftFirework(server, (FireworkEntity) entity); }
+        else if (entity instanceof FireworkRocketEntity) { return new CraftFirework(server, (FireworkRocketEntity) entity); }
         else if (entity instanceof ShulkerBulletEntity) { return new CraftShulkerBullet(server, (ShulkerBulletEntity) entity); }
         else if (entity instanceof AreaEffectCloudEntity) { return new CraftAreaEffectCloud(server, (AreaEffectCloudEntity) entity); }
         else if (entity instanceof EvokerFangsEntity) { return new CraftEvokerFangs(server, (EvokerFangsEntity) entity); }
@@ -419,20 +426,20 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
     @Override
     public BoundingBox getBoundingBox() {
         Box bb = getHandle().getBoundingBox();
-        return new BoundingBox(bb.x1, bb.y1, bb.z1, bb.x2, bb.y2, bb.z2);
+        return new BoundingBox(bb.minX, bb.minY, bb.minZ, bb.maxX, bb.maxY, bb.maxZ);
     }
 
     @Override
     public boolean isOnGround() {
-        if (entity instanceof ProjectileEntity) {
-            return ((ProjectileEntity) entity).inGround;
+        if (entity instanceof PersistentProjectileEntity) {
+            return ((PersistentProjectileEntity) entity).inGround;
         }
-        return entity.onGround;
+        return entity.isOnGround();
     }
 
     @Override
     public World getWorld() {
-        return entity.world.getCraftWorld();
+        return entity.world.getWorld();
     }
 
     @Override
@@ -469,7 +476,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
 
         // Let the server handle cross world teleports
         if (!location.getWorld().equals(getWorld())) {
-            entity.teleportTo(((CraftWorld) location.getWorld()).getHandle().getDimension().getType(), new BlockPos(location.getX(), location.getY(), location.getZ()));
+            entity.teleportTo(((CraftWorld) location.getWorld()).getHandle(), new BlockPos(location.getX(), location.getY(), location.getZ()));
             return true;
         }
 
@@ -493,7 +500,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
 
     @Override
     public List<org.bukkit.entity.Entity> getNearbyEntities(double x, double y, double z) {
-        List<Entity> notchEntityList = entity.world.getEntities(entity, entity.getBoundingBox().expand(x, y, z), null);
+        List<Entity> notchEntityList = entity.world.a(entity, entity.getBoundingBox().expand(x, y, z), null);
         List<org.bukkit.entity.Entity> bukkitEntityList = new java.util.ArrayList<org.bukkit.entity.Entity>(notchEntityList.size());
 
         for (Entity e : notchEntityList) {
@@ -590,7 +597,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
     public boolean addPassenger(org.bukkit.entity.Entity passenger) {
         Preconditions.checkArgument(passenger != null, "passenger == null");
 
-        return ((CraftEntity) passenger).getHandle().startRiding(getHandle(), true);
+        return ((CraftEntity) passenger).getHandle().a(getHandle(), true);
     }
 
     @Override
@@ -751,7 +758,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
 
     @Override
     public String getCustomName() {
-        Text name = getHandle().getCustomName();
+        Text name = getHandle().R();
 
         if (name == null) {
             return null;
@@ -782,7 +789,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
 
     @Override
     public String getName() {
-        return CraftChatMessage.fromComponent(getHandle().getName(), Formatting.WHITE);
+        return CraftChatMessage.fromComponent(getHandle().P());
     }
 
     @Override

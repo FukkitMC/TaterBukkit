@@ -10,7 +10,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.WhitelistEntry;
 import net.minecraft.stat.ServerStatHandler;
 import net.minecraft.world.WorldSaveHandler;
-import net.minecraft.world.dimension.DimensionType;
 import org.bukkit.BanList;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -34,7 +33,7 @@ public class CraftOfflinePlayer implements OfflinePlayer, ConfigurationSerializa
     protected CraftOfflinePlayer(CraftServer server, GameProfile profile) {
         this.server = server;
         this.profile = profile;
-        this.storage = (WorldSaveHandler) (server.console.getWorld(DimensionType.OVERWORLD).getSaveHandler());
+        this.storage = server.console.worldNBTStorage;
 
     }
 
@@ -91,9 +90,9 @@ public class CraftOfflinePlayer implements OfflinePlayer, ConfigurationSerializa
         }
 
         if (value) {
-            server.getHandle().addToOperators(profile);
+            server.getHandle().a(profile);
         } else {
-            server.getHandle().removeFromOperators(profile);
+            server.getHandle().b(profile);
         }
     }
 

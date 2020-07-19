@@ -12,7 +12,7 @@ public class CraftLightningStrike extends CraftEntity implements LightningStrike
 
     @Override
     public boolean isEffect() {
-        return ((LightningEntity) super.getHandle()).isEffect;
+        return getHandle().cosmetic;
     }
 
     @Override

@@ -1,7 +1,7 @@
 package org.bukkit.craftbukkit.legacy;
 
 import com.google.common.base.Preconditions;
-import com.mojang.datafixers.Dynamic;
+import com.mojang.serialization.Dynamic;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -80,7 +80,7 @@ public final class CraftLegacy {
                 mappedData = blockToMaterial.get(block);
                 // Fallback to matching item
                 if (mappedData == null) {
-                    mappedData = itemToMaterial.get(block.asItem());
+                    mappedData = itemToMaterial.get(block.h());
                 }
             }
         } else {
@@ -128,13 +128,13 @@ public final class CraftLegacy {
             // Try exact match first
             BlockState converted = materialToData.get(materialData);
             if (converted != null) {
-                return converted.getBlock().asItem();
+                return converted.getBlock().h();
             }
 
             // Fallback to any block
             Block convertedBlock = materialToBlock.get(materialData);
             if (convertedBlock != null) {
-                return convertedBlock.asItem();
+                return convertedBlock.h();
             }
         }
 
@@ -255,7 +255,7 @@ public final class CraftLegacy {
 
     static {
         System.err.println("Initializing Legacy Material Support. Unless you have legacy plugins and/or data this is a bug!");
-        if (MinecraftServer.getServer() != null && MinecraftServer.getServer().isDebuggingEnabled()) {
+        if (MinecraftServer.getServer() != null && MinecraftServer.getServer().isDebugging()) {
             new Exception().printStackTrace();
         }
 
@@ -309,7 +309,7 @@ public final class CraftLegacy {
         SPAWN_EGGS.put((byte) EntityType.WOLF.getTypeId(), Material.WOLF_SPAWN_EGG);
         SPAWN_EGGS.put((byte) EntityType.ZOMBIE.getTypeId(), Material.ZOMBIE_SPAWN_EGG);
         SPAWN_EGGS.put((byte) EntityType.ZOMBIE_HORSE.getTypeId(), Material.ZOMBIE_HORSE_SPAWN_EGG);
-        SPAWN_EGGS.put((byte) EntityType.PIG_ZOMBIE.getTypeId(), Material.ZOMBIE_PIGMAN_SPAWN_EGG);
+        SPAWN_EGGS.put((byte) EntityType.ZOMBIFIED_PIGLIN.getTypeId(), Material.ZOMBIFIED_PIGLIN_SPAWN_EGG);
         SPAWN_EGGS.put((byte) EntityType.ZOMBIE_VILLAGER.getTypeId(), Material.ZOMBIE_VILLAGER_SPAWN_EGG);
 
         Bootstrap.initialize();
@@ -331,18 +331,18 @@ public final class CraftLegacy {
                     }
 
                     String name = blockTag.get("Name").asString("");
-                    Block block = Registry.BLOCK.get(new Identifier(name));
+                    Block block = Registry.BLOCK.a(new Identifier(name));
                     if (block == null) {
                         continue;
                     }
                     BlockState blockData = block.getDefaultState();
                     StateManager states = block.getStateManager();
 
-                    Optional<CompoundTag> propMap = blockTag.getElement("Properties");
+                    Optional<CompoundTag> propMap = blockTag.getElement("Properties").result();
                     if (propMap.isPresent()) {
                         CompoundTag properties = propMap.get();
                         for (String dataKey : properties.getKeys()) {
-                            Property state = states.getProperty(dataKey);
+                            Property state = states.a(dataKey);
 
                             if (state == null) {
                                 if (whitelistedStates.contains(dataKey)) {
@@ -400,7 +400,7 @@ public final class CraftLegacy {
                 stack.putInt("id", material.getId());
                 stack.putShort("Damage", data);
 
-                Dynamic<Tag> converted = Schemas.getFixer().update(TypeReferences.ITEM_STACK, new Dynamic<Tag>(NbtOps.INSTANCE, stack), -1, CraftMagicNumbers.INSTANCE.getDataVersion());
+                Dynamic<Tag> converted = Schemas.getFixer().update(TypeReferences.ITEM_STACK, new Dynamic<Tag>(NbtOps.a, stack), -1, CraftMagicNumbers.INSTANCE.getDataVersion());
 
                 String newId = converted.get("id").asString("");
                 // Recover spawn eggs with invalid data
@@ -409,7 +409,7 @@ public final class CraftLegacy {
                 }
 
                 // Preconditions.checkState(newId.contains("minecraft:"), "Unknown new material for " + matData);
-                Item newMaterial = Registry.ITEM.get(new Identifier(newId));
+                Item newMaterial = Registry.ITEM.a(new Identifier(newId));
 
                 if (newMaterial == Items.AIR) {
                     continue;

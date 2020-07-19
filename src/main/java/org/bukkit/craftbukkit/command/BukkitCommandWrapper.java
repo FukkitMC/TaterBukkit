@@ -40,12 +40,12 @@ public class BukkitCommandWrapper implements com.mojang.brigadier.Command<Server
     }
 
     @Override
-    public int run(CommandContext<ServerCommandSource> context) {
+    public int run(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
         return server.dispatchCommand(context.getSource().getBukkitSender(), context.getInput()) ? 1 : 0;
     }
 
     @Override
-    public CompletableFuture<Suggestions> getSuggestions(CommandContext<ServerCommandSource> context, SuggestionsBuilder builder) {
+    public CompletableFuture<Suggestions> getSuggestions(CommandContext<ServerCommandSource> context, SuggestionsBuilder builder) throws CommandSyntaxException {
         List<String> results = server.tabComplete(context.getSource().getBukkitSender(), builder.getInput(), context.getSource().getWorld(), context.getSource().getPosition(), true);
 
         // Defaults to sub nodes, but we have just one giant args node, so offset accordingly

@@ -3,7 +3,7 @@ package org.bukkit.craftbukkit.entity;
 import com.google.common.collect.ImmutableList;
 import java.util.Collection;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.thrown.ThrownPotionEntity;
+import net.minecraft.entity.projectile.thrown.PotionEntity;
 import net.minecraft.potion.PotionUtil;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Material;
@@ -16,14 +16,14 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 
 public class CraftThrownPotion extends CraftProjectile implements ThrownPotion {
-    public CraftThrownPotion(CraftServer server, ThrownPotionEntity entity) {
+    public CraftThrownPotion(CraftServer server, PotionEntity entity) {
         super(server, entity);
     }
 
     @Override
     public Collection<PotionEffect> getEffects() {
         ImmutableList.Builder<PotionEffect> builder = ImmutableList.builder();
-        for (StatusEffectInstance effect : PotionUtil.getPotionEffects(getHandle().getStack())) {
+        for (StatusEffectInstance effect : PotionUtil.getPotionEffects(getHandle().getItem())) {
             builder.add(CraftPotionUtil.toBukkit(effect));
         }
         return builder.build();
@@ -31,7 +31,7 @@ public class CraftThrownPotion extends CraftProjectile implements ThrownPotion {
 
     @Override
     public ItemStack getItem() {
-        return CraftItemStack.asBukkitCopy(getHandle().getStack());
+        return CraftItemStack.asBukkitCopy(getHandle().getItem());
     }
 
     @Override
@@ -42,12 +42,12 @@ public class CraftThrownPotion extends CraftProjectile implements ThrownPotion {
         // The ItemStack must be a potion.
         Validate.isTrue(item.getType() == Material.LINGERING_POTION || item.getType() == Material.SPLASH_POTION, "ItemStack must be a lingering or splash potion. This item stack was " + item.getType() + ".");
 
-        getHandle().setItemStack(CraftItemStack.asNMSCopy(item));
+        getHandle().setItem(CraftItemStack.asNMSCopy(item));
     }
 
     @Override
-    public ThrownPotionEntity getHandle() {
-        return (ThrownPotionEntity) entity;
+    public PotionEntity getHandle() {
+        return (PotionEntity) entity;
     }
 
     @Override

@@ -1,6 +1,8 @@
 package org.bukkit.craftbukkit;
 
 import com.google.common.base.Preconditions;
+import com.google.common.base.Predicates;
+import java.util.function.Predicate;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Heightmap;
@@ -61,7 +63,7 @@ public class CraftChunkSnapshot implements ChunkSnapshot {
     public boolean contains(BlockData block) {
         Preconditions.checkArgument(block != null, "Block cannot be null");
 
-        BlockState nms = ((CraftBlockData) block).getState();
+        Predicate<BlockState> nms = Predicates.equalTo(((CraftBlockData) block).getState());
         for (PalettedContainer<BlockState> palette : blockids) {
             if (palette.method_19526(nms)) {
                 return true;
@@ -126,7 +128,7 @@ public class CraftChunkSnapshot implements ChunkSnapshot {
         Preconditions.checkState(biome != null, "ChunkSnapshot created without biome. Please call getSnapshot with includeBiome=true");
         CraftChunk.validateChunkCoordinates(x, y, z);
 
-        return CraftBlock.biomeBaseToBiome(biome.getBiomeForNoiseGen(x >> 2, y >> 2, z >> 2));
+        return CraftBlock.biomeBaseToBiome(biome.b(x >> 2, y >> 2, z >> 2));
     }
 
     @Override
@@ -139,7 +141,7 @@ public class CraftChunkSnapshot implements ChunkSnapshot {
         Preconditions.checkState(biome != null, "ChunkSnapshot created without biome. Please call getSnapshot with includeBiome=true");
         CraftChunk.validateChunkCoordinates(x, y, z);
 
-        return biome.getBiomeForNoiseGen(x >> 2, y >> 2, z >> 2).getTemperature(new BlockPos((this.x << 4) | x, y, (this.z << 4) | z));
+        return biome.b(x >> 2, y >> 2, z >> 2).getTemperature(new BlockPos((this.x << 4) | x, y, (this.z << 4) | z));
     }
 
     @Override

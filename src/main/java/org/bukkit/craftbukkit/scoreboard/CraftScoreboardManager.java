@@ -89,7 +89,7 @@ public final class CraftScoreboardManager implements ScoreboardManager {
         }
 
         // The above is the reverse of the below method.
-        server.getPlayerManager().sendScoreboard((ServerScoreboard) newboard, player.getHandle());
+        server.getPlayerList().sendScoreboard((ServerScoreboard) newboard, player.getHandle());
     }
 
     // CraftBukkit method

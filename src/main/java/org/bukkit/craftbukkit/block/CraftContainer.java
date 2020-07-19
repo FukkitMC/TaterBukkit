@@ -29,13 +29,13 @@ public abstract class CraftContainer<T extends LockableContainerBlockEntity> ext
 
     @Override
     public void setLock(String key) {
-        this.getSnapshot().lock = (key == null) ? ContainerLock.EMPTY : new ContainerLock(key);
+        this.getSnapshot().lock = (key == null) ? ContainerLock.a : new ContainerLock(key);
     }
 
     @Override
     public String getCustomName() {
         T container = this.getSnapshot();
-        return container.customName != null ? CraftChatMessage.fromComponent(container.getCustomName()) : null;
+        return container.customName != null ? CraftChatMessage.fromComponent(container.R()) : null;
     }
 
     @Override

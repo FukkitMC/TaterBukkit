@@ -3,14 +3,13 @@ package org.bukkit.craftbukkit.block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.ChestBlock;
 import net.minecraft.block.entity.ChestBlockEntity;
-import net.minecraft.container.NameableContainerFactory;
+import net.minecraft.screen.NamedScreenHandlerFactory;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.craftbukkit.CraftWorld;
 import org.bukkit.craftbukkit.inventory.CraftInventory;
 import org.bukkit.craftbukkit.inventory.CraftInventoryDoubleChest;
-import org.bukkit.craftbukkit.subclasses.DoubleInventory;
 import org.bukkit.inventory.Inventory;
 
 public class CraftChest extends CraftLootable<ChestBlockEntity> implements Chest {
@@ -48,10 +47,10 @@ public class CraftChest extends CraftLootable<ChestBlockEntity> implements Chest
         CraftWorld world = (CraftWorld) this.getWorld();
 
         ChestBlock blockChest = (ChestBlock) (this.getType() == Material.CHEST ? Blocks.CHEST : Blocks.TRAPPED_CHEST);
-        NameableContainerFactory nms = blockChest.createContainerFactory(data, world.getHandle(), this.getPosition());
+        NamedScreenHandlerFactory nms = blockChest.b(data, world.getHandle(), this.getPosition());
 
-        if (nms instanceof DoubleInventory) {
-            inventory = new CraftInventoryDoubleChest((DoubleInventory) nms);
+        if (nms instanceof ChestBlock.DoubleInventory) {
+            inventory = new CraftInventoryDoubleChest((ChestBlock.DoubleInventory) nms);
         }
         return inventory;
     }

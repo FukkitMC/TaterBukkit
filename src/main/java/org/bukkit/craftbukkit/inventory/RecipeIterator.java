@@ -9,11 +9,11 @@ import net.minecraft.util.Identifier;
 import org.bukkit.inventory.Recipe;
 
 public class RecipeIterator implements Iterator<Recipe> {
-    private final Iterator<Map.Entry<RecipeType<?>, Map<Identifier, net.minecraft.recipe.Recipe<?>>>> recipes;
+    private final Iterator<Map.Entry<RecipeType<?>, Object2ObjectLinkedOpenHashMap<Identifier, net.minecraft.recipe.Recipe<?>>>> recipes;
     private Iterator<net.minecraft.recipe.Recipe<?>> current;
 
     public RecipeIterator() {
-        this.recipes = MinecraftServer.getServer().getRecipeManager().recipes.entrySet().iterator();
+        this.recipes = MinecraftServer.getServer().getCraftingManager().recipes.entrySet().iterator();
     }
 
     @Override

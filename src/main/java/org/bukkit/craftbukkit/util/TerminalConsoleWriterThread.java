@@ -1,13 +1,12 @@
 package org.bukkit.craftbukkit.util;
 
 import com.mojang.util.QueueLogAppender;
-
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import jline.console.ConsoleReader;
+import org.bukkit.craftbukkit.Main;
 import org.fusesource.jansi.Ansi;
 import org.fusesource.jansi.Ansi.Erase;
 
@@ -35,8 +34,22 @@ public class TerminalConsoleWriterThread extends Thread {
             }
 
             try {
-                output.write(message.getBytes());
-                output.flush();
+                if (Main.useJline) {
+                    reader.print(Ansi.ansi().eraseLine(Erase.ALL).toString() + ConsoleReader.RESET_LINE);
+                    reader.flush();
+                    output.write(message.getBytes());
+                    output.flush();
+
+                    try {
+                        reader.drawLine();
+                    } catch (Throwable ex) {
+                        reader.getCursorBuffer().clear();
+                    }
+                    reader.flush();
+                } else {
+                    output.write(message.getBytes());
+                    output.flush();
+                }
             } catch (IOException ex) {
                 Logger.getLogger(TerminalConsoleWriterThread.class.getName()).log(Level.SEVERE, null, ex);
             }

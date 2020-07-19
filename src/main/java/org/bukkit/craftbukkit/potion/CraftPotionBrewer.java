@@ -22,7 +22,7 @@ public class CraftPotionBrewer implements PotionBrewer {
         if (cache.containsKey(damage))
             return cache.get(damage);
 
-        List<StatusEffectInstance> mcEffects = Potion.byId(CraftPotionUtil.fromBukkit(new PotionData(damage, extended, upgraded))).getEffects();
+        List<StatusEffectInstance> mcEffects = Potion.a(CraftPotionUtil.fromBukkit(new PotionData(damage, extended, upgraded))).getEffects();
 
         ImmutableList.Builder<PotionEffect> builder = new ImmutableList.Builder<PotionEffect>();
         for (StatusEffectInstance effect : mcEffects) {

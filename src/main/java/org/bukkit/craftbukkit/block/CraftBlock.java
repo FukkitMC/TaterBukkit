@@ -18,9 +18,9 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.world.IWorld;
 import net.minecraft.world.LightType;
 import net.minecraft.world.RayTraceContext;
+import net.minecraft.world.WorldAccess;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Chunk;
 import org.bukkit.FluidCollisionMode;
@@ -50,15 +50,15 @@ import org.bukkit.util.RayTraceResult;
 import org.bukkit.util.Vector;
 
 public class CraftBlock implements Block {
-    private final net.minecraft.world.IWorld world;
+    private final net.minecraft.world.WorldAccess world;
     private final BlockPos position;
 
-    public CraftBlock(IWorld world, BlockPos position) {
+    public CraftBlock(WorldAccess world, BlockPos position) {
         this.world = world;
         this.position = position.toImmutable();
     }
 
-    public static CraftBlock at(IWorld world, BlockPos position) {
+    public static CraftBlock at(WorldAccess world, BlockPos position) {
         return new CraftBlock(world, position);
     }
 
@@ -76,7 +76,7 @@ public class CraftBlock implements Block {
 
     @Override
     public World getWorld() {
-        return world.getWorld().getCraftWorld();
+        return world.getWorld().getWorld();
     }
 
     public CraftWorld getCraftWorld() {
@@ -313,6 +313,8 @@ public class CraftBlock implements Block {
         case ACACIA_WALL_SIGN:
         case BIRCH_SIGN:
         case BIRCH_WALL_SIGN:
+        case CRIMSON_SIGN:
+        case CRIMSON_WALL_SIGN:
         case DARK_OAK_SIGN:
         case DARK_OAK_WALL_SIGN:
         case JUNGLE_SIGN:
@@ -321,6 +323,8 @@ public class CraftBlock implements Block {
         case OAK_WALL_SIGN:
         case SPRUCE_SIGN:
         case SPRUCE_WALL_SIGN:
+        case WARPED_SIGN:
+        case WARPED_WALL_SIGN:
             return new CraftSign(this);
         case CHEST:
         case TRAPPED_CHEST:
@@ -447,6 +451,7 @@ public class CraftBlock implements Block {
         case BLAST_FURNACE:
             return new CraftBlastFurnace(this);
         case CAMPFIRE:
+        case SOUL_CAMPFIRE:
             return new CraftCampfire(this);
         case JIGSAW:
             return new CraftJigsaw(this);
@@ -549,18 +554,27 @@ public class CraftBlock implements Block {
     @Override
     public int getBlockPower(BlockFace face) {
         int power = 0;
-        RedstoneWireBlock wire = (RedstoneWireBlock) Blocks.REDSTONE_WIRE;
         net.minecraft.world.World world = this.world.getWorld();
         int x = getX();
         int y = getY();
         int z = getZ();
-        if ((face == BlockFace.DOWN || face == BlockFace.SELF) && world.isEmittingRedstonePower(new BlockPos(x, y - 1, z), Direction.DOWN)) power = wire.increasePower(power, world.getBlockState(new BlockPos(x, y - 1, z)));
-        if ((face == BlockFace.UP || face == BlockFace.SELF) && world.isEmittingRedstonePower(new BlockPos(x, y + 1, z), Direction.UP)) power = wire.increasePower(power, world.getBlockState(new BlockPos(x, y + 1, z)));
-        if ((face == BlockFace.EAST || face == BlockFace.SELF) && world.isEmittingRedstonePower(new BlockPos(x + 1, y, z), Direction.EAST)) power = wire.increasePower(power, world.getBlockState(new BlockPos(x + 1, y, z)));
-        if ((face == BlockFace.WEST || face == BlockFace.SELF) && world.isEmittingRedstonePower(new BlockPos(x - 1, y, z), Direction.WEST)) power = wire.increasePower(power, world.getBlockState(new BlockPos(x - 1, y, z)));
-        if ((face == BlockFace.NORTH || face == BlockFace.SELF) && world.isEmittingRedstonePower(new BlockPos(x, y, z - 1), Direction.NORTH)) power = wire.increasePower(power, world.getBlockState(new BlockPos(x, y, z - 1)));
-        if ((face == BlockFace.SOUTH || face == BlockFace.SELF) && world.isEmittingRedstonePower(new BlockPos(x, y, z + 1), Direction.SOUTH)) power = wire.increasePower(power, world.getBlockState(new BlockPos(x, y, z + 1)));
+        if ((face == BlockFace.DOWN || face == BlockFace.SELF) && world.isEmittingRedstonePower(new BlockPos(x, y - 1, z), Direction.DOWN)) power = getPower(power, world.d_(new BlockPos(x, y - 1, z)));
+        if ((face == BlockFace.UP || face == BlockFace.SELF) && world.isEmittingRedstonePower(new BlockPos(x, y + 1, z), Direction.UP)) power = getPower(power, world.d_(new BlockPos(x, y + 1, z)));
+        if ((face == BlockFace.EAST || face == BlockFace.SELF) && world.isEmittingRedstonePower(new BlockPos(x + 1, y, z), Direction.EAST)) power = getPower(power, world.d_(new BlockPos(x + 1, y, z)));
+        if ((face == BlockFace.WEST || face == BlockFace.SELF) && world.isEmittingRedstonePower(new BlockPos(x - 1, y, z), Direction.WEST)) power = getPower(power, world.d_(new BlockPos(x - 1, y, z)));
+        if ((face == BlockFace.NORTH || face == BlockFace.SELF) && world.isEmittingRedstonePower(new BlockPos(x, y, z - 1), Direction.NORTH)) power = getPower(power, world.d_(new BlockPos(x, y, z - 1)));
+        if ((face == BlockFace.SOUTH || face == BlockFace.SELF) && world.isEmittingRedstonePower(new BlockPos(x, y, z + 1), Direction.SOUTH)) power = getPower(power, world.d_(new BlockPos(x, y, z + 1)));
         return power > 0 ? power : (face == BlockFace.SELF ? isBlockIndirectlyPowered() : isBlockFaceIndirectlyPowered(face)) ? 15 : 0;
+    }
+
+    private static int getPower(int i, net.minecraft.block.BlockState iblockdata) {
+        if (!iblockdata.getBlock().a(Blocks.REDSTONE_WIRE)) {
+            return i;
+        } else {
+            int j = iblockdata.get(RedstoneWireBlock.POWER);
+
+            return j > i ? j : i;
+        }
     }
 
     @Override
@@ -585,7 +599,7 @@ public class CraftBlock implements Block {
 
     @Override
     public boolean breakNaturally() {
-        return breakNaturally(new ItemStack(Material.AIR));
+        return breakNaturally(null);
     }
 
     @Override
@@ -597,7 +611,7 @@ public class CraftBlock implements Block {
         boolean result = false;
 
         // Modelled off EntityHuman#hasBlock
-        if (block != Blocks.AIR && (iblockdata.getMaterial().canBreakByHand() || nmsItem.isEffectiveOn(iblockdata))) {
+        if (block != Blocks.AIR && (item == null || !iblockdata.isToolRequired() || nmsItem.isEffectiveOn(iblockdata))) {
             net.minecraft.block.Block.dropStacks(iblockdata, world.getWorld(), position, world.getBlockEntity(position), null, nmsItem);
             result = true;
         }
@@ -607,7 +621,7 @@ public class CraftBlock implements Block {
 
     @Override
     public Collection<ItemStack> getDrops() {
-        return getDrops(new ItemStack(Material.AIR));
+        return getDrops(null);
     }
 
     @Override
@@ -621,7 +635,7 @@ public class CraftBlock implements Block {
         net.minecraft.item.ItemStack nms = CraftItemStack.asNMSCopy(item);
 
         // Modelled off EntityHuman#hasBlock
-        if (iblockdata.getMaterial().canBreakByHand() || nms.isEffectiveOn(iblockdata)) {
+        if (item == null || !iblockdata.isToolRequired() || nms.isEffectiveOn(iblockdata)) {
             return net.minecraft.block.Block.getDroppedStacks(iblockdata, (ServerWorld) world.getWorld(), position, world.getBlockEntity(position), entity == null ? null : ((CraftEntity) entity).getHandle(), nms)
                     .stream().map(CraftItemStack::asBukkitCopy).collect(Collectors.toList());
         } else {
@@ -686,6 +700,6 @@ public class CraftBlock implements Block {
         }
 
         Box aabb = shape.getBoundingBox();
-        return new BoundingBox(getX() + aabb.x1, getY() + aabb.y1, getZ() + aabb.z1, getX() + aabb.x2, getY() + aabb.y2, getZ() + aabb.z2);
+        return new BoundingBox(getX() + aabb.minX, getY() + aabb.minY, getZ() + aabb.minZ, getX() + aabb.maxX, getY() + aabb.maxY, getZ() + aabb.maxZ);
     }
 }

@@ -44,7 +44,7 @@ public class CraftFox extends CraftAnimals implements Fox {
 
     @Override
     public boolean isCrouching() {
-        return getHandle().isSitting();
+        return getHandle().bv();
     }
 
     @Override

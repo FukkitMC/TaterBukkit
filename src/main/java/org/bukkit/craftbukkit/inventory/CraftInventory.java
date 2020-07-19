@@ -40,12 +40,12 @@ public class CraftInventory implements Inventory {
 
     @Override
     public int getSize() {
-        return getInventory().getInvSize();
+        return getInventory().size();
     }
 
     @Override
     public ItemStack getItem(int index) {
-        net.minecraft.item.ItemStack item = getInventory().getInvStack(index);
+        net.minecraft.item.ItemStack item = getInventory().getStack(index);
         return item.isEmpty() ? null : CraftItemStack.asCraftMirror(item);
     }
 
@@ -95,7 +95,7 @@ public class CraftInventory implements Inventory {
 
     @Override
     public void setItem(int index, ItemStack item) {
-        getInventory().setInvStack(index, CraftItemStack.asNMSCopy(item));
+        getInventory().setStack(index, CraftItemStack.asNMSCopy(item));
     }
 
     @Override
@@ -386,7 +386,7 @@ public class CraftInventory implements Inventory {
     }
 
     private int getMaxItemStack() {
-        return getInventory().getInvMaxStackAmount();
+        return getInventory().getMaxCountPerStack();
     }
 
     @Override
@@ -445,7 +445,7 @@ public class CraftInventory implements Inventory {
     public InventoryType getType() {
         // Thanks to Droppers extending Dispensers, Blast Furnaces & Smokers extending Furnace, order is important.
         if (inventory instanceof CraftingInventory) {
-            return inventory.getInvSize() >= 9 ? InventoryType.WORKBENCH : InventoryType.CRAFTING;
+            return inventory.size() >= 9 ? InventoryType.WORKBENCH : InventoryType.CRAFTING;
         } else if (inventory instanceof PlayerInventory) {
             return InventoryType.PLAYER;
         } else if (inventory instanceof DropperBlockEntity) {
@@ -472,13 +472,15 @@ public class CraftInventory implements Inventory {
             return InventoryType.BEACON;
         } else if (this instanceof CraftInventoryAnvil) {
             return InventoryType.ANVIL;
+        } else if (this instanceof CraftInventorySmithing) {
+            return InventoryType.SMITHING;
         } else if (inventory instanceof Hopper) {
             return InventoryType.HOPPER;
         } else if (inventory instanceof ShulkerBoxBlockEntity) {
             return InventoryType.SHULKER_BOX;
         } else if (inventory instanceof BarrelBlockEntity) {
             return InventoryType.BARREL;
-        } else if (inventory instanceof LecternBlockEntity) {
+        } else if (inventory instanceof LecternBlockEntity.LecternInventory) {
             return InventoryType.LECTERN;
         } else if (this instanceof CraftInventoryLoom) {
             return InventoryType.LOOM;
@@ -500,7 +502,7 @@ public class CraftInventory implements Inventory {
 
     @Override
     public int getMaxStackSize() {
-        return inventory.getInvMaxStackAmount();
+        return inventory.getMaxCountPerStack();
     }
 
     @Override

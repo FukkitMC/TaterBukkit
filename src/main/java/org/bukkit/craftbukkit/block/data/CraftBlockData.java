@@ -15,7 +15,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.command.arguments.BlockArgumentParser;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.state.AbstractState;
+import net.minecraft.state.State;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.IntProperty;
@@ -76,7 +76,7 @@ public class CraftBlockData implements BlockData {
     protected <B extends Enum<B>> Set<B> getValues(EnumProperty<?> nms, Class<B> bukkit) {
         ImmutableSet.Builder<B> values = ImmutableSet.builder();
 
-        for (Enum<?> e : nms.getValues()) {
+        for (Enum<?> e : nms.a()) {
             values.add(toBukkit(e, bukkit));
         }
 
@@ -84,7 +84,7 @@ public class CraftBlockData implements BlockData {
     }
 
     /**
-     * Set a given {@link BlockStateEnum} with the matching enum from Bukkit.
+     * Set a given {@link EnumProperty} with the matching enum from Bukkit.
      *
      * @param nms the NMS BlockStateEnum to set
      * @param bukkit the matching Bukkit Enum
@@ -241,7 +241,7 @@ public class CraftBlockData implements BlockData {
 
     @Override
     public String getAsString() {
-        return toString(((AbstractState) state).getEntries());
+        return toString(state.getEntries());
     }
 
     @Override
@@ -265,11 +265,11 @@ public class CraftBlockData implements BlockData {
 
     // Mimicked from BlockDataAbstract#toString()
     public String toString(Map<Property<?>, Comparable<?>> states) {
-        StringBuilder stateString = new StringBuilder(Registry.BLOCK.getId(state.getBlock()).toString());
+        StringBuilder stateString = new StringBuilder(Registry.BLOCK.b(state.getBlock()).toString());
 
         if (!states.isEmpty()) {
             stateString.append('[');
-            stateString.append(states.entrySet().stream().map(AbstractState.PROPERTY_MAP_PRINTER).collect(Collectors.joining(",")));
+            stateString.append(states.entrySet().stream().map(State.PROPERTY_MAP_PRINTER).collect(Collectors.joining(",")));
             stateString.append(']');
         }
 
@@ -331,7 +331,7 @@ public class CraftBlockData implements BlockData {
     }
 
     /**
-     * Get a specified {@link IBlockState} from a given block's class with a
+     * Get a specified {@link Property} from a given block's class with a
      * given name
      *
      * @param block the class to retrieve the state from
@@ -347,9 +347,9 @@ public class CraftBlockData implements BlockData {
         for (Block instance : Registry.BLOCK) {
             if (instance.getClass() == block) {
                 if (state == null) {
-                    state = instance.getStateManager().getProperty(name);
+                    state = instance.getStateManager().a(name);
                 } else {
-                    Property<?> newState = instance.getStateManager().getProperty(name);
+                    Property<?> newState = instance.getStateManager().a(name);
 
                     Preconditions.checkState(state == newState, "State mistmatch %s,%s", state, newState);
                 }
@@ -403,6 +403,7 @@ public class CraftBlockData implements BlockData {
         register(net.minecraft.block.CampfireBlock.class, org.bukkit.craftbukkit.block.impl.CraftCampfire::new);
         register(net.minecraft.block.CarrotsBlock.class, org.bukkit.craftbukkit.block.impl.CraftCarrots::new);
         register(net.minecraft.block.CauldronBlock.class, org.bukkit.craftbukkit.block.impl.CraftCauldron::new);
+        register(net.minecraft.block.ChainBlock.class, org.bukkit.craftbukkit.block.impl.CraftChain::new);
         register(net.minecraft.block.ChestBlock.class, org.bukkit.craftbukkit.block.impl.CraftChest::new);
         register(net.minecraft.block.TrappedChestBlock.class, org.bukkit.craftbukkit.block.impl.CraftChestTrapped::new);
         register(net.minecraft.block.ChorusFlowerBlock.class, org.bukkit.craftbukkit.block.impl.CraftChorusFlower::new);
@@ -449,7 +450,6 @@ public class CraftBlockData implements BlockData {
         register(net.minecraft.block.LeavesBlock.class, org.bukkit.craftbukkit.block.impl.CraftLeaves::new);
         register(net.minecraft.block.LecternBlock.class, org.bukkit.craftbukkit.block.impl.CraftLectern::new);
         register(net.minecraft.block.LeverBlock.class, org.bukkit.craftbukkit.block.impl.CraftLever::new);
-        register(net.minecraft.block.LogBlock.class, org.bukkit.craftbukkit.block.impl.CraftLogAbstract::new);
         register(net.minecraft.block.LoomBlock.class, org.bukkit.craftbukkit.block.impl.CraftLoom::new);
         register(net.minecraft.block.DetectorRailBlock.class, org.bukkit.craftbukkit.block.impl.CraftMinecartDetector::new);
         register(net.minecraft.block.RailBlock.class, org.bukkit.craftbukkit.block.impl.CraftMinecartTrack::new);
@@ -474,6 +474,7 @@ public class CraftBlockData implements BlockData {
         register(net.minecraft.block.RedstoneWireBlock.class, org.bukkit.craftbukkit.block.impl.CraftRedstoneWire::new);
         register(net.minecraft.block.SugarCaneBlock.class, org.bukkit.craftbukkit.block.impl.CraftReed::new);
         register(net.minecraft.block.RepeaterBlock.class, org.bukkit.craftbukkit.block.impl.CraftRepeater::new);
+        register(net.minecraft.block.RespawnAnchorBlock.class, org.bukkit.craftbukkit.block.impl.CraftRespawnAnchor::new);
         register(net.minecraft.block.PillarBlock.class, org.bukkit.craftbukkit.block.impl.CraftRotatable::new);
         register(net.minecraft.block.SaplingBlock.class, org.bukkit.craftbukkit.block.impl.CraftSapling::new);
         register(net.minecraft.block.ScaffoldingBlock.class, org.bukkit.craftbukkit.block.impl.CraftScaffolding::new);
@@ -499,13 +500,16 @@ public class CraftBlockData implements BlockData {
         register(net.minecraft.block.TallPlantBlock.class, org.bukkit.craftbukkit.block.impl.CraftTallPlant::new);
         register(net.minecraft.block.TallFlowerBlock.class, org.bukkit.craftbukkit.block.impl.CraftTallPlantFlower::new);
         register(net.minecraft.block.TallSeagrassBlock.class, org.bukkit.craftbukkit.block.impl.CraftTallSeaGrass::new);
+        register(net.minecraft.block.TargetBlock.class, org.bukkit.craftbukkit.block.impl.CraftTarget::new);
         register(net.minecraft.block.WallTorchBlock.class, org.bukkit.craftbukkit.block.impl.CraftTorchWall::new);
         register(net.minecraft.block.TrapdoorBlock.class, org.bukkit.craftbukkit.block.impl.CraftTrapdoor::new);
         register(net.minecraft.block.TripwireBlock.class, org.bukkit.craftbukkit.block.impl.CraftTripwire::new);
         register(net.minecraft.block.TripwireHookBlock.class, org.bukkit.craftbukkit.block.impl.CraftTripwireHook::new);
         register(net.minecraft.block.TurtleEggBlock.class, org.bukkit.craftbukkit.block.impl.CraftTurtleEgg::new);
+        register(net.minecraft.block.TwistingVinesBlock.class, org.bukkit.craftbukkit.block.impl.CraftTwistingVines::new);
         register(net.minecraft.block.VineBlock.class, org.bukkit.craftbukkit.block.impl.CraftVine::new);
         register(net.minecraft.block.WallSignBlock.class, org.bukkit.craftbukkit.block.impl.CraftWallSign::new);
+        register(net.minecraft.block.WeepingVinesBlock.class, org.bukkit.craftbukkit.block.impl.CraftWeepingVines::new);
         register(net.minecraft.block.WitherSkullBlock.class, org.bukkit.craftbukkit.block.impl.CraftWitherSkull::new);
         register(net.minecraft.block.WallWitherSkullBlock.class, org.bukkit.craftbukkit.block.impl.CraftWitherSkullWall::new);
         register(net.minecraft.block.WoodButtonBlock.class, org.bukkit.craftbukkit.block.impl.CraftWoodButton::new);
@@ -528,11 +532,11 @@ public class CraftBlockData implements BlockData {
             try {
                 // Material provided, force that material in
                 if (block != null) {
-                    data = Registry.BLOCK.getId(block) + data;
+                    data = Registry.BLOCK.b(block) + data;
                 }
 
                 StringReader reader = new StringReader(data);
-                BlockArgumentParser arg = new BlockArgumentParser(reader, false).parse(false);
+                BlockArgumentParser arg = new BlockArgumentParser(reader, false).a(false);
                 Preconditions.checkArgument(!reader.canRead(), "Spurious trailing data: " + data);
 
                 blockData = arg.getBlockState();

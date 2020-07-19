@@ -40,7 +40,7 @@ public class CraftLootTable implements org.bukkit.loot.LootTable {
     @Override
     public Collection<ItemStack> populateLoot(Random random, LootContext context) {
         net.minecraft.loot.context.LootContext nmsContext = convertContext(context);
-        List<net.minecraft.item.ItemStack> nmsItems = handle.getDrops(nmsContext);
+        List<net.minecraft.item.ItemStack> nmsItems = handle.generateLoot(nmsContext);
         Collection<ItemStack> bukkit = new ArrayList<>(nmsItems.size());
 
         for (net.minecraft.item.ItemStack item : nmsItems) {
@@ -78,43 +78,43 @@ public class CraftLootTable implements org.bukkit.loot.LootTable {
 
             if (context.getLootedEntity() != null) {
                 Entity nmsLootedEntity = ((CraftEntity) context.getLootedEntity()).getHandle();
-                builder.put(LootContextParameters.THIS_ENTITY, nmsLootedEntity);
-                builder.put(LootContextParameters.DAMAGE_SOURCE, DamageSource.GENERIC);
-                builder.put(LootContextParameters.POSITION, new BlockPos(nmsLootedEntity));
+                builder.parameter(LootContextParameters.THIS_ENTITY, nmsLootedEntity);
+                builder.parameter(LootContextParameters.DAMAGE_SOURCE, DamageSource.GENERIC);
+                builder.parameter(LootContextParameters.POSITION, nmsLootedEntity.getBlockPos());
             }
 
             if (context.getKiller() != null) {
                 PlayerEntity nmsKiller = ((CraftHumanEntity) context.getKiller()).getHandle();
-                builder.put(LootContextParameters.KILLER_ENTITY, nmsKiller);
+                builder.parameter(LootContextParameters.KILLER_ENTITY, nmsKiller);
                 // If there is a player killer, damage source should reflect that in case loot tables use that information
-                builder.put(LootContextParameters.DAMAGE_SOURCE, DamageSource.player(nmsKiller));
-                builder.put(LootContextParameters.LAST_DAMAGE_PLAYER, nmsKiller); // SPIGOT-5603 - Set minecraft:killed_by_player
+                builder.parameter(LootContextParameters.DAMAGE_SOURCE, DamageSource.player(nmsKiller));
+                builder.parameter(LootContextParameters.LAST_DAMAGE_PLAYER, nmsKiller); // SPIGOT-5603 - Set minecraft:killed_by_player
             }
 
             // SPIGOT-5603 - Use LootContext#lootingModifier
             if (context.getLootingModifier() != LootContext.DEFAULT_LOOT_MODIFIER) {
-                builder.put(LootContextParameters.LOOTING_MOD, context.getLootingModifier());
+                builder.parameter(LootContextParameters.LOOTING_MOD, context.getLootingModifier());
             }
         }
 
         // SPIGOT-5603 - Avoid IllegalArgumentException in LootTableInfo#build()
-        LootContextType.Builder nmsBuilder = new LootContextType.Builder(); // PAIL rename Builder
-        for (LootContextParameter<?> param : getHandle().getType().getRequired()) { // PAIL rename required
-            nmsBuilder.require(param); // PAIL rename addRequired
+        LootContextType.Builder nmsBuilder = new LootContextType.Builder();
+        for (LootContextParameter<?> param : getHandle().getType().getRequired()) {
+            nmsBuilder.require(param);
         }
-        for (LootContextParameter<?> param : getHandle().getType().getAllowed()) { // PAIL rename optional
-            if (!getHandle().getType().getRequired().contains(param)) { // PAIL rename required
-                nmsBuilder.allow(param); // PAIL rename addOptional
+        for (LootContextParameter<?> param : getHandle().getType().getAllowed()) {
+            if (!getHandle().getType().getRequired().contains(param)) {
+                nmsBuilder.allow(param);
             }
         }
-        nmsBuilder.allow(LootContextParameters.LOOTING_MOD); // PAIL rename addOptional
+        nmsBuilder.allow(LootContextParameters.LOOTING_MOD);
 
-        return builder.build(nmsBuilder.build()); // PAIL rename build
+        return builder.build(nmsBuilder.build());
     }
 
     public static LootContext convertContext(net.minecraft.loot.context.LootContext info) {
         BlockPos position = info.get(LootContextParameters.POSITION);
-        Location location = new Location(info.getWorld().getCraftWorld(), position.getX(), position.getY(), position.getZ()); // PAIL rename getWorld
+        Location location = new Location(info.getWorld().getWorld(), position.getX(), position.getY(), position.getZ());
         LootContext.Builder contextBuilder = new LootContext.Builder(location);
 
         if (info.hasParameter(LootContextParameters.KILLER_ENTITY)) {
@@ -132,7 +132,7 @@ public class CraftLootTable implements org.bukkit.loot.LootTable {
             contextBuilder.lootingModifier(info.get(LootContextParameters.LOOTING_MOD));
         }
 
-        contextBuilder.luck(info.getLuck()); // PAIL rename getLuck
+        contextBuilder.luck(info.getLuck());
         return contextBuilder.build();
     }
 

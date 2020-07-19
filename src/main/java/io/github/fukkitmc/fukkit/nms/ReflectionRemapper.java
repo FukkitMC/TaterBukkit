@@ -15,10 +15,10 @@ import java.util.Arrays;
 @SuppressWarnings("unused")
 public class ReflectionRemapper {
 
-    private static final String VERSION = "v1_15_R2";
+    private static final String VERSION = "1_16_R1";
     private static final boolean DEBUG = FabricLoader.getInstance().isDevelopmentEnvironment();
 
-    // As concerning as it is, we should just insert the "version" (R1_15_2) thing here
+    // As concerning as it is, we should just insert the "version" (1_16_R1) thing here
     public static String package_getName(Package pckg) {
         if (DEBUG) {
             System.out.println("pckg = " + pckg);
