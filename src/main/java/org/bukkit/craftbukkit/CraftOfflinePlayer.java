@@ -35,7 +35,6 @@ public class CraftOfflinePlayer implements OfflinePlayer, ConfigurationSerializa
         this.server = server;
         this.profile = profile;
         this.storage = (WorldSaveHandler) (server.console.getWorld(DimensionType.OVERWORLD).getSaveHandler());
-
     }
 
     public GameProfile getProfile() {

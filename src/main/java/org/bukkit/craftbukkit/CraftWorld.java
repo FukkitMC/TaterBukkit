@@ -87,6 +87,7 @@ import net.minecraft.world.dimension.TheEndDimension;
 import net.minecraft.world.explosion.Explosion;
 import net.minecraft.world.gen.feature.DefaultBiomeFeatures;
 import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.level.storage.SessionLock;
 import org.apache.commons.lang.Validate;
 import org.bukkit.BlockChangeDelegate;
 import org.bukkit.Bukkit;
@@ -243,6 +244,7 @@ import org.bukkit.entity.minecart.PoweredMinecart;
 import org.bukkit.entity.minecart.SpawnerMinecart;
 import org.bukkit.entity.minecart.StorageMinecart;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
+import org.bukkit.event.weather.LightningStrikeEvent;
 import org.bukkit.event.world.SpawnChangeEvent;
 import org.bukkit.event.world.TimeSkipEvent;
 import org.bukkit.generator.BlockPopulator;
@@ -640,15 +642,19 @@ public class CraftWorld implements World {
 
     @Override
     public LightningStrike strikeLightning(Location loc) {
-        LightningEntity lightning = new LightningEntity(world, loc.getX(), loc.getY(), loc.getZ(), false);
-        world.addLightning(lightning);
+        LightningEntity lightning = new LightningEntity(net.minecraft.entity.EntityType.LIGHTNING_BOLT, world.getWorld());
+        // Sets isCosmetic
+        lightning.method_29498(false);
+        world.strikeLightning(lightning, LightningStrikeEvent.Cause.UNKNOWN);
         return new CraftLightningStrike(server, lightning);
     }
 
     @Override
     public LightningStrike strikeLightningEffect(Location loc) {
-        LightningEntity lightning = new LightningEntity(world, loc.getX(), loc.getY(), loc.getZ(), true);
-        world.addLightning(lightning);
+        LightningEntity lightning = new LightningEntity(net.minecraft.entity.EntityType.LIGHTNING_BOLT, world.getWorld());
+        // Sets isCosmetic
+        lightning.method_29498(true);
+        world.strikeLightning(lightning, LightningStrikeEvent.Cause.UNKNOWN);
         return new CraftLightningStrike(server, lightning);
     }
 
@@ -659,77 +665,85 @@ public class CraftWorld implements World {
         net.minecraft.world.gen.feature.Feature gen;
         net.minecraft.world.gen.feature.FeatureConfig conf;
         switch (type) {
-        case BIG_TREE:
-            gen = Feature.FANCY_TREE;
-            conf = DefaultBiomeFeatures.FANCY_TREE_CONFIG;
-            break;
-        case BIRCH:
-            gen = Feature.NORMAL_TREE;
-            conf = DefaultBiomeFeatures.BIRCH_TREE_CONFIG;
-            break;
-        case REDWOOD:
-            gen = Feature.NORMAL_TREE;
-            conf = DefaultBiomeFeatures.SPRUCE_TREE_CONFIG;
-            break;
-        case TALL_REDWOOD:
-            gen = Feature.NORMAL_TREE;
-            conf = DefaultBiomeFeatures.PINE_TREE_CONFIG;
-            break;
-        case JUNGLE:
-            gen = Feature.MEGA_JUNGLE_TREE;
-            conf = DefaultBiomeFeatures.MEGA_JUNGLE_TREE_CONFIG;
-            break;
-        case SMALL_JUNGLE:
-            gen = Feature.NORMAL_TREE;
-            conf = DefaultBiomeFeatures.JUNGLE_SAPLING_TREE_CONFIG;
-            break;
-        case COCOA_TREE:
-            gen = Feature.NORMAL_TREE;
-            conf = DefaultBiomeFeatures.JUNGLE_TREE_CONFIG;
-            break;
-        case JUNGLE_BUSH:
-            gen = Feature.JUNGLE_GROUND_BUSH;
-            conf = DefaultBiomeFeatures.JUNGLE_GROUND_BUSH_CONFIG;
-            break;
-        case RED_MUSHROOM:
-            gen = Feature.HUGE_RED_MUSHROOM;
-            conf = DefaultBiomeFeatures.HUGE_RED_MUSHROOM_CONFIG;
-            break;
-        case BROWN_MUSHROOM:
-            gen = Feature.HUGE_BROWN_MUSHROOM;
-            conf = DefaultBiomeFeatures.HUGE_BROWN_MUSHROOM_CONFIG;
-            break;
-        case SWAMP:
-            gen = Feature.NORMAL_TREE;
-            conf = DefaultBiomeFeatures.SWAMP_TREE_CONFIG;
-            break;
-        case ACACIA:
-            gen = Feature.ACACIA_TREE;
-            conf = DefaultBiomeFeatures.ACACIA_TREE_CONFIG;
-            break;
-        case DARK_OAK:
-            gen = Feature.DARK_OAK_TREE;
-            conf = DefaultBiomeFeatures.DARK_OAK_TREE_CONFIG;
-            break;
-        case MEGA_REDWOOD:
-            gen = Feature.MEGA_SPRUCE_TREE;
-            conf = DefaultBiomeFeatures.MEGA_PINE_TREE_CONFIG;
-            break;
-        case TALL_BIRCH:
-            gen = Feature.NORMAL_TREE;
-            conf = DefaultBiomeFeatures.LARGE_BIRCH_TREE_CONFIG;
-            break;
-        case CHORUS_PLANT:
-            ((ChorusFlowerBlock) Blocks.CHORUS_FLOWER).generate(world, pos, rand, 8);
-            return true;
-        case TREE:
-        default:
-            gen = Feature.NORMAL_TREE;
-            conf = DefaultBiomeFeatures.OAK_TREE_CONFIG;
-            break;
+            case BIG_TREE:
+                gen = Feature.TREE;
+                conf = DefaultBiomeFeatures.FANCY_TREE_CONFIG;
+                break;
+            case BIRCH:
+                gen = Feature.TREE;
+                conf = DefaultBiomeFeatures.BIRCH_TREE_CONFIG;
+                break;
+            case REDWOOD:
+                gen = Feature.TREE;
+                conf = DefaultBiomeFeatures.SPRUCE_TREE_CONFIG;
+                break;
+            case TALL_REDWOOD:
+                gen = Feature.TREE;
+                conf = DefaultBiomeFeatures.PINE_TREE_CONFIG;
+                break;
+            case JUNGLE:
+                gen = Feature.TREE;
+                conf = DefaultBiomeFeatures.MEGA_JUNGLE_TREE_CONFIG;
+                break;
+            case SMALL_JUNGLE:
+                gen = Feature.TREE;
+                conf = DefaultBiomeFeatures.JUNGLE_TREE_CONFIG;
+                break;
+            case COCOA_TREE:
+                gen = Feature.TREE;
+                conf = DefaultBiomeFeatures.JUNGLE_TREE_CONFIG;
+                break;
+            case JUNGLE_BUSH:
+                gen = Feature.TREE;
+                conf = DefaultBiomeFeatures.JUNGLE_GROUND_BUSH_CONFIG;
+                break;
+            case RED_MUSHROOM:
+                gen = Feature.HUGE_RED_MUSHROOM;
+                conf = DefaultBiomeFeatures.HUGE_RED_MUSHROOM_CONFIG;
+                break;
+            case BROWN_MUSHROOM:
+                gen = Feature.HUGE_BROWN_MUSHROOM;
+                conf = DefaultBiomeFeatures.HUGE_BROWN_MUSHROOM_CONFIG;
+                break;
+            case SWAMP:
+                gen = Feature.TREE;
+                conf = DefaultBiomeFeatures.SWAMP_TREE_CONFIG;
+                break;
+            case ACACIA:
+                gen = Feature.TREE;
+                conf = DefaultBiomeFeatures.ACACIA_TREE_CONFIG;
+                break;
+            case DARK_OAK:
+                gen = Feature.TREE;
+                conf = DefaultBiomeFeatures.DARK_OAK_TREE_CONFIG;
+                break;
+            case MEGA_REDWOOD:
+                gen = Feature.TREE;
+                conf = DefaultBiomeFeatures.MEGA_PINE_TREE_CONFIG;
+                break;
+            case TALL_BIRCH:
+                gen = Feature.TREE;
+                conf = DefaultBiomeFeatures.BIRCH_TREE_WITH_BEEHIVES_CONFIG;
+                break;
+            case CHORUS_PLANT:
+                ChorusFlowerBlock.generate(world, pos, rand, 8);
+                return true;
+            case CRIMSON_FUNGUS:
+                gen = Feature.HUGE_FUNGUS;
+                conf = WorldGenFeatureHugeFungiConfiguration.b;
+                break;
+            case WARPED_FUNGUS:
+                gen = Feature.HUGE_FUNGUS;
+                conf = WorldGenFeatureHugeFungiConfiguration.d;
+                break;
+            case TREE:
+            default:
+                gen = Feature.TREE;
+                conf = DefaultBiomeFeatures.OAK_TREE_CONFIG;
+                break;
         }
 
-        return gen.generate(world, world.dimension.createChunkGenerator(), rand, pos, conf);
+        return gen.generate(world, world.getStructureManager(), world.getChunkProvider().getChunkGenerator(), rand, pos, conf);
     }
 
     @Override
@@ -758,7 +772,7 @@ public class CraftWorld implements World {
 
     @Override
     public String getName() {
-        return world.properties.getLevelName();
+        return world.worldProperties.getLevelName();
     }
 
     @Override
@@ -1247,7 +1261,7 @@ public class CraftWorld implements World {
             world.save(null, false, false);
 
             world.savingDisabled = oldSave;
-        } catch (SessionLockException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }

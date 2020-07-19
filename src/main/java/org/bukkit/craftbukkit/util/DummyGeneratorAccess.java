@@ -16,6 +16,7 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Direction;
 import net.minecraft.world.*;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.source.BiomeAccess;
@@ -24,18 +25,15 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkManager;
 import net.minecraft.world.chunk.ChunkStatus;
 import net.minecraft.world.chunk.light.LightingProvider;
-import net.minecraft.world.dimension.Dimension;
+import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.level.LevelProperties;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+
+import javax.annotation.Nullable;
 
 public class DummyGeneratorAccess implements WorldAccess {
 
     protected DummyGeneratorAccess() {
-    }
-
-    @Override
-    public long getSeed() {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
@@ -75,11 +73,6 @@ public class DummyGeneratorAccess implements WorldAccess {
 
     @Override
     public void updateNeighbors(BlockPos bp, Block block) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public BlockPos getSpawnPos() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -149,8 +142,13 @@ public class DummyGeneratorAccess implements WorldAccess {
     }
 
     @Override
-    public Dimension getDimension() {
+    public DimensionType getDimension() {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public float getBrightness(Direction direction, boolean shaded) {
+        return 0;
     }
 
     @Override
@@ -184,6 +182,11 @@ public class DummyGeneratorAccess implements WorldAccess {
     }
 
     @Override
+    public boolean setBlockState(BlockPos pos, BlockState state, int flags, int maxUpdateDepth) {
+        return false;
+    }
+
+    @Override
     public boolean setBlockState(BlockPos blockposition, BlockState iblockdata, int i) {
         return false;
     }
@@ -196,6 +199,11 @@ public class DummyGeneratorAccess implements WorldAccess {
     @Override
     public boolean breakBlock(BlockPos blockposition, boolean flag, Entity entity) {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public boolean breakBlock(BlockPos pos, boolean drop, @Nullable Entity breakingEntity, int maxUpdateDepth) {
+        return false;
     }
 
     @Override

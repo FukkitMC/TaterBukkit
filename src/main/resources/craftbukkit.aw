@@ -35108,3 +35108,9 @@ accessible	field	net/minecraft/server/rcon/DataStreamHelper	byteArrayOutputStrea
 mutable	field	net/minecraft/server/rcon/DataStreamHelper	byteArrayOutputStream	Ljava/io/ByteArrayOutputStream;
 accessible	field	net/minecraft/server/rcon/DataStreamHelper	dataOutputStream	Ljava/io/DataOutputStream;
 mutable	field	net/minecraft/server/rcon/DataStreamHelper	dataOutputStream	Ljava/io/DataOutputStream;
+accessible	field	net/minecraft/world/World	properties	Lnet/minecraft/world/MutableWorldProperties;
+accessible  method  net/minecraft/text/Style <init>	 (Lnet/minecraft/text/TextColor;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Lnet/minecraft/text/ClickEvent;Lnet/minecraft/text/HoverEvent;Ljava/lang/String;Lnet/minecraft/util/Identifier;)V
+accessible  field   net/minecraft/text/Style  underlined	Ljava/lang/Boolean;
+mutable  field   net/minecraft/text/Style  underlined	 Ljava/lang/Boolean;
+accessible  field   net/minecraft/world/dimension/DimensionType  OVERWORLD	  Lnet/minecraft/world/dimension/DimensionType;
+accessible  field   net/minecraft/server/world/ServerWorld  worldProperties    Lnet/minecraft/world/level/ServerWorldProperties;

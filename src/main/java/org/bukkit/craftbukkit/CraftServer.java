@@ -603,7 +603,7 @@ public final class CraftServer implements Server {
         return this.getProperties().whiteList.get();
     }
 
-    // NOTE: Temporary calls through to server.properies until its replaced
+    // NOTE: Temporary calls through to server.properties until its replaced
     private ServerPropertiesHandler getProperties() {
         return this.console.getProperties();
     }
@@ -637,6 +637,11 @@ public final class CraftServer implements Server {
     @Override
     public int getTicksPerWaterSpawns() {
         return this.configuration.getInt("ticks-per.water-spawns");
+    }
+
+    @Override
+    public int getTicksPerWaterAmbientSpawns() {
+        return 0;
     }
 
     @Override
@@ -1584,6 +1589,11 @@ public final class CraftServer implements Server {
     @Override
     public int getWaterAnimalSpawnLimit() {
         return waterAnimalSpawn;
+    }
+
+    @Override
+    public int getWaterAmbientSpawnLimit() {
+        return 0;
     }
 
     @Override

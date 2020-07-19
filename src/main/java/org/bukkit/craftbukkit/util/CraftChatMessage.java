@@ -7,12 +7,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import net.minecraft.text.ClickEvent;
+
+import net.minecraft.text.*;
 import net.minecraft.text.ClickEvent.Action;
-import net.minecraft.text.LiteralText;
-import net.minecraft.text.Style;
-import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
 import org.bukkit.ChatColor;
 
@@ -41,8 +38,8 @@ public final class CraftChatMessage {
         private static final Pattern INCREMENTAL_PATTERN = Pattern.compile("(" + String.valueOf(org.bukkit.ChatColor.COLOR_CHAR) + "[0-9a-fk-or])|(\\n)|((?:(?:https?):\\/\\/)?(?:[-\\w_\\.]{2,}\\.[a-z]{2,4}.*?(?=[\\.\\?!,;:]?(?:[" + String.valueOf(org.bukkit.ChatColor.COLOR_CHAR) + " \\n]|$))))", Pattern.CASE_INSENSITIVE);
 
         private final List<Text> list = new ArrayList<Text>();
-        private Text currentChatComponent = new LiteralText("");
-        private Style modifier = new Style();
+        private MutableText currentChatComponent = new LiteralText("");
+        private Style modifier = Style.EMPTY;
         private final Text[] output;
         private int currentIndex;
         private final String message;
@@ -67,29 +64,18 @@ public final class CraftChatMessage {
                 case 1:
                     Formatting format = formatMap.get(match.toLowerCase(java.util.Locale.ENGLISH).charAt(1));
                     if (format == Formatting.RESET) {
-                        modifier = new Style();
+                        modifier = Style.EMPTY;
                     } else if (format.isModifier()) {
                         switch (format) {
-                        case BOLD:
-                            modifier.withBold(Boolean.TRUE);
-                            break;
-                        case ITALIC:
-                            modifier.withItalic(Boolean.TRUE);
-                            break;
-                        case STRIKETHROUGH:
-                            modifier.setStrikethrough(Boolean.TRUE);
-                            break;
-                        case UNDERLINE:
-                            modifier.setUnderline(Boolean.TRUE);
-                            break;
-                        case OBFUSCATED:
-                            modifier.setObfuscated(Boolean.TRUE);
-                            break;
-                        default:
-                            throw new AssertionError("Unexpected message format");
+                            case BOLD -> modifier.withBold(Boolean.TRUE);
+                            case ITALIC -> modifier.withItalic(Boolean.TRUE);
+                            case STRIKETHROUGH -> modifier.strikethrough = true;
+                            case UNDERLINE -> modifier.underlined = true;
+                            case OBFUSCATED -> modifier.obfuscated = true;
+                            default -> throw new AssertionError("Unexpected message format");
                         }
                     } else { // Color resets formatting
-                        modifier = new Style().withColor(format);
+                        modifier = Style.EMPTY.withColor(format);
                     }
                     break;
                 case 2:
@@ -123,7 +109,8 @@ public final class CraftChatMessage {
             }
             Text addition = new LiteralText(message.substring(currentIndex, index)).setStyle(modifier);
             currentIndex = index;
-            modifier = modifier.deepCopy();
+            // Doesn't seem to do anything, and the method doesn't exist
+//            modifier = modifier.deepCopy();
             if (currentChatComponent == null) {
                 currentChatComponent = new LiteralText("");
                 list.add(currentChatComponent);
@@ -207,7 +194,7 @@ public final class CraftChatMessage {
             if (matcher.reset(msg).find()) {
                 matcher.reset();
 
-                Style modifier = text.getStyle() != null ? text.getStyle() : new Style();
+                Style modifier = text.getStyle() != null ? text.getStyle() : Style.EMPTY;
                 List<Text> extras = new ArrayList<Text>();
                 List<Text> extrasOld = new ArrayList<Text>(text.getSiblings());
                 component = text = new LiteralText("");
@@ -225,8 +212,7 @@ public final class CraftChatMessage {
                     extras.add(prev);
 
                     LiteralText link = new LiteralText(matcher.group());
-                    Style linkModi = modifier.deepCopy();
-                    linkModi.withClickEvent(new ClickEvent(Action.OPEN_URL, match));
+                    Style linkModi = modifier.withClickEvent(new ClickEvent(Action.OPEN_URL, match));
                     link.setStyle(linkModi);
                     extras.add(link);
 
