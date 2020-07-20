@@ -13,7 +13,7 @@ import net.minecraft.network.packet.c2s.play.HandSwingC2SPacket;
 import net.minecraft.network.packet.c2s.play.PlayerInteractBlockC2SPacket;
 import net.minecraft.network.packet.c2s.play.PlayerInteractItemC2SPacket;
 import net.minecraft.network.packet.s2c.play.BlockUpdateS2CPacket;
-import net.minecraft.network.packet.s2c.play.ChatMessageS2CPacket;
+import net.minecraft.network.packet.s2c.play.GameMessageS2CPacket;
 import net.minecraft.network.packet.s2c.play.PlayerPositionLookS2CPacket;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
@@ -25,6 +25,7 @@ import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Util;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
@@ -62,33 +63,26 @@ import java.util.concurrent.atomic.AtomicInteger;
 public abstract class ServerPlayNetworkHandlerMixin implements ServerPlayNetworkHandlerExtra {
 
     @Shadow
+    public static Logger LOGGER;
+    private final AtomicInteger chatSpamField = new AtomicInteger();
+    @Shadow
     public MinecraftServer server;
-
     @Shadow
     public ServerPlayerEntity player;
-
     @Shadow
-    public static Logger LOGGER;
+    public int teleportRequestTick;
+    @Shadow
+    public int ticks;
+    @Shadow
+    public Vec3d requestedTeleportPos;
+    @Shadow
+    public int requestedTeleportId;
 
     @Shadow
     public abstract void disconnect(Text reason);
 
     @Shadow
     public abstract void sendPacket(Packet<?> packet);
-
-    @Shadow
-    public int teleportRequestTick;
-
-    @Shadow
-    public int ticks;
-
-    @Shadow
-    public Vec3d requestedTeleportPos;
-
-    @Shadow
-    public int requestedTeleportId;
-
-    private final AtomicInteger chatSpamField = new AtomicInteger();
 
     @Inject(method = "<init>", at = @At("TAIL"))
     public void constructor(MinecraftServer minecraftServer, ClientConnection clientConnection, ServerPlayerEntity serverPlayerEntity, CallbackInfo ci) {
@@ -237,10 +231,10 @@ public abstract class ServerPlayNetworkHandlerMixin implements ServerPlayNetwork
     public void onPlayerInteractBlock(PlayerInteractBlockC2SPacket packetplayinuseitem, CallbackInfo ci) {
         ci.cancel();
         if (this.player.isImmobile()) return; // CraftBukkit
-        ServerWorld worldserver = this.server.getWorld(this.player.dimension);
+        ServerWorld worldserver = (ServerWorld) this.player.world;
         Hand enumhand = packetplayinuseitem.getHand();
         ItemStack itemstack = this.player.getStackInHand(enumhand);
-        BlockHitResult movingobjectpositionblock = packetplayinuseitem.getHitY();
+        BlockHitResult movingobjectpositionblock = packetplayinuseitem.getBlockHitResult();
         BlockPos blockposition = movingobjectpositionblock.getBlockPos();
         Direction enumdirection = movingobjectpositionblock.getSide();
 
@@ -248,7 +242,7 @@ public abstract class ServerPlayNetworkHandlerMixin implements ServerPlayNetwork
         if (blockposition.getY() >= this.server.getWorldHeight() - 1 && (enumdirection == Direction.UP || blockposition.getY() >= this.server.getWorldHeight())) {
             Text ichatbasecomponent = (new TranslatableText("build.tooHigh", this.server.getWorldHeight())).formatted(Formatting.RED);
 
-            this.player.networkHandler.sendPacket(new ChatMessageS2CPacket(ichatbasecomponent, MessageType.GAME_INFO));
+            this.player.networkHandler.sendPacket(new GameMessageS2CPacket(ichatbasecomponent, MessageType.GAME_INFO, Util.NIL_UUID));
         } else if (this.requestedTeleportPos == null && this.player.squaredDistanceTo((double) blockposition.getX() + 0.5D, (double) blockposition.getY() + 0.5D, (double) blockposition.getZ() + 0.5D) < 64.0D && worldserver.canPlayerModifyAt(this.player, blockposition)) {
             // CraftBukkit start - Check if we can actually do something over this large a distance
             Location eyeLoc = this.getPlayer().getEyeLocation();
@@ -324,7 +318,7 @@ public abstract class ServerPlayNetworkHandlerMixin implements ServerPlayNetwork
     @Inject(method = "onPlayerInteractItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/network/ServerPlayerInteractionManager;interactItem(Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/world/World;Lnet/minecraft/item/ItemStack;Lnet/minecraft/util/Hand;)Lnet/minecraft/util/ActionResult;"), cancellable = true)
     public void onPlayerInteractItem(PlayerInteractItemC2SPacket playerInteractItemC2SPacket, CallbackInfo ci) {
         ci.cancel();
-        ServerWorld worldserver = this.server.getWorld(this.player.dimension);
+        ServerWorld worldserver = (ServerWorld) this.player.world;
         Hand enumhand = playerInteractItemC2SPacket.getHand();
         ItemStack itemstack = this.player.getStackInHand(enumhand);
 
@@ -375,7 +369,7 @@ public abstract class ServerPlayNetworkHandlerMixin implements ServerPlayNetwork
      * @reason commands?
      */
     @Overwrite
-    public void onChatMessage(ChatMessageC2SPacket packetplayinchat) {
+    public void onGameMessage(ChatMessageC2SPacket packetplayinchat) {
         if (this.server.isStopped()) {
             return;
         }
@@ -387,7 +381,7 @@ public abstract class ServerPlayNetworkHandlerMixin implements ServerPlayNetwork
 
         // CraftBukkit end
         if (this.player.removed || this.player.getClientChatVisibility() == ChatVisibility.HIDDEN) { // CraftBukkit - dead men tell no tales
-            this.sendPacket(new ChatMessageS2CPacket((new TranslatableText("chat.cannotSend")).formatted(Formatting.RED)));
+            this.sendPacket(new GameMessageS2CPacket((new TranslatableText("chat.cannotSend")).formatted(Formatting.RED), MessageType.SYSTEM, Util.NIL_UUID));
         } else {
             this.player.updateLastActionTime();
             String s = packetplayinchat.getChatMessage();
@@ -434,8 +428,8 @@ public abstract class ServerPlayNetworkHandlerMixin implements ServerPlayNetwork
             } else if (this.player.getClientChatVisibility() == ChatVisibility.SYSTEM) { // Re-add "Command Only" flag check
                 TranslatableText chatmessage = new TranslatableText("chat.cannotSend");
 
-                chatmessage.getStyle().setColor(Formatting.RED);
-                this.sendPacket(new ChatMessageS2CPacket(chatmessage));
+                chatmessage.getStyle().withColor(Formatting.RED);
+                this.sendPacket(new GameMessageS2CPacket(chatmessage, MessageType.SYSTEM, Util.NIL_UUID));
             } else {
                 this.chat(s, true);
                 // CraftBukkit end - the below is for reference. :)

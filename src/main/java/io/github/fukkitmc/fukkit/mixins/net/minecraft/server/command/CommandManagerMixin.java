@@ -105,7 +105,7 @@ public abstract class CommandManagerMixin implements CommandManagerExtra {
                 if (commandsyntaxexception.getInput() != null && commandsyntaxexception.getCursor() >= 0) {
                     int j = Math.min(commandsyntaxexception.getInput().length(), commandsyntaxexception.getCursor());
                     Text ichatbasecomponent = (new LiteralText("")).formatted(Formatting.GRAY).styled((chatmodifier) -> {
-                        chatmodifier.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, label)); // CraftBukkit
+                        chatmodifier.withClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, label)); // CraftBukkit
                     });
 
                     if (j > 10) {

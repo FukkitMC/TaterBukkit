@@ -4,7 +4,7 @@ import io.github.fukkitmc.fukkit.extras.PlayerInventoryExtra;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.DefaultedList;
+import net.minecraft.util.collection.DefaultedList;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.entity.CraftHumanEntity;
 import org.bukkit.entity.HumanEntity;
@@ -56,13 +56,13 @@ public abstract class PlayerInventoryMixin implements PlayerInventoryExtra {
             if (itemstack1.isEmpty()) return itemstack.getCount();
 
             if (this.canStackAddMore(itemstack1, itemstack)) {
-                remains -= (Math.min(itemstack1.getMaxCount(), ((PlayerInventory) (Object) this).getInvMaxStackAmount())) - itemstack1.getCount();
+                remains -= (Math.min(itemstack1.getMaxCount(), ((PlayerInventory) (Object) this).getMaxCountPerStack())) - itemstack1.getCount();
             }
             if (remains <= 0) return itemstack.getCount();
         }
         ItemStack offhandItemStack = this.getInvStack(this.main.size() + this.armor.size());
         if (this.canStackAddMore(offhandItemStack, itemstack)) {
-            remains -= (Math.min(offhandItemStack.getMaxCount(), ((PlayerInventory) (Object) this).getInvMaxStackAmount())) - offhandItemStack.getCount();
+            remains -= (Math.min(offhandItemStack.getMaxCount(), ((PlayerInventory) (Object) this).getMaxCountPerStack())) - offhandItemStack.getCount();
         }
         if (remains <= 0) return itemstack.getCount();
 
