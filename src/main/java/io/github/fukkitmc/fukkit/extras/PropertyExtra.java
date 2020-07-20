@@ -1,6 +1,6 @@
 package io.github.fukkitmc.fukkit.extras;
 
-public interface PropertyExtra {
+public interface PropertyExtra<T extends Comparable<T>> {
 
     com.mojang.serialization.Codec<net.minecraft.state.property.Property.class_4933<T>> e();
 

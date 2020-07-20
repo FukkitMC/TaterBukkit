@@ -1,6 +1,8 @@
 package io.github.fukkitmc.fukkit.extras;
 
-public interface AbstractCriterionExtra {
+import net.minecraft.advancement.criterion.AbstractCriterionConditions;
+
+public interface AbstractCriterionExtra<T extends AbstractCriterionConditions> {
 
     void b(net.minecraft.advancement.PlayerAdvancementTracker var0, net.minecraft.advancement.criterion.Criterion.ConditionsContainer var1);
 

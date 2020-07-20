@@ -1,6 +1,8 @@
 package io.github.fukkitmc.fukkit.extras;
 
-public interface ServerConfigListExtra {
+import net.minecraft.server.ServerConfigEntry;
+
+public interface ServerConfigListExtra<K, V extends ServerConfigEntry<K>> {
 
     java.util.Collection<V> getValues();
 }

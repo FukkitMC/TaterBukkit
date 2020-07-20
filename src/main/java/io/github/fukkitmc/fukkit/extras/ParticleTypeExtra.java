@@ -1,6 +1,8 @@
 package io.github.fukkitmc.fukkit.extras;
 
-public interface ParticleTypeExtra {
+import net.minecraft.particle.ParticleEffect;
+
+public interface ParticleTypeExtra<T extends ParticleEffect> {
 
     net.minecraft.particle.ParticleEffect.Factory<T> d();
 }

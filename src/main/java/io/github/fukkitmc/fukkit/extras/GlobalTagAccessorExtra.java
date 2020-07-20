@@ -1,6 +1,6 @@
 package io.github.fukkitmc.fukkit.extras;
 
-public interface GlobalTagAccessorExtra {
+public interface GlobalTagAccessorExtra<T> {
 
     net.minecraft.tag.Tag.Identified<T> a(java.lang.String var0);
 
