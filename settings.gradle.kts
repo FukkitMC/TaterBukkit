@@ -1,4 +1,4 @@
-rootProject.name = "craftbukkit"
+rootProject.name = "TaterBukkit"
 
 pluginManagement {
     repositories {
