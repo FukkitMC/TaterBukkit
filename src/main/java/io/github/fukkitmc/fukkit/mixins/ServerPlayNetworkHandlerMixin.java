@@ -111,7 +111,6 @@ public abstract class ServerPlayNetworkHandlerMixin implements ServerPlayNetwork
         }
     }
 
-    @Override
     public void internalTeleport(double d0, double d1, double d2, float f, float f1, Set<PlayerPositionLookS2CPacket.Flag> set) {
         // CraftBukkit start
         if (Float.isNaN(f)) {
