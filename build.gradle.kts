@@ -25,6 +25,8 @@ repositories {
         name = "SpigotMC"
         url = uri("https://hub.spigotmc.org/nexus/content/groups/public/")
     }
+
+    mavenLocal()
 }
 
 dependencies {
@@ -38,13 +40,14 @@ dependencies {
     implementation("jline:jline:2.12.1")
     implementation("mysql:mysql-connector-java:5.1.49")
     // Bukkit API is no longer being published to Spigot's Maven
-    implementation("org.spigotmc:spigot-api:1.16.1-R0.1-SNAPSHOT")
+    // For now, force users to have Bukkit
+    implementation("org.bukkit:bukkit:1.16.1-R0.1-SNAPSHOT")
     implementation("org.xerial:sqlite-jdbc:3.32.3")
 
     include("com.googlecode.json-simple:json-simple:1.1.1")
     include("jline:jline:2.12.1")
     include("mysql:mysql-connector-java:5.1.49")
-    include("org.spigotmc:spigot-api:1.16.1-R0.1-SNAPSHOT")
+    include("org.bukkit:bukkit:1.16.1-R0.1-SNAPSHOT")
     include("org.xerial:sqlite-jdbc:3.32.3")
 }
 
