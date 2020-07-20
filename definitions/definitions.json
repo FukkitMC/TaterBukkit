@@ -1281,11 +1281,6 @@
         "type": "I"
       },
       {
-        "access": 1,
-        "name": "craftServer",
-        "type": "Lorg/bukkit/craftbukkit/CraftServer;"
-      },
-      {
         "access": 9,
         "name": "CUSTOM_REGISTER",
         "type": "Lnet/minecraft/util/Identifier;"
