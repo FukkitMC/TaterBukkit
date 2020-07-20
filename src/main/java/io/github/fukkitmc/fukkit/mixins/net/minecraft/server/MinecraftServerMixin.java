@@ -32,10 +32,13 @@ import net.minecraft.util.thread.ReentrantThreadExecutor;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.PersistentStateManager;
 import net.minecraft.world.SaveProperties;
+import net.minecraft.world.border.WorldBorder;
 import net.minecraft.world.dimension.DimensionType;
+import net.minecraft.world.gen.GeneratorOptions;
 import net.minecraft.world.level.LevelGeneratorType;
 import net.minecraft.world.level.LevelInfo;
 import net.minecraft.world.level.LevelProperties;
+import net.minecraft.world.level.ServerWorldProperties;
 import net.minecraft.world.level.storage.LevelStorage;
 import org.apache.logging.log4j.Logger;
 import org.bukkit.command.CommandSender;
@@ -83,6 +86,10 @@ public abstract class MinecraftServerMixin extends ReentrantThreadExecutor<Serve
     @Shadow
     public abstract void initScoreboard(PersistentStateManager persistentStateManager);
 
+    @Shadow public ServerResourceManager serverResourceManager;
+
+    @Shadow public SaveProperties saveProperties;
+
     @Inject(method = "<init>", at = @At("TAIL"))
     public void init(Thread thread, RegistryTracker.Modifiable modifiable, LevelStorage.Session session, SaveProperties saveProperties, ResourcePackManager<ResourcePackProfile> resourcePackManager, Proxy proxy, DataFixer dataFixer, ServerResourceManager serverResourceManager, MinecraftSessionService minecraftSessionService, GameProfileRepository gameProfileRepository, UserCache userCache, WorldGenerationProgressListenerFactory worldGenerationProgressListenerFactory, CallbackInfo ci) throws IOException {
         MinecraftServer self = (MinecraftServer) (Object) this;
@@ -90,8 +97,7 @@ public abstract class MinecraftServerMixin extends ReentrantThreadExecutor<Serve
         self.processQueue = new java.util.concurrent.ConcurrentLinkedQueue<Runnable>();
         self.options = Main.serverOptions;
         self.reader = new ConsoleReader(System.in, System.out);
-        self.commandManager = self.vanillaCommandDispatcher = commandManager; // CraftBukkit
-
+        self.vanillaCommandDispatcher = serverResourceManager.commandManager;; // CraftBukkit
     }
 
     @Inject(method = "loadWorld", at = @At("TAIL"))
@@ -248,27 +254,27 @@ public abstract class MinecraftServerMixin extends ReentrantThreadExecutor<Serve
 
     // CraftBukkit start
     @Override
-    public void initWorld(ServerWorld worldserver1, LevelProperties worlddata, LevelInfo worldsettings) {
+    public void initWorld(ServerWorld worldserver1, ServerWorldProperties worlddata, SaveProperties saveProperties, GeneratorOptions generatorOptions) {
         MinecraftServer self = (MinecraftServer) (Object) this;
 
-        worldserver1.getWorldBorder().load(worlddata);
-
+        boolean isDebugWorld = generatorOptions.isDebugWorld();
         // CraftBukkit start
         if (worldserver1.generator != null) {
             worldserver1.getCraftWorld().getPopulators().addAll(worldserver1.generator.getDefaultPopulators(worldserver1.getCraftWorld()));
         }
         // CraftBukkit end
 
+        WorldBorder worldborder = worldserver1.getWorldBorder();
+        worldborder.load(worlddata.getWorldBorder());
         if (!worlddata.isInitialized()) {
             try {
-                worldserver1.init(worldsettings);
-                if (worlddata.getGeneratorType() == LevelGeneratorType.DEBUG_ALL_BLOCK_STATES) {
-                    self.setToDebugWorldProperties(worlddata);
-                }
-
+                MinecraftServer.setupSpawn(worldserver1, worlddata, generatorOptions.hasBonusChest(), isDebugWorld, true);
                 worlddata.setInitialized(true);
-            } catch (Throwable throwable) {
-                CrashReport crashreport = CrashReport.create(throwable, "Exception initializing level");
+                if (isDebugWorld) {
+                    self.setToDebugWorldProperties(this.saveProperties);
+                }
+            } catch (Throwable errorCause) {
+                CrashReport crashreport = CrashReport.create(errorCause, "Exception initializing level");
 
                 try {
                     worldserver1.addDetailsToCrashReport(crashreport);
@@ -280,6 +286,8 @@ public abstract class MinecraftServerMixin extends ReentrantThreadExecutor<Serve
 
             worlddata.setInitialized(true);
         }
+
+
     }
 
     @Override

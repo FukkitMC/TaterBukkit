@@ -440,7 +440,7 @@ public final class CraftServer implements Server {
 
     public void syncCommands() {
         // Clear existing commands
-        CommandManager dispatcher = console.dataPackResources.commandManager = new CommandManager();
+        CommandManager dispatcher = console.dataPackResources.commandManager = new CommandManager(CommandManager.RegistrationEnvironment.DEDICATED);
 
         // Register all commands, vanilla ones will be using the old dispatcher references
         for (Map.Entry<String, Command> entry : commandMap.getKnownCommands().entrySet()) {
