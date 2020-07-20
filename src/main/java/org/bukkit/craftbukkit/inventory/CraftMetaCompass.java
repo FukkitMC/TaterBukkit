@@ -43,7 +43,7 @@ public class CraftMetaCompass extends CraftMetaItem implements CompassMeta {
             Optional<RegistryKey<net.minecraft.world.World>> key = net.minecraft.world.World.CODEC.parse(NbtOps.INSTANCE, tag.get(LODESTONE_DIMENSION.NBT)).result();
 
             if (key.isPresent()) {
-                World world = MinecraftServer.getServer().getWorldServer(key.get()).getWorld();
+                World world = MinecraftServer.getServer().getWorldServer(key.get()).getCraftWorld();
 
                 CompoundTag pos = tag.getCompound(LODESTONE_POS.NBT);
                 lodestone = new Location(world, pos.getInt("X"), pos.getInt("Y"), pos.getInt("Z"));

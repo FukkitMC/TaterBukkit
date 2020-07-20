@@ -15,7 +15,6 @@ import com.mojang.brigadier.tree.CommandNode;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import com.mojang.serialization.DynamicOps;
 import com.mojang.serialization.Lifecycle;
-import io.github.fukkitmc.fukkit.nms.PluginRemapper;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufOutputStream;
 import io.netty.buffer.Unpooled;
@@ -375,15 +374,7 @@ public final class CraftServer implements Server {
         File pluginFolder = (File) console.options.valueOf("plugins");
 
         if (pluginFolder.exists()) {
-            Plugin[] plugins;
-
-            try {
-                PluginRemapper.remapDirectory(pluginFolder);
-                plugins = pluginManager.loadPlugins(pluginFolder);
-            } catch (IOException exception) {
-                throw new RuntimeException(exception);
-            }
-
+            Plugin[] plugins = pluginManager.loadPlugins(pluginFolder);
             for (Plugin plugin : plugins) {
                 try {
                     String message = String.format("Loading %s", plugin.getDescription().getFullName());
@@ -1051,12 +1042,12 @@ public final class CraftServer implements Server {
         internal.setMobSpawnOptions(true, true);
         console.worldServer.put(internal.getRegistryKey(), internal);
 
-        pluginManager.callEvent(new WorldInitEvent(internal.getWorld()));
+        pluginManager.callEvent(new WorldInitEvent(internal.getCraftWorld()));
 
         getServer().loadSpawn(internal.getChunkManager().threadedAnvilChunkStorage.worldGenerationProgressListener, internal);
 
-        pluginManager.callEvent(new WorldLoadEvent(internal.getWorld()));
-        return internal.getWorld();
+        pluginManager.callEvent(new WorldLoadEvent(internal.getCraftWorld()));
+        return internal.getCraftWorld();
     }
 
     @Override
@@ -1084,7 +1075,7 @@ public final class CraftServer implements Server {
             return false;
         }
 
-        WorldUnloadEvent e = new WorldUnloadEvent(handle.getWorld());
+        WorldUnloadEvent e = new WorldUnloadEvent(handle.getCraftWorld());
         pluginManager.callEvent(e);
 
         if (e.isCancelled()) {
@@ -1726,7 +1717,7 @@ public final class CraftServer implements Server {
             if (pos == null) {
                 completions = getCommandMap().tabComplete(player, message);
             } else {
-                completions = getCommandMap().tabComplete(player, message, new Location(world.getWorld(), pos.x, pos.y, pos.z));
+                completions = getCommandMap().tabComplete(player, message, new Location(world.getCraftWorld(), pos.x, pos.y, pos.z));
             }
         } catch (CommandException ex) {
             player.sendMessage(ChatColor.RED + "An internal error occurred while attempting to tab-complete this command");

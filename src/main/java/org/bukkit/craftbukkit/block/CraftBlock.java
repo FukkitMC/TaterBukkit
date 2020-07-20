@@ -76,7 +76,7 @@ public class CraftBlock implements Block {
 
     @Override
     public World getWorld() {
-        return world.getWorld().getWorld();
+        return world.getWorld().getCraftWorld();
     }
 
     public CraftWorld getCraftWorld() {

@@ -8,5 +8,5 @@ public interface ArrowEntityExtra {
 
     void setType(java.lang.String var0);
 
-    java.lang.String getType();
+    java.lang.String getCraftType();
 }

@@ -1307,7 +1307,7 @@
       },
       {
         "access": 1,
-        "name": "server",
+        "name": "craftServer",
         "type": "Lorg/bukkit/craftbukkit/CraftServer;"
       },
       {
@@ -1671,7 +1671,7 @@
       },
       {
         "access": 1,
-        "name": "player",
+        "name": "playerInventory",
         "type": "Lnet/minecraft/entity/player/PlayerInventory;"
       }
     ],
@@ -4808,6 +4808,11 @@
     "syntheticFields": [
       {
         "access": 1,
+        "name": "craftLastLocation",
+        "type": "Lorg/bukkit/Location;"
+      },
+      {
+        "access": 1,
         "name": "occupiedDeceleration",
         "type": "D"
       },
@@ -4825,11 +4830,6 @@
         "access": 1,
         "name": "maxSpeed",
         "type": "D"
-      },
-      {
-        "access": 1,
-        "name": "lastLocation",
-        "type": "Lorg/bukkit/Location;"
       }
     ],
     "syntheticMethods": []
@@ -8539,6 +8539,11 @@
       },
       {
         "access": 1,
+        "name": "craftWorld",
+        "type": "Lorg/bukkit/craftbukkit/CraftWorld;"
+      },
+      {
+        "access": 1,
         "name": "ticksPerMonsterSpawns",
         "type": "J"
       },
@@ -8567,11 +8572,6 @@
         "access": 1,
         "name": "pvpMode",
         "type": "Z"
-      },
-      {
-        "access": 1,
-        "name": "world",
-        "type": "Lorg/bukkit/craftbukkit/CraftWorld;"
       },
       {
         "access": 1,

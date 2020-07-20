@@ -52,7 +52,7 @@ public class CraftChunk implements Chunk {
 
     @Override
     public World getWorld() {
-        return worldServer.getWorld();
+        return worldServer.getCraftWorld();
     }
 
     public CraftWorld getCraftWorld() {
@@ -141,7 +141,7 @@ public class CraftChunk implements Chunk {
             }
 
             BlockPos position = (BlockPos) obj;
-            entities[index++] = worldServer.getWorld().getBlockAt(position.getX(), position.getY(), position.getZ()).getState();
+            entities[index++] = worldServer.getCraftWorld().getBlockAt(position.getX(), position.getY(), position.getZ()).getState();
         }
 
         return entities;

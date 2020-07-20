@@ -2,6 +2,8 @@ package io.github.fukkitmc.fukkit.extras;
 
 public interface BeaconBlockEntityExtra {
 
+    int getCraftLevel();
+
     org.bukkit.potion.PotionEffect getPrimaryEffect();
 
     byte getAmplification();
@@ -9,8 +11,6 @@ public interface BeaconBlockEntityExtra {
     void applyEffect(java.util.List var0, net.minecraft.entity.effect.StatusEffect var1, int var2, int var3);
 
     java.util.List getHumansInRange();
-
-    int getLevel();
 
     boolean hasSecondaryEffect();
 

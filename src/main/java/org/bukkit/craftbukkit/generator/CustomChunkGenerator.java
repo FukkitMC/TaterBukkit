@@ -23,7 +23,6 @@ import net.minecraft.world.chunk.ChunkSection;
 import net.minecraft.world.chunk.ProtoChunk;
 import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.StructureAccessor;
-import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.craftbukkit.block.CraftBlock;
 import org.bukkit.generator.ChunkGenerator;
@@ -51,7 +50,7 @@ public class CustomChunkGenerator extends InternalChunkGenerator {
 
         @Override
         public void setBiome(int x, int z, Biome bio) {
-            for (int y = 0; y < world.getWorld().getMaxHeight(); y += 4) {
+            for (int y = 0; y < world.getCraftWorld().getMaxHeight(); y += 4) {
                 setBiome(x, y, z, bio);
             }
         }
@@ -107,10 +106,10 @@ public class CustomChunkGenerator extends InternalChunkGenerator {
 
         ChunkData data;
         if (generator.isParallelCapable()) {
-            data = generator.generateChunkData(this.world.getWorld(), random, x, z, biomegrid);
+            data = generator.generateChunkData(this.world.getCraftWorld(), random, x, z, biomegrid);
         } else {
             synchronized (this) {
-                data = generator.generateChunkData(this.world.getWorld(), random, x, z, biomegrid);
+                data = generator.generateChunkData(this.world.getCraftWorld(), random, x, z, biomegrid);
             }
         }
 

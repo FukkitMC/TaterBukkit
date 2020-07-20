@@ -4,7 +4,7 @@ public interface MobEntityExtra {
 
     void a(boolean var0);
 
-    net.minecraft.util.Identifier getLootTable();
+    net.minecraft.util.Identifier getCraftLootTable();
 
     boolean g(net.minecraft.item.ItemStack var0, net.minecraft.entity.ItemEntity var1);
 
