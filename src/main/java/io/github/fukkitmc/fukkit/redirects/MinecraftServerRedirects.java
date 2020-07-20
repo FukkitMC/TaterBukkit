@@ -1,12 +1,8 @@
 package io.github.fukkitmc.fukkit.redirects;
 
-import net.minecraft.server.MinecraftServer;
-import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.CraftServer;
-
 public interface MinecraftServerRedirects {
 
-    static MinecraftServer getServer() {
-        return ((CraftServer) Bukkit.getServer()).getServer();
-    }
+	static void convertWorld(net.minecraft.world.level.storage.LevelStorage.Session var0) { throw new RuntimeException("TODO"); }
+
+	static net.minecraft.server.MinecraftServer getServer() { throw new RuntimeException("TODO"); }
 }

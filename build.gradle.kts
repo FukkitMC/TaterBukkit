@@ -16,6 +16,8 @@ java {
 
 minecraft {
     accessWidener = file("src/main/resources/craftbukkit.aw")
+
+    loadDefinitions("definitions/definitions.json")
 }
 
 repositories {
