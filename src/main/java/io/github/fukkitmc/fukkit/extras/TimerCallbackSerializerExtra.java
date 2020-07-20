@@ -2,7 +2,7 @@ package io.github.fukkitmc.fukkit.extras;
 
 public interface TimerCallbackSerializerExtra {
 
-	net.minecraft.world.timer.TimerCallback.Serializer a(java.lang.Class var0);
+    <T extends net.minecraft.world.timer.TimerCallback<C>> net.minecraft.world.timer.TimerCallback.Serializer<C, T> a(java.lang.Class var0);
 
-	net.minecraft.world.timer.TimerCallbackSerializer a(net.minecraft.world.timer.TimerCallback.Serializer var0);
+    net.minecraft.world.timer.TimerCallbackSerializer<C> a(net.minecraft.world.timer.TimerCallback.Serializer var0);
 }

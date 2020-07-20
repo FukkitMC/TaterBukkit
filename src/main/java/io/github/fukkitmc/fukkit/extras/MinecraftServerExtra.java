@@ -2,169 +2,169 @@ package io.github.fukkitmc.fukkit.extras;
 
 public interface MinecraftServerExtra {
 
-	java.lang.String getResourcePack();
+    java.lang.String getResourcePack();
 
-	boolean getSpawnMonsters();
+    boolean getSpawnMonsters();
 
-	java.lang.String getSinglePlayerName();
+    java.lang.String getSinglePlayerName();
 
-	net.minecraft.structure.StructureManager getDefinedStructureManager();
+    net.minecraft.structure.StructureManager getDefinedStructureManager();
 
-	java.util.Optional getModded();
+    java.util.Optional<java.lang.String> getModded();
 
-	boolean getPVP();
+    boolean getPVP();
 
-	net.minecraft.server.PlayerManager getPlayerList();
+    net.minecraft.server.PlayerManager getPlayerList();
 
-	java.lang.String getMotd();
+    java.lang.String getMotd();
 
-	net.minecraft.resource.ResourcePackManager getResourcePackRepository();
+    net.minecraft.resource.ResourcePackManager<net.minecraft.resource.ResourcePackProfile> getResourcePackRepository();
 
-	java.lang.Iterable getWorlds();
+    java.lang.Iterable<net.minecraft.server.world.ServerWorld> getWorlds();
 
-	boolean init();
+    boolean init();
 
-	net.minecraft.server.ServerTask postToMainThread(java.lang.Runnable var0);
+    net.minecraft.server.ServerTask postToMainThread(java.lang.Runnable var0);
 
-	void setPVP(boolean var0);
+    void setPVP(boolean var0);
 
-	boolean isDebugging();
+    boolean isDebugging();
 
-	boolean canSleepForTick();
+    boolean canSleepForTick();
 
-	net.minecraft.server.ServerAdvancementLoader getAdvancementData();
+    net.minecraft.server.ServerAdvancementLoader getAdvancementData();
 
-	void sleepForTick();
+    void sleepForTick();
 
-	void exit();
+    void exit();
 
-	void c(net.minecraft.server.ServerTask var0);
+    void c(net.minecraft.server.ServerTask var0);
 
-	boolean saveChunks(boolean var0, boolean var1, boolean var2);
+    boolean saveChunks(boolean var0, boolean var1, boolean var2);
 
-	boolean getSpawnNPCs();
+    boolean getSpawnNPCs();
 
-	boolean isEmbeddedServer();
+    boolean isEmbeddedServer();
 
-	int getMaxBuildHeight();
+    int getMaxBuildHeight();
 
-	int getPlayerCount();
+    int getPlayerCount();
 
-	void updateWorldSettings();
+    void updateWorldSettings();
 
-	java.security.KeyPair getKeyPair();
+    java.security.KeyPair getKeyPair();
 
-	void safeShutdown(boolean var0);
+    void safeShutdown(boolean var0);
 
-	boolean getAllowFlight();
+    boolean getAllowFlight();
 
-	net.minecraft.recipe.RecipeManager getCraftingManager();
+    net.minecraft.recipe.RecipeManager getCraftingManager();
 
-	com.mojang.datafixers.DataFixer getDataFixer();
+    com.mojang.datafixers.DataFixer getDataFixer();
 
-	java.lang.String[] getPlayers();
+    java.lang.String[] getPlayers();
 
-	void loadWorld(java.lang.String var0);
+    void loadWorld(java.lang.String var0);
 
-	void loadSpawn(net.minecraft.server.WorldGenerationProgressListener var0, net.minecraft.server.world.ServerWorld var1);
+    void loadSpawn(net.minecraft.server.WorldGenerationProgressListener var0, net.minecraft.server.world.ServerWorld var1);
 
-	void setForceGamemode(boolean var0);
+    void setForceGamemode(boolean var0);
 
-	net.minecraft.world.GameMode getGamemode();
+    net.minecraft.world.GameMode getGamemode();
 
-	com.mojang.authlib.minecraft.MinecraftSessionService getMinecraftSessionService();
+    com.mojang.authlib.minecraft.MinecraftSessionService getMinecraftSessionService();
 
-	void setIdleTimeout(int var0);
+    void setIdleTimeout(int var0);
 
-	void executeModerately();
+    void executeModerately();
 
-	java.lang.String getResourcePackHash();
+    java.lang.String getResourcePackHash();
 
-	void initializeScoreboards(net.minecraft.world.PersistentStateManager var0);
+    void initializeScoreboards(net.minecraft.world.PersistentStateManager var0);
 
-	boolean getForceGamemode();
+    boolean getForceGamemode();
 
-	boolean isMainThread();
+    boolean isMainThread();
 
-	net.minecraft.tag.RegistryTagManager getTagRegistry();
+    net.minecraft.tag.RegistryTagManager getTagRegistry();
 
-	net.minecraft.server.function.CommandFunctionManager getFunctionData();
+    net.minecraft.server.function.CommandFunctionManager getFunctionData();
 
-	boolean isDemoMode();
+    boolean isDemoMode();
 
-	com.mojang.authlib.GameProfileRepository getGameProfileRepository();
+    com.mojang.authlib.GameProfileRepository getGameProfileRepository();
 
-	int getSpawnProtection();
+    int getSpawnProtection();
 
-	net.minecraft.server.world.ServerWorld getWorldServer(net.minecraft.util.registry.RegistryKey var0);
+    net.minecraft.server.world.ServerWorld getWorldServer(net.minecraft.util.registry.RegistryKey var0);
 
-	void setMotd(java.lang.String var0);
+    void setMotd(java.lang.String var0);
 
-	void stop();
+    void stop();
 
-	void invalidatePingSample();
+    void invalidatePingSample();
 
-	net.minecraft.server.ServerNetworkIo getServerConnection();
+    net.minecraft.server.ServerNetworkIo getServerConnection();
 
-	boolean getAllowNether();
+    boolean getAllowNether();
 
-	net.minecraft.entity.boss.BossBarManager getBossBattleCustomData();
+    net.minecraft.entity.boss.BossBarManager getBossBattleCustomData();
 
-	net.minecraft.server.command.ServerCommandSource getServerCommandListener();
+    net.minecraft.server.command.ServerCommandSource getServerCommandListener();
 
-	boolean isHardcore();
+    boolean isHardcore();
 
-	void setAllowFlight(boolean var0);
+    void setAllowFlight(boolean var0);
 
-	void setPort(int var0);
+    void setPort(int var0);
 
-	void setOnlineMode(boolean var0);
+    void setOnlineMode(boolean var0);
 
-	int getIdleTimeout();
+    int getIdleTimeout();
 
-	boolean isSyncChunkWrites();
+    boolean isSyncChunkWrites();
 
-	int getMaxPlayers();
+    int getMaxPlayers();
 
-	boolean isStopped();
+    boolean isStopped();
 
-	boolean canExecute(net.minecraft.server.ServerTask var0);
+    boolean canExecute(net.minecraft.server.ServerTask var0);
 
-	int getPort();
+    int getPort();
 
-	java.lang.String getServerIp();
+    java.lang.String getServerIp();
 
-	boolean isRunning();
+    boolean isRunning();
 
-	void loadResourcesZip();
+    void loadResourcesZip();
 
-	boolean getSpawnAnimals();
+    boolean getSpawnAnimals();
 
-	net.minecraft.scoreboard.ServerScoreboard getScoreboard();
+    net.minecraft.scoreboard.ServerScoreboard getScoreboard();
 
-	net.minecraft.world.SaveProperties getSaveData();
+    net.minecraft.world.SaveProperties getSaveData();
 
-	boolean getOnlineMode();
+    boolean getOnlineMode();
 
-	net.minecraft.server.ServerMetadata getServerPing();
+    net.minecraft.server.ServerMetadata getServerPing();
 
-	void initWorld(net.minecraft.server.world.ServerWorld var0, net.minecraft.world.level.ServerWorldProperties var1, net.minecraft.world.SaveProperties var2, net.minecraft.world.gen.GeneratorOptions var3);
+    void initWorld(net.minecraft.server.world.ServerWorld var0, net.minecraft.world.level.ServerWorldProperties var1, net.minecraft.world.SaveProperties var2, net.minecraft.world.gen.GeneratorOptions var3);
 
-	net.minecraft.util.profiler.Profiler getMethodProfiler();
+    net.minecraft.util.profiler.Profiler getMethodProfiler();
 
-	java.lang.String getVersion();
+    java.lang.String getVersion();
 
-	net.minecraft.world.GameRules getGameRules();
+    net.minecraft.world.GameRules getGameRules();
 
-	boolean hasStopped();
+    boolean hasStopped();
 
-	net.minecraft.util.UserCache getUserCache();
+    net.minecraft.util.UserCache getUserCache();
 
-	net.minecraft.loot.LootManager getLootTableRegistry();
+    net.minecraft.loot.LootManager getLootTableRegistry();
 
-	void setResourcePack(java.lang.String var0, java.lang.String var1);
+    void setResourcePack(java.lang.String var0, java.lang.String var1);
 
-	boolean getEnableCommandBlock();
+    boolean getEnableCommandBlock();
 
-	net.minecraft.server.command.CommandManager getCommandDispatcher();
+    net.minecraft.server.command.CommandManager getCommandDispatcher();
 }

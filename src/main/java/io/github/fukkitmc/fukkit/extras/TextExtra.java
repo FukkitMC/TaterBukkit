@@ -2,11 +2,11 @@ package io.github.fukkitmc.fukkit.extras;
 
 public interface TextExtra {
 
-	java.util.Optional b(net.minecraft.text.StringRenderable.Visitor var0);
+    <T> java.util.Optional<T> b(net.minecraft.text.StringRenderable.Visitor var0);
 
-	java.util.stream.Stream stream();
+    java.util.stream.Stream<net.minecraft.text.Text> stream();
 
-	java.util.Optional a(net.minecraft.text.StringRenderable.Visitor var0);
+    <T> java.util.Optional<T> a(net.minecraft.text.StringRenderable.Visitor var0);
 
-	java.util.Iterator iterator();
+    java.util.Iterator<net.minecraft.text.Text> iterator();
 }

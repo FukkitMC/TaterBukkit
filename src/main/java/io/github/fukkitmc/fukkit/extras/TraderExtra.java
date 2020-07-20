@@ -2,7 +2,7 @@ package io.github.fukkitmc.fukkit.extras;
 
 public interface TraderExtra {
 
-	org.bukkit.craftbukkit.inventory.CraftMerchant getCraftMerchant();
+    org.bukkit.craftbukkit.inventory.CraftMerchant getCraftMerchant();
 
-	net.minecraft.world.World getWorld();
+    net.minecraft.world.World getWorld();
 }

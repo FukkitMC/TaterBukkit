@@ -2,15 +2,15 @@ package io.github.fukkitmc.fukkit.extras;
 
 public interface DispenserBlockEntityExtra {
 
-	void onOpen(org.bukkit.craftbukkit.entity.CraftHumanEntity var0);
+    void onOpen(org.bukkit.craftbukkit.entity.CraftHumanEntity var0);
 
-	java.util.List getViewers();
+    java.util.List<org.bukkit.entity.HumanEntity> getViewers();
 
-	java.util.List getContents();
+    java.util.List<net.minecraft.item.ItemStack> getContents();
 
-	void setMaxStackSize(int var0);
+    void setMaxStackSize(int var0);
 
-	void onClose(org.bukkit.craftbukkit.entity.CraftHumanEntity var0);
+    void onClose(org.bukkit.craftbukkit.entity.CraftHumanEntity var0);
 
-	int getMaxStackSize();
+    int getMaxStackSize();
 }

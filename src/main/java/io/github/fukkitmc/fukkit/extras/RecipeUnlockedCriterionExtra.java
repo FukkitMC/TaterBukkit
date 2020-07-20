@@ -2,5 +2,5 @@ package io.github.fukkitmc.fukkit.extras;
 
 public interface RecipeUnlockedCriterionExtra {
 
-	net.minecraft.advancement.criterion.RecipeUnlockedCriterion.Conditions b(com.google.gson.JsonObject var0, net.minecraft.predicate.entity.EntityPredicate.Extended var1, net.minecraft.predicate.entity.AdvancementEntityPredicateDeserializer var2);
+    net.minecraft.advancement.criterion.RecipeUnlockedCriterion.Conditions b(com.google.gson.JsonObject var0, net.minecraft.predicate.entity.EntityPredicate.Extended var1, net.minecraft.predicate.entity.AdvancementEntityPredicateDeserializer var2);
 }

@@ -2,13 +2,13 @@ package io.github.fukkitmc.fukkit.extras;
 
 public interface SignBlockEntityExtra {
 
-	boolean shouldSendSuccess();
+    boolean shouldSendSuccess();
 
-	boolean shouldBroadcastCommands();
+    boolean shouldBroadcastCommands();
 
-	void sendMessage(net.minecraft.text.Text var0, java.util.UUID var1);
+    void sendMessage(net.minecraft.text.Text var0, java.util.UUID var1);
 
-	boolean shouldSendFailure();
+    boolean shouldSendFailure();
 
-	org.bukkit.command.CommandSender getBukkitSender(net.minecraft.server.command.ServerCommandSource var0);
+    org.bukkit.command.CommandSender getBukkitSender(net.minecraft.server.command.ServerCommandSource var0);
 }

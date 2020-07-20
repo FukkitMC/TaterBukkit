@@ -2,7 +2,7 @@ package io.github.fukkitmc.fukkit.extras;
 
 public interface ArmorStandEntityExtra {
 
-	boolean isDropExperience();
+    boolean isDropExperience();
 
-	float getBukkitYaw();
+    float getBukkitYaw();
 }

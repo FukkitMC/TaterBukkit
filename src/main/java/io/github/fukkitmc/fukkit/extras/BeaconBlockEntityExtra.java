@@ -2,17 +2,17 @@ package io.github.fukkitmc.fukkit.extras;
 
 public interface BeaconBlockEntityExtra {
 
-	org.bukkit.potion.PotionEffect getPrimaryEffect();
+    org.bukkit.potion.PotionEffect getPrimaryEffect();
 
-	byte getAmplification();
+    byte getAmplification();
 
-	void applyEffect(java.util.List var0, net.minecraft.entity.effect.StatusEffect var1, int var2, int var3);
+    void applyEffect(java.util.List var0, net.minecraft.entity.effect.StatusEffect var1, int var2, int var3);
 
-	java.util.List getHumansInRange();
+    java.util.List getHumansInRange();
 
-	int getLevel();
+    int getLevel();
 
-	boolean hasSecondaryEffect();
+    boolean hasSecondaryEffect();
 
-	org.bukkit.potion.PotionEffect getSecondaryEffect();
+    org.bukkit.potion.PotionEffect getSecondaryEffect();
 }

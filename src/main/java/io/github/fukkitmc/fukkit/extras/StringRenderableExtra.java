@@ -2,5 +2,5 @@ package io.github.fukkitmc.fukkit.extras;
 
 public interface StringRenderableExtra {
 
-	java.util.Optional a(net.minecraft.text.StringRenderable.Visitor var0);
+    <T> java.util.Optional<T> a(net.minecraft.text.StringRenderable.Visitor var0);
 }

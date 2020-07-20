@@ -2,37 +2,37 @@ package io.github.fukkitmc.fukkit.extras;
 
 public interface MinecraftDedicatedServerExtra {
 
-	int getSpawnProtection();
+    int getSpawnProtection();
 
-	boolean getAllowNether();
+    boolean getAllowNether();
 
-	void updateWorldSettings();
+    void updateWorldSettings();
 
-	void exit();
+    void exit();
 
-	boolean isHardcore();
+    boolean isHardcore();
 
-	boolean isDebugging();
+    boolean isDebugging();
 
-	boolean getSpawnNPCs();
+    boolean getSpawnNPCs();
 
-	void stop();
+    void stop();
 
-	net.minecraft.server.dedicated.DedicatedPlayerManager getPlayerList();
+    net.minecraft.server.dedicated.DedicatedPlayerManager getPlayerList();
 
-	void setIdleTimeout(int var0);
+    void setIdleTimeout(int var0);
 
-	java.util.Optional getModded();
+    java.util.Optional<java.lang.String> getModded();
 
-	boolean getEnableCommandBlock();
+    boolean getEnableCommandBlock();
 
-	org.bukkit.command.CommandSender getBukkitSender(net.minecraft.server.command.ServerCommandSource var0);
+    org.bukkit.command.CommandSender getBukkitSender(net.minecraft.server.command.ServerCommandSource var0);
 
-	boolean init();
+    boolean init();
 
-	boolean getSpawnMonsters();
+    boolean getSpawnMonsters();
 
-	boolean getSpawnAnimals();
+    boolean getSpawnAnimals();
 
-	boolean isSyncChunkWrites();
+    boolean isSyncChunkWrites();
 }
