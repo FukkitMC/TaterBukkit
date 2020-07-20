@@ -125,7 +125,7 @@ public class CraftEntityEquipment implements EntityEquipment {
     }
 
     private void setEquipment(net.minecraft.entity.EquipmentSlot slot, ItemStack stack) {
-        entity.getHandle().a(slot, CraftItemStack.asNMSCopy(stack));
+        entity.getHandle().equipStack(slot, CraftItemStack.asNMSCopy(stack));
     }
 
     @Override

@@ -76,7 +76,7 @@ public class CraftBlockData implements BlockData {
     protected <B extends Enum<B>> Set<B> getValues(EnumProperty<?> nms, Class<B> bukkit) {
         ImmutableSet.Builder<B> values = ImmutableSet.builder();
 
-        for (Enum<?> e : nms.a()) {
+        for (Enum<?> e : nms.getValues()) {
             values.add(toBukkit(e, bukkit));
         }
 
@@ -265,7 +265,7 @@ public class CraftBlockData implements BlockData {
 
     // Mimicked from BlockDataAbstract#toString()
     public String toString(Map<Property<?>, Comparable<?>> states) {
-        StringBuilder stateString = new StringBuilder(Registry.BLOCK.b(state.getBlock()).toString());
+        StringBuilder stateString = new StringBuilder(Registry.BLOCK.getId(state.getBlock()).toString());
 
         if (!states.isEmpty()) {
             stateString.append('[');
@@ -347,9 +347,9 @@ public class CraftBlockData implements BlockData {
         for (Block instance : Registry.BLOCK) {
             if (instance.getClass() == block) {
                 if (state == null) {
-                    state = instance.getStateManager().a(name);
+                    state = instance.getStateManager().getProperty(name);
                 } else {
-                    Property<?> newState = instance.getStateManager().a(name);
+                    Property<?> newState = instance.getStateManager().getProperty(name);
 
                     Preconditions.checkState(state == newState, "State mistmatch %s,%s", state, newState);
                 }
@@ -532,11 +532,11 @@ public class CraftBlockData implements BlockData {
             try {
                 // Material provided, force that material in
                 if (block != null) {
-                    data = Registry.BLOCK.b(block) + data;
+                    data = Registry.BLOCK.getId(block) + data;
                 }
 
                 StringReader reader = new StringReader(data);
-                BlockArgumentParser arg = new BlockArgumentParser(reader, false).a(false);
+                BlockArgumentParser arg = new BlockArgumentParser(reader, false).parse(false);
                 Preconditions.checkArgument(!reader.canRead(), "Spurious trailing data: " + data);
 
                 blockData = arg.getBlockState();

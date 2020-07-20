@@ -500,7 +500,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
 
     @Override
     public List<org.bukkit.entity.Entity> getNearbyEntities(double x, double y, double z) {
-        List<Entity> notchEntityList = entity.world.a(entity, entity.getBoundingBox().expand(x, y, z), null);
+        List<Entity> notchEntityList = entity.world.getEntities(entity, entity.getBoundingBox().expand(x, y, z), null);
         List<org.bukkit.entity.Entity> bukkitEntityList = new java.util.ArrayList<org.bukkit.entity.Entity>(notchEntityList.size());
 
         for (Entity e : notchEntityList) {
@@ -597,7 +597,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
     public boolean addPassenger(org.bukkit.entity.Entity passenger) {
         Preconditions.checkArgument(passenger != null, "passenger == null");
 
-        return ((CraftEntity) passenger).getHandle().a(getHandle(), true);
+        return ((CraftEntity) passenger).getHandle().startRiding(getHandle(), true);
     }
 
     @Override
@@ -758,7 +758,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
 
     @Override
     public String getCustomName() {
-        Text name = getHandle().R();
+        Text name = getHandle().getCustomName();
 
         if (name == null) {
             return null;
@@ -789,7 +789,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
 
     @Override
     public String getName() {
-        return CraftChatMessage.fromComponent(getHandle().P());
+        return CraftChatMessage.fromComponent(getHandle().getName());
     }
 
     @Override

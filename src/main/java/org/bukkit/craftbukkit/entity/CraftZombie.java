@@ -31,7 +31,7 @@ public class CraftZombie extends CraftMonster implements Zombie {
 
     @Override
     public boolean isBaby() {
-        return getHandle().x_();
+        return getHandle().isBaby();
     }
 
     @Override

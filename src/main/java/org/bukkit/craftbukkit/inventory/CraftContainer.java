@@ -93,7 +93,7 @@ public class CraftContainer extends ScreenHandler {
     }
 
     @Override
-    public boolean c(PlayerEntity entityhuman) {
+    public boolean isNotRestricted(PlayerEntity entityhuman) {
         if (cachedType == view.getType() && cachedSize == getSize() && cachedTitle.equals(view.getTitle())) {
             return true;
         }
@@ -271,25 +271,25 @@ public class CraftContainer extends ScreenHandler {
 
     private void setupWorkbench(net.minecraft.inventory.Inventory top, net.minecraft.inventory.Inventory bottom) {
         // This code copied from ContainerWorkbench
-        this.a(new Slot(top, 0, 124, 35));
+        this.addSlot(new Slot(top, 0, 124, 35));
 
         int row;
         int col;
 
         for (row = 0; row < 3; ++row) {
             for (col = 0; col < 3; ++col) {
-                this.a(new Slot(top, 1 + col + row * 3, 30 + col * 18, 17 + row * 18));
+                this.addSlot(new Slot(top, 1 + col + row * 3, 30 + col * 18, 17 + row * 18));
             }
         }
 
         for (row = 0; row < 3; ++row) {
             for (col = 0; col < 9; ++col) {
-                this.a(new Slot(bottom, col + row * 9 + 9, 8 + col * 18, 84 + row * 18));
+                this.addSlot(new Slot(bottom, col + row * 9 + 9, 8 + col * 18, 84 + row * 18));
             }
         }
 
         for (col = 0; col < 9; ++col) {
-            this.a(new Slot(bottom, col, 8 + col * 18, 142));
+            this.addSlot(new Slot(bottom, col, 8 + col * 18, 142));
         }
         // End copy from ContainerWorkbench
     }

@@ -13,7 +13,7 @@ public class CraftZoglin extends CraftMonster implements Zoglin {
 
     @Override
     public boolean isBaby() {
-        return getHandle().x_();
+        return getHandle().isBaby();
     }
 
     @Override

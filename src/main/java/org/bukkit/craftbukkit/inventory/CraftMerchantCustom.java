@@ -66,13 +66,13 @@ public class CraftMerchantCustom extends CraftMerchant {
         }
 
         @Override
-        public void a(TradeOffer merchantrecipe) {
+        public void trade(TradeOffer merchantrecipe) {
             // increase recipe's uses
             merchantrecipe.use();
         }
 
         @Override
-        public void k(ItemStack itemstack) {
+        public void onSellingItem(ItemStack itemstack) {
         }
 
         public Text getScoreboardDisplayName() {

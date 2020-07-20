@@ -12,7 +12,7 @@ public final class CraftNamespacedKey {
         if (string == null || string.isEmpty()) {
             return null;
         }
-        Identifier minecraft = Identifier.a(string);
+        Identifier minecraft = Identifier.tryParse(string);
         return (minecraft == null) ? null : fromMinecraft(minecraft);
     }
 

@@ -69,9 +69,9 @@ public class CraftArrow extends AbstractProjectile implements AbstractArrow {
     @Override
     public void setShooter(ProjectileSource shooter) {
         if (shooter instanceof Entity) {
-            getHandle().b(((CraftEntity) shooter).getHandle());
+            getHandle().setOwner(((CraftEntity) shooter).getHandle());
         } else {
-            getHandle().b(null);
+            getHandle().setOwner(null);
         }
         getHandle().projectileSource = shooter;
     }
@@ -99,7 +99,7 @@ public class CraftArrow extends AbstractProjectile implements AbstractArrow {
     @Override
     public void setPickupStatus(PickupStatus status) {
         Preconditions.checkNotNull(status, "status");
-        getHandle().pickupType = PersistentProjectileEntity.PickupPermission.a(status.ordinal());
+        getHandle().pickupType = PersistentProjectileEntity.PickupPermission.fromOrdinal(status.ordinal());
     }
 
     @Override

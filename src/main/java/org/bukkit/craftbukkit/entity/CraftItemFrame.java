@@ -24,10 +24,10 @@ public class CraftItemFrame extends CraftHanging implements ItemFrame {
     @Override
     public boolean setFacingDirection(BlockFace face, boolean force) {
         AbstractDecorationEntity hanging = getHandle();
-        Direction oldDir = hanging.bY();
+        Direction oldDir = hanging.getHorizontalFacing();
         Direction newDir = CraftBlock.blockFaceToNotch(face);
 
-        getHandle().a(newDir);
+        getHandle().setFacing(newDir);
         if (!force && !hanging.canStayAttached()) {
             hanging.setFacing(oldDir);
             return false;
@@ -43,14 +43,14 @@ public class CraftItemFrame extends CraftHanging implements ItemFrame {
 
         ServerWorld world = ((CraftWorld) getWorld()).getHandle();
         BlockPos position = old.getDecorationBlockPos();
-        Direction direction = old.bY();
+        Direction direction = old.getHorizontalFacing();
         ItemStack item = old.getHeldItemStack() != null ? old.getHeldItemStack().copy() : null;
 
         old.remove();
 
         ItemFrameEntity frame = new ItemFrameEntity(world, position, direction);
         frame.setHeldItemStack(item);
-        world.c(frame);
+        world.spawnEntity(frame);
         this.entity = frame;
     }
 

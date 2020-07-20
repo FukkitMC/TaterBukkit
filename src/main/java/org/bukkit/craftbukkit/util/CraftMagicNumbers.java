@@ -87,11 +87,11 @@ public final class CraftMagicNumbers implements UnsafeValues {
 
     static {
         for (Block block : Registry.BLOCK) {
-            BLOCK_MATERIAL.put(block, Material.getMaterial(Registry.BLOCK.b(block).getPath().toUpperCase(Locale.ROOT)));
+            BLOCK_MATERIAL.put(block, Material.getMaterial(Registry.BLOCK.getId(block).getPath().toUpperCase(Locale.ROOT)));
         }
 
         for (Item item : Registry.ITEM) {
-            ITEM_MATERIAL.put(item, Material.getMaterial(Registry.ITEM.b(item).getPath().toUpperCase(Locale.ROOT)));
+            ITEM_MATERIAL.put(item, Material.getMaterial(Registry.ITEM.getId(item).getPath().toUpperCase(Locale.ROOT)));
         }
 
         for (Material material : Material.values()) {
@@ -100,10 +100,10 @@ public final class CraftMagicNumbers implements UnsafeValues {
             }
 
             Identifier key = key(material);
-            Registry.ITEM.b(key).ifPresent((item) -> {
+            Registry.ITEM.getOrEmpty(key).ifPresent((item) -> {
                 MATERIAL_ITEM.put(material, item);
             });
-            Registry.BLOCK.b(key).ifPresent((block) -> {
+            Registry.BLOCK.getOrEmpty(key).ifPresent((block) -> {
                 MATERIAL_BLOCK.put(material, block);
             });
         }
@@ -179,7 +179,7 @@ public final class CraftMagicNumbers implements UnsafeValues {
         CompoundTag stack = new CompoundTag();
         stack.putString("id", "minecraft:" + material.toLowerCase(Locale.ROOT));
 
-        Dynamic<Tag> converted = Schemas.getFixer().update(TypeReferences.ITEM_STACK, new Dynamic<>(NbtOps.a, stack), version, this.getDataVersion());
+        Dynamic<Tag> converted = Schemas.getFixer().update(TypeReferences.ITEM_STACK, new Dynamic<>(NbtOps.INSTANCE, stack), version, this.getDataVersion());
         String newId = converted.get("id").asString("");
 
         return Material.matchMaterial(newId);
@@ -225,7 +225,7 @@ public final class CraftMagicNumbers implements UnsafeValues {
     }
 
     private static File getBukkitDataPackFolder() {
-        return new File(MinecraftServer.getServer().a(WorldSavePath.DATAPACKS).toFile(), "bukkit");
+        return new File(MinecraftServer.getServer().getSavePath(WorldSavePath.DATAPACKS).toFile(), "bukkit");
     }
 
     @Override
@@ -237,7 +237,7 @@ public final class CraftMagicNumbers implements UnsafeValues {
 
         JsonElement jsonelement = ServerAdvancementLoader.GSON.fromJson(advancement, JsonElement.class);
         JsonObject jsonobject = JsonHelper.asObject(jsonelement, "advancement");
-        net.minecraft.advancement.Advancement.Task nms = net.minecraft.advancement.Advancement.Task.a(jsonobject, new AdvancementEntityPredicateDeserializer(minecraftkey, MinecraftServer.getServer().aI()));
+        net.minecraft.advancement.Advancement.Task nms = net.minecraft.advancement.Advancement.Task.fromJson(jsonobject, new AdvancementEntityPredicateDeserializer(minecraftkey, MinecraftServer.getServer().getPredicateManager()));
         if (nms != null) {
             MinecraftServer.getServer().getAdvancementData().manager.load(Maps.newHashMap(Collections.singletonMap(minecraftkey, nms)));
             Advancement bukkit = Bukkit.getAdvancement(key);

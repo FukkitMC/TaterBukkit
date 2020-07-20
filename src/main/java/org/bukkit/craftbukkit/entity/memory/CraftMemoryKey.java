@@ -10,10 +10,10 @@ public final class CraftMemoryKey {
     private CraftMemoryKey() {}
 
     public static <T, U> MemoryModuleType<U> fromMemoryKey(MemoryKey<T> memoryKey) {
-        return (MemoryModuleType<U>) Registry.MEMORY_MODULE_TYPE.a(CraftNamespacedKey.toMinecraft(memoryKey.getKey()));
+        return (MemoryModuleType<U>) Registry.MEMORY_MODULE_TYPE.get(CraftNamespacedKey.toMinecraft(memoryKey.getKey()));
     }
 
     public static <T, U> MemoryKey<U> toMemoryKey(MemoryModuleType<T> memoryModuleType) {
-        return MemoryKey.getByKey(CraftNamespacedKey.fromMinecraft(Registry.MEMORY_MODULE_TYPE.b(memoryModuleType)));
+        return MemoryKey.getByKey(CraftNamespacedKey.fromMinecraft(Registry.MEMORY_MODULE_TYPE.getId(memoryModuleType)));
     }
 }

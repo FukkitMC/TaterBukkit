@@ -182,7 +182,7 @@ public class CraftBlockState implements BlockState {
 
         net.minecraft.block.BlockState newBlock = this.data;
         block.setTypeAndData(newBlock, applyPhysics);
-        world.getHandle().a(
+        world.getHandle().updateListeners(
                 position,
                 block.getNMS(),
                 newBlock,

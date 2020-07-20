@@ -26,13 +26,13 @@ public class BlockStateListPopulator extends DummyGeneratorAccess {
     @Override
     public net.minecraft.block.BlockState getBlockState(BlockPos bp) {
         CraftBlockState state = list.get(bp);
-        return (state != null) ? state.getHandle() : world.d_(bp);
+        return (state != null) ? state.getHandle() : world.getBlockState(bp);
     }
 
     @Override
     public FluidState getFluidState(BlockPos bp) {
         CraftBlockState state = list.get(bp);
-        return (state != null) ? state.getHandle().getFluidState() : world.b(bp);
+        return (state != null) ? state.getHandle().getFluidState() : world.getFluidState(bp);
     }
 
     @Override

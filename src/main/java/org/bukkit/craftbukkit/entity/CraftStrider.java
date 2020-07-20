@@ -25,41 +25,41 @@ public class CraftStrider extends CraftAnimals implements Strider {
 
     @Override
     public boolean hasSaddle() {
-        return getHandle().N_();
+        return getHandle().isSaddled();
     }
 
     @Override
     public void setSaddle(boolean saddled) {
-        getHandle().bA.setSaddled(saddled);
+        getHandle().saddledComponent.setSaddled(saddled);
     }
 
     @Override
     public int getBoostTicks() {
-        return getHandle().bA.boosted ? getHandle().bA.currentBoostTime : 0;
+        return getHandle().saddledComponent.boosted ? getHandle().saddledComponent.currentBoostTime : 0;
     }
 
     @Override
     public void setBoostTicks(int ticks) {
         Preconditions.checkArgument(ticks >= 0, "ticks must be >= 0");
 
-        getHandle().bA.setBoostTicks(ticks);
+        getHandle().saddledComponent.setBoostTicks(ticks);
     }
 
     @Override
     public int getCurrentBoostTicks() {
-        return getHandle().bA.boosted ? getHandle().bA.field_23216 : 0;
+        return getHandle().saddledComponent.boosted ? getHandle().saddledComponent.field_23216 : 0;
     }
 
     @Override
     public void setCurrentBoostTicks(int ticks) {
-        if (!getHandle().bA.boosted) {
+        if (!getHandle().saddledComponent.boosted) {
             return;
         }
 
-        int max = getHandle().bA.currentBoostTime;
+        int max = getHandle().saddledComponent.currentBoostTime;
         Preconditions.checkArgument(ticks >= 0 && ticks <= max, "boost ticks must not exceed 0 or %d (inclusive)", max);
 
-        this.getHandle().bA.field_23216 = ticks;
+        this.getHandle().saddledComponent.field_23216 = ticks;
     }
 
     @Override

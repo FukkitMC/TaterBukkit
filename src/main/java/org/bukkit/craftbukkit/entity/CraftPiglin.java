@@ -55,7 +55,7 @@ public class CraftPiglin extends CraftMonster implements Piglin {
 
     @Override
     public boolean isBaby() {
-        return getHandle().x_();
+        return getHandle().isBaby();
     }
 
     @Override

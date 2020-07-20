@@ -45,11 +45,11 @@ public final class CraftChatMessage {
         // Separate pattern with no group 3, new lines are part of previous string
         private static final Pattern INCREMENTAL_PATTERN_KEEP_NEWLINES = Pattern.compile("(" + String.valueOf(org.bukkit.ChatColor.COLOR_CHAR) + "[0-9a-fk-orx])|((?:(?:https?):\\/\\/)?(?:[-\\w_\\.]{2,}\\.[a-z]{2,4}.*?(?=[\\.\\?!,;:]?(?:[" + String.valueOf(org.bukkit.ChatColor.COLOR_CHAR) + " ]|$))))", Pattern.CASE_INSENSITIVE);
         // ChatColor.b does not explicitly reset, its more of empty
-        private static final Style RESET = Style.b.withBold(false).withItalic(false).setUnderline(false).setStrikethrough(false).setRandom(false);
+        private static final Style RESET = Style.EMPTY.withBold(false).withItalic(false).setUnderline(false).setStrikethrough(false).setRandom(false);
 
         private final List<Text> list = new ArrayList<Text>();
         private MutableText currentChatComponent = new LiteralText("");
-        private Style modifier = Style.b;
+        private Style modifier = Style.EMPTY;
         private final Text[] output;
         private int currentIndex;
         private StringBuilder hex;
@@ -87,7 +87,7 @@ public final class CraftChatMessage {
                         hex.append(c);
 
                         if (hex.length() == 7) {
-                            modifier = RESET.withColor(TextColor.a(hex.toString()));
+                            modifier = RESET.withColor(TextColor.parse(hex.toString()));
                             hex = null;
                         }
                     } else if (format.isModifier() && format != Formatting.RESET) {
@@ -141,7 +141,7 @@ public final class CraftChatMessage {
         }
 
         private void appendNewComponent(int index) {
-            Text addition = new LiteralText(message.substring(currentIndex, index)).a(modifier);
+            Text addition = new LiteralText(message.substring(currentIndex, index)).setStyle(modifier);
             currentIndex = index;
             if (currentChatComponent == null) {
                 currentChatComponent = new LiteralText("");
@@ -172,7 +172,7 @@ public final class CraftChatMessage {
     }
 
     public static String toJSON(Text component) {
-        return Text.Serializer.a(component);
+        return Text.Serializer.toJson(component);
     }
 
     public static String fromComponent(Text component) {
@@ -219,7 +219,7 @@ public final class CraftChatMessage {
                 out.append(Formatting.OBFUSCATED);
                 hadFormat = true;
             }
-            c.b((x) -> {
+            c.visitSelf((x) -> {
                 out.append(x);
                 return Optional.empty();
             });
@@ -235,13 +235,13 @@ public final class CraftChatMessage {
     private static Text fixComponent(Text component, Matcher matcher) {
         if (component instanceof LiteralText) {
             LiteralText text = ((LiteralText) component);
-            String msg = text.a();
+            String msg = text.asString();
             if (matcher.reset(msg).find()) {
                 matcher.reset();
 
-                Style modifier = text.c();
+                Style modifier = text.getStyle();
                 List<Text> extras = new ArrayList<Text>();
-                List<Text> extrasOld = new ArrayList<Text>(text.b());
+                List<Text> extrasOld = new ArrayList<Text>(text.getSiblings());
                 component = text = new LiteralText("");
 
                 int pos = 0;
@@ -253,24 +253,24 @@ public final class CraftChatMessage {
                     }
 
                     LiteralText prev = new LiteralText(msg.substring(pos, matcher.start()));
-                    prev.a(modifier);
+                    prev.setStyle(modifier);
                     extras.add(prev);
 
                     LiteralText link = new LiteralText(matcher.group());
                     Style linkModi = modifier.withClickEvent(new ClickEvent(Action.OPEN_URL, match));
-                    link.a(linkModi);
+                    link.setStyle(linkModi);
                     extras.add(link);
 
                     pos = matcher.end();
                 }
 
                 LiteralText prev = new LiteralText(msg.substring(pos));
-                prev.a(modifier);
+                prev.setStyle(modifier);
                 extras.add(prev);
                 extras.addAll(extrasOld);
 
                 for (Text c : extras) {
-                    text.a(c);
+                    text.append(c);
                 }
             }
         }

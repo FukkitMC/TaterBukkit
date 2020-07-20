@@ -1110,7 +1110,7 @@ public class CraftEventFactory {
 
     public static ScreenHandler callInventoryOpenEvent(ServerPlayerEntity player, ScreenHandler container, boolean cancelled) {
         if (player.currentScreenHandler != player.playerScreenHandler) { // fire INVENTORY_CLOSE if one already open
-            player.networkHandler.a(new GuiCloseC2SPacket(player.currentScreenHandler.syncId));
+            player.networkHandler.onGuiClose(new GuiCloseC2SPacket(player.currentScreenHandler.syncId));
         }
 
         CraftServer server = player.world.getServer();
@@ -1579,7 +1579,7 @@ public class CraftEventFactory {
     public static LootGenerateEvent callLootGenerateEvent(Inventory inventory, LootTable lootTable, LootContext lootInfo, List<ItemStack> loot, boolean plugin) {
         CraftWorld world = lootInfo.getWorld().getWorld();
         Entity entity = lootInfo.get(LootContextParameters.THIS_ENTITY);
-        NamespacedKey key = CraftNamespacedKey.fromMinecraft(world.getHandle().l().getLootTableRegistry().lootTableToKey.get(lootTable));
+        NamespacedKey key = CraftNamespacedKey.fromMinecraft(world.getHandle().getServer().getLootTableRegistry().lootTableToKey.get(lootTable));
         CraftLootTable craftLootTable = new CraftLootTable(key, lootTable);
         List<org.bukkit.inventory.ItemStack> bukkitLoot = loot.stream().map(CraftItemStack::asCraftMirror).collect(Collectors.toCollection(ArrayList::new));
 

@@ -40,7 +40,7 @@ public class CraftMetaCompass extends CraftMetaItem implements CompassMeta {
     CraftMetaCompass(CompoundTag tag) {
         super(tag);
         if (tag.contains(LODESTONE_DIMENSION.NBT) && tag.contains(LODESTONE_POS.NBT)) {
-            Optional<RegistryKey<net.minecraft.world.World>> key = net.minecraft.world.World.CODEC.parse(NbtOps.a, tag.get(LODESTONE_DIMENSION.NBT)).result();
+            Optional<RegistryKey<net.minecraft.world.World>> key = net.minecraft.world.World.CODEC.parse(NbtOps.INSTANCE, tag.get(LODESTONE_DIMENSION.NBT)).result();
 
             if (key.isPresent()) {
                 World world = MinecraftServer.getServer().getWorldServer(key.get()).getWorld();
@@ -74,7 +74,7 @@ public class CraftMetaCompass extends CraftMetaItem implements CompassMeta {
             tag.put(LODESTONE_POS.NBT, pos);
 
             RegistryKey<net.minecraft.world.World> key = ((CraftWorld) lodestone.getWorld()).getHandle().getRegistryKey();
-            DataResult<Tag> dataresult = net.minecraft.world.World.CODEC.encodeStart(NbtOps.a, key);
+            DataResult<Tag> dataresult = net.minecraft.world.World.CODEC.encodeStart(NbtOps.INSTANCE, key);
             tag.put(LODESTONE_DIMENSION.NBT, dataresult.get().orThrow());
         }
 

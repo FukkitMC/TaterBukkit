@@ -109,11 +109,11 @@ class CraftMetaMap extends CraftMetaItem implements MapMeta {
         }
 
         if (hasLocationName()) {
-            setDisplayTag(tag, MAP_LOC_NAME.NBT, StringTag.a(getLocationName()));
+            setDisplayTag(tag, MAP_LOC_NAME.NBT, StringTag.of(getLocationName()));
         }
 
         if (hasColor()) {
-            setDisplayTag(tag, MAP_COLOR.NBT, IntTag.a(color.asRGB()));
+            setDisplayTag(tag, MAP_COLOR.NBT, IntTag.of(color.asRGB()));
         }
     }
 

@@ -77,7 +77,7 @@ public class CraftMetaBook extends CraftMetaItem implements BookMeta {
                 String page = pages.getString(i);
                 if (resolved) {
                     try {
-                        this.pages.add(Serializer.a(page));
+                        this.pages.add(Serializer.fromJson(page));
                         continue;
                     } catch (Exception e) {
                         // Ignore and treat as an old book
@@ -127,7 +127,7 @@ public class CraftMetaBook extends CraftMetaItem implements BookMeta {
             if (hasPages()) {
                 ListTag list = new ListTag();
                 for (Text page : pages) {
-                    list.add(StringTag.a(page == null ? "" : CraftChatMessage.fromComponent(page)));
+                    list.add(StringTag.of(page == null ? "" : CraftChatMessage.fromComponent(page)));
                 }
                 itemData.put(BOOK_PAGES.NBT, list);
             }

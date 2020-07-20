@@ -25,16 +25,16 @@ public final class CraftItemStack extends ItemStack {
     public static net.minecraft.item.ItemStack asNMSCopy(ItemStack original) {
         if (original instanceof CraftItemStack) {
             CraftItemStack stack = (CraftItemStack) original;
-            return stack.handle == null ? net.minecraft.item.ItemStack.b : stack.handle.copy();
+            return stack.handle == null ? net.minecraft.item.ItemStack.EMPTY : stack.handle.copy();
         }
         if (original == null || original.getType() == Material.AIR) {
-            return net.minecraft.item.ItemStack.b;
+            return net.minecraft.item.ItemStack.EMPTY;
         }
 
         Item item = CraftMagicNumbers.getItem(original.getType(), original.getDurability());
 
         if (item == null) {
-            return net.minecraft.item.ItemStack.b;
+            return net.minecraft.item.ItemStack.EMPTY;
         }
 
         net.minecraft.item.ItemStack stack = new net.minecraft.item.ItemStack(item, original.getAmount());

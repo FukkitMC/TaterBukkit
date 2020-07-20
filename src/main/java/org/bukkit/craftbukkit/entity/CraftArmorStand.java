@@ -162,7 +162,7 @@ public class CraftArmorStand extends CraftLivingEntity implements ArmorStand {
 
     @Override
     public void setVisible(boolean visible) {
-        getHandle().j(!visible);
+        getHandle().setInvisible(!visible);
     }
 
     @Override

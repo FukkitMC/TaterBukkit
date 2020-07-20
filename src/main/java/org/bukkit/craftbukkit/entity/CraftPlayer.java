@@ -154,9 +154,9 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         if (value == isOp()) return;
 
         if (value) {
-            server.getHandle().a(getProfile());
+            server.getHandle().addToOperators(getProfile());
         } else {
-            server.getHandle().b(getProfile());
+            server.getHandle().removeFromOperators(getProfile());
         }
 
         perm.recalculatePermissions();
@@ -552,7 +552,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         sign.setTextColor(net.minecraft.util.DyeColor.byId(dyeColor.getWoolData()));
         System.arraycopy(components, 0, sign.text, 0, sign.text.length);
 
-        getHandle().networkHandler.sendPacket(sign.a());
+        getHandle().networkHandler.sendPacket(sign.toUpdatePacket());
     }
 
     @Override
@@ -597,7 +597,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         Collection<MapIcon> icons = new ArrayList<MapIcon>();
         for (MapCursor cursor : data.cursors) {
             if (cursor.isVisible()) {
-                icons.add(new MapIcon(MapIcon.Type.a(cursor.getRawType()), cursor.getX(), cursor.getY(), cursor.getDirection(), CraftChatMessage.fromStringOrNull(cursor.getCaption())));
+                icons.add(new MapIcon(MapIcon.Type.byId(cursor.getRawType()), cursor.getX(), cursor.getY(), cursor.getDirection(), CraftChatMessage.fromStringOrNull(cursor.getCaption())));
             }
         }
 
@@ -644,7 +644,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         }
 
         // If this player is riding another entity, we must dismount before teleporting.
-        entity.l();
+        entity.stopRiding();
 
         // SPIGOT-5509: Wakeup, similar to riding
         if (this.isSleeping()) {
@@ -661,7 +661,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
 
         // Close any foreign inventory
         if (getHandle().currentScreenHandler != getHandle().playerScreenHandler) {
-            getHandle().m();
+            getHandle().closeHandledScreen();
         }
 
         // Check if the fromWorld and toWorld are the same.
@@ -690,7 +690,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
 
     @Override
     public void setSprinting(boolean sprinting) {
-        getHandle().g(sprinting);
+        getHandle().setSprinting(sprinting);
     }
 
     @Override
@@ -760,13 +760,13 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
     @Override
     public boolean hasDiscoveredRecipe(NamespacedKey recipe) {
         Preconditions.checkArgument(recipe != null, "recipe cannot be null");
-        return getHandle().B().b(CraftNamespacedKey.toMinecraft(recipe));
+        return getHandle().getRecipeBook().contains(CraftNamespacedKey.toMinecraft(recipe));
     }
 
     @Override
     public Set<NamespacedKey> getDiscoveredRecipes() {
         ImmutableSet.Builder<NamespacedKey> bukkitRecipeKeys = ImmutableSet.builder();
-        getHandle().B().recipes.forEach(key -> bukkitRecipeKeys.add(CraftNamespacedKey.fromMinecraft(key)));
+        getHandle().getRecipeBook().recipes.forEach(key -> bukkitRecipeKeys.add(CraftNamespacedKey.fromMinecraft(key)));
         return bukkitRecipeKeys.build();
     }
 
@@ -928,7 +928,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
             throw new IllegalArgumentException("Mode cannot be null");
         }
 
-        getHandle().a(net.minecraft.world.GameMode.byId(mode.getValue()));
+        getHandle().setGameMode(net.minecraft.world.GameMode.byId(mode.getValue()));
     }
 
     @Override
@@ -938,12 +938,12 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
 
     @Override
     public void giveExp(int exp) {
-        getHandle().d(exp);
+        getHandle().addExperience(exp);
     }
 
     @Override
     public void giveExpLevels(int levels) {
-        getHandle().c(levels);
+        getHandle().addExperienceLevels(levels);
     }
 
     @Override
@@ -1065,7 +1065,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         hiddenPlayers.put(player.getUniqueId(), hidingPlugins);
 
         // Remove this player from the hidden player's EntityTrackerEntry
-        ThreadedAnvilChunkStorage tracker = ((ServerWorld) entity.world).E().threadedAnvilChunkStorage;
+        ThreadedAnvilChunkStorage tracker = ((ServerWorld) entity.world).getChunkManager().threadedAnvilChunkStorage;
         ServerPlayerEntity other = ((CraftPlayer) player).getHandle();
         ThreadedAnvilChunkStorage.EntityTracker entry = tracker.entityTrackers.get(other.getEntityId());
         if (entry != null) {
@@ -1107,7 +1107,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         }
         hiddenPlayers.remove(player.getUniqueId());
 
-        ThreadedAnvilChunkStorage tracker = ((ServerWorld) entity.world).E().threadedAnvilChunkStorage;
+        ThreadedAnvilChunkStorage tracker = ((ServerWorld) entity.world).getChunkManager().threadedAnvilChunkStorage;
         ServerPlayerEntity other = ((CraftPlayer) player).getHandle();
 
         getHandle().networkHandler.sendPacket(new PlayerListS2CPacket(PlayerListS2CPacket.Action.ADD_PLAYER, other));
@@ -1217,7 +1217,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         data.putBoolean("keepLevel", handle.keepLevel);
         data.putLong("firstPlayed", getFirstPlayed());
         data.putLong("lastPlayed", System.currentTimeMillis());
-        data.putString("lastKnownName", handle.bT());
+        data.putString("lastKnownName", handle.getEntityName());
     }
 
     @Override
@@ -1349,7 +1349,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         if (container.getBukkitView().getType() != prop.getType()) {
             return false;
         }
-        getHandle().a(container, prop.getId(), value);
+        getHandle().onPropertyUpdate(container, prop.getId(), value);
         return true;
     }
 
@@ -1370,7 +1370,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         }
 
         getHandle().abilities.flying = value;
-        getHandle().t();
+        getHandle().sendAbilitiesUpdate();
     }
 
     @Override
@@ -1385,7 +1385,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         }
 
         getHandle().abilities.allowFlying = value;
-        getHandle().t();
+        getHandle().sendAbilitiesUpdate();
     }
 
     @Override
@@ -1408,7 +1408,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         validateSpeed(value);
         ServerPlayerEntity player = getHandle();
         player.abilities.flySpeed = value / 2f;
-        player.t();
+        player.sendAbilitiesUpdate();
 
     }
 
@@ -1417,7 +1417,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
         validateSpeed(value);
         ServerPlayerEntity player = getHandle();
         player.abilities.walkSpeed = value / 2f;
-        player.t();
+        player.sendAbilitiesUpdate();
         getHandle().getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED).setBaseValue(player.abilities.walkSpeed); // SPIGOT-5833: combination of the two in 1.16+
     }
 
@@ -1683,7 +1683,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
     public void updateCommands() {
         if (getHandle().networkHandler == null) return;
 
-        getHandle().server.getCommandDispatcher().a(getHandle());
+        getHandle().server.getCommandDispatcher().sendCommandTree(getHandle());
     }
 
     @Override
@@ -1693,7 +1693,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
 
         ItemStack hand = getInventory().getItemInMainHand();
         getInventory().setItemInMainHand(book);
-        getHandle().a(org.bukkit.craftbukkit.inventory.CraftItemStack.asNMSCopy(book), net.minecraft.util.Hand.MAIN_HAND);
+        getHandle().openEditBookScreen(org.bukkit.craftbukkit.inventory.CraftItemStack.asNMSCopy(book), net.minecraft.util.Hand.MAIN_HAND);
         getInventory().setItemInMainHand(hand);
     }
 }

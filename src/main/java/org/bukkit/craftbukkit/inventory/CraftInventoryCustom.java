@@ -55,7 +55,7 @@ public class CraftInventoryCustom extends CraftInventory {
 
         public MinecraftInventory(InventoryHolder owner, int size, String title) {
             Validate.notNull(title, "Title cannot be null");
-            this.items = DefaultedList.a(size, ItemStack.b);
+            this.items = DefaultedList.ofSize(size, ItemStack.EMPTY);
             this.title = title;
             this.viewers = new ArrayList<HumanEntity>();
             this.owner = owner;
@@ -76,9 +76,9 @@ public class CraftInventoryCustom extends CraftInventory {
         public ItemStack removeStack(int i, int j) {
             ItemStack stack = this.getStack(i);
             ItemStack result;
-            if (stack == ItemStack.b) return stack;
+            if (stack == ItemStack.EMPTY) return stack;
             if (stack.getCount() <= j) {
-                this.setStack(i, ItemStack.b);
+                this.setStack(i, ItemStack.EMPTY);
                 result = stack;
             } else {
                 result = CraftItemStack.copyNMSStack(stack, j);
@@ -92,7 +92,7 @@ public class CraftInventoryCustom extends CraftInventory {
         public ItemStack removeStack(int i) {
             ItemStack stack = this.getStack(i);
             ItemStack result;
-            if (stack == ItemStack.b) return stack;
+            if (stack == ItemStack.EMPTY) return stack;
             if (stack.getCount() <= 1) {
                 this.setStack(i, null);
                 result = stack;
@@ -106,7 +106,7 @@ public class CraftInventoryCustom extends CraftInventory {
         @Override
         public void setStack(int i, ItemStack itemstack) {
             items.set(i, itemstack);
-            if (itemstack != ItemStack.b && this.getMaxCountPerStack() > 0 && itemstack.getCount() > this.getMaxCountPerStack()) {
+            if (itemstack != ItemStack.EMPTY && this.getMaxCountPerStack() > 0 && itemstack.getCount() > this.getMaxCountPerStack()) {
                 itemstack.setCount(this.getMaxCountPerStack());
             }
         }
@@ -125,7 +125,7 @@ public class CraftInventoryCustom extends CraftInventory {
         public void markDirty() {}
 
         @Override
-        public boolean a(PlayerEntity entityhuman) {
+        public boolean canPlayerUse(PlayerEntity entityhuman) {
             return true;
         }
 
@@ -159,7 +159,7 @@ public class CraftInventoryCustom extends CraftInventory {
         }
 
         @Override
-        public boolean b(int i, ItemStack itemstack) {
+        public boolean isValid(int i, ItemStack itemstack) {
             return true;
         }
 

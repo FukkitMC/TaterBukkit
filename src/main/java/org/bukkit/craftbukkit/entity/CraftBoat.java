@@ -81,7 +81,7 @@ public class CraftBoat extends CraftVehicle implements Boat {
         return EntityType.BOAT;
     }
 
-    public static TreeSpecies getTreeSpecies(BoatEntity.Type boatType) {
+    public static TreeSpecies getTreeSpecies(BoatEntity.b boatType) {
         switch (boatType) {
             case SPRUCE:
                 return TreeSpecies.REDWOOD;
@@ -99,21 +99,21 @@ public class CraftBoat extends CraftVehicle implements Boat {
         }
     }
 
-    public static BoatEntity.Type getBoatType(TreeSpecies species) {
+    public static BoatEntity.b getBoatType(TreeSpecies species) {
         switch (species) {
             case REDWOOD:
-                return BoatEntity.Type.SPRUCE;
+                return BoatEntity.b.SPRUCE;
             case BIRCH:
-                return BoatEntity.Type.BIRCH;
+                return BoatEntity.b.BIRCH;
             case JUNGLE:
-                return BoatEntity.Type.JUNGLE;
+                return BoatEntity.b.JUNGLE;
             case ACACIA:
-                return BoatEntity.Type.ACACIA;
+                return BoatEntity.b.ACACIA;
             case DARK_OAK:
-                return BoatEntity.Type.DARK_OAK;
+                return BoatEntity.b.DARK_OAK;
             case GENERIC:
             default:
-                return BoatEntity.Type.OAK;
+                return BoatEntity.b.OAK;
         }
     }
 }

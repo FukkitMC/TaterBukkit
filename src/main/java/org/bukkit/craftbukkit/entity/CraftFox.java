@@ -39,7 +39,7 @@ public class CraftFox extends CraftAnimals implements Fox {
     public void setFoxType(Type type) {
         Preconditions.checkArgument(type != null, "type");
 
-        getHandle().setType(FoxEntity.Type.values()[type.ordinal()]);
+        getHandle().setType(FoxEntity.v.values()[type.ordinal()]);
     }
 
     @Override

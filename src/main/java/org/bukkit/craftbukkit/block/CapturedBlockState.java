@@ -41,7 +41,7 @@ public final class CapturedBlockState extends CraftBlockState {
                 for (int k = 0; k < j; ++k) {
                     BeeEntity entitybee = new BeeEntity(EntityType.BEE, generatoraccess.getWorld());
 
-                    tileentitybeehive.a(entitybee, false, random.nextInt(599));
+                    tileentitybeehive.tryEnterHive(entitybee, false, random.nextInt(599));
                 }
             }
             // End copied block

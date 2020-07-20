@@ -15,7 +15,7 @@ public class CraftPig extends CraftAnimals implements Pig {
 
     @Override
     public boolean hasSaddle() {
-        return getHandle().N_();
+        return getHandle().isSaddled();
     }
 
     @Override

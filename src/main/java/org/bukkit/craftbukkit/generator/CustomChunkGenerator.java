@@ -58,7 +58,7 @@ public class CustomChunkGenerator extends InternalChunkGenerator {
 
         @Override
         public Biome getBiome(int x, int y, int z) {
-            return CraftBlock.biomeBaseToBiome(biome.b(x >> 2, y >> 2, z >> 2));
+            return CraftBlock.biomeBaseToBiome(biome.getBiomeForNoiseGen(x >> 2, y >> 2, z >> 2));
         }
 
         @Override
@@ -132,7 +132,7 @@ public class CustomChunkGenerator extends InternalChunkGenerator {
         }
 
         // Set biome grid
-        ((ProtoChunk) ichunkaccess).a(biomegrid.biome);
+        ((ProtoChunk) ichunkaccess).setBiomes(biomegrid.biome);
 
         if (craftData.getTiles() != null) {
             for (BlockPos pos : craftData.getTiles()) {
@@ -205,8 +205,8 @@ public class CustomChunkGenerator extends InternalChunkGenerator {
     }
 
     @Override
-    public BlockView a(int i, int j) {
-        return delegate.a(i, j);
+    public BlockView getColumnSample(int i, int j) {
+        return delegate.getColumnSample(i, j);
     }
 
     @Override

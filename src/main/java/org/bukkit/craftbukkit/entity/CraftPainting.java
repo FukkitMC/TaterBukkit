@@ -33,11 +33,11 @@ public class CraftPainting extends CraftHanging implements Painting {
         PaintingEntity painting = this.getHandle();
         PaintingMotive oldArt = painting.motive;
         painting.motive = CraftArt.BukkitToNotch(art);
-        painting.setFacing(painting.bY());
+        painting.setFacing(painting.getHorizontalFacing());
         if (!force && !painting.canStayAttached()) {
             // Revert painting since it doesn't fit
             painting.motive = oldArt;
-            painting.setFacing(painting.bY());
+            painting.setFacing(painting.getHorizontalFacing());
             return false;
         }
         this.update();
@@ -56,13 +56,13 @@ public class CraftPainting extends CraftHanging implements Painting {
 
     private void update() {
         ServerWorld world = ((CraftWorld) getWorld()).getHandle();
-        PaintingEntity painting = net.minecraft.entity.EntityType.PAINTING.a(world);
+        PaintingEntity painting = net.minecraft.entity.EntityType.PAINTING.create(world);
         painting.attachmentPos = getHandle().attachmentPos;
         painting.motive = getHandle().motive;
-        painting.setFacing(getHandle().bY());
+        painting.setFacing(getHandle().getHorizontalFacing());
         getHandle().remove();
         getHandle().velocityModified = true; // because this occurs when the painting is broken, so it might be important
-        world.c(painting);
+        world.spawnEntity(painting);
         this.entity = painting;
     }
 

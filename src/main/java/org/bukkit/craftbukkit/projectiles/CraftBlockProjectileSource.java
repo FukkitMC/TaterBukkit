@@ -67,8 +67,8 @@ public class CraftBlockProjectileSource implements BlockProjectileSource {
         // Copied from BlockDispenser.dispense()
         BlockPointerImpl isourceblock = new BlockPointerImpl(dispenserBlock.getWorld(), dispenserBlock.getPos());
         // Copied from DispenseBehaviorProjectile
-        Position iposition = DispenserBlock.a(isourceblock);
-        Direction enumdirection = (Direction) isourceblock.e().get(DispenserBlock.FACING);
+        Position iposition = DispenserBlock.getOutputLocation(isourceblock);
+        Direction enumdirection = (Direction) isourceblock.getBlockState().get(DispenserBlock.FACING);
         net.minecraft.world.World world = dispenserBlock.getWorld();
         net.minecraft.entity.Entity launch = null;
 
@@ -112,7 +112,7 @@ public class CraftBlockProjectileSource implements BlockProjectileSource {
             if (SmallFireball.class.isAssignableFrom(projectile)) {
                 launch = new SmallFireballEntity(world, null, d0, d1, d2);
             } else if (WitherSkull.class.isAssignableFrom(projectile)) {
-                launch = EntityType.WITHER_SKULL.a(world);
+                launch = EntityType.WITHER_SKULL.create(world);
                 launch.updatePosition(d0, d1, d2);
                 double d6 = (double) MathHelper.sqrt(d3 * d3 + d4 * d4 + d5 * d5);
 
@@ -120,7 +120,7 @@ public class CraftBlockProjectileSource implements BlockProjectileSource {
                 ((ExplosiveProjectileEntity) launch).posY = d4 / d6 * 0.1D;
                 ((ExplosiveProjectileEntity) launch).posZ = d5 / d6 * 0.1D;
             } else {
-                launch = EntityType.FIREBALL.a(world);
+                launch = EntityType.FIREBALL.create(world);
                 launch.updatePosition(d0, d1, d2);
                 double d6 = (double) MathHelper.sqrt(d3 * d3 + d4 * d4 + d5 * d5);
 

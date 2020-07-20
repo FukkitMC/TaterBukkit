@@ -326,7 +326,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
 
             if (display.contains(NAME.NBT)) {
                 try {
-                    displayName = Text.Serializer.a(display.getString(NAME.NBT));
+                    displayName = Text.Serializer.fromJson(display.getString(NAME.NBT));
                 } catch (JsonParseException ex) {
                     // Ignore (stripped like Vanilla)
                 }
@@ -334,7 +334,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
 
             if (display.contains(LOCNAME.NBT)) {
                 try {
-                    locName = Text.Serializer.a(display.getString(LOCNAME.NBT));
+                    locName = Text.Serializer.fromJson(display.getString(LOCNAME.NBT));
                 } catch (JsonParseException ex) {
                     // Ignore (stripped like Vanilla)
                 }
@@ -347,7 +347,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
                 for (int index = 0; index < list.size(); index++) {
                     String line = list.getString(index);
                     try {
-                        lore.add(Text.Serializer.a(line));
+                        lore.add(Text.Serializer.fromJson(line));
                     } catch (JsonParseException ex) {
                         // Ignore (stripped like Vanilla)
                     }
@@ -429,7 +429,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
                 // entry is not an actual NBTTagCompound. getCompound returns empty NBTTagCompound in that case
                 continue;
             }
-            net.minecraft.entity.attribute.EntityAttributeModifier nmsModifier = net.minecraft.entity.attribute.EntityAttributeModifier.a(entry);
+            net.minecraft.entity.attribute.EntityAttributeModifier nmsModifier = net.minecraft.entity.attribute.EntityAttributeModifier.fromTag(entry);
             if (nmsModifier == null) {
                 continue;
             }
@@ -526,7 +526,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
         if (internal != null) {
             ByteArrayInputStream buf = new ByteArrayInputStream(Base64.decodeBase64(internal));
             try {
-                internalTag = NbtIo.a(buf);
+                internalTag = NbtIo.readCompressed(buf);
                 deserializeInternal(internalTag, map);
                 Set<String> keys = internalTag.getKeys();
                 for (String key : keys) {
@@ -614,10 +614,10 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
     @Overridden
     void applyToItem(CompoundTag itemTag) {
         if (hasDisplayName()) {
-            setDisplayTag(itemTag, NAME.NBT, StringTag.a(CraftChatMessage.toJSON(displayName)));
+            setDisplayTag(itemTag, NAME.NBT, StringTag.of(CraftChatMessage.toJSON(displayName)));
         }
         if (hasLocalizedName()) {
-            setDisplayTag(itemTag, LOCNAME.NBT, StringTag.a(CraftChatMessage.toJSON(locName)));
+            setDisplayTag(itemTag, LOCNAME.NBT, StringTag.of(CraftChatMessage.toJSON(locName)));
         }
 
         if (hasLore()) {
@@ -674,7 +674,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
         ListTag tagList = new ListTag();
         for (Text value : list) {
             // SPIGOT-5342 - horrible hack as 0 version does not go through the Mojang updater
-            tagList.add(StringTag.a(version <= 0 || version >= 1803 ? CraftChatMessage.toJSON(value) : CraftChatMessage.fromComponent(value))); // SPIGOT-4935
+            tagList.add(StringTag.of(version <= 0 || version >= 1803 ? CraftChatMessage.toJSON(value) : CraftChatMessage.fromComponent(value))); // SPIGOT-4935
         }
 
         return tagList;
@@ -1267,7 +1267,7 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
             }
             try {
                 ByteArrayOutputStream buf = new ByteArrayOutputStream();
-                NbtIo.a(internal, buf);
+                NbtIo.writeCompressed(internal, buf);
                 builder.put("internal", Base64.encodeBase64String(buf.toByteArray()));
             } catch (IOException ex) {
                 Logger.getLogger(CraftMetaItem.class.getName()).log(Level.SEVERE, null, ex);

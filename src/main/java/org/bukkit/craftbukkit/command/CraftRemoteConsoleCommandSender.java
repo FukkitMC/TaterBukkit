@@ -15,7 +15,7 @@ public class CraftRemoteConsoleCommandSender extends ServerCommandSender impleme
 
     @Override
     public void sendMessage(String message) {
-        listener.a(new LiteralText(message + "\n"), Util.NIL_UUID); // Send a newline after each message, to preserve formatting.
+        listener.sendSystemMessage(new LiteralText(message + "\n"), Util.NIL_UUID); // Send a newline after each message, to preserve formatting.
     }
 
     @Override

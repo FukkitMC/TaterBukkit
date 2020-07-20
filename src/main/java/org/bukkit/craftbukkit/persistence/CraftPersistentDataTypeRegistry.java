@@ -111,29 +111,29 @@ public final class CraftPersistentDataTypeRegistry {
             Primitives
          */
         if (Objects.equals(Byte.class, type)) {
-            return createAdapter(Byte.class, ByteTag.class, ByteTag::a, ByteTag::h);
+            return createAdapter(Byte.class, ByteTag.class, ByteTag::of, ByteTag::getByte);
         }
         if (Objects.equals(Short.class, type)) {
-            return createAdapter(Short.class, ShortTag.class, ShortTag::a, ShortTag::g);
+            return createAdapter(Short.class, ShortTag.class, ShortTag::of, ShortTag::getShort);
         }
         if (Objects.equals(Integer.class, type)) {
-            return createAdapter(Integer.class, IntTag.class, IntTag::a, IntTag::f);
+            return createAdapter(Integer.class, IntTag.class, IntTag::of, IntTag::getInt);
         }
         if (Objects.equals(Long.class, type)) {
-            return createAdapter(Long.class, LongTag.class, LongTag::a, LongTag::e);
+            return createAdapter(Long.class, LongTag.class, LongTag::of, LongTag::getLong);
         }
         if (Objects.equals(Float.class, type)) {
-            return createAdapter(Float.class, FloatTag.class, FloatTag::a, FloatTag::j);
+            return createAdapter(Float.class, FloatTag.class, FloatTag::of, FloatTag::getFloat);
         }
         if (Objects.equals(Double.class, type)) {
-            return createAdapter(Double.class, DoubleTag.class, DoubleTag::a, DoubleTag::i);
+            return createAdapter(Double.class, DoubleTag.class, DoubleTag::of, DoubleTag::getDouble);
         }
 
         /*
             String
          */
         if (Objects.equals(String.class, type)) {
-            return createAdapter(String.class, StringTag.class, StringTag::a, StringTag::f_);
+            return createAdapter(String.class, StringTag.class, StringTag::of, StringTag::asString);
         }
 
         /*

@@ -94,7 +94,7 @@ public class CraftHumanEntity extends CraftLivingEntity implements HumanEntity {
 
     @Override
     public MainHand getMainHand() {
-        return getHandle().dU() == Arm.LEFT ? MainHand.LEFT : MainHand.RIGHT;
+        return getHandle().getMainArm() == Arm.LEFT ? MainHand.LEFT : MainHand.RIGHT;
     }
 
     @Override
@@ -133,7 +133,7 @@ public class CraftHumanEntity extends CraftLivingEntity implements HumanEntity {
         Preconditions.checkArgument(location.getWorld().equals(getWorld()), "Cannot sleep across worlds");
 
         BlockPos blockposition = new BlockPos(location.getBlockX(), location.getBlockY(), location.getBlockZ());
-        BlockState iblockdata = getHandle().world.d_(blockposition);
+        BlockState iblockdata = getHandle().world.getBlockState(blockposition);
         if (!(iblockdata.getBlock() instanceof BedBlock)) {
             return false;
         }
@@ -144,7 +144,7 @@ public class CraftHumanEntity extends CraftLivingEntity implements HumanEntity {
 
         // From BlockBed
         iblockdata = (BlockState) iblockdata.with(BedBlock.OCCUPIED, true);
-        getHandle().world.a(blockposition, iblockdata, 4);
+        getHandle().world.setBlockState(blockposition, iblockdata, 4);
 
         return true;
     }
@@ -166,7 +166,7 @@ public class CraftHumanEntity extends CraftLivingEntity implements HumanEntity {
 
     @Override
     public String getName() {
-        return getHandle().bT();
+        return getHandle().getEntityName();
     }
 
     @Override
@@ -334,7 +334,7 @@ public class CraftHumanEntity extends CraftLivingEntity implements HumanEntity {
         if (location == null) {
             location = getLocation();
         }
-        getHandle().openHandledScreen(((CraftingTableBlock) Blocks.CRAFTING_TABLE).b(null, getHandle().world, new BlockPos(location.getBlockX(), location.getBlockY(), location.getBlockZ())));
+        getHandle().openHandledScreen(((CraftingTableBlock) Blocks.CRAFTING_TABLE).createScreenHandlerFactory(null, getHandle().world, new BlockPos(location.getBlockX(), location.getBlockY(), location.getBlockZ())));
         if (force) {
             getHandle().currentScreenHandler.checkReachable = false;
         }
@@ -355,7 +355,7 @@ public class CraftHumanEntity extends CraftLivingEntity implements HumanEntity {
 
         // If there isn't an enchant table we can force create one, won't be very useful though.
         BlockPos pos = new BlockPos(location.getBlockX(), location.getBlockY(), location.getBlockZ());
-        getHandle().openHandledScreen(((EnchantingTableBlock) Blocks.ENCHANTING_TABLE).b(null, getHandle().world, pos));
+        getHandle().openHandledScreen(((EnchantingTableBlock) Blocks.ENCHANTING_TABLE).createScreenHandlerFactory(null, getHandle().world, pos));
 
         if (force) {
             getHandle().currentScreenHandler.checkReachable = false;
@@ -369,7 +369,7 @@ public class CraftHumanEntity extends CraftLivingEntity implements HumanEntity {
         if (((ServerPlayerEntity) getHandle()).networkHandler == null) return;
         if (getHandle().currentScreenHandler != getHandle().playerScreenHandler) {
             // fire INVENTORY_CLOSE if one already open
-            ((ServerPlayerEntity) getHandle()).networkHandler.a(new GuiCloseC2SPacket(getHandle().currentScreenHandler.syncId));
+            ((ServerPlayerEntity) getHandle()).networkHandler.onGuiClose(new GuiCloseC2SPacket(getHandle().currentScreenHandler.syncId));
         }
         ServerPlayerEntity player = (ServerPlayerEntity) getHandle();
         ScreenHandler container;
@@ -416,9 +416,9 @@ public class CraftHumanEntity extends CraftLivingEntity implements HumanEntity {
         int level = 1; // note: using level 0 with active 'is-regular-villager'-flag allows hiding the name suffix
         if (merchant instanceof CraftAbstractVillager) {
             mcMerchant = ((CraftAbstractVillager) merchant).getHandle();
-            name = ((CraftAbstractVillager) merchant).getHandle().d();
+            name = ((CraftAbstractVillager) merchant).getHandle().getDisplayName();
             if (merchant instanceof CraftVillager) {
-                level = ((CraftVillager) merchant).getHandle().eY().getLevel();
+                level = ((CraftVillager) merchant).getHandle().getVillagerData().getLevel();
             }
         } else if (merchant instanceof CraftMerchantCustom) {
             mcMerchant = ((CraftMerchantCustom) merchant).getMerchant();
@@ -521,7 +521,7 @@ public class CraftHumanEntity extends CraftLivingEntity implements HumanEntity {
         RecipeManager manager = getHandle().world.getServer().getCraftingManager();
 
         for (NamespacedKey recipeKey : recipeKeys) {
-            Optional<? extends Recipe<?>> recipe = manager.a(CraftNamespacedKey.toMinecraft(recipeKey));
+            Optional<? extends Recipe<?>> recipe = manager.get(CraftNamespacedKey.toMinecraft(recipeKey));
             if (!recipe.isPresent()) {
                 continue;
             }
@@ -535,7 +535,7 @@ public class CraftHumanEntity extends CraftLivingEntity implements HumanEntity {
     @Override
     public org.bukkit.entity.Entity getShoulderEntityLeft() {
         if (!getHandle().getShoulderEntityLeft().isEmpty()) {
-            Optional<Entity> shoulder = EntityType.a(getHandle().getShoulderEntityLeft(), getHandle().world);
+            Optional<Entity> shoulder = EntityType.getEntityFromTag(getHandle().getShoulderEntityLeft(), getHandle().world);
 
             return (!shoulder.isPresent()) ? null : shoulder.get().getBukkitEntity();
         }
@@ -554,7 +554,7 @@ public class CraftHumanEntity extends CraftLivingEntity implements HumanEntity {
     @Override
     public org.bukkit.entity.Entity getShoulderEntityRight() {
         if (!getHandle().getShoulderEntityRight().isEmpty()) {
-            Optional<Entity> shoulder = EntityType.a(getHandle().getShoulderEntityRight(), getHandle().world);
+            Optional<Entity> shoulder = EntityType.getEntityFromTag(getHandle().getShoulderEntityRight(), getHandle().world);
 
             return (!shoulder.isPresent()) ? null : shoulder.get().getBukkitEntity();
         }

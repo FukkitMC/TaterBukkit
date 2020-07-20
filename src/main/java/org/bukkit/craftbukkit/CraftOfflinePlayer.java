@@ -90,9 +90,9 @@ public class CraftOfflinePlayer implements OfflinePlayer, ConfigurationSerializa
         }
 
         if (value) {
-            server.getHandle().a(profile);
+            server.getHandle().addToOperators(profile);
         } else {
-            server.getHandle().b(profile);
+            server.getHandle().removeFromOperators(profile);
         }
     }
 

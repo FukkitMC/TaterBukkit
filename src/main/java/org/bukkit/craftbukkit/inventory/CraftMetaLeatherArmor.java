@@ -51,7 +51,7 @@ class CraftMetaLeatherArmor extends CraftMetaItem implements LeatherArmorMeta {
         super.applyToItem(itemTag);
 
         if (hasColor()) {
-            setDisplayTag(itemTag, COLOR.NBT, IntTag.a(color.asRGB()));
+            setDisplayTag(itemTag, COLOR.NBT, IntTag.of(color.asRGB()));
         }
     }
 

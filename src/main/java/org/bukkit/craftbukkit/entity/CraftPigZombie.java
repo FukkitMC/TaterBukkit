@@ -13,12 +13,12 @@ public class CraftPigZombie extends CraftZombie implements PigZombie {
 
     @Override
     public int getAnger() {
-        return getHandle().F_();
+        return getHandle().getAngerTime();
     }
 
     @Override
     public void setAnger(int level) {
-        getHandle().a_(level);
+        getHandle().setAngerTime(level);
     }
 
     @Override
