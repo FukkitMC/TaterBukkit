@@ -73,11 +73,6 @@ public abstract class CommandManagerMixin implements CommandManagerExtra {
     }
 
     @Override
-    public CommandManager init(boolean var0) {
-        return new CommandManager(var0);
-    }
-
-    @Override
     public int a(ServerCommandSource commandlistenerwrapper, String s, String label) {
         StringReader stringreader = new StringReader(s);
 
@@ -93,9 +88,7 @@ public abstract class CommandManagerMixin implements CommandManagerExtra {
             byte b1;
 
             try {
-                int i = this.dispatcher.execute(stringreader, commandlistenerwrapper);
-
-                return i;
+                return this.dispatcher.execute(stringreader, commandlistenerwrapper);
             } catch (CommandException commandexception) {
                 commandlistenerwrapper.sendError(commandexception.getTextMessage());
                 b1 = 0;
@@ -104,7 +97,7 @@ public abstract class CommandManagerMixin implements CommandManagerExtra {
                 commandlistenerwrapper.sendError(Texts.toText(commandsyntaxexception.getRawMessage()));
                 if (commandsyntaxexception.getInput() != null && commandsyntaxexception.getCursor() >= 0) {
                     int j = Math.min(commandsyntaxexception.getInput().length(), commandsyntaxexception.getCursor());
-                    Text ichatbasecomponent = (new LiteralText("")).formatted(Formatting.GRAY).styled((chatmodifier) -> {
+                    MutableText ichatbasecomponent = (new LiteralText("")).formatted(Formatting.GRAY).styled((chatmodifier) -> {
                         chatmodifier.withClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, label)); // CraftBukkit
                     });
 
@@ -114,7 +107,7 @@ public abstract class CommandManagerMixin implements CommandManagerExtra {
 
                     ichatbasecomponent.append(commandsyntaxexception.getInput().substring(Math.max(0, j - 10), j));
                     if (j < commandsyntaxexception.getInput().length()) {
-                        Text ichatbasecomponent1 = (new LiteralText(commandsyntaxexception.getInput().substring(j))).formatted(Formatting.RED, Formatting.UNDERLINE);
+                        MutableText ichatbasecomponent1 = (new LiteralText(commandsyntaxexception.getInput().substring(j))).formatted(Formatting.RED, Formatting.UNDERLINE);
 
                         ichatbasecomponent.append(ichatbasecomponent1);
                     }

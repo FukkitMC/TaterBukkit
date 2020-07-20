@@ -4,12 +4,16 @@ import com.mojang.authlib.GameProfile;
 import com.mojang.datafixers.util.Either;
 import io.github.fukkitmc.fukkit.extras.ServerPlayerEntityExtra;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.network.ServerPlayerInteractionManager;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
+import net.minecraft.util.Unit;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionType;
 import org.bukkit.WeatherType;
@@ -40,6 +44,21 @@ public class ServerPlayerEntityMixin implements ServerPlayerEntityExtra {
     @Override
     public void tickWeather() {
 
+    }
+
+    @Override
+    public Either<PlayerEntity.SleepFailureReason, Unit> getBedResult(BlockPos var0, Direction var1) {
+        return null;
+    }
+
+    @Override
+    public Scoreboard getScoreboard() {
+        return null;
+    }
+
+    @Override
+    public Entity a(ServerWorld var0, PlayerTeleportEvent.TeleportCause var1) {
+        return null;
     }
 
     @Override

@@ -18,6 +18,8 @@ public class Main {
     public static boolean useJline = true;
     public static boolean useConsole = true;
 
+    public static OptionSet serverOptions = null;
+
     public static void main(String[] args) {
         // Todo: Installation script
         OptionParser parser = new OptionParser() {
@@ -124,21 +126,19 @@ public class Main {
             }
         };
 
-        OptionSet options = null;
-
         try {
-            options = parser.parse(args);
+            serverOptions = parser.parse(args);
         } catch (joptsimple.OptionException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, ex.getLocalizedMessage());
         }
 
-        if ((options == null) || (options.has("?"))) {
+        if ((serverOptions == null) || (serverOptions.has("?"))) {
             try {
                 parser.printHelpOn(System.out);
             } catch (IOException ex) {
                 Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } else if (options.has("v")) {
+        } else if (serverOptions.has("v")) {
             System.out.println(CraftServer.class.getPackage().getImplementationVersion());
         } else {
             // Do you love Java using + and ! as string based identifiers? I sure do!
@@ -161,7 +161,7 @@ public class Main {
 
                 useJline = !(jline_UnsupportedTerminal).equals(System.getProperty(jline_terminal));
 
-                if (options.has("nojline")) {
+                if (serverOptions.has("nojline")) {
                     System.setProperty("user.language", "en");
                     useJline = false;
                 }
@@ -173,7 +173,7 @@ public class Main {
                     System.setProperty(jline.TerminalFactory.JLINE_TERMINAL, jline.UnsupportedTerminal.class.getName());
                 }
 
-                if (options.has("noconsole")) {
+                if (serverOptions.has("noconsole")) {
                     useConsole = false;
                 }
 
@@ -191,7 +191,7 @@ public class Main {
                 }
 
                 System.out.println("Loading libraries, please wait...");
-                net.minecraft.server.Main.main(options);
+                net.minecraft.server.Main.main(serverOptions);
             } catch (Throwable t) {
                 t.printStackTrace();
             }
