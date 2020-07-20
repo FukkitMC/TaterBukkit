@@ -41,13 +41,13 @@ dependencies {
     implementation("mysql:mysql-connector-java:5.1.49")
     // Bukkit API is no longer being published to Spigot's Maven
     // For now, force users to have Bukkit
-    implementation("org.bukkit:bukkit:1.16.1-R0.1-SNAPSHOT")
+    implementation("org.spigotmc:spigot-api:1.16.1-R0.1-SNAPSHOT")
     implementation("org.xerial:sqlite-jdbc:3.32.3")
 
     include("com.googlecode.json-simple:json-simple:1.1.1")
     include("jline:jline:2.12.1")
     include("mysql:mysql-connector-java:5.1.49")
-    include("org.bukkit:bukkit:1.16.1-R0.1-SNAPSHOT")
+    include("org.spgiotmc:spigot-api:1.16.1-R0.1-SNAPSHOT")
     include("org.xerial:sqlite-jdbc:3.32.3")
 }
 

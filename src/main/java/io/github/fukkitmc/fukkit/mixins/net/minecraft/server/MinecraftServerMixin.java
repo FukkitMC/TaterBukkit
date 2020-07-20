@@ -10,6 +10,9 @@ import io.github.fukkitmc.fukkit.extras.MinecraftServerExtra;
 import jline.console.ConsoleReader;
 import net.minecraft.SharedConstants;
 import net.minecraft.network.packet.s2c.play.WorldTimeUpdateS2CPacket;
+import net.minecraft.resource.ResourcePackManager;
+import net.minecraft.resource.ResourcePackProfile;
+import net.minecraft.resource.ServerResourceManager;
 import net.minecraft.server.*;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
@@ -24,13 +27,16 @@ import net.minecraft.util.crash.CrashException;
 import net.minecraft.util.crash.CrashReport;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.RegistryTracker;
 import net.minecraft.util.thread.ReentrantThreadExecutor;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.PersistentStateManager;
+import net.minecraft.world.SaveProperties;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.level.LevelGeneratorType;
 import net.minecraft.world.level.LevelInfo;
 import net.minecraft.world.level.LevelProperties;
+import net.minecraft.world.level.storage.LevelStorage;
 import org.apache.logging.log4j.Logger;
 import org.bukkit.command.CommandSender;
 import org.bukkit.craftbukkit.Main;
@@ -78,7 +84,7 @@ public abstract class MinecraftServerMixin extends ReentrantThreadExecutor<Serve
     public abstract void initScoreboard(PersistentStateManager persistentStateManager);
 
     @Inject(method = "<init>", at = @At("TAIL"))
-    public void init(File gameDir, Proxy proxy, DataFixer dataFixer, CommandManager commandManager, YggdrasilAuthenticationService authService, MinecraftSessionService sessionService, GameProfileRepository gameProfileRepository, UserCache userCache, WorldGenerationProgressListenerFactory worldGenerationProgressListenerFactory, String levelName, CallbackInfo ci) throws IOException {
+    public void init(Thread thread, RegistryTracker.Modifiable modifiable, LevelStorage.Session session, SaveProperties saveProperties, ResourcePackManager<ResourcePackProfile> resourcePackManager, Proxy proxy, DataFixer dataFixer, ServerResourceManager serverResourceManager, MinecraftSessionService minecraftSessionService, GameProfileRepository gameProfileRepository, UserCache userCache, WorldGenerationProgressListenerFactory worldGenerationProgressListenerFactory, CallbackInfo ci) throws IOException {
         MinecraftServer self = (MinecraftServer) (Object) this;
 
         self.processQueue = new java.util.concurrent.ConcurrentLinkedQueue<Runnable>();
@@ -89,7 +95,7 @@ public abstract class MinecraftServerMixin extends ReentrantThreadExecutor<Serve
     }
 
     @Inject(method = "loadWorld", at = @At("TAIL"))
-    public void loadWorld(String name, String serverName, long seed, LevelGeneratorType generatorType, JsonElement generatorSettings, CallbackInfo ci) {
+    public void loadWorld(CallbackInfo ci) {
         ((MinecraftDedicatedServer) (Object) this).server.enablePlugins(org.bukkit.plugin.PluginLoadOrder.POSTWORLD);
         ((MinecraftDedicatedServer) (Object) this).server.getPluginManager().callEvent(new ServerLoadEvent(ServerLoadEvent.LoadType.STARTUP));
         ((MinecraftDedicatedServer) (Object) this).networkIo.acceptConnections();
