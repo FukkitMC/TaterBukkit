@@ -43,16 +43,15 @@ public abstract class PlayerInventoryMixin implements PlayerInventoryExtra {
     public List<DefaultedList<ItemStack>> combinedInventory;
 
     @Shadow
-    public abstract ItemStack getInvStack(int slot);
-
-    @Shadow
     public abstract boolean canStackAddMore(ItemStack existingStack, ItemStack stack);
+
+    @Shadow public abstract ItemStack getStack(int slot);
 
     @Override
     public int canHold(ItemStack itemstack) {
         int remains = itemstack.getCount();
         for (int i = 0; i < this.main.size(); ++i) {
-            ItemStack itemstack1 = this.getInvStack(i);
+            ItemStack itemstack1 = this.getStack(i);
             if (itemstack1.isEmpty()) return itemstack.getCount();
 
             if (this.canStackAddMore(itemstack1, itemstack)) {
@@ -60,7 +59,7 @@ public abstract class PlayerInventoryMixin implements PlayerInventoryExtra {
             }
             if (remains <= 0) return itemstack.getCount();
         }
-        ItemStack offhandItemStack = this.getInvStack(this.main.size() + this.armor.size());
+        ItemStack offhandItemStack = this.getStack(this.main.size() + this.armor.size());
         if (this.canStackAddMore(offhandItemStack, itemstack)) {
             remains -= (Math.min(offhandItemStack.getMaxCount(), ((PlayerInventory) (Object) this).getMaxCountPerStack())) - offhandItemStack.getCount();
         }
