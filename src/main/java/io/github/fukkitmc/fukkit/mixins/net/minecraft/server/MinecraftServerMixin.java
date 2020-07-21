@@ -26,6 +26,7 @@ import net.minecraft.util.Util;
 import net.minecraft.util.crash.CrashException;
 import net.minecraft.util.crash.CrashReport;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.profiler.Profiler;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryTracker;
 import net.minecraft.util.thread.ReentrantThreadExecutor;
@@ -89,6 +90,8 @@ public abstract class MinecraftServerMixin extends ReentrantThreadExecutor<Serve
     @Shadow public ServerResourceManager serverResourceManager;
 
     @Shadow public SaveProperties saveProperties;
+
+    @Shadow public abstract Profiler getProfiler();
 
     @Inject(method = "<init>", at = @At("TAIL"))
     public void init(Thread thread, RegistryTracker.Modifiable modifiable, LevelStorage.Session session, SaveProperties saveProperties, ResourcePackManager<ResourcePackProfile> resourcePackManager, Proxy proxy, DataFixer dataFixer, ServerResourceManager serverResourceManager, MinecraftSessionService minecraftSessionService, GameProfileRepository gameProfileRepository, UserCache userCache, WorldGenerationProgressListenerFactory worldGenerationProgressListenerFactory, CallbackInfo ci) throws IOException {
@@ -167,7 +170,7 @@ public abstract class MinecraftServerMixin extends ReentrantThreadExecutor<Serve
     }
 
     /**
-     * @author
+     * @author fukkit
      */
     @Overwrite
     public void tickWorlds(BooleanSupplier booleansupplier) {
@@ -196,10 +199,8 @@ public abstract class MinecraftServerMixin extends ReentrantThreadExecutor<Serve
         while (iterator.hasNext()) {
             ServerWorld worldserver = (ServerWorld) iterator.next();
 
-            if (true || worldserver.dimension.getType() == DimensionType.OVERWORLD || self.isNetherAllowed()) { // CraftBukkit
-                self.profiler.push(() -> {
-                    return worldserver.getLevelProperties().getLevelName() + " " + Registry.DIMENSION_TYPE.getId(worldserver.dimension.getType());
-                });
+            if (worldserver.dimension == DimensionType.OVERWORLD || self.isNetherAllowed()) { // CraftBukkit
+                self.profiler.push(() -> worldserver.getCraftWorld().getName() + " " + worldserver.dimension);
                 /* Drop global time updates
                 if (((MinecraftServer)(Object)this).ticks % 20 == 0) {
                     ((MinecraftServer)(Object)this).methodProfiler.enter("timeSync");
@@ -291,6 +292,11 @@ public abstract class MinecraftServerMixin extends ReentrantThreadExecutor<Serve
     }
 
     @Override
+    public Profiler getMethodProfiler() {
+        return getProfiler();
+    }
+
+    @Override
     public void loadSpawn(WorldGenerationProgressListener var0, ServerWorld var1) {
     }
 
@@ -304,11 +310,6 @@ public abstract class MinecraftServerMixin extends ReentrantThreadExecutor<Serve
     @Override
     public void executeModerately() {
 
-    }
-
-    @Override
-    public CommandSender getBukkitSender2(ServerCommandSource var0) {
-        return var0.getBukkitSender();
     }
 
     @Override

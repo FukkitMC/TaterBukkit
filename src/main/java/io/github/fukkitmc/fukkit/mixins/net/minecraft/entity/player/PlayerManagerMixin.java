@@ -18,7 +18,9 @@ import net.minecraft.stat.ServerStatHandler;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.registry.RegistryTracker;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldSaveHandler;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.level.LevelProperties;
 import org.bukkit.Location;
@@ -60,7 +62,7 @@ public abstract class PlayerManagerMixin implements PlayerManagerExtra {
     public abstract void sendWorldInfo(ServerPlayerEntity player, ServerWorld world);
 
     @Inject(method = "<init>", at = @At("TAIL"))
-    public void init(MinecraftServer server, int maxPlayers, CallbackInfo ci) {
+    public void init(MinecraftServer server, RegistryTracker.Modifiable tracker, WorldSaveHandler saveHandler, int maxPlayers, CallbackInfo ci) {
         if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
             //TODO: add a constructor for the client
             throw new RuntimeException("Not implemented yet!");

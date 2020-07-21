@@ -47,15 +47,15 @@ public class CraftPanda extends CraftAnimals implements Panda {
         getHandle().setHiddenGene(toNms(gene));
     }
 
-    public static Gene fromNms(PandaEntity.a gene) {
+    public static Gene fromNms(PandaEntity.Gene gene) {
         Preconditions.checkArgument(gene != null, "Gene may not be null");
 
         return Gene.values()[gene.ordinal()];
     }
 
-    public static PandaEntity.a toNms(Gene gene) {
+    public static PandaEntity.Gene toNms(Gene gene) {
         Preconditions.checkArgument(gene != null, "Gene may not be null");
 
-        return PandaEntity.a.values()[gene.ordinal()];
+        return PandaEntity.Gene.values()[gene.ordinal()];
     }
 }

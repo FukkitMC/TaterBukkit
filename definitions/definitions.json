@@ -223,11 +223,6 @@
         "type": "Z"
       },
       {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      },
-      {
         "access": 1,
         "name": "projectileSource",
         "type": "Lorg/bukkit/projectiles/ProjectileSource;"
@@ -269,11 +264,6 @@
       "io/github/fukkitmc/fukkit/extras/RegionFileExtra"
     ],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
     ],
     "syntheticMethods": []
   },
@@ -396,11 +386,6 @@
     "name": "net/minecraft/world/PersistentState",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
     ],
     "syntheticMethods": []
   },
@@ -410,11 +395,7 @@
       "io/github/fukkitmc/fukkit/extras/StatusEffectInstanceExtra"
     ],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -424,11 +405,7 @@
       "io/github/fukkitmc/fukkit/extras/AbstractPropertiesHandlerExtra"
     ],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      },
+
       {
         "access": 1,
         "name": "options",
@@ -459,11 +436,7 @@
       "io/github/fukkitmc/fukkit/extras/BiomeArrayExtra"
     ],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -481,11 +454,7 @@
       "io/github/fukkitmc/fukkit/extras/ServerNetworkIoExtra"
     ],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -501,11 +470,7 @@
     "name": "net/minecraft/network/LegacyQueryHandler",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -593,11 +558,7 @@
     "name": "net/minecraft/server/ServerAdvancementLoader",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -728,11 +689,7 @@
     "name": "net/minecraft/item/CompassItem",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -756,11 +713,7 @@
     "name": "net/minecraft/entity/attribute/AttributeContainer",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -790,11 +743,7 @@
     "name": "net/minecraft/world/gen/GeneratorOptions",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -828,11 +777,7 @@
       "io/github/fukkitmc/fukkit/extras/TagContainerExtra"
     ],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -863,11 +808,7 @@
       "io/github/fukkitmc/fukkit/extras/BlockPosExtra"
     ],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -935,11 +876,7 @@
       "io/github/fukkitmc/fukkit/extras/ProfileResultImplExtra"
     ],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      },
+
       {
         "access": 9,
         "name": "d",
@@ -1165,11 +1102,7 @@
       "io/github/fukkitmc/fukkit/extras/ChunkRegionExtra"
     ],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -1215,11 +1148,7 @@
       "io/github/fukkitmc/fukkit/extras/MinecraftDedicatedServerExtra"
     ],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -1227,11 +1156,7 @@
     "name": "net/minecraft/predicate/entity/AdvancementEntityPredicateDeserializer",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -1320,11 +1245,7 @@
         "name": "processedDisconnect",
         "type": "Z"
       },
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      },
+
       {
         "access": 1,
         "name": "dropCount",
@@ -1451,11 +1372,7 @@
     "name": "net/minecraft/server/network/ServerRecipeBook",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -1473,11 +1390,7 @@
       "io/github/fukkitmc/fukkit/extras/ProfilerSystemExtra"
     ],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      },
+
       {
         "access": 1,
         "name": "l",
@@ -1496,11 +1409,7 @@
     "name": "net/minecraft/block/entity/BlockEntityType",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": [
       {
@@ -1547,11 +1456,7 @@
     "name": "net/minecraft/test/FailureLoggingTestCompletionListener",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -1610,11 +1515,7 @@
     "name": "net/minecraft/data/dev/NbtProvider",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -1694,11 +1595,7 @@
     "name": "net/minecraft/server/command/ReloadCommand",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": [
       {
@@ -1719,11 +1616,7 @@
     "name": "net/minecraft/util/Language",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -1776,11 +1669,7 @@
     "name": "net/minecraft/network/NetworkEncryptionUtils",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -1796,11 +1685,7 @@
     "name": "net/minecraft/util/registry/SimpleRegistry",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -1824,11 +1709,7 @@
     "name": "net/minecraft/advancement/PlayerAdvancementTracker",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -2031,11 +1912,6 @@
         "name": "recipes",
         "type": "Ljava/util/Map;",
         "signature": "Ljava/util/Map\u003cLnet/minecraft/recipe/RecipeType\u003c*\u003e;Lit/unimi/dsi/fastutil/objects/Object2ObjectLinkedOpenHashMap\u003cLnet/minecraft/util/Identifier;Lnet/minecraft/recipe/Recipe\u003c*\u003e;\u003e;\u003e;"
-      },
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
       }
     ],
     "syntheticMethods": []
@@ -2073,11 +1949,7 @@
       "io/github/fukkitmc/fukkit/extras/ItemStackExtra"
     ],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -2085,11 +1957,7 @@
     "name": "net/minecraft/world/storage/SerializingRegionBasedStorage",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -2179,11 +2047,7 @@
     "name": "net/minecraft/server/network/DebugInfoSender",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -2241,11 +2105,7 @@
       "io/github/fukkitmc/fukkit/extras/LevelPropertiesExtra"
     ],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      },
+
       {
         "access": 1,
         "name": "v",
@@ -2289,11 +2149,7 @@
       "io/github/fukkitmc/fukkit/extras/SelectorTextExtra"
     ],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -2932,11 +2788,7 @@
     "name": "net/minecraft/world/gen/feature/ConfiguredFeature",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -2944,11 +2796,7 @@
     "name": "net/minecraft/world/SpawnHelper",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": [
       {
@@ -3065,11 +2913,7 @@
     "name": "net/minecraft/server/rcon/RconBase",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -3180,11 +3024,7 @@
     "name": "net/minecraft/entity/ai/goal/GoalSelector",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -3230,11 +3070,7 @@
     "name": "net/minecraft/world/biome/source/BiomeLayerSampler",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -3242,11 +3078,7 @@
     "name": "net/minecraft/resource/DefaultResourcePack",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -3341,11 +3173,6 @@
         "name": "e",
         "type": "Ljava/util/Map;",
         "signature": "Ljava/util/Map\u003cLnet/minecraft/util/registry/RegistryKey\u003c+Lnet/minecraft/util/registry/Registry\u003c*\u003e;\u003e;Lnet/minecraft/util/dynamic/RegistryOps$ValueHolder\u003c*\u003e;\u003e;"
-      },
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
       }
     ],
     "syntheticMethods": []
@@ -3361,13 +3188,7 @@
   {
     "name": "net/minecraft/server/Main",
     "injectInterfaces": [],
-    "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
-    ],
+    "syntheticFields": [],
     "syntheticMethods": [
       {
         "opcode": 185,
@@ -3422,11 +3243,7 @@
       "io/github/fukkitmc/fukkit/extras/ServerWorldExtra"
     ],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      },
+
       {
         "access": 1,
         "name": "uuid",
@@ -3532,11 +3349,7 @@
     "name": "net/minecraft/datafixer/schema/Schema99",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -3654,11 +3467,7 @@
         "type": "Ljava/util/Map;",
         "signature": "Ljava/util/Map\u003cLnet/minecraft/entity/EntityType\u003c*\u003e;Lnet/minecraft/world/biome/Biome$SpawnDensity;\u003e;"
       },
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      },
+
       {
         "access": 1,
         "name": "x",
@@ -3672,11 +3481,7 @@
     "name": "net/minecraft/util/Util",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -3838,11 +3643,7 @@
     "name": "net/minecraft/client/util/NetworkUtils",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -3884,11 +3685,7 @@
     "name": "net/minecraft/network/packet/s2c/play/PlayerActionResponseS2CPacket",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -3927,11 +3724,7 @@
       "io/github/fukkitmc/fukkit/extras/FunctionLoaderExtra"
     ],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -3947,11 +3740,7 @@
     "name": "net/minecraft/data/DataCache",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -4111,11 +3900,7 @@
       "io/github/fukkitmc/fukkit/extras/ItemFrameEntityExtra"
     ],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": [
       {
@@ -4249,11 +4034,7 @@
     "name": "net/minecraft/entity/boss/dragon/EnderDragonEntity",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      },
+
       {
         "access": 1,
         "name": "explosionSource",
@@ -4307,11 +4088,7 @@
     "name": "net/minecraft/world/GameRules",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -4327,11 +4104,7 @@
     "name": "net/minecraft/block/entity/EndGatewayBlockEntity",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -4388,11 +4161,7 @@
     "name": "net/minecraft/world/ChunkSerializer",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -4467,11 +4236,7 @@
     "name": "net/minecraft/world/PersistentStateManager",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -4846,11 +4611,7 @@
     "name": "net/minecraft/item/KnowledgeBookItem",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -4898,11 +4659,7 @@
     "name": "net/minecraft/MinecraftVersion",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -4977,11 +4734,7 @@
     "name": "net/minecraft/nbt/CompoundTag",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -5141,11 +4894,7 @@
     "name": "net/minecraft/loot/function/FurnaceSmeltLootFunction",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": [
       {
@@ -5201,11 +4950,6 @@
         "access": 1,
         "name": "cserver",
         "type": "Lorg/bukkit/craftbukkit/CraftServer;"
-      },
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
       }
     ],
     "syntheticMethods": []
@@ -5296,11 +5040,7 @@
       "io/github/fukkitmc/fukkit/extras/LootTableExtra"
     ],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": [
       {
@@ -5321,11 +5061,7 @@
     "name": "net/minecraft/data/DataGenerator",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -5734,11 +5470,7 @@
     "name": "net/minecraft/world/chunk/UpgradeData",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -5770,11 +5502,7 @@
     "name": "net/minecraft/entity/attribute/DefaultAttributeRegistry",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -5782,11 +5510,7 @@
     "name": "net/minecraft/network/NetworkThreadUtils",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -5796,11 +5520,7 @@
       "io/github/fukkitmc/fukkit/extras/WorldChunkExtra"
     ],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      },
+
       {
         "access": 1,
         "name": "world",
@@ -5882,11 +5602,7 @@
     "name": "net/minecraft/scoreboard/ScoreboardState",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -5982,11 +5698,7 @@
     "name": "net/minecraft/world/MobSpawnerLogic",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -6002,11 +5714,7 @@
     "name": "net/minecraft/server/dedicated/EulaReader",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -6014,11 +5722,7 @@
     "name": "net/minecraft/server/ServerConfigHandler",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -6047,11 +5751,7 @@
     "name": "net/minecraft/resource/NamespaceResourceManager",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -6178,11 +5878,7 @@
       "io/github/fukkitmc/fukkit/extras/AnvilScreenHandlerExtra"
     ],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      },
+
       {
         "access": 1,
         "name": "maximumRepairCost",
@@ -6200,11 +5896,7 @@
     "name": "net/minecraft/resource/AbstractFileResourcePack",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -6220,11 +5912,7 @@
     "name": "net/minecraft/util/thread/TaskExecutor",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -6240,11 +5928,7 @@
     "name": "net/minecraft/text/HoverEvent",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -6280,11 +5964,7 @@
     "name": "net/minecraft/server/command/DebugCommand",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -6360,11 +6040,7 @@
     "name": "net/minecraft/world/gen/feature/DungeonFeature",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -6562,11 +6238,7 @@
         "name": "g",
         "type": "Lnet/minecraft/server/world/ChunkTicketManager$NearbyChunkTicketUpdater;"
       },
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      },
+
       {
         "access": 1,
         "name": "f",
@@ -6649,11 +6321,7 @@
         "name": "relativeTime",
         "type": "Z"
       },
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      },
+
       {
         "access": 1,
         "name": "newTotalExp",
@@ -6772,11 +6440,7 @@
       "io/github/fukkitmc/fukkit/extras/DataTrackerExtra"
     ],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -6794,11 +6458,7 @@
       "io/github/fukkitmc/fukkit/extras/BlockExtra"
     ],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      },
+
       {
         "access": 9,
         "name": "g",
@@ -6861,11 +6521,7 @@
     "name": "net/minecraft/server/dedicated/DedicatedPlayerManager",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -6902,11 +6558,6 @@
         "name": "d",
         "type": "Ljava/util/Map;",
         "signature": "Ljava/util/Map\u003cLjava/lang/String;Lnet/minecraft/server/dedicated/ServerMBean$Entry;\u003e;"
-      },
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
       }
     ],
     "syntheticMethods": []
@@ -6964,11 +6615,7 @@
       "io/github/fukkitmc/fukkit/extras/ProtoChunkExtra"
     ],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -7005,11 +6652,7 @@
       "io/github/fukkitmc/fukkit/extras/ChunkTaskPrioritySystemExtra"
     ],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      },
+
       {
         "access": 1,
         "name": "d",
@@ -7072,11 +6715,7 @@
       "io/github/fukkitmc/fukkit/extras/ProfilingResourceReloaderExtra"
     ],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -7084,11 +6723,7 @@
     "name": "net/minecraft/network/DecoderHandler",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -7153,11 +6788,7 @@
       "io/github/fukkitmc/fukkit/extras/StructureFeatureExtra"
     ],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -7167,11 +6798,7 @@
       "io/github/fukkitmc/fukkit/extras/BrainExtra"
     ],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": [
       {
@@ -7245,11 +6872,7 @@
     "name": "net/minecraft/advancement/AdvancementManager",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      },
+
       {
         "access": 1,
         "name": "e",
@@ -7272,11 +6895,7 @@
       "io/github/fukkitmc/fukkit/extras/ThreadExecutorExtra"
     ],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -7334,11 +6953,7 @@
     "name": "net/minecraft/loot/function/ExplorationMapLootFunction",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": [
       {
@@ -7375,11 +6990,7 @@
     "name": "net/minecraft/structure/StructureManager",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -7415,11 +7026,6 @@
         "name": "be",
         "type": "Lnet/minecraft/entity/EntityType$EntityFactory;",
         "signature": "Lnet/minecraft/entity/EntityType$EntityFactory\u003cTT;\u003e;"
-      },
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
       }
     ],
     "syntheticMethods": [
@@ -7575,11 +7181,7 @@
     "name": "net/minecraft/structure/PoolStructurePiece",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -7684,11 +7286,7 @@
     "name": "net/minecraft/resource/ReloadableResourceManagerImpl",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -7848,11 +7446,7 @@
     "name": "net/minecraft/nbt/NbtHelper",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -7908,11 +7502,7 @@
       "io/github/fukkitmc/fukkit/extras/ReferenceLootConditionExtra"
     ],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -7979,11 +7569,7 @@
     "name": "net/minecraft/entity/boss/dragon/EnderDragonFight",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -8009,11 +7595,7 @@
       "io/github/fukkitmc/fukkit/extras/ClientConnectionExtra"
     ],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -8028,12 +7610,8 @@
         "name": "trackedPlayers",
         "type": "Ljava/util/Set;",
         "signature": "Ljava/util/Set\u003cLnet/minecraft/server/network/ServerPlayerEntity;\u003e;"
-      },
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
       }
+
     ],
     "syntheticMethods": []
   },
@@ -8056,13 +7634,7 @@
   {
     "name": "net/minecraft/resource/DirectoryResourcePack",
     "injectInterfaces": [],
-    "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
-    ],
+    "syntheticFields": [],
     "syntheticMethods": []
   },
   {
@@ -8108,11 +7680,7 @@
     "name": "net/minecraft/loot/function/SetNameLootFunction",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -8136,11 +7704,7 @@
     "name": "net/minecraft/structure/pool/StructurePoolBasedGenerator",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": [
       {
@@ -8204,11 +7768,7 @@
     "name": "net/minecraft/datafixer/fix/AddTrappedChestFix",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -8228,11 +7788,7 @@
     "name": "net/minecraft/loot/LootManager",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      },
+
       {
         "access": 1,
         "name": "lootTableToKey",
@@ -8297,11 +7853,7 @@
     "name": "net/minecraft/datafixer/fix/ChunkPalettedStorageFix",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -8333,11 +7885,7 @@
     "name": "net/minecraft/server/rcon/RconClient",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -8377,11 +7925,7 @@
     "name": "net/minecraft/structure/pool/StructurePool",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -8389,11 +7933,7 @@
     "name": "net/minecraft/entity/boss/dragon/phase/PhaseManager",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -8425,11 +7965,7 @@
     "name": "net/minecraft/util/logging/LoggerPrintStream",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -8532,11 +8068,7 @@
         "type": "Ljava/util/Map;",
         "signature": "Ljava/util/Map\u003cLnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/entity/BlockEntity;\u003e;"
       },
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      },
+
       {
         "access": 1,
         "name": "craftWorld",
@@ -8728,11 +8260,7 @@
         "name": "chunkDistanceManager",
         "type": "Lnet/minecraft/server/world/ThreadedAnvilChunkStorage$TicketManager;"
       },
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      },
+
       {
         "access": 1,
         "name": "callbackExecutor",
@@ -8825,12 +8353,8 @@
         "access": 9,
         "name": "ANSI",
         "type": "Ljava/util/regex/Pattern;"
-      },
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
       }
+
     ],
     "syntheticMethods": []
   },
@@ -8848,11 +8372,7 @@
       "io/github/fukkitmc/fukkit/extras/CommandBlockExtra"
     ],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -8872,11 +8392,7 @@
     "name": "net/minecraft/entity/boss/dragon/phase/ChargingPlayerPhase",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -8903,11 +8419,7 @@
     "name": "net/minecraft/loot/function/SetDamageLootFunction",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": [
       {
@@ -9008,11 +8520,7 @@
     "name": "net/minecraft/test/TestRunner",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -9057,11 +8565,7 @@
     "name": "net/minecraft/world/level/storage/AnvilLevelStorage",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -9071,11 +8575,7 @@
       "io/github/fukkitmc/fukkit/extras/CommandManagerExtra"
     ],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": [
       {
@@ -9097,11 +8597,7 @@
     "name": "net/minecraft/predicate/entity/LocationPredicate",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -9162,11 +8658,7 @@
     "name": "net/minecraft/entity/boss/dragon/phase/StrafePlayerPhase",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -9206,11 +8698,7 @@
     "name": "net/minecraft/loot/function/EnchantRandomlyLootFunction",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": [
       {
@@ -9250,11 +8738,7 @@
     "name": "net/minecraft/entity/attribute/EntityAttributeModifier",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -9284,11 +8768,7 @@
         "type": "Ljava/util/Map;",
         "signature": "Ljava/util/Map\u003cLnet/minecraft/util/Identifier;Lnet/minecraft/command/arguments/ArgumentTypes$Entry\u003c*\u003e;\u003e;"
       },
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      },
+
       {
         "access": 9,
         "name": "b",
@@ -9329,11 +8809,7 @@
     "name": "net/minecraft/util/registry/Registry",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -9359,11 +8835,7 @@
       "io/github/fukkitmc/fukkit/extras/JsonDataLoaderExtra"
     ],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -9415,11 +8887,7 @@
     "name": "net/minecraft/text/NbtText",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      },
+
       {
         "access": 1,
         "name": "f",
@@ -9453,11 +8921,7 @@
     "name": "net/minecraft/Bootstrap",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -9467,11 +8931,7 @@
       "io/github/fukkitmc/fukkit/extras/LevelStorageExtra"
     ],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -9486,11 +8946,7 @@
         "name": "persistentDataContainer",
         "type": "Lorg/bukkit/craftbukkit/persistence/CraftPersistentDataContainer;"
       },
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      },
+
       {
         "access": 9,
         "name": "DATA_TYPE_REGISTRY",
@@ -9523,11 +8979,7 @@
     "name": "net/minecraft/structure/RuinedPortalStructurePiece",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      },
+
       {
         "access": 1,
         "name": "i",
@@ -9643,11 +9095,7 @@
       "io/github/fukkitmc/fukkit/extras/PacketEncoderExtra"
     ],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -9671,11 +9119,7 @@
     "name": "net/minecraft/resource/ResourcePackProfile",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": [
       {
@@ -9697,11 +9141,7 @@
     "name": "net/minecraft/server/rcon/RconListener",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -9743,11 +9183,7 @@
       "io/github/fukkitmc/fukkit/extras/ServerLoginNetworkHandlerExtra"
     ],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      },
+
       {
         "access": 1,
         "name": "hostname",
@@ -9760,11 +9196,7 @@
     "name": "net/minecraft/world/gen/chunk/FlatChunkGeneratorConfig",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -9805,11 +9237,7 @@
     "name": "net/minecraft/world/gen/decorator/TopSolidHeightmapNoiseBiasedDecoratorConfig",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -9819,11 +9247,7 @@
       "io/github/fukkitmc/fukkit/extras/WorldUpdaterExtra"
     ],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      },
+
       {
         "access": 1,
         "name": "c",
@@ -9851,11 +9275,7 @@
     "name": "net/minecraft/util/crash/CrashReport",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -9992,11 +9412,7 @@
       "io/github/fukkitmc/fukkit/extras/ServerConfigListExtra"
     ],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -10006,11 +9422,7 @@
       "io/github/fukkitmc/fukkit/extras/StorageIoWorkerExtra"
     ],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      },
+
       {
         "access": 1,
         "name": "c",
@@ -10038,11 +9450,7 @@
     "name": "net/minecraft/recipe/InputSlotFiller",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -10050,11 +9458,7 @@
     "name": "net/minecraft/stat/ServerStatHandler",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -10253,11 +9657,7 @@
       "io/github/fukkitmc/fukkit/extras/WorldSaveHandlerExtra"
     ],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -10314,11 +9714,7 @@
         "name": "datapackconfiguration",
         "type": "Lnet/minecraft/resource/DataPackSettings;"
       },
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      },
+
       {
         "access": 1,
         "name": "pvpMode",
@@ -10633,11 +10029,7 @@
     "name": "net/minecraft/loot/condition/LootConditionManager",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -10698,11 +10090,7 @@
         "name": "server",
         "type": "Lorg/bukkit/craftbukkit/CraftServer;"
       },
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      },
+
       {
         "access": 1,
         "name": "uniqueId",
@@ -10760,11 +10148,7 @@
     "name": "net/minecraft/world/biome/layer/AddHillsLayer",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -10858,11 +10242,7 @@
     "name": "net/minecraft/structure/SimpleStructurePiece",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -10972,11 +10352,7 @@
     "name": "net/minecraft/server/network/ServerPlayerInteractionManager",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      },
+
       {
         "access": 1,
         "name": "firedInteract",
@@ -11002,11 +10378,7 @@
     "name": "net/minecraft/server/dedicated/DedicatedServerWatchdog",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -11083,11 +10455,7 @@
     "name": "net/minecraft/server/WorldGenerationProgressLogger",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -11111,11 +10479,7 @@
     "name": "net/minecraft/server/world/ServerLightingProvider",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      },
+
       {
         "access": 1,
         "name": "e",
@@ -11129,11 +10493,7 @@
     "name": "net/minecraft/server/rcon/QueryResponseHandler",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -11151,11 +10511,7 @@
       "io/github/fukkitmc/fukkit/extras/AreaEffectCloudEntityExtra"
     ],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -11179,11 +10535,7 @@
         "type": "Ljava/util/Map;",
         "signature": "Ljava/util/Map\u003cLnet/minecraft/util/Identifier;Lnet/minecraft/world/timer/TimerCallback$Serializer\u003cTC;*\u003e;\u003e;"
       },
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      },
+
       {
         "access": 1,
         "name": "d",
@@ -11307,11 +10659,7 @@
     "name": "net/minecraft/world/poi/PointOfInterestSet",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -11384,11 +10732,7 @@
     "name": "net/minecraft/datafixer/fix/AbstractUuidFix",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -11404,11 +10748,7 @@
     "name": "net/minecraft/util/TickDurationMonitor",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -11424,11 +10764,7 @@
     "name": "net/minecraft/datafixer/fix/BlockStateFlattening",
     "injectInterfaces": [],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      }
+
     ],
     "syntheticMethods": []
   },
@@ -11502,11 +10838,7 @@
       "io/github/fukkitmc/fukkit/extras/TimerExtra"
     ],
     "syntheticFields": [
-      {
-        "access": 9,
-        "name": "LOGGER",
-        "type": "Lorg/apache/logging/log4j/Logger;"
-      },
+
       {
         "access": 1,
         "name": "e",
