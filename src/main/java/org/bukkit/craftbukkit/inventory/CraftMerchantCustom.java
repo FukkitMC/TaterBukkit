@@ -12,6 +12,8 @@ import net.minecraft.village.TraderOfferList;
 import net.minecraft.world.World;
 import org.apache.commons.lang.Validate;
 
+import javax.annotation.Nullable;
+
 public class CraftMerchantCustom extends CraftMerchant {
 
     public CraftMerchantCustom(String title) {
@@ -66,6 +68,11 @@ public class CraftMerchantCustom extends CraftMerchant {
         }
 
         @Override
+        public void setOffersFromServer(@Nullable TraderOfferList offers) {
+
+        }
+
+        @Override
         public void trade(TradeOffer merchantrecipe) {
             // increase recipe's uses
             merchantrecipe.use();
@@ -73,6 +80,11 @@ public class CraftMerchantCustom extends CraftMerchant {
 
         @Override
         public void onSellingItem(ItemStack itemstack) {
+        }
+
+        @Override
+        public World getTraderWorld() {
+            return null;
         }
 
         public Text getScoreboardDisplayName() {

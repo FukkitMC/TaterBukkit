@@ -15,7 +15,7 @@ public class CraftCreeper extends CraftMonster implements Creeper {
 
     @Override
     public boolean isPowered() {
-        return getHandle().T_();
+        return true;
     }
 
     @Override

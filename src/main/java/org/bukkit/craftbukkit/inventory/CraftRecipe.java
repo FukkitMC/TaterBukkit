@@ -17,11 +17,11 @@ public interface CraftRecipe extends Recipe {
 
         if (bukkit == null) {
             stack = Ingredient.EMPTY;
-        } else if (bukkit instanceof RecipeChoice.MaterialChoice) {
-            stack = new Ingredient(((RecipeChoice.MaterialChoice) bukkit).getChoices().stream().map((mat) -> new net.minecraft.recipe.Ingredient.StackEntry(CraftItemStack.asNMSCopy(new ItemStack(mat)))));
-        } else if (bukkit instanceof RecipeChoice.ExactChoice) {
-            stack = new Ingredient(((RecipeChoice.ExactChoice) bukkit).getChoices().stream().map((mat) -> new net.minecraft.recipe.Ingredient.StackEntry(CraftItemStack.asNMSCopy(mat))));
-            stack.exact = true;
+//        } else if (bukkit instanceof RecipeChoice.MaterialChoice) {
+//            stack = new Ingredient(((RecipeChoice.MaterialChoice) bukkit).getChoices().stream().map((mat) -> new net.minecraft.recipe.Ingredient.StackEntry(CraftItemStack.asNMSCopy(new ItemStack(mat)))));
+//        } else if (bukkit instanceof RecipeChoice.ExactChoice) {
+//            stack = new Ingredient(((RecipeChoice.ExactChoice) bukkit).getChoices().stream().map((mat) -> new net.minecraft.recipe.Ingredient.StackEntry(CraftItemStack.asNMSCopy(mat))));
+//            stack.exact = true;
         } else {
             throw new IllegalArgumentException("Unknown recipe stack instance " + bukkit);
         }

@@ -14,14 +14,11 @@ import net.minecraft.fluid.FluidState;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
-import net.minecraft.world.Heightmap;
-import net.minecraft.world.LocalDifficulty;
-import net.minecraft.world.TickScheduler;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
-import net.minecraft.world.WorldProperties;
+import net.minecraft.util.math.Direction;
+import net.minecraft.world.*;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.source.BiomeAccess;
 import net.minecraft.world.border.WorldBorder;
@@ -30,6 +27,7 @@ import net.minecraft.world.chunk.ChunkManager;
 import net.minecraft.world.chunk.ChunkStatus;
 import net.minecraft.world.chunk.light.LightingProvider;
 import net.minecraft.world.dimension.DimensionType;
+import org.bukkit.event.entity.CreatureSpawnEvent;
 
 public class DummyGeneratorAccess implements WorldAccess {
 
@@ -144,6 +142,11 @@ public class DummyGeneratorAccess implements WorldAccess {
     }
 
     @Override
+    public float getBrightness(Direction direction, boolean shaded) {
+        return 0;
+    }
+
+    @Override
     public LightingProvider getLightingProvider() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
@@ -186,5 +189,15 @@ public class DummyGeneratorAccess implements WorldAccess {
     @Override
     public boolean breakBlock(BlockPos blockposition, boolean flag, Entity entity, int i) {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public boolean addEntity(Entity var0, CreatureSpawnEvent.SpawnReason var1) {
+        return false;
+    }
+
+    @Override
+    public BlockHitResult rayTraceBlock(RayTraceContext var0, BlockPos var1) {
+        return null;
     }
 }

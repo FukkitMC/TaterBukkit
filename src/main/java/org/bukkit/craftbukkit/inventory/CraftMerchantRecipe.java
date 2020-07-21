@@ -25,8 +25,8 @@ public class CraftMerchantRecipe extends MerchantRecipe {
                 uses,
                 maxUses,
                 experience,
-                priceMultiplier,
-                this
+                priceMultiplier
+
         );
         this.setExperienceReward(experienceReward);
     }

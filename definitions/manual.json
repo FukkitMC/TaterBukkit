@@ -1,0 +1,12 @@
+[
+  {
+    "name": "net/minecraft/server/world/ServerWorld",
+    "syntheticFields": [
+      {
+        "access": 1,
+        "name": "worldDataServer",
+        "type": "Lnet/minecraft/world/level/LevelProperties;"
+      }
+    ]
+  }
+]

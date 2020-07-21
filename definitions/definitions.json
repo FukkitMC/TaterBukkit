@@ -7147,11 +7147,6 @@
       },
       {
         "access": 1,
-        "name": "serverThread",
-        "type": "Ljava/lang/Thread;"
-      },
-      {
-        "access": 1,
         "name": "saveData",
         "type": "Lnet/minecraft/world/SaveProperties;"
       },

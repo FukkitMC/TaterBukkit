@@ -480,8 +480,6 @@ public class CraftInventory implements Inventory {
             return InventoryType.SHULKER_BOX;
         } else if (inventory instanceof BarrelBlockEntity) {
             return InventoryType.BARREL;
-        } else if (inventory instanceof LecternBlockEntity.LecternInventory) {
-            return InventoryType.LECTERN;
         } else if (this instanceof CraftInventoryLoom) {
             return InventoryType.LOOM;
         } else if (this instanceof CraftInventoryCartography) {

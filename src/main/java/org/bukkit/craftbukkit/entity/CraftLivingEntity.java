@@ -274,7 +274,7 @@ public class CraftLivingEntity extends CraftEntity implements LivingEntity {
 
     @Override
     public void setMaximumNoDamageTicks(int ticks) {
-        getHandle().defaultMaxHealth = ticks;
+//        getHandle().defaultMaxHealth = ticks;
     }
 
     @Override

@@ -1275,27 +1275,28 @@ public class CraftEventFactory {
     }
 
     public static ItemStack handleEditBookEvent(ServerPlayerEntity player, net.minecraft.entity.EquipmentSlot slot, ItemStack itemInHand, ItemStack newBookItem) {
-        int itemInHandIndex = (slot == net.minecraft.entity.EquipmentSlot.MAINHAND) ? player.inventory.selectedSlot : -1;
-
-        PlayerEditBookEvent editBookEvent = new PlayerEditBookEvent(player.getBukkitEntity(), itemInHandIndex, (BookMeta) CraftItemStack.getItemMeta(itemInHand), (BookMeta) CraftItemStack.getItemMeta(newBookItem), newBookItem.getItem() == Items.WRITTEN_BOOK);
-        player.world.getCraftServer().getPluginManager().callEvent(editBookEvent);
-
-        // If they've got the same item in their hand, it'll need to be updated.
-        if (itemInHand != null && itemInHand.getItem() == Items.WRITABLE_BOOK) {
-            if (!editBookEvent.isCancelled()) {
-                if (editBookEvent.isSigning()) {
-                    itemInHand.setItem(Items.WRITTEN_BOOK);
-                }
-                CraftMetaBook meta = (CraftMetaBook) editBookEvent.getNewBookMeta();
-                List<Text> pages = meta.pages;
-                for (int i = 0; i < pages.size(); i++) {
-                    pages.set(i, stripEvents(pages.get(i)));
-                }
-                CraftItemStack.setItemMeta(itemInHand, meta);
-            }
-        }
-
-        return itemInHand;
+//        int itemInHandIndex = (slot == net.minecraft.entity.EquipmentSlot.MAINHAND) ? player.inventory.selectedSlot : -1;
+//
+//        PlayerEditBookEvent editBookEvent = new PlayerEditBookEvent(player.getBukkitEntity(), itemInHandIndex, (BookMeta) CraftItemStack.getItemMeta(itemInHand), (BookMeta) CraftItemStack.getItemMeta(newBookItem), newBookItem.getItem() == Items.WRITTEN_BOOK);
+//        player.world.getCraftServer().getPluginManager().callEvent(editBookEvent);
+//
+//        // If they've got the same item in their hand, it'll need to be updated.
+//        if (itemInHand != null && itemInHand.getItem() == Items.WRITABLE_BOOK) {
+//            if (!editBookEvent.isCancelled()) {
+//                if (editBookEvent.isSigning()) {
+//                    itemInHand.setItem(Items.WRITTEN_BOOK);
+//                }
+//                CraftMetaBook meta = (CraftMetaBook) editBookEvent.getNewBookMeta();
+//                List<Text> pages = meta.pages;
+//                for (int i = 0; i < pages.size(); i++) {
+//                    pages.set(i, stripEvents(pages.get(i)));
+//                }
+//                CraftItemStack.setItemMeta(itemInHand, meta);
+//            }
+//        }
+//
+//        return itemInHand;
+        throw new RuntimeException("No");
     }
 
     private static Text stripEvents(Text c) {

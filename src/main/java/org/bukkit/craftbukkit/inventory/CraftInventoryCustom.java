@@ -6,6 +6,7 @@ import java.util.List;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.recipe.Recipe;
 import net.minecraft.util.collection.DefaultedList;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Location;
@@ -135,6 +136,11 @@ public class CraftInventoryCustom extends CraftInventory {
         }
 
         @Override
+        public Recipe getCurrentRecipe() {
+            return null;
+        }
+
+        @Override
         public void onOpen(CraftHumanEntity who) {
             viewers.add(who);
         }
@@ -156,6 +162,11 @@ public class CraftInventoryCustom extends CraftInventory {
         @Override
         public InventoryHolder getOwner() {
             return owner;
+        }
+
+        @Override
+        public void setCurrentRecipe(Recipe var0) {
+
         }
 
         @Override

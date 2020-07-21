@@ -108,7 +108,7 @@ final class CraftTeam extends CraftScoreboardComponent implements Team {
     public boolean canSeeFriendlyInvisibles() throws IllegalStateException {
         CraftScoreboard scoreboard = checkState();
 
-        return team.i();
+        return team.showFriendlyInvisibles;
     }
 
     @Override
@@ -244,7 +244,7 @@ final class CraftTeam extends CraftScoreboardComponent implements Team {
                 team.setDeathMessageVisibilityRule(VisibilityRule.values()[status.ordinal()]);
                 break;
             case COLLISION_RULE:
-                team.setCollisionRule(AbstractTeam.a.values()[status.ordinal()]);
+                team.setCollisionRule(AbstractTeam.CollisionRule.values()[status.ordinal()]);
                 break;
             default:
                 throw new IllegalArgumentException("Unrecognised option " + option);

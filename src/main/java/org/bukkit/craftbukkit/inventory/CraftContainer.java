@@ -28,6 +28,8 @@ import net.minecraft.screen.SmokerScreenHandler;
 import net.minecraft.screen.StonecutterScreenHandler;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
+import org.bukkit.craftbukkit.entity.CraftHumanEntity;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.inventory.InventoryType;
@@ -41,6 +43,7 @@ public class CraftContainer extends ScreenHandler {
     private String cachedTitle;
     private ScreenHandler delegate;
     private final int cachedSize;
+    private CraftInventoryCustom.MinecraftInventory slots;
 
     public CraftContainer(InventoryView view, PlayerEntity player, int id) {
         super(getNotchInventoryType(view.getTopInventory()), id);
@@ -86,6 +89,21 @@ public class CraftContainer extends ScreenHandler {
     @Override
     public InventoryView getBukkitView() {
         return view;
+    }
+
+    @Override
+    public Text getTitle() {
+        return null;
+    }
+
+    @Override
+    public void setTitle(Text var0) {
+
+    }
+
+    @Override
+    public void transferTo(ScreenHandler var0, CraftHumanEntity var1) {
+
     }
 
     private int getSize() {
@@ -235,9 +253,6 @@ public class CraftContainer extends ScreenHandler {
             case BLAST_FURNACE:
                 delegate = new BlastFurnaceScreenHandler(windowId, bottom, top, new ArrayPropertyDelegate(4));
                 break;
-            case LECTERN:
-                delegate = new LecternScreenHandler(windowId, top, new ArrayPropertyDelegate(1), bottom);
-                break;
             case SMOKER:
                 delegate = new SmokerScreenHandler(windowId, bottom, top, new ArrayPropertyDelegate(4));
                 break;
@@ -260,7 +275,7 @@ public class CraftContainer extends ScreenHandler {
 
         if (delegate != null) {
             this.trackedStacks = delegate.trackedStacks;
-            this.slots = delegate.slots;
+            this.slots = (CraftInventoryCustom.MinecraftInventory) delegate.slots;
         }
 
         // SPIGOT-4598 - we should still delegate the shift click handler

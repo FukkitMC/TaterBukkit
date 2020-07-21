@@ -176,55 +176,56 @@ public final class CraftChatMessage {
     }
 
     public static String fromComponent(Text component) {
-        if (component == null) return "";
-        StringBuilder out = new StringBuilder();
-
-        boolean hadFormat = false;
-        for (Text c : component) {
-            Style modi = c.getStyle();
-            TextColor color = modi.getColor();
-            if (!c.asString().isEmpty() || color != null) {
-                if (color != null) {
-                    if (color.format != null) {
-                        out.append(color.format);
-                    } else {
-                        out.append(ChatColor.COLOR_CHAR).append("x");
-                        for (char magic : color.getName().substring(1).toCharArray()) {
-                            out.append(ChatColor.COLOR_CHAR).append(magic);
-                        }
-                    }
-                    hadFormat = true;
-                } else if (hadFormat) {
-                    out.append(ChatColor.RESET);
-                    hadFormat = false;
-                }
-            }
-            if (modi.isBold()) {
-                out.append(Formatting.BOLD);
-                hadFormat = true;
-            }
-            if (modi.isItalic()) {
-                out.append(Formatting.ITALIC);
-                hadFormat = true;
-            }
-            if (modi.isUnderlined()) {
-                out.append(Formatting.UNDERLINE);
-                hadFormat = true;
-            }
-            if (modi.isStrikethrough()) {
-                out.append(Formatting.STRIKETHROUGH);
-                hadFormat = true;
-            }
-            if (modi.isObfuscated()) {
-                out.append(Formatting.OBFUSCATED);
-                hadFormat = true;
-            }
-            c.visitSelf((x) -> {
-                out.append(x);
-                return Optional.empty();
-            });
-        }
-        return out.toString();
+        throw new RuntimeException("No");
+//        if (component == null) return "";
+//        StringBuilder out = new StringBuilder();
+//
+//        boolean hadFormat = false;
+//        for (Text c : component) {
+//            Style modi = c.getStyle();
+//            TextColor color = modi.getColor();
+//            if (!c.asString().isEmpty() || color != null) {
+//                if (color != null) {
+//                    if (color.format != null) {
+//                        out.append(color.format);
+//                    } else {
+//                        out.append(ChatColor.COLOR_CHAR).append("x");
+//                        for (char magic : color.getName().substring(1).toCharArray()) {
+//                            out.append(ChatColor.COLOR_CHAR).append(magic);
+//                        }
+//                    }
+//                    hadFormat = true;
+//                } else if (hadFormat) {
+//                    out.append(ChatColor.RESET);
+//                    hadFormat = false;
+//                }
+//            }
+//            if (modi.isBold()) {
+//                out.append(Formatting.BOLD);
+//                hadFormat = true;
+//            }
+//            if (modi.isItalic()) {
+//                out.append(Formatting.ITALIC);
+//                hadFormat = true;
+//            }
+//            if (modi.isUnderlined()) {
+//                out.append(Formatting.UNDERLINE);
+//                hadFormat = true;
+//            }
+//            if (modi.isStrikethrough()) {
+//                out.append(Formatting.STRIKETHROUGH);
+//                hadFormat = true;
+//            }
+//            if (modi.isObfuscated()) {
+//                out.append(Formatting.OBFUSCATED);
+//                hadFormat = true;
+//            }
+//            c.visitSelf((x) -> {
+//                out.append(x);
+//                return Optional.empty();
+//            });
+//        }
+//        return out.toString();
     }
 
     public static Text fixComponent(Text component) {
