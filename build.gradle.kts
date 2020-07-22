@@ -1,13 +1,10 @@
 plugins {
     id("fabric-loom") version "g0.4.0-SNAPSHOT"
+    id("de.set.ecj") version "1.4.1"
 }
 
 group = "io.github.fukkitmc"
 version = "1.0.0-SNAPSHOT"
-
-configurations {
-    create("ecj")
-}
 
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
@@ -30,8 +27,11 @@ repositories {
     mavenLocal()
 }
 
+ecj {
+    toolVersion = "3.22.0"
+}
+
 dependencies {
-    "ecj"("org.eclipse.jdt:ecj:3.22.0")
     minecraft("net.minecraft", "minecraft", "1.16.1")
     mappings("net.fabricmc", "yarn", "1.16.1+build.21", classifier = "v2")
     modCompile("net.fabricmc", "fabric-loader", "0.9.0+build.204")
@@ -54,10 +54,4 @@ dependencies {
 
 tasks.withType<JavaCompile> {
     options.headerOutputDirectory.convention(objects.directoryProperty())
-    options.isFork = true
-
-    options.forkOptions.apply {
-        executable = "java"
-        jvmArgs = listOf("-classpath", project.configurations["ecj"].asPath, "org.eclipse.jdt.internal.compiler.batch.Main", "-nowarn", "-g", "-verbose", "-referenceInfo")
-    }
 }
