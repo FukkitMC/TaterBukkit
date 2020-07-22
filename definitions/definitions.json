@@ -7065,16 +7065,6 @@
       },
       {
         "access": 1,
-        "name": "userCache",
-        "type": "Lnet/minecraft/util/UserCache;"
-      },
-      {
-        "access": 1,
-        "name": "motd",
-        "type": "Ljava/lang/String;"
-      },
-      {
-        "access": 1,
         "name": "console",
         "type": "Lorg/bukkit/command/ConsoleCommandSender;"
       },
@@ -7131,11 +7121,6 @@
       },
       {
         "access": 1,
-        "name": "serverPort",
-        "type": "I"
-      },
-      {
-        "access": 1,
         "name": "resourcePackRepository",
         "type": "Lnet/minecraft/resource/ResourcePackManager;",
         "signature": "Lnet/minecraft/resource/ResourcePackManager\u003cLnet/minecraft/resource/ResourcePackProfile;\u003e;"
@@ -7183,11 +7168,6 @@
       },
       {
         "access": 1,
-        "name": "snooper",
-        "type": "Lnet/minecraft/util/snooper/Snooper;"
-      },
-      {
-        "access": 1,
         "name": "autosavePeriod",
         "type": "I"
       },
@@ -7195,11 +7175,6 @@
         "access": 1,
         "name": "persistentCommandStorage",
         "type": "Lnet/minecraft/command/DataCommandStorage;"
-      },
-      {
-        "access": 1,
-        "name": "serverIp",
-        "type": "Ljava/lang/String;"
       },
       {
         "access": 1,
@@ -7218,26 +7193,6 @@
       },
       {
         "access": 1,
-        "name": "proxy",
-        "type": "Ljava/net/Proxy;"
-      },
-      {
-        "access": 1,
-        "name": "onlineMode",
-        "type": "Z"
-      },
-      {
-        "access": 1,
-        "name": "allowFlight",
-        "type": "Z"
-      },
-      {
-        "access": 1,
-        "name": "stopLock",
-        "type": "Ljava/lang/Object;"
-      },
-      {
-        "access": 1,
         "name": "convertable",
         "type": "Lnet/minecraft/world/level/storage/LevelStorage$Session;"
       },
@@ -7251,11 +7206,6 @@
         "name": "processQueue",
         "type": "Ljava/util/Queue;",
         "signature": "Ljava/util/Queue\u003cLjava/lang/Runnable;\u003e;"
-      },
-      {
-        "access": 1,
-        "name": "ticks",
-        "type": "I"
       },
       {
         "access": 1,

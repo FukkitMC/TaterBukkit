@@ -52,12 +52,12 @@ dependencies {
     include("org.xerial:sqlite-jdbc:3.32.3")
 }
 
-//tasks.withType<JavaCompile> {
-//    options.headerOutputDirectory.convention(objects.directoryProperty())
-//    options.isFork = true
-//
-//    options.forkOptions.apply {
-//        executable = "java"
-//        jvmArgs = listOf("-classpath", project.configurations["ecj"].asPath, "org.eclipse.jdt.internal.compiler.batch.Main", "-nowarn", "-g", "-verbose", "-referenceInfo")
-//    }
-//}
+tasks.withType<JavaCompile> {
+    options.headerOutputDirectory.convention(objects.directoryProperty())
+    options.isFork = true
+
+    options.forkOptions.apply {
+        executable = "java"
+        jvmArgs = listOf("-classpath", project.configurations["ecj"].asPath, "org.eclipse.jdt.internal.compiler.batch.Main", "-nowarn", "-g", "-verbose", "-referenceInfo")
+    }
+}

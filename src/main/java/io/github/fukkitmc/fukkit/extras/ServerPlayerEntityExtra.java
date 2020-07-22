@@ -1,5 +1,6 @@
 package io.github.fukkitmc.fukkit.extras;
 
+import org.bukkit.craftbukkit.entity.CraftPlayer;
 public interface ServerPlayerEntityExtra {
 
     net.minecraft.scoreboard.Scoreboard getScoreboard();
