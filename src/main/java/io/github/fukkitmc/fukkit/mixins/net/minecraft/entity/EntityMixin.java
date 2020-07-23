@@ -25,9 +25,6 @@ import org.spongepowered.asm.mixin.Shadow;
 
 import java.util.List;
 
-/**
- * @author Justsnoopy30
- */
 @Mixin(Entity.class)
 public abstract class EntityMixin implements EntityExtra {
     @Shadow

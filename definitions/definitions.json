@@ -21,7 +21,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "c",
         "descriptor": "()Lnet/minecraft/loot/function/SetStewEffectLootFunction$Builder;",
@@ -40,7 +40,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Lcom/mojang/serialization/MapCodec;Lnet/minecraft/util/dynamic/NumberCodecs$class_5395;)Lcom/mojang/serialization/MapCodec;",
@@ -97,7 +97,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Lnet/minecraft/enchantment/Enchantment;[F)Lnet/minecraft/loot/condition/LootCondition$Builder;",
@@ -145,7 +145,19 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
+        "access": 9,
+        "name": "a",
+        "descriptor": "(Ljava/lang/String;)Lnet/minecraft/command/arguments/OperationArgumentType$Operation;",
+        "redirect": {
+          "owner": "io/github/fukkitmc/fukkit/redirects/OperationArgumentTypeRedirects",
+          "name": "a",
+          "descriptor": "(Ljava/lang/String;)Lnet/minecraft/command/arguments/OperationArgumentType$Operation;",
+          "isInterface": true
+        }
+      },
+      {
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Lcom/mojang/brigadier/context/CommandContext;Ljava/lang/String;)Lnet/minecraft/command/arguments/OperationArgumentType$Operation;",
@@ -158,19 +170,7 @@
         }
       },
       {
-        "opcode": 185,
-        "access": 9,
-        "name": "a",
-        "descriptor": "(Ljava/lang/String;)Lnet/minecraft/command/arguments/OperationArgumentType$Operation;",
-        "redirect": {
-          "owner": "io/github/fukkitmc/fukkit/redirects/OperationArgumentTypeRedirects",
-          "name": "a",
-          "descriptor": "(Ljava/lang/String;)Lnet/minecraft/command/arguments/OperationArgumentType$Operation;",
-          "isInterface": true
-        }
-      },
-      {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "b",
         "descriptor": "(Ljava/lang/String;)Lnet/minecraft/command/arguments/OperationArgumentType$IntOperator;",
@@ -246,7 +246,7 @@
     ],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "isLevelAtLeast",
         "descriptor": "(Lnet/minecraft/nbt/CompoundTag;I)Z",
@@ -265,7 +265,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Lnet/minecraft/server/command/ServerCommandSource;Ljava/util/Collection;Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/command/arguments/PosArgument;Lnet/minecraft/command/arguments/PosArgument;Lnet/minecraft/server/command/TeleportCommand$LookTarget;)I",
@@ -278,7 +278,7 @@
         }
       },
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Lnet/minecraft/server/command/ServerCommandSource;Lnet/minecraft/entity/Entity;Lnet/minecraft/server/world/ServerWorld;DDDLjava/util/Set;FFLnet/minecraft/server/command/TeleportCommand$LookTarget;)V",
@@ -338,7 +338,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "c",
         "descriptor": "()Lnet/minecraft/loot/function/ConditionalLootFunction$Builder;",
@@ -735,7 +735,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "c",
         "descriptor": "()Lnet/minecraft/loot/condition/LootCondition$Builder;",
@@ -816,7 +816,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Lnet/minecraft/server/command/ServerCommandSource;Ljava/util/Collection;Lnet/minecraft/scoreboard/ScoreboardObjective;Lnet/minecraft/command/arguments/OperationArgumentType$Operation;Ljava/util/Collection;Lnet/minecraft/scoreboard/ScoreboardObjective;)I",
@@ -862,7 +862,19 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
+        "access": 9,
+        "name": "a",
+        "descriptor": "(Lcom/mojang/brigadier/StringReader;Z)Lnet/minecraft/command/arguments/NbtPathArgumentType$PathNode;",
+        "redirect": {
+          "owner": "io/github/fukkitmc/fukkit/redirects/NbtPathArgumentTypeRedirects",
+          "name": "a",
+          "descriptor": "(Lcom/mojang/brigadier/StringReader;Z)Lnet/minecraft/command/arguments/NbtPathArgumentType$PathNode;",
+          "isInterface": true
+        }
+      },
+      {
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Lcom/mojang/brigadier/context/CommandContext;Ljava/lang/String;)Lnet/minecraft/command/arguments/NbtPathArgumentType$NbtPath;",
@@ -875,7 +887,7 @@
         }
       },
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Lcom/mojang/brigadier/StringReader;Ljava/lang/String;)Lnet/minecraft/command/arguments/NbtPathArgumentType$PathNode;",
@@ -883,18 +895,6 @@
           "owner": "io/github/fukkitmc/fukkit/redirects/NbtPathArgumentTypeRedirects",
           "name": "a",
           "descriptor": "(Lcom/mojang/brigadier/StringReader;Ljava/lang/String;)Lnet/minecraft/command/arguments/NbtPathArgumentType$PathNode;",
-          "isInterface": true
-        }
-      },
-      {
-        "opcode": 185,
-        "access": 9,
-        "name": "a",
-        "descriptor": "(Lcom/mojang/brigadier/StringReader;Z)Lnet/minecraft/command/arguments/NbtPathArgumentType$PathNode;",
-        "redirect": {
-          "owner": "io/github/fukkitmc/fukkit/redirects/NbtPathArgumentTypeRedirects",
-          "name": "a",
-          "descriptor": "(Lcom/mojang/brigadier/StringReader;Z)Lnet/minecraft/command/arguments/NbtPathArgumentType$PathNode;",
           "isInterface": true
         }
       }
@@ -1110,7 +1110,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Ljava/util/function/Function;)Lnet/minecraft/loot/function/ConditionalLootFunction$Builder;",
@@ -1205,7 +1205,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Ljava/lang/String;Lnet/minecraft/block/entity/BlockEntityType$Builder;)Lnet/minecraft/block/entity/BlockEntityType;",
@@ -1309,19 +1309,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
-        "access": 9,
-        "name": "a",
-        "descriptor": "(Lnet/minecraft/enchantment/EnchantmentHelper$Consumer;Lnet/minecraft/item/ItemStack;)V",
-        "redirect": {
-          "owner": "io/github/fukkitmc/fukkit/redirects/EnchantmentHelperRedirects",
-          "name": "a",
-          "descriptor": "(Lnet/minecraft/enchantment/EnchantmentHelper$Consumer;Lnet/minecraft/item/ItemStack;)V",
-          "isInterface": true
-        }
-      },
-      {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Lnet/minecraft/enchantment/EnchantmentHelper$Consumer;Ljava/lang/Iterable;)V",
@@ -1330,6 +1318,18 @@
           "owner": "io/github/fukkitmc/fukkit/redirects/EnchantmentHelperRedirects",
           "name": "a",
           "descriptor": "(Lnet/minecraft/enchantment/EnchantmentHelper$Consumer;Ljava/lang/Iterable;)V",
+          "isInterface": true
+        }
+      },
+      {
+        "opcode": 184,
+        "access": 9,
+        "name": "a",
+        "descriptor": "(Lnet/minecraft/enchantment/EnchantmentHelper$Consumer;Lnet/minecraft/item/ItemStack;)V",
+        "redirect": {
+          "owner": "io/github/fukkitmc/fukkit/redirects/EnchantmentHelperRedirects",
+          "name": "a",
+          "descriptor": "(Lnet/minecraft/enchantment/EnchantmentHelper$Consumer;Lnet/minecraft/item/ItemStack;)V",
           "isInterface": true
         }
       }
@@ -1354,7 +1354,7 @@
     ],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(ILnet/minecraft/world/World;Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/inventory/CraftingInventory;Lnet/minecraft/inventory/CraftingResultInventory;Lnet/minecraft/screen/ScreenHandler;)V",
@@ -1373,7 +1373,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "reload",
         "descriptor": "(Lnet/minecraft/server/MinecraftServer;)V",
@@ -1394,7 +1394,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "d",
         "descriptor": "(Lnet/minecraft/block/BlockState;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/entity/Entity;)Lnet/minecraft/block/BlockState;",
@@ -1406,7 +1406,7 @@
         }
       },
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Lnet/minecraft/block/BlockState;Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/item/ItemStack;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/entity/Entity;)Lnet/minecraft/block/BlockState;",
@@ -1418,7 +1418,7 @@
         }
       },
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "b",
         "descriptor": "(Lnet/minecraft/block/BlockState;Lnet/minecraft/world/WorldAccess;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/item/ItemStack;D)Lnet/minecraft/block/BlockState;",
@@ -1461,19 +1461,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
-        "access": 9,
-        "name": "a",
-        "descriptor": "(Lnet/minecraft/command/arguments/NbtPathArgumentType$NbtPath;Lnet/minecraft/command/DataCommandObject;)Lnet/minecraft/nbt/Tag;",
-        "redirect": {
-          "owner": "io/github/fukkitmc/fukkit/redirects/DataCommandRedirects",
-          "name": "a",
-          "descriptor": "(Lnet/minecraft/command/arguments/NbtPathArgumentType$NbtPath;Lnet/minecraft/command/DataCommandObject;)Lnet/minecraft/nbt/Tag;",
-          "isInterface": true
-        }
-      },
-      {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(ILnet/minecraft/nbt/CompoundTag;Lnet/minecraft/command/arguments/NbtPathArgumentType$NbtPath;Ljava/util/List;)I",
@@ -1486,7 +1474,7 @@
         }
       },
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Lcom/mojang/brigadier/context/CommandContext;Lnet/minecraft/server/command/DataCommand$ObjectType;Lnet/minecraft/server/command/DataCommand$ModifyOperation;Ljava/util/List;)I",
@@ -1499,7 +1487,19 @@
         }
       },
       {
-        "opcode": 185,
+        "opcode": 184,
+        "access": 9,
+        "name": "a",
+        "descriptor": "(Lnet/minecraft/server/command/ServerCommandSource;Lnet/minecraft/command/DataCommandObject;Lnet/minecraft/command/arguments/NbtPathArgumentType$NbtPath;)I",
+        "redirect": {
+          "owner": "io/github/fukkitmc/fukkit/redirects/DataCommandRedirects",
+          "name": "a",
+          "descriptor": "(Lnet/minecraft/server/command/ServerCommandSource;Lnet/minecraft/command/DataCommandObject;Lnet/minecraft/command/arguments/NbtPathArgumentType$NbtPath;)I",
+          "isInterface": true
+        }
+      },
+      {
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Lnet/minecraft/server/command/ServerCommandSource;Lnet/minecraft/command/DataCommandObject;Lnet/minecraft/command/arguments/NbtPathArgumentType$NbtPath;D)I",
@@ -1511,19 +1511,7 @@
         }
       },
       {
-        "opcode": 185,
-        "access": 9,
-        "name": "a",
-        "descriptor": "(Lnet/minecraft/server/command/ServerCommandSource;Lnet/minecraft/command/DataCommandObject;Lnet/minecraft/command/arguments/NbtPathArgumentType$NbtPath;)I",
-        "redirect": {
-          "owner": "io/github/fukkitmc/fukkit/redirects/DataCommandRedirects",
-          "name": "a",
-          "descriptor": "(Lnet/minecraft/server/command/ServerCommandSource;Lnet/minecraft/command/DataCommandObject;Lnet/minecraft/command/arguments/NbtPathArgumentType$NbtPath;)I",
-          "isInterface": true
-        }
-      },
-      {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "b",
         "descriptor": "(Lnet/minecraft/server/command/ServerCommandSource;Lnet/minecraft/command/DataCommandObject;Lnet/minecraft/command/arguments/NbtPathArgumentType$NbtPath;)I",
@@ -1531,6 +1519,18 @@
           "owner": "io/github/fukkitmc/fukkit/redirects/DataCommandRedirects",
           "name": "b",
           "descriptor": "(Lnet/minecraft/server/command/ServerCommandSource;Lnet/minecraft/command/DataCommandObject;Lnet/minecraft/command/arguments/NbtPathArgumentType$NbtPath;)I",
+          "isInterface": true
+        }
+      },
+      {
+        "opcode": 184,
+        "access": 9,
+        "name": "a",
+        "descriptor": "(Lnet/minecraft/command/arguments/NbtPathArgumentType$NbtPath;Lnet/minecraft/command/DataCommandObject;)Lnet/minecraft/nbt/Tag;",
+        "redirect": {
+          "owner": "io/github/fukkitmc/fukkit/redirects/DataCommandRedirects",
+          "name": "a",
+          "descriptor": "(Lnet/minecraft/command/arguments/NbtPathArgumentType$NbtPath;Lnet/minecraft/command/DataCommandObject;)Lnet/minecraft/nbt/Tag;",
           "isInterface": true
         }
       }
@@ -1542,7 +1542,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Ljava/lang/String;Lnet/minecraft/particle/ParticleEffect$Factory;Ljava/util/function/Function;)Lnet/minecraft/particle/ParticleType;",
@@ -1747,7 +1747,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Lnet/minecraft/util/Identifier;)Lnet/minecraft/loot/entry/LeafEntry$Builder;",
@@ -1821,7 +1821,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Ljava/lang/String;)Lnet/minecraft/tag/Tag$Identified;",
@@ -1857,7 +1857,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Lnet/minecraft/entity/EntityType$EntityFactory;Lnet/minecraft/entity/SpawnGroup;)Lnet/minecraft/entity/EntityType$Builder;",
@@ -1904,32 +1904,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
-        "access": 9,
-        "name": "a",
-        "descriptor": "(Lnet/minecraft/entity/SpawnGroup;Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/world/chunk/WorldChunk;Lnet/minecraft/world/SpawnHelper$Checker;Lnet/minecraft/world/SpawnHelper$Runner;)V",
-        "redirect": {
-          "owner": "io/github/fukkitmc/fukkit/redirects/SpawnHelperRedirects",
-          "name": "a",
-          "descriptor": "(Lnet/minecraft/entity/SpawnGroup;Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/world/chunk/WorldChunk;Lnet/minecraft/world/SpawnHelper$Checker;Lnet/minecraft/world/SpawnHelper$Runner;)V",
-          "isInterface": true
-        }
-      },
-      {
-        "opcode": 185,
-        "access": 9,
-        "name": "a",
-        "descriptor": "(ILjava/lang/Iterable;Lnet/minecraft/world/SpawnHelper$ChunkSource;)Lnet/minecraft/world/SpawnHelper$Info;",
-        "signature": "(ILjava/lang/Iterable\u003cLnet/minecraft/entity/Entity;\u003e;Lnet/minecraft/world/SpawnHelper$ChunkSource;)Lnet/minecraft/world/SpawnHelper$Info;",
-        "redirect": {
-          "owner": "io/github/fukkitmc/fukkit/redirects/SpawnHelperRedirects",
-          "name": "a",
-          "descriptor": "(ILjava/lang/Iterable;Lnet/minecraft/world/SpawnHelper$ChunkSource;)Lnet/minecraft/world/SpawnHelper$Info;",
-          "isInterface": true
-        }
-      },
-      {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Lnet/minecraft/entity/SpawnGroup;Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/world/chunk/Chunk;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/world/SpawnHelper$Checker;Lnet/minecraft/world/SpawnHelper$Runner;)V",
@@ -1941,7 +1916,7 @@
         }
       },
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/world/chunk/WorldChunk;Lnet/minecraft/world/SpawnHelper$Info;ZZZ)V",
@@ -1949,6 +1924,31 @@
           "owner": "io/github/fukkitmc/fukkit/redirects/SpawnHelperRedirects",
           "name": "a",
           "descriptor": "(Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/world/chunk/WorldChunk;Lnet/minecraft/world/SpawnHelper$Info;ZZZ)V",
+          "isInterface": true
+        }
+      },
+      {
+        "opcode": 184,
+        "access": 9,
+        "name": "a",
+        "descriptor": "(Lnet/minecraft/entity/SpawnGroup;Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/world/chunk/WorldChunk;Lnet/minecraft/world/SpawnHelper$Checker;Lnet/minecraft/world/SpawnHelper$Runner;)V",
+        "redirect": {
+          "owner": "io/github/fukkitmc/fukkit/redirects/SpawnHelperRedirects",
+          "name": "a",
+          "descriptor": "(Lnet/minecraft/entity/SpawnGroup;Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/world/chunk/WorldChunk;Lnet/minecraft/world/SpawnHelper$Checker;Lnet/minecraft/world/SpawnHelper$Runner;)V",
+          "isInterface": true
+        }
+      },
+      {
+        "opcode": 184,
+        "access": 9,
+        "name": "a",
+        "descriptor": "(ILjava/lang/Iterable;Lnet/minecraft/world/SpawnHelper$ChunkSource;)Lnet/minecraft/world/SpawnHelper$Info;",
+        "signature": "(ILjava/lang/Iterable\u003cLnet/minecraft/entity/Entity;\u003e;Lnet/minecraft/world/SpawnHelper$ChunkSource;)Lnet/minecraft/world/SpawnHelper$Info;",
+        "redirect": {
+          "owner": "io/github/fukkitmc/fukkit/redirects/SpawnHelperRedirects",
+          "name": "a",
+          "descriptor": "(ILjava/lang/Iterable;Lnet/minecraft/world/SpawnHelper$ChunkSource;)Lnet/minecraft/world/SpawnHelper$Info;",
           "isInterface": true
         }
       }
@@ -2076,19 +2076,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
-        "access": 9,
-        "name": "a",
-        "descriptor": "(Lnet/minecraft/command/EntitySelectorReader;Ljava/lang/String;I)Lnet/minecraft/command/EntitySelectorOptions$SelectorHandler;",
-        "redirect": {
-          "owner": "io/github/fukkitmc/fukkit/redirects/EntitySelectorOptionsRedirects",
-          "name": "a",
-          "descriptor": "(Lnet/minecraft/command/EntitySelectorReader;Ljava/lang/String;I)Lnet/minecraft/command/EntitySelectorOptions$SelectorHandler;",
-          "isInterface": true
-        }
-      },
-      {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Ljava/lang/String;Lnet/minecraft/command/EntitySelectorOptions$SelectorHandler;Ljava/util/function/Predicate;Lnet/minecraft/text/Text;)V",
@@ -2097,6 +2085,18 @@
           "owner": "io/github/fukkitmc/fukkit/redirects/EntitySelectorOptionsRedirects",
           "name": "a",
           "descriptor": "(Ljava/lang/String;Lnet/minecraft/command/EntitySelectorOptions$SelectorHandler;Ljava/util/function/Predicate;Lnet/minecraft/text/Text;)V",
+          "isInterface": true
+        }
+      },
+      {
+        "opcode": 184,
+        "access": 9,
+        "name": "a",
+        "descriptor": "(Lnet/minecraft/command/EntitySelectorReader;Ljava/lang/String;I)Lnet/minecraft/command/EntitySelectorOptions$SelectorHandler;",
+        "redirect": {
+          "owner": "io/github/fukkitmc/fukkit/redirects/EntitySelectorOptionsRedirects",
+          "name": "a",
+          "descriptor": "(Lnet/minecraft/command/EntitySelectorReader;Ljava/lang/String;I)Lnet/minecraft/command/EntitySelectorOptions$SelectorHandler;",
           "isInterface": true
         }
       }
@@ -2138,7 +2138,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Lnet/minecraft/loot/entry/CombinedEntry$Factory;)Lnet/minecraft/loot/entry/LootPoolEntry$Serializer;",
@@ -2226,7 +2226,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "convertWorld",
         "descriptor": "(Lnet/minecraft/world/level/storage/LevelStorage$Session;Lcom/mojang/datafixers/DataFixer;ZLjava/util/function/BooleanSupplier;Lcom/google/common/collect/ImmutableSet;)V",
@@ -2239,7 +2239,7 @@
         }
       },
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "main",
         "descriptor": "(Ljoptsimple/OptionSet;)V",
@@ -2296,7 +2296,7 @@
     ],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/entity/Entity;)V",
@@ -2372,20 +2372,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
-        "access": 9,
-        "name": "a",
-        "descriptor": "(Ljava/lang/String;Lnet/minecraft/world/chunk/ChunkStatus;ILjava/util/EnumSet;Lnet/minecraft/world/chunk/ChunkStatus$ChunkType;Lnet/minecraft/world/chunk/ChunkStatus$GenerationTask;Lnet/minecraft/world/chunk/ChunkStatus$LoadTask;)Lnet/minecraft/world/chunk/ChunkStatus;",
-        "signature": "(Ljava/lang/String;Lnet/minecraft/world/chunk/ChunkStatus;ILjava/util/EnumSet\u003cLnet/minecraft/world/Heightmap$Type;\u003e;Lnet/minecraft/world/chunk/ChunkStatus$ChunkType;Lnet/minecraft/world/chunk/ChunkStatus$GenerationTask;Lnet/minecraft/world/chunk/ChunkStatus$LoadTask;)Lnet/minecraft/world/chunk/ChunkStatus;",
-        "redirect": {
-          "owner": "io/github/fukkitmc/fukkit/redirects/ChunkStatusRedirects",
-          "name": "a",
-          "descriptor": "(Ljava/lang/String;Lnet/minecraft/world/chunk/ChunkStatus;ILjava/util/EnumSet;Lnet/minecraft/world/chunk/ChunkStatus$ChunkType;Lnet/minecraft/world/chunk/ChunkStatus$GenerationTask;Lnet/minecraft/world/chunk/ChunkStatus$LoadTask;)Lnet/minecraft/world/chunk/ChunkStatus;",
-          "isInterface": true
-        }
-      },
-      {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Ljava/lang/String;Lnet/minecraft/world/chunk/ChunkStatus;ILjava/util/EnumSet;Lnet/minecraft/world/chunk/ChunkStatus$ChunkType;Lnet/minecraft/world/chunk/ChunkStatus$GenerationTask;)Lnet/minecraft/world/chunk/ChunkStatus;",
@@ -2398,7 +2385,20 @@
         }
       },
       {
-        "opcode": 185,
+        "opcode": 184,
+        "access": 9,
+        "name": "a",
+        "descriptor": "(Ljava/lang/String;Lnet/minecraft/world/chunk/ChunkStatus;ILjava/util/EnumSet;Lnet/minecraft/world/chunk/ChunkStatus$ChunkType;Lnet/minecraft/world/chunk/ChunkStatus$GenerationTask;Lnet/minecraft/world/chunk/ChunkStatus$LoadTask;)Lnet/minecraft/world/chunk/ChunkStatus;",
+        "signature": "(Ljava/lang/String;Lnet/minecraft/world/chunk/ChunkStatus;ILjava/util/EnumSet\u003cLnet/minecraft/world/Heightmap$Type;\u003e;Lnet/minecraft/world/chunk/ChunkStatus$ChunkType;Lnet/minecraft/world/chunk/ChunkStatus$GenerationTask;Lnet/minecraft/world/chunk/ChunkStatus$LoadTask;)Lnet/minecraft/world/chunk/ChunkStatus;",
+        "redirect": {
+          "owner": "io/github/fukkitmc/fukkit/redirects/ChunkStatusRedirects",
+          "name": "a",
+          "descriptor": "(Ljava/lang/String;Lnet/minecraft/world/chunk/ChunkStatus;ILjava/util/EnumSet;Lnet/minecraft/world/chunk/ChunkStatus$ChunkType;Lnet/minecraft/world/chunk/ChunkStatus$GenerationTask;Lnet/minecraft/world/chunk/ChunkStatus$LoadTask;)Lnet/minecraft/world/chunk/ChunkStatus;",
+          "isInterface": true
+        }
+      },
+      {
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Ljava/lang/String;Lnet/minecraft/world/chunk/ChunkStatus;ILjava/util/EnumSet;Lnet/minecraft/world/chunk/ChunkStatus$ChunkType;Lnet/minecraft/world/chunk/ChunkStatus$SimpleGenerationTask;)Lnet/minecraft/world/chunk/ChunkStatus;",
@@ -2514,7 +2514,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Lnet/minecraft/world/World;Lnet/minecraft/item/ItemStack;ILnet/minecraft/util/math/Direction;Lnet/minecraft/util/math/BlockPointer;)Z",
@@ -2543,7 +2543,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Lnet/minecraft/block/Block;)Lnet/minecraft/loot/condition/BlockStatePropertyLootCondition$Builder;",
@@ -2636,7 +2636,20 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
+        "access": 9,
+        "name": "a",
+        "descriptor": "(Lcom/mojang/brigadier/tree/CommandNode;Lcom/mojang/brigadier/builder/ArgumentBuilder;ZLnet/minecraft/server/command/ExecuteCommand$Condition;)Lcom/mojang/brigadier/builder/ArgumentBuilder;",
+        "signature": "(Lcom/mojang/brigadier/tree/CommandNode\u003cLnet/minecraft/server/command/ServerCommandSource;\u003e;Lcom/mojang/brigadier/builder/ArgumentBuilder\u003cLnet/minecraft/server/command/ServerCommandSource;*\u003e;ZLnet/minecraft/server/command/ExecuteCommand$Condition;)Lcom/mojang/brigadier/builder/ArgumentBuilder\u003cLnet/minecraft/server/command/ServerCommandSource;*\u003e;",
+        "redirect": {
+          "owner": "io/github/fukkitmc/fukkit/redirects/ExecuteCommandRedirects",
+          "name": "a",
+          "descriptor": "(Lcom/mojang/brigadier/tree/CommandNode;Lcom/mojang/brigadier/builder/ArgumentBuilder;ZLnet/minecraft/server/command/ExecuteCommand$Condition;)Lcom/mojang/brigadier/builder/ArgumentBuilder;",
+          "isInterface": true
+        }
+      },
+      {
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Lnet/minecraft/command/DataCommandObject;Lnet/minecraft/command/arguments/NbtPathArgumentType$NbtPath;)I",
@@ -2648,20 +2661,7 @@
         }
       },
       {
-        "opcode": 185,
-        "access": 9,
-        "name": "a",
-        "descriptor": "(Lnet/minecraft/server/command/ServerCommandSource;Lnet/minecraft/command/DataCommandObject;Lnet/minecraft/command/arguments/NbtPathArgumentType$NbtPath;Ljava/util/function/IntFunction;Z)Lnet/minecraft/server/command/ServerCommandSource;",
-        "signature": "(Lnet/minecraft/server/command/ServerCommandSource;Lnet/minecraft/command/DataCommandObject;Lnet/minecraft/command/arguments/NbtPathArgumentType$NbtPath;Ljava/util/function/IntFunction\u003cLnet/minecraft/nbt/Tag;\u003e;Z)Lnet/minecraft/server/command/ServerCommandSource;",
-        "redirect": {
-          "owner": "io/github/fukkitmc/fukkit/redirects/ExecuteCommandRedirects",
-          "name": "a",
-          "descriptor": "(Lnet/minecraft/server/command/ServerCommandSource;Lnet/minecraft/command/DataCommandObject;Lnet/minecraft/command/arguments/NbtPathArgumentType$NbtPath;Ljava/util/function/IntFunction;Z)Lnet/minecraft/server/command/ServerCommandSource;",
-          "isInterface": true
-        }
-      },
-      {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(ZLnet/minecraft/server/command/ExecuteCommand$ExistsCondition;)Lcom/mojang/brigadier/Command;",
@@ -2674,15 +2674,15 @@
         }
       },
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
-        "descriptor": "(Lcom/mojang/brigadier/tree/CommandNode;Lcom/mojang/brigadier/builder/ArgumentBuilder;ZLnet/minecraft/server/command/ExecuteCommand$Condition;)Lcom/mojang/brigadier/builder/ArgumentBuilder;",
-        "signature": "(Lcom/mojang/brigadier/tree/CommandNode\u003cLnet/minecraft/server/command/ServerCommandSource;\u003e;Lcom/mojang/brigadier/builder/ArgumentBuilder\u003cLnet/minecraft/server/command/ServerCommandSource;*\u003e;ZLnet/minecraft/server/command/ExecuteCommand$Condition;)Lcom/mojang/brigadier/builder/ArgumentBuilder\u003cLnet/minecraft/server/command/ServerCommandSource;*\u003e;",
+        "descriptor": "(Lnet/minecraft/server/command/ServerCommandSource;Lnet/minecraft/command/DataCommandObject;Lnet/minecraft/command/arguments/NbtPathArgumentType$NbtPath;Ljava/util/function/IntFunction;Z)Lnet/minecraft/server/command/ServerCommandSource;",
+        "signature": "(Lnet/minecraft/server/command/ServerCommandSource;Lnet/minecraft/command/DataCommandObject;Lnet/minecraft/command/arguments/NbtPathArgumentType$NbtPath;Ljava/util/function/IntFunction\u003cLnet/minecraft/nbt/Tag;\u003e;Z)Lnet/minecraft/server/command/ServerCommandSource;",
         "redirect": {
           "owner": "io/github/fukkitmc/fukkit/redirects/ExecuteCommandRedirects",
           "name": "a",
-          "descriptor": "(Lcom/mojang/brigadier/tree/CommandNode;Lcom/mojang/brigadier/builder/ArgumentBuilder;ZLnet/minecraft/server/command/ExecuteCommand$Condition;)Lcom/mojang/brigadier/builder/ArgumentBuilder;",
+          "descriptor": "(Lnet/minecraft/server/command/ServerCommandSource;Lnet/minecraft/command/DataCommandObject;Lnet/minecraft/command/arguments/NbtPathArgumentType$NbtPath;Ljava/util/function/IntFunction;Z)Lnet/minecraft/server/command/ServerCommandSource;",
           "isInterface": true
         }
       }
@@ -2720,7 +2720,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "calculateBoundingBox",
         "descriptor": "(Lnet/minecraft/entity/Entity;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/math/Direction;II)Lnet/minecraft/util/math/Box;",
@@ -2757,7 +2757,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "interact",
         "descriptor": "(Lnet/minecraft/block/BlockState;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/entity/Entity;)V",
@@ -2794,7 +2794,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Lnet/minecraft/loot/condition/LootCondition$Builder;)Lnet/minecraft/loot/condition/LootCondition$Builder;",
@@ -2813,7 +2813,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/loot/function/ConditionalLootFunction$Builder;",
@@ -2855,7 +2855,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Lnet/minecraft/predicate/entity/LocationPredicate$Builder;)Lnet/minecraft/loot/condition/LootCondition$Builder;",
@@ -2867,7 +2867,7 @@
         }
       },
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Lnet/minecraft/predicate/entity/LocationPredicate$Builder;Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/loot/condition/LootCondition$Builder;",
@@ -2978,7 +2978,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "b",
         "descriptor": "(Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/util/math/BlockPos;Lorg/bukkit/block/Block;Lorg/bukkit/craftbukkit/inventory/CraftItemStack;)Z",
@@ -2997,72 +2997,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
-        "access": 9,
-        "name": "a",
-        "descriptor": "(Lnet/minecraft/server/command/ServerCommandSource;Lnet/minecraft/util/math/BlockPos;IILjava/util/List;Lnet/minecraft/server/command/LootCommand$FeedbackMessage;)I",
-        "signature": "(Lnet/minecraft/server/command/ServerCommandSource;Lnet/minecraft/util/math/BlockPos;IILjava/util/List\u003cLnet/minecraft/item/ItemStack;\u003e;Lnet/minecraft/server/command/LootCommand$FeedbackMessage;)I",
-        "redirect": {
-          "owner": "io/github/fukkitmc/fukkit/redirects/LootCommandRedirects",
-          "name": "a",
-          "descriptor": "(Lnet/minecraft/server/command/ServerCommandSource;Lnet/minecraft/util/math/BlockPos;IILjava/util/List;Lnet/minecraft/server/command/LootCommand$FeedbackMessage;)I",
-          "isInterface": true
-        }
-      },
-      {
-        "opcode": 185,
-        "access": 9,
-        "name": "a",
-        "descriptor": "(Ljava/util/Collection;Ljava/util/List;Lnet/minecraft/server/command/LootCommand$FeedbackMessage;)I",
-        "signature": "(Ljava/util/Collection\u003cLnet/minecraft/server/network/ServerPlayerEntity;\u003e;Ljava/util/List\u003cLnet/minecraft/item/ItemStack;\u003e;Lnet/minecraft/server/command/LootCommand$FeedbackMessage;)I",
-        "redirect": {
-          "owner": "io/github/fukkitmc/fukkit/redirects/LootCommandRedirects",
-          "name": "a",
-          "descriptor": "(Ljava/util/Collection;Ljava/util/List;Lnet/minecraft/server/command/LootCommand$FeedbackMessage;)I",
-          "isInterface": true
-        }
-      },
-      {
-        "opcode": 185,
-        "access": 9,
-        "name": "a",
-        "descriptor": "(Lcom/mojang/brigadier/context/CommandContext;Lnet/minecraft/util/Identifier;Lnet/minecraft/server/command/LootCommand$Target;)I",
-        "signature": "(Lcom/mojang/brigadier/context/CommandContext\u003cLnet/minecraft/server/command/ServerCommandSource;\u003e;Lnet/minecraft/util/Identifier;Lnet/minecraft/server/command/LootCommand$Target;)I",
-        "redirect": {
-          "owner": "io/github/fukkitmc/fukkit/redirects/LootCommandRedirects",
-          "name": "a",
-          "descriptor": "(Lcom/mojang/brigadier/context/CommandContext;Lnet/minecraft/util/Identifier;Lnet/minecraft/server/command/LootCommand$Target;)I",
-          "isInterface": true
-        }
-      },
-      {
-        "opcode": 185,
-        "access": 9,
-        "name": "a",
-        "descriptor": "(Lcom/mojang/brigadier/context/CommandContext;Lnet/minecraft/util/Identifier;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/item/ItemStack;Lnet/minecraft/server/command/LootCommand$Target;)I",
-        "signature": "(Lcom/mojang/brigadier/context/CommandContext\u003cLnet/minecraft/server/command/ServerCommandSource;\u003e;Lnet/minecraft/util/Identifier;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/item/ItemStack;Lnet/minecraft/server/command/LootCommand$Target;)I",
-        "redirect": {
-          "owner": "io/github/fukkitmc/fukkit/redirects/LootCommandRedirects",
-          "name": "a",
-          "descriptor": "(Lcom/mojang/brigadier/context/CommandContext;Lnet/minecraft/util/Identifier;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/item/ItemStack;Lnet/minecraft/server/command/LootCommand$Target;)I",
-          "isInterface": true
-        }
-      },
-      {
-        "opcode": 185,
-        "access": 9,
-        "name": "a",
-        "descriptor": "(Lcom/mojang/brigadier/context/CommandContext;Lnet/minecraft/util/Identifier;Lnet/minecraft/loot/context/LootContext;Lnet/minecraft/server/command/LootCommand$Target;)I",
-        "signature": "(Lcom/mojang/brigadier/context/CommandContext\u003cLnet/minecraft/server/command/ServerCommandSource;\u003e;Lnet/minecraft/util/Identifier;Lnet/minecraft/loot/context/LootContext;Lnet/minecraft/server/command/LootCommand$Target;)I",
-        "redirect": {
-          "owner": "io/github/fukkitmc/fukkit/redirects/LootCommandRedirects",
-          "name": "a",
-          "descriptor": "(Lcom/mojang/brigadier/context/CommandContext;Lnet/minecraft/util/Identifier;Lnet/minecraft/loot/context/LootContext;Lnet/minecraft/server/command/LootCommand$Target;)I",
-          "isInterface": true
-        }
-      },
-      {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Lcom/mojang/brigadier/context/CommandContext;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/item/ItemStack;Lnet/minecraft/server/command/LootCommand$Target;)I",
@@ -3075,7 +3010,33 @@
         }
       },
       {
-        "opcode": 185,
+        "opcode": 184,
+        "access": 9,
+        "name": "a",
+        "descriptor": "(Lcom/mojang/brigadier/context/CommandContext;Lnet/minecraft/util/Identifier;Lnet/minecraft/server/command/LootCommand$Target;)I",
+        "signature": "(Lcom/mojang/brigadier/context/CommandContext\u003cLnet/minecraft/server/command/ServerCommandSource;\u003e;Lnet/minecraft/util/Identifier;Lnet/minecraft/server/command/LootCommand$Target;)I",
+        "redirect": {
+          "owner": "io/github/fukkitmc/fukkit/redirects/LootCommandRedirects",
+          "name": "a",
+          "descriptor": "(Lcom/mojang/brigadier/context/CommandContext;Lnet/minecraft/util/Identifier;Lnet/minecraft/server/command/LootCommand$Target;)I",
+          "isInterface": true
+        }
+      },
+      {
+        "opcode": 184,
+        "access": 9,
+        "name": "a",
+        "descriptor": "(Lcom/mojang/brigadier/context/CommandContext;Lnet/minecraft/util/Identifier;Lnet/minecraft/loot/context/LootContext;Lnet/minecraft/server/command/LootCommand$Target;)I",
+        "signature": "(Lcom/mojang/brigadier/context/CommandContext\u003cLnet/minecraft/server/command/ServerCommandSource;\u003e;Lnet/minecraft/util/Identifier;Lnet/minecraft/loot/context/LootContext;Lnet/minecraft/server/command/LootCommand$Target;)I",
+        "redirect": {
+          "owner": "io/github/fukkitmc/fukkit/redirects/LootCommandRedirects",
+          "name": "a",
+          "descriptor": "(Lcom/mojang/brigadier/context/CommandContext;Lnet/minecraft/util/Identifier;Lnet/minecraft/loot/context/LootContext;Lnet/minecraft/server/command/LootCommand$Target;)I",
+          "isInterface": true
+        }
+      },
+      {
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Lnet/minecraft/server/command/ServerCommandSource;Lnet/minecraft/util/math/Vec3d;Ljava/util/List;Lnet/minecraft/server/command/LootCommand$FeedbackMessage;)I",
@@ -3088,33 +3049,7 @@
         }
       },
       {
-        "opcode": 185,
-        "access": 9,
-        "name": "a",
-        "descriptor": "(Lcom/mojang/brigadier/builder/ArgumentBuilder;Lnet/minecraft/server/command/LootCommand$SourceConstructor;)Lcom/mojang/brigadier/builder/ArgumentBuilder;",
-        "signature": "\u003cT:Lcom/mojang/brigadier/builder/ArgumentBuilder\u003cLnet/minecraft/server/command/ServerCommandSource;TT;\u003e;\u003e(TT;Lnet/minecraft/server/command/LootCommand$SourceConstructor;)TT;",
-        "redirect": {
-          "owner": "io/github/fukkitmc/fukkit/redirects/LootCommandRedirects",
-          "name": "a",
-          "descriptor": "(Lcom/mojang/brigadier/builder/ArgumentBuilder;Lnet/minecraft/server/command/LootCommand$SourceConstructor;)Lcom/mojang/brigadier/builder/ArgumentBuilder;",
-          "isInterface": true
-        }
-      },
-      {
-        "opcode": 185,
-        "access": 9,
-        "name": "a",
-        "descriptor": "(Lcom/mojang/brigadier/context/CommandContext;Lnet/minecraft/entity/Entity;Lnet/minecraft/server/command/LootCommand$Target;)I",
-        "signature": "(Lcom/mojang/brigadier/context/CommandContext\u003cLnet/minecraft/server/command/ServerCommandSource;\u003e;Lnet/minecraft/entity/Entity;Lnet/minecraft/server/command/LootCommand$Target;)I",
-        "redirect": {
-          "owner": "io/github/fukkitmc/fukkit/redirects/LootCommandRedirects",
-          "name": "a",
-          "descriptor": "(Lcom/mojang/brigadier/context/CommandContext;Lnet/minecraft/entity/Entity;Lnet/minecraft/server/command/LootCommand$Target;)I",
-          "isInterface": true
-        }
-      },
-      {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Ljava/util/Collection;IILjava/util/List;Lnet/minecraft/server/command/LootCommand$FeedbackMessage;)I",
@@ -3127,7 +3062,33 @@
         }
       },
       {
-        "opcode": 185,
+        "opcode": 184,
+        "access": 9,
+        "name": "a",
+        "descriptor": "(Ljava/util/Collection;Ljava/util/List;Lnet/minecraft/server/command/LootCommand$FeedbackMessage;)I",
+        "signature": "(Ljava/util/Collection\u003cLnet/minecraft/server/network/ServerPlayerEntity;\u003e;Ljava/util/List\u003cLnet/minecraft/item/ItemStack;\u003e;Lnet/minecraft/server/command/LootCommand$FeedbackMessage;)I",
+        "redirect": {
+          "owner": "io/github/fukkitmc/fukkit/redirects/LootCommandRedirects",
+          "name": "a",
+          "descriptor": "(Ljava/util/Collection;Ljava/util/List;Lnet/minecraft/server/command/LootCommand$FeedbackMessage;)I",
+          "isInterface": true
+        }
+      },
+      {
+        "opcode": 184,
+        "access": 9,
+        "name": "a",
+        "descriptor": "(Lnet/minecraft/server/command/ServerCommandSource;Lnet/minecraft/util/math/BlockPos;IILjava/util/List;Lnet/minecraft/server/command/LootCommand$FeedbackMessage;)I",
+        "signature": "(Lnet/minecraft/server/command/ServerCommandSource;Lnet/minecraft/util/math/BlockPos;IILjava/util/List\u003cLnet/minecraft/item/ItemStack;\u003e;Lnet/minecraft/server/command/LootCommand$FeedbackMessage;)I",
+        "redirect": {
+          "owner": "io/github/fukkitmc/fukkit/redirects/LootCommandRedirects",
+          "name": "a",
+          "descriptor": "(Lnet/minecraft/server/command/ServerCommandSource;Lnet/minecraft/util/math/BlockPos;IILjava/util/List;Lnet/minecraft/server/command/LootCommand$FeedbackMessage;)I",
+          "isInterface": true
+        }
+      },
+      {
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Lnet/minecraft/server/command/ServerCommandSource;Lnet/minecraft/util/math/BlockPos;Ljava/util/List;Lnet/minecraft/server/command/LootCommand$FeedbackMessage;)I",
@@ -3136,6 +3097,45 @@
           "owner": "io/github/fukkitmc/fukkit/redirects/LootCommandRedirects",
           "name": "a",
           "descriptor": "(Lnet/minecraft/server/command/ServerCommandSource;Lnet/minecraft/util/math/BlockPos;Ljava/util/List;Lnet/minecraft/server/command/LootCommand$FeedbackMessage;)I",
+          "isInterface": true
+        }
+      },
+      {
+        "opcode": 184,
+        "access": 9,
+        "name": "a",
+        "descriptor": "(Lcom/mojang/brigadier/context/CommandContext;Lnet/minecraft/util/Identifier;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/item/ItemStack;Lnet/minecraft/server/command/LootCommand$Target;)I",
+        "signature": "(Lcom/mojang/brigadier/context/CommandContext\u003cLnet/minecraft/server/command/ServerCommandSource;\u003e;Lnet/minecraft/util/Identifier;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/item/ItemStack;Lnet/minecraft/server/command/LootCommand$Target;)I",
+        "redirect": {
+          "owner": "io/github/fukkitmc/fukkit/redirects/LootCommandRedirects",
+          "name": "a",
+          "descriptor": "(Lcom/mojang/brigadier/context/CommandContext;Lnet/minecraft/util/Identifier;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/item/ItemStack;Lnet/minecraft/server/command/LootCommand$Target;)I",
+          "isInterface": true
+        }
+      },
+      {
+        "opcode": 184,
+        "access": 9,
+        "name": "a",
+        "descriptor": "(Lcom/mojang/brigadier/context/CommandContext;Lnet/minecraft/entity/Entity;Lnet/minecraft/server/command/LootCommand$Target;)I",
+        "signature": "(Lcom/mojang/brigadier/context/CommandContext\u003cLnet/minecraft/server/command/ServerCommandSource;\u003e;Lnet/minecraft/entity/Entity;Lnet/minecraft/server/command/LootCommand$Target;)I",
+        "redirect": {
+          "owner": "io/github/fukkitmc/fukkit/redirects/LootCommandRedirects",
+          "name": "a",
+          "descriptor": "(Lcom/mojang/brigadier/context/CommandContext;Lnet/minecraft/entity/Entity;Lnet/minecraft/server/command/LootCommand$Target;)I",
+          "isInterface": true
+        }
+      },
+      {
+        "opcode": 184,
+        "access": 9,
+        "name": "a",
+        "descriptor": "(Lcom/mojang/brigadier/builder/ArgumentBuilder;Lnet/minecraft/server/command/LootCommand$SourceConstructor;)Lcom/mojang/brigadier/builder/ArgumentBuilder;",
+        "signature": "\u003cT:Lcom/mojang/brigadier/builder/ArgumentBuilder\u003cLnet/minecraft/server/command/ServerCommandSource;TT;\u003e;\u003e(TT;Lnet/minecraft/server/command/LootCommand$SourceConstructor;)TT;",
+        "redirect": {
+          "owner": "io/github/fukkitmc/fukkit/redirects/LootCommandRedirects",
+          "name": "a",
+          "descriptor": "(Lcom/mojang/brigadier/builder/ArgumentBuilder;Lnet/minecraft/server/command/LootCommand$SourceConstructor;)Lcom/mojang/brigadier/builder/ArgumentBuilder;",
           "isInterface": true
         }
       }
@@ -3155,7 +3155,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Lnet/minecraft/loot/function/CopyNameLootFunction$Source;)Lnet/minecraft/loot/function/ConditionalLootFunction$Builder;",
@@ -3211,7 +3211,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Lnet/minecraft/entity/EntityType;Lnet/minecraft/entity/SpawnRestriction$Location;Lnet/minecraft/world/Heightmap$Type;Lnet/minecraft/entity/SpawnRestriction$SpawnPredicate;)V",
@@ -3405,7 +3405,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "b",
         "descriptor": "()Lnet/minecraft/network/NetworkState$PacketHandlerInitializer;",
@@ -3548,7 +3548,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "c",
         "descriptor": "()Lnet/minecraft/loot/function/ConditionalLootFunction$Builder;",
@@ -3614,7 +3614,7 @@
     ],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "load",
         "descriptor": "(Ljava/nio/file/Path;Ljoptsimple/OptionSet;)Lnet/minecraft/server/dedicated/ServerPropertiesHandler;",
@@ -3688,7 +3688,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "b",
         "descriptor": "()Lnet/minecraft/loot/LootTable$Builder;",
@@ -3730,7 +3730,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Ljava/lang/String;)Lnet/minecraft/tag/Tag$Identified;",
@@ -3873,7 +3873,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "([Lnet/minecraft/loot/condition/LootCondition$Builder;)Lnet/minecraft/loot/condition/AlternativeLootCondition$Builder;",
@@ -3892,7 +3892,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Lnet/minecraft/util/Identifier;)Lnet/minecraft/loot/entry/LeafEntry$Builder;",
@@ -3914,7 +3914,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Lnet/minecraft/predicate/entity/DamageSourcePredicate$Builder;)Lnet/minecraft/loot/condition/LootCondition$Builder;",
@@ -3933,7 +3933,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "b",
         "descriptor": "(Lcom/google/gson/JsonElement;)Lnet/minecraft/predicate/PlayerPredicate$AdvancementPredicate;",
@@ -4019,7 +4019,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "b",
         "descriptor": "(Ljava/lang/String;)Lnet/minecraft/command/arguments/NbtPathArgumentType$NbtPath;",
@@ -4031,7 +4031,7 @@
         }
       },
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Lnet/minecraft/loot/function/CopyNbtLootFunction$Source;)Lnet/minecraft/loot/function/CopyNbtLootFunction$Builder;",
@@ -4050,7 +4050,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Lnet/minecraft/util/registry/Registry;Ljava/lang/String;Ljava/lang/String;Ljava/util/function/Function;)Lnet/minecraft/util/JsonSerializing$TypeHandler;",
@@ -4181,7 +4181,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "b",
         "descriptor": "(Lnet/minecraft/tag/Tag;)Lnet/minecraft/loot/entry/LeafEntry$Builder;",
@@ -4264,7 +4264,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "c",
         "descriptor": "()Lnet/minecraft/loot/condition/LootCondition$Builder;",
@@ -4486,7 +4486,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Lnet/minecraft/server/command/ServerCommandSource;Lnet/minecraft/resource/ResourcePackProfile;Lnet/minecraft/server/command/DatapackCommand$PackAdder;)I",
@@ -4721,19 +4721,20 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
-        "descriptor": "(Ljava/lang/Runnable;JZ)Lnet/minecraft/server/world/ChunkTaskPrioritySystem$SorterMessage;",
+        "descriptor": "(Lnet/minecraft/server/world/ChunkHolder;Ljava/lang/Runnable;)Lnet/minecraft/server/world/ChunkTaskPrioritySystem$Task;",
+        "signature": "(Lnet/minecraft/server/world/ChunkHolder;Ljava/lang/Runnable;)Lnet/minecraft/server/world/ChunkTaskPrioritySystem$Task\u003cLjava/lang/Runnable;\u003e;",
         "redirect": {
           "owner": "io/github/fukkitmc/fukkit/redirects/ChunkTaskPrioritySystemRedirects",
           "name": "a",
-          "descriptor": "(Ljava/lang/Runnable;JZ)Lnet/minecraft/server/world/ChunkTaskPrioritySystem$SorterMessage;",
+          "descriptor": "(Lnet/minecraft/server/world/ChunkHolder;Ljava/lang/Runnable;)Lnet/minecraft/server/world/ChunkTaskPrioritySystem$Task;",
           "isInterface": true
         }
       },
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Ljava/lang/Runnable;JLjava/util/function/IntSupplier;)Lnet/minecraft/server/world/ChunkTaskPrioritySystem$Task;",
@@ -4746,15 +4747,14 @@
         }
       },
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
-        "descriptor": "(Lnet/minecraft/server/world/ChunkHolder;Ljava/lang/Runnable;)Lnet/minecraft/server/world/ChunkTaskPrioritySystem$Task;",
-        "signature": "(Lnet/minecraft/server/world/ChunkHolder;Ljava/lang/Runnable;)Lnet/minecraft/server/world/ChunkTaskPrioritySystem$Task\u003cLjava/lang/Runnable;\u003e;",
+        "descriptor": "(Ljava/lang/Runnable;JZ)Lnet/minecraft/server/world/ChunkTaskPrioritySystem$SorterMessage;",
         "redirect": {
           "owner": "io/github/fukkitmc/fukkit/redirects/ChunkTaskPrioritySystemRedirects",
           "name": "a",
-          "descriptor": "(Lnet/minecraft/server/world/ChunkHolder;Ljava/lang/Runnable;)Lnet/minecraft/server/world/ChunkTaskPrioritySystem$Task;",
+          "descriptor": "(Ljava/lang/Runnable;JZ)Lnet/minecraft/server/world/ChunkTaskPrioritySystem$SorterMessage;",
           "isInterface": true
         }
       }
@@ -4801,7 +4801,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Lnet/minecraft/item/ItemConvertible;)Lnet/minecraft/loot/entry/LeafEntry$Builder;",
@@ -4837,7 +4837,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Ljava/util/Collection;Ljava/util/Collection;)Lnet/minecraft/entity/ai/brain/Brain$Profile;",
@@ -4889,7 +4889,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "([Lnet/minecraft/loot/entry/LootPoolEntry$Builder;)Lnet/minecraft/loot/entry/AlternativeEntry$Builder;",
@@ -4941,7 +4941,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "c",
         "descriptor": "()Lnet/minecraft/loot/function/ExplorationMapLootFunction$Builder;",
@@ -4962,7 +4962,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Lnet/minecraft/util/Identifier;)Lnet/minecraft/advancement/criterion/RecipeUnlockedCriterion$Conditions;",
@@ -5031,7 +5031,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Lnet/minecraft/predicate/item/ItemPredicate$Builder;)Lnet/minecraft/loot/condition/LootCondition$Builder;",
@@ -5076,7 +5076,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(FF)Lnet/minecraft/loot/condition/LootCondition$Builder;",
@@ -5095,7 +5095,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "getBlockState",
         "descriptor": "(Lnet/minecraft/block/BlockState;Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/block/BlockState;",
@@ -5192,7 +5192,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "checkExpiry",
         "descriptor": "(Ljava/lang/Object;Lcom/google/gson/JsonObject;)Ljava/lang/Object;",
@@ -5214,7 +5214,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Lnet/minecraft/loot/context/LootContext$EntityTarget;)Lnet/minecraft/loot/condition/LootCondition$Builder;",
@@ -5226,7 +5226,7 @@
         }
       },
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Lnet/minecraft/loot/context/LootContext$EntityTarget;Lnet/minecraft/predicate/entity/EntityPredicate;)Lnet/minecraft/loot/condition/LootCondition$Builder;",
@@ -5238,7 +5238,7 @@
         }
       },
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Lnet/minecraft/loot/context/LootContext$EntityTarget;Lnet/minecraft/predicate/entity/EntityPredicate$Builder;)Lnet/minecraft/loot/condition/LootCondition$Builder;",
@@ -5484,7 +5484,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "calculateBoundingBox",
         "descriptor": "(Lnet/minecraft/entity/Entity;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/math/Direction;II)Lnet/minecraft/util/math/Box;",
@@ -5496,7 +5496,7 @@
         }
       },
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(I)D",
@@ -5531,20 +5531,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
-        "access": 9,
-        "name": "a",
-        "descriptor": "(Lnet/minecraft/structure/PoolStructurePiece;ILnet/minecraft/structure/pool/StructurePoolBasedGenerator$PieceFactory;Lnet/minecraft/world/gen/chunk/ChunkGenerator;Lnet/minecraft/structure/StructureManager;Ljava/util/List;Ljava/util/Random;)V",
-        "signature": "(Lnet/minecraft/structure/PoolStructurePiece;ILnet/minecraft/structure/pool/StructurePoolBasedGenerator$PieceFactory;Lnet/minecraft/world/gen/chunk/ChunkGenerator;Lnet/minecraft/structure/StructureManager;Ljava/util/List\u003c-Lnet/minecraft/structure/PoolStructurePiece;\u003e;Ljava/util/Random;)V",
-        "redirect": {
-          "owner": "io/github/fukkitmc/fukkit/redirects/StructurePoolBasedGeneratorRedirects",
-          "name": "a",
-          "descriptor": "(Lnet/minecraft/structure/PoolStructurePiece;ILnet/minecraft/structure/pool/StructurePoolBasedGenerator$PieceFactory;Lnet/minecraft/world/gen/chunk/ChunkGenerator;Lnet/minecraft/structure/StructureManager;Ljava/util/List;Ljava/util/Random;)V",
-          "isInterface": true
-        }
-      },
-      {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Lnet/minecraft/util/Identifier;ILnet/minecraft/structure/pool/StructurePoolBasedGenerator$PieceFactory;Lnet/minecraft/world/gen/chunk/ChunkGenerator;Lnet/minecraft/structure/StructureManager;Lnet/minecraft/util/math/BlockPos;Ljava/util/List;Ljava/util/Random;ZZ)V",
@@ -5553,6 +5540,19 @@
           "owner": "io/github/fukkitmc/fukkit/redirects/StructurePoolBasedGeneratorRedirects",
           "name": "a",
           "descriptor": "(Lnet/minecraft/util/Identifier;ILnet/minecraft/structure/pool/StructurePoolBasedGenerator$PieceFactory;Lnet/minecraft/world/gen/chunk/ChunkGenerator;Lnet/minecraft/structure/StructureManager;Lnet/minecraft/util/math/BlockPos;Ljava/util/List;Ljava/util/Random;ZZ)V",
+          "isInterface": true
+        }
+      },
+      {
+        "opcode": 184,
+        "access": 9,
+        "name": "a",
+        "descriptor": "(Lnet/minecraft/structure/PoolStructurePiece;ILnet/minecraft/structure/pool/StructurePoolBasedGenerator$PieceFactory;Lnet/minecraft/world/gen/chunk/ChunkGenerator;Lnet/minecraft/structure/StructureManager;Ljava/util/List;Ljava/util/Random;)V",
+        "signature": "(Lnet/minecraft/structure/PoolStructurePiece;ILnet/minecraft/structure/pool/StructurePoolBasedGenerator$PieceFactory;Lnet/minecraft/world/gen/chunk/ChunkGenerator;Lnet/minecraft/structure/StructureManager;Ljava/util/List\u003c-Lnet/minecraft/structure/PoolStructurePiece;\u003e;Ljava/util/Random;)V",
+        "redirect": {
+          "owner": "io/github/fukkitmc/fukkit/redirects/StructurePoolBasedGeneratorRedirects",
+          "name": "a",
+          "descriptor": "(Lnet/minecraft/structure/PoolStructurePiece;ILnet/minecraft/structure/pool/StructurePoolBasedGenerator$PieceFactory;Lnet/minecraft/world/gen/chunk/ChunkGenerator;Lnet/minecraft/structure/StructureManager;Ljava/util/List;Ljava/util/Random;)V",
           "isInterface": true
         }
       }
@@ -6021,7 +6021,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "()Lnet/minecraft/util/profiler/CsvWriter$Header;",
@@ -6103,7 +6103,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Lnet/minecraft/loot/UniformLootTableRange;)Lnet/minecraft/loot/function/ConditionalLootFunction$Builder;",
@@ -6155,7 +6155,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Lnet/minecraft/loot/operator/BoundedIntUnaryOperator;)Lnet/minecraft/loot/function/ConditionalLootFunction$Builder;",
@@ -6209,7 +6209,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Lnet/minecraft/server/command/CommandManager$CommandParser;)Ljava/util/function/Predicate;",
@@ -6269,7 +6269,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "d",
         "descriptor": "()Lnet/minecraft/loot/function/ConditionalLootFunction$Builder;",
@@ -6331,7 +6331,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Lcom/mojang/brigadier/arguments/ArgumentType;)Lnet/minecraft/command/arguments/ArgumentTypes$Entry;",
@@ -6344,7 +6344,7 @@
         }
       },
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Lnet/minecraft/util/Identifier;)Lnet/minecraft/command/arguments/ArgumentTypes$Entry;",
@@ -6404,7 +6404,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Lnet/minecraft/loot/entry/LeafEntry$Factory;)Lnet/minecraft/loot/entry/LeafEntry$Builder;",
@@ -6432,7 +6432,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "d",
         "descriptor": "(Ljava/lang/String;)Lnet/minecraft/command/arguments/NbtPathArgumentType$NbtPath;",
@@ -6544,7 +6544,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Lnet/minecraft/loot/LootTableRange;)Lnet/minecraft/loot/function/ConditionalLootFunction$Builder;",
@@ -6580,7 +6580,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Lnet/minecraft/loot/LootTableRange;)Lnet/minecraft/loot/function/EnchantWithLevelsLootFunction$Builder;",
@@ -6631,7 +6631,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Ljava/lang/String;ZLjava/util/function/Supplier;Lnet/minecraft/resource/ResourcePackProfile$Factory;Lnet/minecraft/resource/ResourcePackProfile$InsertionPosition;Lnet/minecraft/resource/ResourcePackSource;)Lnet/minecraft/resource/ResourcePackProfile;",
@@ -6697,7 +6697,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Lcom/google/gson/JsonElement;Lnet/minecraft/predicate/NumberRange;Ljava/util/function/BiFunction;Lnet/minecraft/predicate/NumberRange$Factory;)Lnet/minecraft/predicate/NumberRange;",
@@ -6710,7 +6710,7 @@
         }
       },
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Lcom/mojang/brigadier/StringReader;Lnet/minecraft/predicate/NumberRange$CommandFactory;Ljava/util/function/Function;Ljava/util/function/Supplier;Ljava/util/function/Function;)Lnet/minecraft/predicate/NumberRange;",
@@ -6786,7 +6786,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Ljava/lang/String;)Lnet/minecraft/tag/Tag$Identified;",
@@ -6846,7 +6846,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Lnet/minecraft/block/Block;)Lnet/minecraft/loot/function/CopyStateFunction$Builder;",
@@ -6873,7 +6873,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "()Lnet/minecraft/loot/LootPool$Builder;",
@@ -6916,19 +6916,20 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
-        "descriptor": "(Lnet/minecraft/util/math/Vec2f;DLnet/minecraft/server/world/ServerWorld;Ljava/util/Random;DDDDI[Lnet/minecraft/server/command/SpreadPlayersCommand$Pile;Z)V",
+        "descriptor": "(Ljava/util/Collection;Lnet/minecraft/server/world/ServerWorld;[Lnet/minecraft/server/command/SpreadPlayersCommand$Pile;IZ)D",
+        "signature": "(Ljava/util/Collection\u003c+Lnet/minecraft/entity/Entity;\u003e;Lnet/minecraft/server/world/ServerWorld;[Lnet/minecraft/server/command/SpreadPlayersCommand$Pile;IZ)D",
         "redirect": {
           "owner": "io/github/fukkitmc/fukkit/redirects/SpreadPlayersCommandRedirects",
           "name": "a",
-          "descriptor": "(Lnet/minecraft/util/math/Vec2f;DLnet/minecraft/server/world/ServerWorld;Ljava/util/Random;DDDDI[Lnet/minecraft/server/command/SpreadPlayersCommand$Pile;Z)V",
+          "descriptor": "(Ljava/util/Collection;Lnet/minecraft/server/world/ServerWorld;[Lnet/minecraft/server/command/SpreadPlayersCommand$Pile;IZ)D",
           "isInterface": true
         }
       },
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Ljava/util/Random;IDDDD)[Lnet/minecraft/server/command/SpreadPlayersCommand$Pile;",
@@ -6940,15 +6941,14 @@
         }
       },
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
-        "descriptor": "(Ljava/util/Collection;Lnet/minecraft/server/world/ServerWorld;[Lnet/minecraft/server/command/SpreadPlayersCommand$Pile;IZ)D",
-        "signature": "(Ljava/util/Collection\u003c+Lnet/minecraft/entity/Entity;\u003e;Lnet/minecraft/server/world/ServerWorld;[Lnet/minecraft/server/command/SpreadPlayersCommand$Pile;IZ)D",
+        "descriptor": "(Lnet/minecraft/util/math/Vec2f;DLnet/minecraft/server/world/ServerWorld;Ljava/util/Random;DDDDI[Lnet/minecraft/server/command/SpreadPlayersCommand$Pile;Z)V",
         "redirect": {
           "owner": "io/github/fukkitmc/fukkit/redirects/SpreadPlayersCommandRedirects",
           "name": "a",
-          "descriptor": "(Ljava/util/Collection;Lnet/minecraft/server/world/ServerWorld;[Lnet/minecraft/server/command/SpreadPlayersCommand$Pile;IZ)D",
+          "descriptor": "(Lnet/minecraft/util/math/Vec2f;DLnet/minecraft/server/world/ServerWorld;Ljava/util/Random;DDDDI[Lnet/minecraft/server/command/SpreadPlayersCommand$Pile;Z)V",
           "isInterface": true
         }
       }
@@ -7215,7 +7215,7 @@
     ],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "convertWorld",
         "descriptor": "(Lnet/minecraft/world/level/storage/LevelStorage$Session;)V",
@@ -7227,7 +7227,7 @@
         }
       },
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "getServer",
         "descriptor": "()Lnet/minecraft/server/MinecraftServer;",
@@ -7253,13 +7253,7 @@
     "injectInterfaces": [
       "io/github/fukkitmc/fukkit/extras/InventoryExtra"
     ],
-    "syntheticFields": [
-      {
-        "access": 9,
-        "name": "MAX_STACK",
-        "type": "I"
-      }
-    ],
+    "syntheticFields": [],
     "syntheticMethods": []
   },
   {
@@ -7284,7 +7278,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "()Lnet/minecraft/command/arguments/NumberRangeArgumentType$IntRangeArgumentType;",
@@ -7381,7 +7375,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Ljava/lang/String;Lcom/google/gson/JsonElement;)Lnet/minecraft/predicate/StatePredicate$Condition;",
@@ -7460,20 +7454,20 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
-        "descriptor": "(Lnet/minecraft/enchantment/Enchantment;I)Lnet/minecraft/loot/function/ConditionalLootFunction$Builder;",
-        "signature": "(Lnet/minecraft/enchantment/Enchantment;I)Lnet/minecraft/loot/function/ConditionalLootFunction$Builder\u003c*\u003e;",
+        "descriptor": "(Lnet/minecraft/enchantment/Enchantment;FI)Lnet/minecraft/loot/function/ConditionalLootFunction$Builder;",
+        "signature": "(Lnet/minecraft/enchantment/Enchantment;FI)Lnet/minecraft/loot/function/ConditionalLootFunction$Builder\u003c*\u003e;",
         "redirect": {
           "owner": "io/github/fukkitmc/fukkit/redirects/ApplyBonusLootFunctionRedirects",
           "name": "a",
-          "descriptor": "(Lnet/minecraft/enchantment/Enchantment;I)Lnet/minecraft/loot/function/ConditionalLootFunction$Builder;",
+          "descriptor": "(Lnet/minecraft/enchantment/Enchantment;FI)Lnet/minecraft/loot/function/ConditionalLootFunction$Builder;",
           "isInterface": true
         }
       },
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Lnet/minecraft/enchantment/Enchantment;)Lnet/minecraft/loot/function/ConditionalLootFunction$Builder;",
@@ -7486,7 +7480,7 @@
         }
       },
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "b",
         "descriptor": "(Lnet/minecraft/enchantment/Enchantment;)Lnet/minecraft/loot/function/ConditionalLootFunction$Builder;",
@@ -7499,15 +7493,15 @@
         }
       },
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
-        "descriptor": "(Lnet/minecraft/enchantment/Enchantment;FI)Lnet/minecraft/loot/function/ConditionalLootFunction$Builder;",
-        "signature": "(Lnet/minecraft/enchantment/Enchantment;FI)Lnet/minecraft/loot/function/ConditionalLootFunction$Builder\u003c*\u003e;",
+        "descriptor": "(Lnet/minecraft/enchantment/Enchantment;I)Lnet/minecraft/loot/function/ConditionalLootFunction$Builder;",
+        "signature": "(Lnet/minecraft/enchantment/Enchantment;I)Lnet/minecraft/loot/function/ConditionalLootFunction$Builder\u003c*\u003e;",
         "redirect": {
           "owner": "io/github/fukkitmc/fukkit/redirects/ApplyBonusLootFunctionRedirects",
           "name": "a",
-          "descriptor": "(Lnet/minecraft/enchantment/Enchantment;FI)Lnet/minecraft/loot/function/ConditionalLootFunction$Builder;",
+          "descriptor": "(Lnet/minecraft/enchantment/Enchantment;I)Lnet/minecraft/loot/function/ConditionalLootFunction$Builder;",
           "isInterface": true
         }
       }
@@ -7519,7 +7513,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "c",
         "descriptor": "()Lnet/minecraft/loot/function/SetContentsLootFunction$Builer;",
@@ -7696,7 +7690,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "b",
         "descriptor": "()Lnet/minecraft/loot/entry/LeafEntry$Builder;",
@@ -7790,7 +7784,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Ljava/lang/String;)Lnet/minecraft/tag/Tag$Identified;",
@@ -7810,7 +7804,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(Lnet/minecraft/loot/UniformLootTableRange;)Lnet/minecraft/loot/function/LootingEnchantLootFunction$Builder;",
@@ -7863,7 +7857,7 @@
     "syntheticFields": [],
     "syntheticMethods": [
       {
-        "opcode": 185,
+        "opcode": 184,
         "access": 9,
         "name": "a",
         "descriptor": "(F)Lnet/minecraft/loot/condition/LootCondition$Builder;",

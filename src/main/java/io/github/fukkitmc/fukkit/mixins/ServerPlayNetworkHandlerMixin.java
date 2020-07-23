@@ -58,9 +58,6 @@ import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicInteger;
 
-/**
- * @author Justsnoopy30
- */
 @Mixin(ServerPlayNetworkHandler.class)
 public abstract class ServerPlayNetworkHandlerMixin implements ServerPlayNetworkHandlerExtra {
     @Shadow
@@ -358,7 +355,7 @@ public abstract class ServerPlayNetworkHandlerMixin implements ServerPlayNetwork
     }
 
     /**
-     * @author fukkit
+     * @author Fukkit
      * @reason commands?
      */
     @Overwrite
